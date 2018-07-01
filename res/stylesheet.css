@@ -1,0 +1,38 @@
+QTabWidget::right-corner {
+  height: 30px;
+	bottom: 5px;
+}
+
+QListWidget::item:selected, QListView::item:selected,
+QTreeWidget::item:selected, QTreeView::item:selected,
+QTableWidget::item:selected, QTableView::item:selected {
+  background-color: #AAD4ff;
+	color: black;
+}
+
+QTextEdit[readOnly="true"] {
+  border: 1px solid #eee;
+	background: transparent;
+}
+
+QPushButton::disabled {
+  color: gray;
+}
+
+QTextEdit, QDateEdit, QLineEdit {
+  padding: 3px;
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+}
+
+QTextEdit:focus[readOnly="false"], QDateEdit:focus[readOnly="false"], QLineEdit:focus[readOnly="false"] {
+  border-color: #6dace8;
+}
+
+QWidget[quickEditStyle="true"] QLineEdit[readOnly="true"],
+QWidget[quickEditStyle="true"] QDateEdit[readOnly="true"] {
+  border: none;
+	border-bottom: 1px dotted gray;
+	background: transparent;
+}

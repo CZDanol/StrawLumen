@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>stylesheet.css</file>
+        <file>icons/16/icons8_Video_Projector_16px.png</file>
+        <file>icons/16/icons8_Fresnel_Lantern_16px.png</file>
+    </qresource>
+</RCC>
