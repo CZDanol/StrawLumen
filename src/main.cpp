@@ -3,6 +3,9 @@
 #include <QFile>
 
 #include "gui/mainwindow.h"
+#include "gui/splashscreen.h"
+#include "job/activexjobthread.h"
+#include "presentation/presentation.h"
 
 void initApplication();
 void uninitApplication();
@@ -12,7 +15,9 @@ int main(int argc, char *argv[]) {
 
 	initApplication();
 
-	mainWindow->show();
+	// Queued so the window shows after the application is fully loaded
+	QMetaObject::invokeMethod(mainWindow, "show", Qt::QueuedConnection);
+
 	int result = app.exec();
 
 	uninitApplication();
@@ -21,6 +26,8 @@ int main(int argc, char *argv[]) {
 }
 
 void initApplication() {
+	qRegisterMetaType<QSharedPointer<Presentation>>();
+
 	// Setup stylesheet
 	{
 		qApp->setStyle(QStyleFactory::create("Fusion"));
@@ -34,8 +41,14 @@ void initApplication() {
 		qApp->setStyleSheet( QString( f.readAll() ) );
 	}
 
+	activeXJobThread = new ActiveXJobThread();
+
 	mainWindow = new MainWindow();
+	splashscreen = new Splashscreen(mainWindow);
 }
+
 void uninitApplication() {
 	delete mainWindow;
+
+	delete activeXJobThread;
 }

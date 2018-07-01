@@ -1,7 +1,63 @@
 <RCC>
     <qresource prefix="/">
         <file>stylesheet.css</file>
-        <file>icons/16/icons8_Video_Projector_16px.png</file>
-        <file>icons/16/icons8_Fresnel_Lantern_16px.png</file>
+        <file>preloaders/Preloader_4_00000.png</file>
+        <file>preloaders/Preloader_4_00001.png</file>
+        <file>preloaders/Preloader_4_00002.png</file>
+        <file>preloaders/Preloader_4_00003.png</file>
+        <file>preloaders/Preloader_4_00004.png</file>
+        <file>preloaders/Preloader_4_00005.png</file>
+        <file>preloaders/Preloader_4_00006.png</file>
+        <file>preloaders/Preloader_4_00007.png</file>
+        <file>preloaders/Preloader_4_00008.png</file>
+        <file>preloaders/Preloader_4_00009.png</file>
+        <file>preloaders/Preloader_4_00010.png</file>
+        <file>preloaders/Preloader_4_00011.png</file>
+        <file>preloaders/Preloader_4_00012.png</file>
+        <file>preloaders/Preloader_4_00013.png</file>
+        <file>preloaders/Preloader_4_00014.png</file>
+        <file>preloaders/Preloader_4_00015.png</file>
+        <file>preloaders/Preloader_4_00016.png</file>
+        <file>preloaders/Preloader_4_00017.png</file>
+        <file>preloaders/Preloader_4_00018.png</file>
+        <file>preloaders/Preloader_4_00019.png</file>
+        <file>preloaders/Preloader_4_00020.png</file>
+        <file>preloaders/Preloader_4_00021.png</file>
+        <file>preloaders/Preloader_4_00022.png</file>
+        <file>preloaders/Preloader_4_00023.png</file>
+        <file>preloaders/Preloader_4_00024.png</file>
+        <file>preloaders/Preloader_4_00025.png</file>
+        <file>preloaders/Preloader_4_00026.png</file>
+        <file>preloaders/Preloader_4_00027.png</file>
+        <file>preloaders/Preloader_4_00028.png</file>
+        <file>preloaders/Preloader_4_00029.png</file>
+        <file>preloaders/Preloader_4_00030.png</file>
+        <file>preloaders/Preloader_4_00031.png</file>
+        <file>preloaders/Preloader_4_00032.png</file>
+        <file>preloaders/Preloader_4_00033.png</file>
+        <file>preloaders/Preloader_4_00034.png</file>
+        <file>preloaders/Preloader_4_00035.png</file>
+        <file>preloaders/Preloader_4_00036.png</file>
+        <file>preloaders/Preloader_4_00037.png</file>
+        <file>preloaders/Preloader_4_00038.png</file>
+        <file>preloaders/Preloader_4_00039.png</file>
+        <file>icons/16/Fresnel Lantern_16px.png</file>
+        <file>icons/16/Checkmark_16px.png</file>
+        <file>icons/16/Delete_16px.png</file>
+        <file>icons/16/Microsoft PowerPoint_16px.png</file>
+        <file>icons/16/Plus_16px.png</file>
+        <file>icons/16/Presentation_16px.png</file>
+        <file>icons/16/Trash Can_16px.png</file>
+        <file>icons/16/Video Playlist_16px.png</file>
+        <file>icons/16/Video Projector_16px.png</file>
+        <file>icons/16/Virtual Machine_16px.png</file>
+        <file>icons/16/Musical Notes_16px.png</file>
+        <file>icons/16/icons8_Film_Roll__16px.png</file>
+        <file>icons/16/icons8_Gallery_16px.png</file>
+        <file>icons/16/icons8_Mockup_16px.png</file>
+        <file>icons/16/icons8_Movie_16px.png</file>
+        <file>icons/16/icons8_Photo_Gallery_16px.png</file>
+        <file>icon.ico</file>
+        <file>resources.qrc</file>
     </qresource>
 </RCC>

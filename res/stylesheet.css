@@ -36,3 +36,7 @@ QWidget[quickEditStyle="true"] QDateEdit[readOnly="true"] {
 	border-bottom: 1px dotted gray;
 	background: transparent;
 }
+
+#Splashscreen {
+  /*border: 1px solid #333;*/
+}

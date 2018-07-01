@@ -31,15 +31,37 @@ win32:RC_ICONS += ../res/icon.ico
 SOURCES += main.cpp \
     gui/mainwindow.cpp \
     presentation/presentation.cpp \
-    presentation/powerpointpresentation.cpp
+    presentation/powerpointpresentation.cpp \
+    util/jobthread.cpp \
+    job/activexjobthread.cpp \
+    gui/splashscreen.cpp \
+    presentation/playlist.cpp \
+    util/playlistitemmodel.cpp \
+    gui/mainwindow_presentationmode.cpp \
+    util/standarddialogs.cpp \
+    util/execonmainthread.cpp \
+    util/scopeexit.cpp \
+    util/slidesitemmodel.cpp
 
 FORMS += \
-    gui/mainwindow.ui
+    gui/mainwindow.ui \
+    gui/splashscreen.ui \
+    gui/mainwindow_presentationmode.ui
 
 HEADERS += \
     gui/mainwindow.h \
     presentation/presentation.h \
-    presentation/powerpointpresentation.h
+    presentation/powerpointpresentation.h \
+    util/jobthread.h \
+    job/activexjobthread.h \
+    gui/splashscreen.h \
+    presentation/playlist.h \
+    util/playlistitemmodel.h \
+    gui/mainwindow_presentationmode.h \
+    util/standarddialogs.h \
+    util/execonmainthread.h \
+    util/scopeexit.h \
+    util/slidesitemmodel.h
 
 RESOURCES += \
     ../res/resources.qrc

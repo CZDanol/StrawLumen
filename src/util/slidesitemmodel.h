@@ -1,0 +1,36 @@
+#ifndef SLIDESITEMMODEL_H
+#define SLIDESITEMMODEL_H
+
+#include <QObject>
+#include <QAbstractTableModel>
+#include <QSharedPointer>
+
+class Playlist;
+class Presentation;
+
+class SlidesItemModel : public QAbstractTableModel
+{
+	Q_OBJECT
+
+public:
+	SlidesItemModel();
+
+public:
+	void setPlaylist(const QSharedPointer<Playlist> &playlist);
+
+public:
+	int rowCount(const QModelIndex &parent) const override;
+	int columnCount(const QModelIndex &parent) const override;
+
+	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+	QVariant data(const QModelIndex &index, int role) const override;
+
+private slots:
+	void resetModel();
+
+private:
+	QSharedPointer<Playlist> playlist_;
+
+};
+
+#endif // SLIDESITEMMODEL_H
