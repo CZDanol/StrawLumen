@@ -22,10 +22,14 @@ public:
 
 public:
 	/// Blockingly shows the splashscreen until the job is done
-	void asyncAction(const QString &splashMessage, const JobThread::Job &job, JobThread &jobThread);
+	void asyncAction(const QString &splashMessage, bool enableStorno, JobThread &jobThread, const JobThread::Job &job);
+
+	void setProgress(int val, int max);
+
+	bool isStornoPressed();
 
 protected:
-	void closeEvent(QCloseEvent *e);
+	void reject() override;
 
 private slots:
 	void onAnimation();
@@ -38,6 +42,7 @@ private:
 	QVector<QPixmap> animImages_;
 	int animStep_ = 0;
 	QTimer animTimer_;
+	bool isStornoPressed_;
 
 };
 

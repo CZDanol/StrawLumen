@@ -41,7 +41,8 @@ SOURCES += main.cpp \
     util/standarddialogs.cpp \
     util/execonmainthread.cpp \
     util/scopeexit.cpp \
-    util/slidesitemmodel.cpp
+    util/slidesitemmodel.cpp \
+    util/slidesitemdelegate.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -61,7 +62,8 @@ HEADERS += \
     util/standarddialogs.h \
     util/execonmainthread.h \
     util/scopeexit.h \
-    util/slidesitemmodel.h
+    util/slidesitemmodel.h \
+    util/slidesitemdelegate.h
 
 RESOURCES += \
     ../res/resources.qrc

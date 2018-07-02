@@ -59,5 +59,32 @@
         <file>icons/16/icons8_Photo_Gallery_16px.png</file>
         <file>icon.ico</file>
         <file>resources.qrc</file>
+        <file>icons/16/Load_16px.png</file>
+        <file>icons/16/Sort Left_16px.png</file>
+        <file>icons/16/Sort Right_16px.png</file>
+        <file>icons/16/TV Off_16px.png</file>
+        <file>icons/16/First_16px.png</file>
+        <file>icons/16/Last_16px.png</file>
+        <file>icons/16/Next_16px.png</file>
+        <file>icons/16/Previous_16px.png</file>
+        <file>icons/32/First_32px.png</file>
+        <file>icons/32/Last_32px.png</file>
+        <file>icons/32/Next_32px.png</file>
+        <file>icons/32/Previous_32px.png</file>
+        <file>icons/32/Circled Right_32px.png</file>
+        <file>icons/32/Go Back_32px.png</file>
+        <file>icons/32/Left_32px.png</file>
+        <file>icons/32/Prev_32px.png</file>
+        <file>icons/32/Right Button_32px.png</file>
+        <file>icons/32/Right_32px.png</file>
+        <file>icons/32/Double Left_32px.png</file>
+        <file>icons/32/Double Right_32px.png</file>
+        <file>icons/32/End_32px.png</file>
+        <file>icons/32/Fast Forward_32px.png</file>
+        <file>icons/32/Rewind_32px.png</file>
+        <file>icons/32/Skip to Start_32px.png</file>
+        <file>icons/32/Sort Left_32px.png</file>
+        <file>icons/32/Sort Right_32px.png</file>
+        <file>icons/32/TV Off_32px.png</file>
     </qresource>
 </RCC>

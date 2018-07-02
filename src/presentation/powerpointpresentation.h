@@ -23,6 +23,7 @@ public:
 	QPixmap icon() const override;
 
 	int rawSlideCount() const override;
+	QString rawSlideIdentification(int i) const override;
 	QString rawSlideDescription(int i) const override;
 
 private:

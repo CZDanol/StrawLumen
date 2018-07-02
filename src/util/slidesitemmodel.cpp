@@ -3,6 +3,12 @@
 #include "presentation/playlist.h"
 #include "presentation/presentation.h"
 
+enum Column {
+	colPresentation,
+	colId,
+	colText
+};
+
 SlidesItemModel::SlidesItemModel()
 {
 
@@ -37,7 +43,7 @@ int SlidesItemModel::rowCount(const QModelIndex &) const
 
 int SlidesItemModel::columnCount(const QModelIndex &) const
 {
-	return 2;
+	return 3;
 }
 
 QVariant SlidesItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -50,10 +56,13 @@ QVariant SlidesItemModel::headerData(int section, Qt::Orientation orientation, i
 
 	switch(section) {
 
-	case 0:
+	case colPresentation:
 		return tr("Prezentace");
 
-	case 1:
+	case colId:
+		return tr("Snímek");
+
+	case colText:
 		return tr("Text");
 
 	default:
@@ -81,10 +90,13 @@ QVariant SlidesItemModel::data(const QModelIndex &index, int role) const
 	if (role == Qt::DisplayRole) {
 		switch(column) {
 
-		case 0:
+		case colPresentation:
 			return presentation->identification();
 
-		case 1:
+		case colId:
+			return presentation->slideIdentification(slideId);
+
+		case colText:
 			return presentation->slideDescription(slideId);
 
 		default:
@@ -93,7 +105,14 @@ QVariant SlidesItemModel::data(const QModelIndex &index, int role) const
 		}
 
 	} else if(role == Qt::DecorationRole) {
-		return column == 0 ? presentation->icon() : QVariant();
+		return column == colPresentation ? presentation->icon() : QVariant();
+
+	} else if(role == Qt::UserRole) {
+		// UserRole - row is last in the presentation
+		return slideId == presentation->slideCount() - 1;
+
+	} else if(role == Qt::TextAlignmentRole) {
+		return column == colId ? Qt::AlignCenter : QVariant();
 
 	}
 

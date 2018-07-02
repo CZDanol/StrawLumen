@@ -16,7 +16,7 @@ public:
 	Playlist();
 
 public:
-	void addItem(const QSharedPointer<Presentation> &item);
+	bool addItem(const QSharedPointer<Presentation> &item);
 
 public:
 	inline const QVector<QSharedPointer<Presentation> > &items() const {

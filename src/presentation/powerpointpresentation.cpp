@@ -20,7 +20,7 @@ QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QStr
 {
 	QSharedPointer<PowerpointPresentation> result_;
 
-	splashscreen->asyncAction(tr("Načítání PowerPoint prezentace"), [&]{
+	splashscreen->asyncAction(tr("Načítání '%1'").arg(QFileInfo(filename).fileName()), true, *activeXJobThread, [&]{
 		QSharedPointer<PowerpointPresentation> result(new PowerpointPresentation());
 
 		result->filePath_ = filename;
@@ -29,6 +29,9 @@ QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QStr
 		QAxObject obj;
 		if(!obj.setControl("PowerPoint.Application"))
 			return standardErrorDialog(tr("Program nedetekoval instalaci PowerPointu. Bez nainstalového PowerPointu nelze pracovat s powerpointovými prezentacemi."));
+
+		if(splashscreen->isStornoPressed())
+			return;
 
 		auto presentations = obj.querySubObject("Presentations");
 		auto presentation = presentations->querySubObject(
@@ -39,6 +42,9 @@ QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QStr
 		if(!presentation)
 			return standardErrorDialog(tr("Nepodařilo se načíst prezentaci '%1'.").arg(filename));
 
+		if(splashscreen->isStornoPressed())
+			return;
+
 		//SCOPE_EXIT(presentation->dynamicCall("Quit()"));
 
 		auto slides = presentation->querySubObject("Slides");
@@ -47,6 +53,11 @@ QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QStr
 		const QDir tmpDir(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
 
 		for(int slideI = 1; slideI <= slideCount; slideI++) {
+			if(splashscreen->isStornoPressed())
+				return;
+
+			splashscreen->setProgress(slideI, slideCount);
+
 			auto slide = slides->querySubObject("Item(QVariant)", slideI);
 			auto transition = slide->querySubObject("SlideShowTransition");
 
@@ -96,10 +107,13 @@ QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QStr
 			result->rawSlideCount_ ++;
 		}
 
+		if(splashscreen->isStornoPressed())
+			return;
+
 		result->initDefaultSlideOrder();
 
 		result_ = result;
-	}, *activeXJobThread);
+	});
 
 	return result_;
 }
@@ -118,6 +132,11 @@ QPixmap PowerpointPresentation::icon() const
 int PowerpointPresentation::rawSlideCount() const
 {
 	return rawSlideCount_;
+}
+
+QString PowerpointPresentation::rawSlideIdentification(int i) const
+{
+	return tr("%1").arg(i+1);
 }
 
 QString PowerpointPresentation::rawSlideDescription(int i) const

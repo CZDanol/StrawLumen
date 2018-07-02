@@ -9,10 +9,10 @@ Playlist::Playlist()
 	connect(this, SIGNAL(sigItemsChanged()), this, SLOT(onItemsChanged()));
 }
 
-void Playlist::addItem(const QSharedPointer<Presentation> &item)
+bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 {
 	if(item.isNull())
-		return;
+		return false;
 
 	Q_ASSERT(!item->playlist_);
 
@@ -21,6 +21,8 @@ void Playlist::addItem(const QSharedPointer<Presentation> &item)
 
 	items_.append(item);
 	emit sigItemsChanged();
+
+	return true;
 }
 
 QSharedPointer<Presentation> Playlist::presentationOfSlide(int slide) const

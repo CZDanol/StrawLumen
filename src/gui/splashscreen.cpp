@@ -4,6 +4,8 @@
 #include <QCloseEvent>
 #include <QEventLoop>
 
+#include "util/execonmainthread.h"
+
 Splashscreen *splashscreen = nullptr;
 
 Splashscreen::Splashscreen(QWidget *parent) :
@@ -12,7 +14,8 @@ Splashscreen::Splashscreen(QWidget *parent) :
 {
 	ui->setupUi(this);
 	setFixedSize(size());
-	setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+	setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+	setWindowTitle(" ");
 
 	for(int i = 0; i < 40; i ++)
 		animImages_.append(QPixmap(QString(":/preloaders/Preloader_4_%1.png").arg(i, 5, 10, QChar('0'))));
@@ -26,7 +29,7 @@ Splashscreen::~Splashscreen()
 	delete ui;
 }
 
-void Splashscreen::asyncAction(const QString &splashMessage, const JobThread::Job &job, JobThread &jobThread)
+void Splashscreen::asyncAction(const QString &splashMessage, bool enableStorno, JobThread &jobThread, const JobThread::Job &job)
 {
 	QEventLoop eventLoop;
 
@@ -37,7 +40,13 @@ void Splashscreen::asyncAction(const QString &splashMessage, const JobThread::Jo
 
 	ui->lblMessage->setText(tr("%1...").arg(splashMessage));
 	animTimer_.start();
+
+	ui->wgtStack->setCurrentWidget(ui->wgtPageAnim);
+	isStornoPressed_ = false;
+
+	setWindowFlag(Qt::WindowCloseButtonHint, enableStorno);
 	show();
+	activateWindow();
 
 	eventLoop.exec();
 
@@ -46,15 +55,31 @@ void Splashscreen::asyncAction(const QString &splashMessage, const JobThread::Jo
 	animTimer_.stop();
 }
 
-void Splashscreen::closeEvent(QCloseEvent *e)
+void Splashscreen::setProgress(int val, int max)
+{
+	execOnMainThread([=]{
+		ui->pbProgress->setMaximum(max);
+		ui->pbProgress->setValue(val);
+		activateWindow();
+
+		ui->wgtStack->setCurrentWidget(max == 0 ? ui->wgtPageAnim : ui->wgtPageProgress);
+	});
+}
+
+bool Splashscreen::isStornoPressed()
+{
+	return isStornoPressed_;
+}
+
+void Splashscreen::reject()
 {
 	if(!canClose_) {
-		e->ignore();
+		isStornoPressed_ = true;
 		return;
 	}
 
 	canClose_ = false;
-	QDialog::closeEvent(e);
+	QDialog::reject();
 }
 
 void Splashscreen::onAnimation()

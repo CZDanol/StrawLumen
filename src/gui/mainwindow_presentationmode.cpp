@@ -16,8 +16,9 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	ui(new Ui::MainWindow_PresentationMode)
 {
 	ui->setupUi(this);
-
 	setAcceptDrops(true);
+
+	ui->twPlaylist->setCornerWidget(ui->twPlaylistCorner);
 
 	playlist_.reset(new Playlist());
 	playlistItemModel_.setPlaylist(playlist_);
@@ -25,11 +26,17 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 	ui->tvPlaylist->setModel(&playlistItemModel_);
 	ui->tvSlides->setModel(&slidesItemModel_);
+	ui->tvSlides->setItemDelegate(&slidesItemDelegate_);
 }
 
 MainWindow_PresentationMode::~MainWindow_PresentationMode()
 {
 	delete ui;
+}
+
+QWidget *MainWindow_PresentationMode::menuWidget()
+{
+	return ui->wgtMenu;
 }
 
 void MainWindow_PresentationMode::dragEnterEvent(QDragEnterEvent *e)
@@ -40,7 +47,8 @@ void MainWindow_PresentationMode::dragEnterEvent(QDragEnterEvent *e)
 				return;
 		}
 
-		e->acceptProposedAction();
+		e->setDropAction(Qt::LinkAction);
+		e->accept();
 	}
 }
 
@@ -53,10 +61,11 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 			QString filename = url.toLocalFile();
 			QString extension = QFileInfo(filename).suffix();
 
-			if(PowerpointPresentation::allowedExtensions.contains(extension))
-				playlist_->addItem(PowerpointPresentation::create(filename));
-			else
-				standardErrorDialog(tr("Soubor '%1' s příponou '%2' není podporován.").arg(filename, extension));
+			if(!PowerpointPresentation::allowedExtensions.contains(extension))
+				return standardErrorDialog(tr("Soubor '%1' s příponou '%2' není podporován.").arg(filename, extension));
+
+			if(!playlist_->addItem(PowerpointPresentation::create(filename)))
+				return;
 		}
 	});
 }

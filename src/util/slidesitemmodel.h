@@ -31,6 +31,7 @@ private slots:
 private:
 	QSharedPointer<Playlist> playlist_;
 
+
 };
 
 #endif // SLIDESITEMMODEL_H

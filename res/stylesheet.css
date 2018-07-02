@@ -3,9 +3,7 @@ QTabWidget::right-corner {
 	bottom: 5px;
 }
 
-QListWidget::item:selected, QListView::item:selected,
-QTreeWidget::item:selected, QTreeView::item:selected,
-QTableWidget::item:selected, QTableView::item:selected {
+QAbstractItemView::item:selected {
   background-color: #AAD4ff;
 	color: black;
 }
@@ -39,4 +37,9 @@ QWidget[quickEditStyle="true"] QDateEdit[readOnly="true"] {
 
 #Splashscreen {
   /*border: 1px solid #333;*/
+}
+
+#tvSlides QHeaderView {
+  border: 1px solid #aaa;
+	border-bottom: none;
 }

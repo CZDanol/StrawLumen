@@ -13,7 +13,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="ltMenu">
       <item>
        <widget class="QTabWidget" name="tabWidget_2">
         <property name="sizePolicy">
@@ -51,6 +51,12 @@
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
               <normaloff>:/icons/16/Presentation_16px.png</normaloff>:/icons/16/Presentation_16px.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -110,6 +116,7 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
  </resources>
  <connections/>

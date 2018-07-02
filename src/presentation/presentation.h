@@ -14,7 +14,7 @@ class Presentation : public QObject
 	friend class Playlist;
 
 public:
-	constexpr int maxDescriptionLength = 256;
+	static constexpr int maxDescriptionLength = 256;
 
 public:
 	virtual ~Presentation() {}
@@ -25,12 +25,20 @@ public:
 		return 0;
 	}
 
-	virtual QString rawSlideDescription(int i) const {
+	virtual QString rawSlideIdentification(int) const {
+		return QString();
+	}
+
+	virtual QString rawSlideDescription(int) const {
 		return QString();
 	}
 
 	/// Slide count considering custom ordering
 	int slideCount() const;
+
+	inline QString slideIdentification(int i) const {
+		return slideOrder_.size() > i ? rawSlideIdentification(slideOrder_[i]) : QString();
+	}
 
 	inline QString slideDescription(int i) const {
 		return slideOrder_.size() > i ? rawSlideDescription(slideOrder_[i]) : tr("## SNÍMEK NEEXISTUJE ##");
