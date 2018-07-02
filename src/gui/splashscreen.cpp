@@ -46,7 +46,6 @@ void Splashscreen::asyncAction(const QString &splashMessage, bool enableStorno, 
 
 	setWindowFlag(Qt::WindowCloseButtonHint, enableStorno);
 	show();
-	activateWindow();
 
 	eventLoop.exec();
 
@@ -60,7 +59,6 @@ void Splashscreen::setProgress(int val, int max)
 	execOnMainThread([=]{
 		ui->pbProgress->setMaximum(max);
 		ui->pbProgress->setValue(val);
-		activateWindow();
 
 		ui->wgtStack->setCurrentWidget(max == 0 ? ui->wgtPageAnim : ui->wgtPageProgress);
 	});

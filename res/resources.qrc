@@ -86,5 +86,8 @@
         <file>icons/32/Sort Left_32px.png</file>
         <file>icons/32/Sort Right_32px.png</file>
         <file>icons/32/TV Off_32px.png</file>
+        <file>icons/16/Gas_16px.png</file>
+        <file>icons/16/New Property_16px.png</file>
+        <file>icons/16/Clock_16px.png</file>
     </qresource>
 </RCC>

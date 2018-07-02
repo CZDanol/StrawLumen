@@ -45,6 +45,38 @@ QSharedPointer<Presentation> Playlist::presentationOfSlide(int slide) const
 	return items_[lower];
 }
 
+int Playlist::moveItems(const QVector<int> &itemIndexes, int targetPosition)
+{
+	if(itemIndexes.isEmpty())
+		return -1;
+
+	QVector<QSharedPointer<Presentation>> movedItems;
+	movedItems.resize(itemIndexes.size());
+
+	int adjustedTargetPosition = targetPosition;
+
+	for(int i = 0; i < movedItems.size(); i ++) {
+		const int index = itemIndexes[i];
+		movedItems[i] = items_[index];
+
+		if(index < targetPosition)
+			adjustedTargetPosition--;
+	}
+
+	for(auto &movedItem : movedItems)
+		items_.removeOne(movedItem);
+
+	for(auto &movedItem : movedItems)
+		items_.insert(adjustedTargetPosition++, movedItem);
+
+	for(int i = 0; i < items_.size(); i++)
+		items_[i]->positionInPlaylist_ = i;
+
+	emit sigItemsChanged();
+
+	return movedItems[0]->positionInPlaylist_;
+}
+
 void Playlist::onItemsChanged()
 {
 	slideCount_ = 0;

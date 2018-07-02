@@ -1,5 +1,5 @@
-#ifndef POWERPOINTPRESENTATION_H
-#define POWERPOINTPRESENTATION_H
+#ifndef PRESENTATION_POWERPOINT_H
+#define PRESENTATION_POWERPOINT_H
 
 #include <QSharedPointer>
 #include <QImage>
@@ -8,7 +8,7 @@
 
 #include "presentation.h"
 
-class PowerpointPresentation : public Presentation
+class Presentation_PowerPoint : public Presentation
 {
 	Q_OBJECT
 
@@ -16,7 +16,7 @@ public:
 	static const QStringList allowedExtensions;
 
 	/// Attempts to create a powerpoint presentation. Shows splashscreen during the loading. Can fail and return null.
-	static QSharedPointer<PowerpointPresentation> create(const QString &filename);
+	static QSharedPointer<Presentation_PowerPoint> create(const QString &filename);
 
 public:
 	QString identification() const override;
@@ -27,7 +27,7 @@ public:
 	QString rawSlideDescription(int i) const override;
 
 private:
-	PowerpointPresentation();
+	Presentation_PowerPoint();
 
 private:
 	int rawSlideCount_ = 0;
@@ -38,4 +38,4 @@ private:
 
 };
 
-#endif // POWERPOINTPRESENTATION_H
+#endif // PRESENTATION_POWERPOINT_H

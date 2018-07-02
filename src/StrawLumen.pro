@@ -31,7 +31,6 @@ win32:RC_ICONS += ../res/icon.ico
 SOURCES += main.cpp \
     gui/mainwindow.cpp \
     presentation/presentation.cpp \
-    presentation/powerpointpresentation.cpp \
     util/jobthread.cpp \
     job/activexjobthread.cpp \
     gui/splashscreen.cpp \
@@ -42,7 +41,8 @@ SOURCES += main.cpp \
     util/execonmainthread.cpp \
     util/scopeexit.cpp \
     util/slidesitemmodel.cpp \
-    util/slidesitemdelegate.cpp
+    util/slidesitemdelegate.cpp \
+    presentation/presentation_powerpoint.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -52,7 +52,6 @@ FORMS += \
 HEADERS += \
     gui/mainwindow.h \
     presentation/presentation.h \
-    presentation/powerpointpresentation.h \
     util/jobthread.h \
     job/activexjobthread.h \
     gui/splashscreen.h \
@@ -63,7 +62,8 @@ HEADERS += \
     util/execonmainthread.h \
     util/scopeexit.h \
     util/slidesitemmodel.h \
-    util/slidesitemdelegate.h
+    util/slidesitemdelegate.h \
+    presentation/presentation_powerpoint.h
 
 RESOURCES += \
     ../res/resources.qrc

@@ -1,4 +1,4 @@
-#include "powerpointpresentation.h"
+#include "presentation_powerpoint.h"
 
 #include <QAxObject>
 #include <QFileInfo>
@@ -14,14 +14,14 @@
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
 
-const QStringList PowerpointPresentation::allowedExtensions {"ppt", "pptx"};
+const QStringList Presentation_PowerPoint::allowedExtensions {"ppt", "pptx"};
 
-QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QString &filename)
+QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QString &filename)
 {
-	QSharedPointer<PowerpointPresentation> result_;
+	QSharedPointer<Presentation_PowerPoint> result_;
 
 	splashscreen->asyncAction(tr("Načítání '%1'").arg(QFileInfo(filename).fileName()), true, *activeXJobThread, [&]{
-		QSharedPointer<PowerpointPresentation> result(new PowerpointPresentation());
+		QSharedPointer<Presentation_PowerPoint> result(new Presentation_PowerPoint());
 
 		result->filePath_ = filename;
 		result->identification_ = QFileInfo(filename).completeBaseName();
@@ -95,14 +95,14 @@ QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QStr
 			}
 
 			// Obtain slide image
-			do {
+			/*do {
 				const QString filename = QDir::toNativeSeparators(tmpDir.absoluteFilePath("strawLumenThumbTmp.png"));
 
 				slide->dynamicCall("Export(QString,QString,Long,Long)", filename, "PNG", 512, 512).toBool();
 				result->slideThumbnails_.append(QImage(filename));
 				QFile(filename).remove();
 
-			} while(false);
+			} while(false);*/
 
 			result->rawSlideCount_ ++;
 		}
@@ -118,33 +118,33 @@ QSharedPointer<PowerpointPresentation> PowerpointPresentation::create(const QStr
 	return result_;
 }
 
-QString PowerpointPresentation::identification() const
+QString Presentation_PowerPoint::identification() const
 {
 	return identification_;
 }
 
-QPixmap PowerpointPresentation::icon() const
+QPixmap Presentation_PowerPoint::icon() const
 {
 	static QPixmap icon_(":/icons/16/Microsoft PowerPoint_16px.png");
 	return icon_;
 }
 
-int PowerpointPresentation::rawSlideCount() const
+int Presentation_PowerPoint::rawSlideCount() const
 {
 	return rawSlideCount_;
 }
 
-QString PowerpointPresentation::rawSlideIdentification(int i) const
+QString Presentation_PowerPoint::rawSlideIdentification(int i) const
 {
 	return tr("%1").arg(i+1);
 }
 
-QString PowerpointPresentation::rawSlideDescription(int i) const
+QString Presentation_PowerPoint::rawSlideDescription(int i) const
 {
 	return slideTexts_[i];
 }
 
-PowerpointPresentation::PowerpointPresentation()
+Presentation_PowerPoint::Presentation_PowerPoint()
 {
 
 }

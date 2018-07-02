@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->ltMenu->insertWidget(1, ui->wgtPresentationMode->menuWidget());
+	ui->swMenu->addWidget(ui->wgtPresentationMode->menuWidget());
 
 	setWindowTitle(tr("Straw Lumen v%1").arg(PROGRAM_VERSION));
 }

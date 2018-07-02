@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include <QMap>
 #include <QObject>
+#include <QVector>
 
 class Presentation;
 
@@ -28,6 +29,10 @@ public:
 	}
 
 	QSharedPointer<Presentation> presentationOfSlide(int slide) const;
+
+public:
+	/// Returns index of the first new item
+	int moveItems(const QVector<int> &itemIndexes, int targetPosition);
 
 signals:
 	void sigItemsChanged();

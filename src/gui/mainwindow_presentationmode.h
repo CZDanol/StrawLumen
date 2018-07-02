@@ -2,6 +2,7 @@
 #define MAINWINDOW_PRESENTATIONMODE_H
 
 #include <QWidget>
+#include <QTimer>
 
 #include "util/playlistitemmodel.h"
 #include "util/slidesitemmodel.h"
@@ -26,8 +27,13 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *e) override;
 	void dropEvent(QDropEvent *e) override;
 
+private slots:
+	void onCurrentTimeTimer();
+	void onPlaylistForceSelection(int first, int last);
+
 private:
 	Ui::MainWindow_PresentationMode *ui;
+	QTimer currentTimeTimer_;
 
 	QSharedPointer<Playlist> playlist_;
 	PlaylistItemModel playlistItemModel_;
