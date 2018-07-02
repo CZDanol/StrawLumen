@@ -42,7 +42,10 @@ SOURCES += main.cpp \
     util/scopeexit.cpp \
     util/slidesitemmodel.cpp \
     util/slidesitemdelegate.cpp \
-    presentation/presentation_powerpoint.cpp
+    presentation/presentation_powerpoint.cpp \
+    presentation/presentationengine.cpp \
+    presentation/presentationengine_powerpoint.cpp \
+    presentation/presentationmanager.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -63,7 +66,10 @@ HEADERS += \
     util/scopeexit.h \
     util/slidesitemmodel.h \
     util/slidesitemdelegate.h \
-    presentation/presentation_powerpoint.h
+    presentation/presentation_powerpoint.h \
+    presentation/presentationengine.h \
+    presentation/presentationengine_powerpoint.h \
+    presentation/presentationmanager.h
 
 RESOURCES += \
     ../res/resources.qrc

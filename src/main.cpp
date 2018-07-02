@@ -6,6 +6,8 @@
 #include "gui/splashscreen.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentation.h"
+#include "presentation/presentationengine_powerpoint.h"
+#include "presentation/presentationmanager.h"
 
 void initApplication();
 void uninitApplication();
@@ -42,13 +44,17 @@ void initApplication() {
 	}
 
 	activeXJobThread = new ActiveXJobThread();
+	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
+	presentationManager = new PresentationManager();
 
-	mainWindow = new MainWindow();
+	mainWindow = new MainWindow(nullptr);
 	splashscreen = new Splashscreen(mainWindow);
 }
 
 void uninitApplication() {
 	delete mainWindow;
 
+	delete presentationManager;
+	delete presentationEngine_PowerPoint;
 	delete activeXJobThread;
 }

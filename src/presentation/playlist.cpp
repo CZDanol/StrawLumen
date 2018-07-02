@@ -25,9 +25,9 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	return true;
 }
 
-QSharedPointer<Presentation> Playlist::presentationOfSlide(int slide) const
+QSharedPointer<Presentation> Playlist::presentationOfSlide(int globalSlideId) const
 {
-	if(slide < 0 || slide >= slideCount_)
+	if(globalSlideId < 0 || globalSlideId >= slideCount_)
 		return nullptr;
 
 	// Simple binary search
@@ -36,7 +36,7 @@ QSharedPointer<Presentation> Playlist::presentationOfSlide(int slide) const
 		int current = (lower + upper) / 2;
 		int val = items_[current]->firstSlideOffsetInPlaylist();
 
-		if(slide >= val)
+		if(globalSlideId >= val)
 			lower = current;
 		else
 			upper = current;

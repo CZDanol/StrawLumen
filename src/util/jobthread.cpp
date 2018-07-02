@@ -3,7 +3,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QMutexLocker>
 
-JobThread::JobThread()
+JobThread::JobThread(QObject *parent) : QObject(parent)
 {
 	thread_ = std::thread([=]{threadFunction();});
 }

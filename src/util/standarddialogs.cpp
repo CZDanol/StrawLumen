@@ -27,6 +27,10 @@ void standardErrorDialog(const QString message, QWidget *parent)
 		mb->setParent( parent );
 		mb->setWindowModality( Qt::ApplicationModal );
 		mb->addButton( QObject::tr("Ok"), QMessageBox::AcceptRole );
+
+		static QPixmap iconPixmap(":/icons/32/Cancel_32px.png");
+		mb->setIconPixmap(iconPixmap);
+
 		mb->show();
 	});
 }

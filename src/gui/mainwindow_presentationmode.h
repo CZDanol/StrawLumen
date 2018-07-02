@@ -31,6 +31,10 @@ private slots:
 	void onCurrentTimeTimer();
 	void onPlaylistForceSelection(int first, int last);
 
+	void on_btnEnableProjection_toggled(bool checked);
+
+	void on_tvSlides_activated(const QModelIndex &index);
+
 private:
 	Ui::MainWindow_PresentationMode *ui;
 	QTimer currentTimeTimer_;

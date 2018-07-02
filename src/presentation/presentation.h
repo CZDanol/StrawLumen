@@ -6,6 +6,7 @@
 #include <QPixmap>
 
 class Playlist;
+class PresentationEngine;
 
 class Presentation : public QObject
 {
@@ -25,13 +26,8 @@ public:
 		return 0;
 	}
 
-	virtual QString rawSlideIdentification(int) const {
-		return QString();
-	}
-
-	virtual QString rawSlideDescription(int) const {
-		return QString();
-	}
+	virtual QString rawSlideIdentification(int) const = 0;
+	virtual QString rawSlideDescription(int) const = 0;
 
 	/// Slide count considering custom ordering
 	int slideCount() const;
@@ -49,12 +45,13 @@ public:
 	}
 
 public:
-	virtual QString identification() const {
-		return QString();
-	}
-	virtual QPixmap icon() const {
-		return QPixmap();
-	}
+	virtual QString identification() const = 0;
+	virtual QPixmap icon() const = 0;
+
+public:
+	virtual PresentationEngine *engine() const = 0;
+	virtual bool activatePresentation() = 0;
+	virtual void deactivatePresentation() = 0;
 
 protected:
 	Presentation() {}

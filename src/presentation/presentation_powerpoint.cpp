@@ -11,6 +11,7 @@
 
 #include "gui/splashscreen.h"
 #include "job/activexjobthread.h"
+#include "presentation/presentationengine_powerpoint.h"
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
 
@@ -26,20 +27,20 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 		result->filePath_ = filename;
 		result->identification_ = QFileInfo(filename).completeBaseName();
 
-		QAxObject obj;
-		if(!obj.setControl("PowerPoint.Application"))
+		QAxObject axApplication;
+		if(!axApplication.setControl("PowerPoint.Application"))
 			return standardErrorDialog(tr("Program nedetekoval instalaci PowerPointu. Bez nainstalového PowerPointu nelze pracovat s powerpointovými prezentacemi."));
 
 		if(splashscreen->isStornoPressed())
 			return;
 
-		auto presentations = obj.querySubObject("Presentations");
-		auto presentation = presentations->querySubObject(
+		auto axPresentations = axApplication.querySubObject("Presentations");
+		auto axPresentation = axPresentations->querySubObject(
 					"Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)",
 					QDir::toNativeSeparators(filename), true, false, false
 					);
 
-		if(!presentation)
+		if(!axPresentation)
 			return standardErrorDialog(tr("Nepodařilo se načíst prezentaci '%1'.").arg(filename));
 
 		if(splashscreen->isStornoPressed())
@@ -47,8 +48,8 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 
 		//SCOPE_EXIT(presentation->dynamicCall("Quit()"));
 
-		auto slides = presentation->querySubObject("Slides");
-		const int slideCount = slides->property("Count").toInt();
+		auto axSlides = axPresentation->querySubObject("Slides");
+		const int slideCount = axSlides->property("Count").toInt();
 
 		const QDir tmpDir(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
 
@@ -58,30 +59,33 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 
 			splashscreen->setProgress(slideI, slideCount);
 
-			auto slide = slides->querySubObject("Item(QVariant)", slideI);
-			auto transition = slide->querySubObject("SlideShowTransition");
+			auto axSlide = axSlides->querySubObject("Item(QVariant)", slideI);
+			auto axTransition = axSlide->querySubObject("SlideShowTransition");
 
-			if(transition->property("Hidden").toInt() == (int) Office::MsoTriState::msoTrue)
+			QSharedPointer<Slide> slide(new Slide());
+			result->slides_.append(slide);
+
+			if(axTransition->property("Hidden").toInt() == (int) Office::MsoTriState::msoTrue)
 				continue;
 
 			// Obtain slide text
 			{
-				QString slideText;
+				auto &slideText = slide->text;
 
-				auto shapes = slide->querySubObject("Shapes");
-				int shapeCount = shapes->property("Count").toInt();
+				auto axShapes = axSlide->querySubObject("Shapes");
+				int shapeCount = axShapes->property("Count").toInt();
 
 				for(int shapeI = 1; shapeI <= shapeCount; shapeI++) {
-					auto shape = shapes->querySubObject("Item(QVariant)", shapeI);
+					auto axShape = axShapes->querySubObject("Item(QVariant)", shapeI);
 
-					if(shape->property("HasTextFrame").toInt() == (int) Office::MsoTriState::msoFalse)
+					if(axShape->property("HasTextFrame").toInt() == (int) Office::MsoTriState::msoFalse)
 						continue;
 
-					auto textFrame = shape->querySubObject("TextFrame");
-					auto textRange = textFrame->querySubObject("TextRange");
+					auto axTextFrame = axShape->querySubObject("TextFrame");
+					auto axTextRange = axTextFrame->querySubObject("TextRange");
 
 					slideText.append(' ');
-					slideText.append(textRange->property("Text").toString());
+					slideText.append(axTextRange->property("Text").toString());
 				}
 
 				slideText.replace(QRegularExpression("\\s+"), " ");
@@ -90,16 +94,14 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 					slideText.resize(maxDescriptionLength - 3);
 					slideText.append("...");
 				}
-
-				result->slideTexts_.append(slideText);
 			}
 
 			// Obtain slide image
 			/*do {
 				const QString filename = QDir::toNativeSeparators(tmpDir.absoluteFilePath("strawLumenThumbTmp.png"));
 
-				slide->dynamicCall("Export(QString,QString,Long,Long)", filename, "PNG", 512, 512).toBool();
-				result->slideThumbnails_.append(QImage(filename));
+				axSlide->dynamicCall("Export(QString,QString,Long,Long)", filename, "PNG", 512, 512).toBool();
+				slide->thumbnail = QImage(filename);
 				QFile(filename).remove();
 
 			} while(false);*/
@@ -111,6 +113,7 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 			return;
 
 		result->initDefaultSlideOrder();
+		result->weakPtr_ = result;
 
 		result_ = result;
 	});
@@ -141,7 +144,45 @@ QString Presentation_PowerPoint::rawSlideIdentification(int i) const
 
 QString Presentation_PowerPoint::rawSlideDescription(int i) const
 {
-	return slideTexts_[i];
+	return slides_[i]->text;
+}
+
+PresentationEngine *Presentation_PowerPoint::engine() const
+{
+	return presentationEngine_PowerPoint;
+}
+
+bool Presentation_PowerPoint::activatePresentation()
+{
+	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
+	bool result = false;
+
+	splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
+		auto &pe = *presentationEngine_PowerPoint;
+
+		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
+		if(!pe.axPresentation_)
+			return standardErrorDialog(tr("Nepodařilo se otevřít prezentaci '%1'.").arg(filePath_));
+
+		pe.axSlides_ = pe.axPresentation_->querySubObject("Slides");
+
+		pe.axSSSettings_ = pe.axPresentation_->querySubObject("SlideShowSettings");
+		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", (int) Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk);
+		pe.axSSSettings_->dynamicCall("SetAdvanceMode(Office::PpSlideShowAdvanceMode )", (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance);
+		pe.axSSSettings_->dynamicCall("Run()");
+
+		result = true;
+	});
+
+	return result;
+}
+
+void Presentation_PowerPoint::deactivatePresentation()
+{
+	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
+	activeXJobThread->executeNonblocking([this, selfPtr]{
+		presentationEngine_PowerPoint->axPresentation_->dynamicCall("Close()");
+	});
 }
 
 Presentation_PowerPoint::Presentation_PowerPoint()

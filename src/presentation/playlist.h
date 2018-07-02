@@ -28,7 +28,7 @@ public:
 		return slideCount_;
 	}
 
-	QSharedPointer<Presentation> presentationOfSlide(int slide) const;
+	QSharedPointer<Presentation> presentationOfSlide(int globalSlideId) const;
 
 public:
 	/// Returns index of the first new item

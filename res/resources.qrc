@@ -89,5 +89,13 @@
         <file>icons/16/Gas_16px.png</file>
         <file>icons/16/New Property_16px.png</file>
         <file>icons/16/Clock_16px.png</file>
+        <file>icons/32/Video Projector_32px.png</file>
+        <file>icon_16.png</file>
+        <file>icon_32.png</file>
+        <file>icon_48.png</file>
+        <file>icon_64.png</file>
+        <file>icons/32/Cancel_32px.png</file>
+        <file>icons/32/Error_32px.png</file>
+        <file>icons/32/Help_32px.png</file>
     </qresource>
 </RCC>

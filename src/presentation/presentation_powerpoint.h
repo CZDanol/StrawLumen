@@ -12,6 +12,18 @@ class Presentation_PowerPoint : public Presentation
 {
 	Q_OBJECT
 
+	struct Slide {
+		/// Raw index in the Lumen presentation
+		int index;
+
+		/// Index in the PowerPoint presentation (can be different because of hidden slides)
+		int ppIndex;
+
+		QString text;
+
+		QImage thumbnail;
+	};
+
 public:
 	static const QStringList allowedExtensions;
 
@@ -26,6 +38,10 @@ public:
 	QString rawSlideIdentification(int i) const override;
 	QString rawSlideDescription(int i) const override;
 
+	PresentationEngine *engine() const override;
+	bool activatePresentation() override;
+	void deactivatePresentation() override;
+
 private:
 	Presentation_PowerPoint();
 
@@ -33,8 +49,8 @@ private:
 	int rawSlideCount_ = 0;
 	QString filePath_;
 	QString identification_;
-	QList<QString> slideTexts_;
-	QList<QImage> slideThumbnails_;
+	QList<QSharedPointer<Slide>> slides_;
+	QWeakPointer<Presentation_PowerPoint> weakPtr_;
 
 };
 

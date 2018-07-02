@@ -144,7 +144,33 @@
             <number>4</number>
            </property>
            <item>
-            <widget class="QPushButton" name="pushButton_4">
+            <widget class="QPushButton" name="btnEnableProjection">
+             <property name="toolTip">
+              <string>Promítat</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../res/resources.qrc">
+               <normaloff>:/icons/32/Video Projector_32px.png</normaloff>:/icons/32/Video Projector_32px.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnPreviousPresentation">
+             <property name="toolTip">
+              <string>Předchozí prezentace</string>
+             </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
                <normaloff>:/icons/32/Skip to Start_32px.png</normaloff>:/icons/32/Skip to Start_32px.png</iconset>
@@ -161,7 +187,10 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="btnPreviousSlide">
+             <property name="toolTip">
+              <string>Předchozí snímek</string>
+             </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
                <normaloff>:/icons/32/Sort Left_32px.png</normaloff>:/icons/32/Sort Left_32px.png</iconset>
@@ -178,7 +207,10 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="btnNextSlide">
+             <property name="toolTip">
+              <string>Další snímek</string>
+             </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
                <normaloff>:/icons/32/Sort Right_32px.png</normaloff>:/icons/32/Sort Right_32px.png</iconset>
@@ -195,7 +227,10 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_9">
+            <widget class="QPushButton" name="btnNextPresentation">
+             <property name="toolTip">
+              <string>Další prezentace</string>
+             </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
                <normaloff>:/icons/32/End_32px.png</normaloff>:/icons/32/End_32px.png</iconset>
@@ -212,7 +247,10 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="btnBlackScreen">
+             <property name="toolTip">
+              <string>Černá obrazovka</string>
+             </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
                <normaloff>:/icons/32/TV Off_32px.png</normaloff>:/icons/32/TV Off_32px.png</iconset>
@@ -392,7 +430,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>264</width>
+                <width>302</width>
                 <height>159</height>
                </rect>
               </property>

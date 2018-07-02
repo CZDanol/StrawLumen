@@ -8,6 +8,7 @@
 #include <QDateTime>
 
 #include "presentation/playlist.h"
+#include "presentation/presentationmanager.h"
 #include "presentation/presentation_powerpoint.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
@@ -33,6 +34,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 	connect(&currentTimeTimer_, SIGNAL(timeout()), this, SLOT(onCurrentTimeTimer()));
 	currentTimeTimer_.start();
+
+	on_btnEnableProjection_toggled(false);
 }
 
 MainWindow_PresentationMode::~MainWindow_PresentationMode()
@@ -90,4 +93,27 @@ void MainWindow_PresentationMode::onPlaylistForceSelection(int first, int last)
 
 	for(int i = first; i <= last; i ++)
 		model->select(playlistItemModel_.index(i, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+}
+
+void MainWindow_PresentationMode::on_btnEnableProjection_toggled(bool checked)
+{
+	ui->btnPreviousPresentation->setEnabled(checked);
+	ui->btnPreviousSlide->setEnabled(checked);
+	ui->btnNextSlide->setEnabled(checked);
+	ui->btnNextPresentation->setEnabled(checked);
+	ui->btnBlackScreen->setEnabled(checked);
+}
+
+void MainWindow_PresentationMode::on_tvSlides_activated(const QModelIndex &index)
+{
+	if(!index.isValid()) {
+		presentationManager->setPresentation(nullptr);
+		return;
+	}
+
+	int globalSlideId = index.row();
+	auto presentation = playlist_->presentationOfSlide(globalSlideId);
+	int localSlideId = globalSlideId - presentation->firstSlideOffsetInPlaylist();
+
+	presentationManager->setPresentation(presentation);
 }

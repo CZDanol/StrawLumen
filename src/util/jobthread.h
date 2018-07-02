@@ -4,18 +4,20 @@
 #include <functional>
 #include <thread>
 
+#include <QObject>
 #include <QQueue>
 #include <QMutex>
 #include <QWaitCondition>
 
-class JobThread
+class JobThread : public QObject
 {
+	Q_OBJECT
 
 public:
 	using Job = std::function<void()>;
 
 public:
-	JobThread();
+	explicit JobThread(QObject *parent = nullptr);
 	virtual ~JobThread();
 
 public:

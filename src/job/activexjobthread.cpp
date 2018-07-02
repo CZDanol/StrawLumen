@@ -4,7 +4,7 @@
 
 ActiveXJobThread *activeXJobThread = nullptr;
 
-ActiveXJobThread::ActiveXJobThread()
+ActiveXJobThread::ActiveXJobThread(QObject *parent) : JobThread(parent)
 {
 	qRegisterMetaType<int>("Office::MsoTriState");
 
