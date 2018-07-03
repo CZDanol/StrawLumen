@@ -26,6 +26,14 @@ namespace Office {
 			ppSlideShowUseSlideTimings = 2
 		};
 
+		enum class PpSlideShowState : int {
+			ppSlideShowBlackScreen = 3,
+			ppSlideShowDone = 5,
+			ppSlideShowPaused = 2,
+			ppSlideShowRunning = 1,
+			ppSlideShowWhiteScreen = 4
+		};
+
 	}
 }
 

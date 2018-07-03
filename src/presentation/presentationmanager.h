@@ -17,21 +17,29 @@ public:
 	~PresentationManager();
 
 public:
+	bool isActive() const;
 	QSharedPointer<Presentation> currentPresentation() const;
 	int currentLocalSlideId() const;
 	int currentGlobalSlideId() const;
 
 public slots:
-	bool nextSlide();
-	bool setSlide(const Playlist *playlist, int globalSlideId);
+	void setSlide(const Playlist *playlist, int globalSlideId);
+	void nextSlide();
+	void previousSlide();
+	void nextPresentation();
+	void previousPresentation();
 
-	bool setPresentation(const QSharedPointer<Presentation> &presentation);
-	bool setEngine(PresentationEngine *engine);
-	bool setActive(bool set);
+	void setActive(bool set);
+	void setBlackScreen(bool set);
 
 signals:
 	void sigActiveChanged(bool newValue);
-	void sigCurrentSlideChanged();
+	void sigCurrentSlideChanged(int globalSlideId);
+	void sigBlackScreenChanged(bool isOn);
+
+private:
+	void setPresentation(const QSharedPointer<Presentation> &presentation, int startingSlide = 0);
+	void setEngine(PresentationEngine *engine);
 
 private:
 	void _changeActive(bool set);
@@ -41,6 +49,7 @@ private:
 	PresentationEngine *currentEngine_ = nullptr;
 	QSharedPointer<Presentation> currentPresentation_;
 	int currentLocalSlideId_ = -1;
+	bool isBlackScren_ = false;
 
 };
 

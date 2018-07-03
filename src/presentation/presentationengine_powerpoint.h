@@ -19,8 +19,10 @@ public:
 	~PresentationEngine_PowerPoint();
 
 public:
-	bool activateEngine() override;
+	void activateEngine() override;
 	void deactivateEngine() override;
+
+	void setBlackScreen(bool set) override;
 
 private slots:
 	void onActivateTimer();

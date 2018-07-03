@@ -44,6 +44,10 @@ public:
 		return playlist_;
 	}
 
+	inline int positionInPlaylist() const {
+		return positionInPlaylist_;
+	}
+
 	/// Offset of the slides in the playlist (globalSlideId of the first slide of this presentation)
 	inline int globalSlideIdOffset() const {
 		return globalSlideIdOffset_;
@@ -56,9 +60,13 @@ public:
 public:
 	virtual PresentationEngine *engine() const = 0;
 
-	virtual bool activatePresentation() = 0;
+public:
+	/// DO NOT CALL, ONLY TO BE CALLED BY PRESENTATIONMANAGER
+	virtual void activatePresentation(int startingSlide) = 0;
+	/// DO NOT CALL, ONLY TO BE CALLED BY PRESENTATIONMANAGER
 	virtual void deactivatePresentation() = 0;
-	virtual bool setSlide(int localSlideId) = 0;
+	/// DO NOT CALL, ONLY TO BE CALLED BY PRESENTATIONMANAGER
+	virtual void setSlide(int localSlideId) = 0;
 
 protected:
 	Presentation() {}

@@ -12,8 +12,10 @@ public:
 	virtual ~PresentationEngine() {}
 
 public:
-	virtual bool activateEngine() = 0;
+	virtual void activateEngine() = 0;
 	virtual void deactivateEngine() = 0;
+
+	virtual void setBlackScreen(bool set) = 0;
 
 };
 

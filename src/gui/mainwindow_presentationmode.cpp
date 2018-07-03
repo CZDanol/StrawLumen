@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QStringList>
 #include <QDateTime>
+#include <QShortcut>
 
 #include "presentation/playlist.h"
 #include "presentation/presentationmanager.h"
@@ -21,10 +22,10 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	setAcceptDrops(true);
 
 	playlist_.reset(new Playlist());
-	ui->twPlaylist->setCornerWidget(ui->twPlaylistCorner);
 
-	// Playlist view setup
+	// Playlist tab
 	{
+		ui->twPlaylist->setCornerWidget(ui->twPlaylistCorner);
 		playlistItemModel_.setPlaylist(playlist_);
 
 		ui->tvPlaylist->setModel(&playlistItemModel_);
@@ -32,7 +33,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
 	}
 
-	// Slides view setup
+	// Slides tab
 	{
 		slidesItemModel_.setPlaylist(playlist_);
 
@@ -40,15 +41,37 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		ui->tvSlides->setItemDelegate(&slidesItemDelegate_);
 
 		connect(ui->tvSlides->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onSlideSelected(QModelIndex)));
+		connect(presentationManager, SIGNAL(sigCurrentSlideChanged(int)), this, SLOT(onMgrCurrentSlideChanged(int)));
+		connect(&slidesItemModel_, SIGNAL(sigAfterSlidesChanged()), this, SLOT(onAfterSlidesViewSlidesChanged()));
 	}
 
-	connect(&currentTimeTimer_, SIGNAL(timeout()), this, SLOT(onCurrentTimeTimer()));
-	currentTimeTimer_.start();
+	// Current time tab
+	{
+		connect(&currentTimeTimer_, SIGNAL(timeout()), this, SLOT(onCurrentTimeTimer()));
+		currentTimeTimer_.start();
+	}
 
-	connect(presentationManager, SIGNAL(sigActiveChanged(bool)), ui->btnEnableProjection, SLOT(setChecked(bool)));
-	connect(ui->btnEnableProjection, SIGNAL(clicked(bool)), presentationManager, SLOT(setActive(bool)));
+	// Presentation control tab
+	{
+		connect(presentationManager, SIGNAL(sigActiveChanged(bool)), this, SLOT(updateControlsUIEnabled()));
+		connect(presentationManager, SIGNAL(sigCurrentSlideChanged(int)), this, SLOT(updateControlsUIEnabled()));
+		connect(presentationManager, SIGNAL(sigBlackScreenChanged(bool)), ui->btnBlackScreen, SLOT(setChecked(bool)));
 
-	on_btnEnableProjection_toggled(false);
+		connect(ui->btnPreviousPresentation, SIGNAL(clicked(bool)), presentationManager, SLOT(previousPresentation()));
+		connect(ui->btnPreviousSlide, SIGNAL(clicked(bool)), presentationManager, SLOT(previousSlide()));
+		connect(ui->btnNextSlide, SIGNAL(clicked(bool)), presentationManager, SLOT(nextSlide()));
+		connect(ui->btnNextPresentation, SIGNAL(clicked(bool)), presentationManager, SLOT(nextPresentation()));
+		connect(ui->btnBlackScreen, SIGNAL(clicked(bool)), presentationManager, SLOT(setBlackScreen(bool)));
+	}
+
+	// Shortcuts
+	{
+		new QShortcut(Qt::Key_PageDown, ui->btnNextSlide, SLOT(click()));
+		new QShortcut(Qt::Key_PageUp, ui->btnPreviousSlide, SLOT(click()));
+		new QShortcut(Qt::Key_B, ui->btnBlackScreen, SLOT(click()));
+	}
+
+	updateControlsUIEnabled();
 }
 
 MainWindow_PresentationMode::~MainWindow_PresentationMode()
@@ -92,6 +115,21 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 	});
 }
 
+void MainWindow_PresentationMode::updateControlsUIEnabled()
+{
+	bool isActive = presentationManager->isActive();
+	bool isFirstSlide = isActive && presentationManager->currentGlobalSlideId() == 0;
+	bool isLastSlide = isActive && presentationManager->currentGlobalSlideId() == playlist_->slideCount() - 1;
+
+	ui->btnEnableProjection->setChecked(isActive);
+
+	ui->btnPreviousPresentation->setEnabled(isActive && !isFirstSlide);
+	ui->btnPreviousSlide->setEnabled(isActive && !isFirstSlide);
+	ui->btnNextSlide->setEnabled(isActive && !isLastSlide);
+	ui->btnNextPresentation->setEnabled(isActive && !isLastSlide);
+	ui->btnBlackScreen->setEnabled(isActive);
+}
+
 void MainWindow_PresentationMode::onCurrentTimeTimer()
 {
 	QDateTime currentTime = QDateTime::currentDateTime();
@@ -108,9 +146,9 @@ void MainWindow_PresentationMode::onPlaylistForceSelection(int first, int last)
 		model->select(playlistItemModel_.index(i, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 }
 
-void MainWindow_PresentationMode::onMgrCurrentSlideChanged()
+void MainWindow_PresentationMode::onMgrCurrentSlideChanged(int globalSlideId)
 {
-	ui->tvSlides->setCurrentIndex(slidesItemModel_.index(presentationManager->currentGlobalSlideId(), 0));
+	ui->tvSlides->setCurrentIndex(slidesItemModel_.index(globalSlideId, 0));
 }
 
 void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
@@ -118,11 +156,33 @@ void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
 	presentationManager->setSlide(playlist_.data(), current.row());
 }
 
-void MainWindow_PresentationMode::on_btnEnableProjection_toggled(bool checked)
+void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
 {
-	ui->btnPreviousPresentation->setEnabled(checked);
-	ui->btnPreviousSlide->setEnabled(checked);
-	ui->btnNextSlide->setEnabled(checked);
-	ui->btnNextPresentation->setEnabled(checked);
-	ui->btnBlackScreen->setEnabled(checked);
+	// If the current item was removed
+	if(presentationManager->currentPresentation().isNull() || !presentationManager->currentPresentation()->playlist())
+		return presentationManager->setActive(false);
+
+	presentationManager->setSlide(playlist_.data(), presentationManager->currentGlobalSlideId());
+}
+
+void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)
+{
+	if(!checked) {
+		presentationManager->setActive(false);
+		return;
+	}
+
+	int globalSlideId = ui->tvSlides->currentIndex().row();
+	if(globalSlideId == -1)
+		globalSlideId = 0;
+
+	presentationManager->setSlide(playlist_.data(), globalSlideId);
+}
+
+void MainWindow_PresentationMode::on_tvPlaylist_activated(const QModelIndex &index)
+{
+	if(!index.isValid())
+		return;
+
+	presentationManager->setSlide(playlist_.data(), playlist_->items()[index.row()]->globalSlideIdOffset());
 }

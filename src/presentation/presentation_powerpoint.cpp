@@ -153,12 +153,13 @@ PresentationEngine *Presentation_PowerPoint::engine() const
 	return presentationEngine_PowerPoint;
 }
 
-bool Presentation_PowerPoint::activatePresentation()
+void Presentation_PowerPoint::activatePresentation(int startingSlide)
 {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
-	activeXJobThread->executeNonblocking([this, selfPtr]{
+	int startingSlide_ = slides_[startingSlide]->ppIndex;
+	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide_]{
 		auto &pe = *presentationEngine_PowerPoint;
 
 		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
@@ -170,14 +171,13 @@ bool Presentation_PowerPoint::activatePresentation()
 		pe.axSSSettings_ = pe.axPresentation_->querySubObject("SlideShowSettings");
 		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", (int) Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk);
 		pe.axSSSettings_->dynamicCall("SetAdvanceMode(Office::PpSlideShowAdvanceMode )", (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance);
+		// Crashes for unknown reason pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
 		pe.axSSSettings_->dynamicCall("Run()");
 
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
 		//pe.axPresentationWindow_->dynamicCall("SetWidth(double)", 600);
 	});
-
-	return true;
 }
 
 void Presentation_PowerPoint::deactivatePresentation()
@@ -191,7 +191,7 @@ void Presentation_PowerPoint::deactivatePresentation()
 	});
 }
 
-bool Presentation_PowerPoint::setSlide(int localSlideId)
+void Presentation_PowerPoint::setSlide(int localSlideId)
 {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 	activeXJobThread->executeNonblocking([this, selfPtr, localSlideId]{
@@ -199,8 +199,6 @@ bool Presentation_PowerPoint::setSlide(int localSlideId)
 
 		pe.axSSView_->dynamicCall("GotoSlide(int)", slides_[localSlideId]->ppIndex);
 	});
-
-	return true;
 }
 
 Presentation_PowerPoint::Presentation_PowerPoint()

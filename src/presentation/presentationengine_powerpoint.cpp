@@ -7,7 +7,7 @@ PresentationEngine_PowerPoint *presentationEngine_PowerPoint = nullptr;
 
 PresentationEngine_PowerPoint::PresentationEngine_PowerPoint(QObject *parent) : PresentationEngine(parent)
 {
-	activateTimer_.setInterval(500);
+	activateTimer_.setInterval(100);
 	connect(&activateTimer_, SIGNAL(timeout()), this, SLOT(onActivateTimer()));
 }
 
@@ -19,12 +19,12 @@ PresentationEngine_PowerPoint::~PresentationEngine_PowerPoint()
 	});
 }
 
-bool PresentationEngine_PowerPoint::activateEngine()
+void PresentationEngine_PowerPoint::activateEngine()
 {
 	activateTimer_.start();
 
 	if(isInitialized_)
-		return true;
+		return;
 
 	isInitialized_ = true;
 
@@ -38,13 +38,19 @@ bool PresentationEngine_PowerPoint::activateEngine()
 
 		axPresentations_ = axApplication_->querySubObject("Presentations");
 	});
-
-	return true;
 }
 
 void PresentationEngine_PowerPoint::deactivateEngine()
 {
 	activateTimer_.stop();
+}
+
+void PresentationEngine_PowerPoint::setBlackScreen(bool set)
+{
+	activeXJobThread->executeNonblocking([=]{
+		if(axPresentation_)
+			axSSView_->dynamicCall("SetState(int)", set ? (int) Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen : (int) Office::PowerPoint::PpSlideShowState::ppSlideShowRunning);
+	});
 }
 
 void PresentationEngine_PowerPoint::onActivateTimer()

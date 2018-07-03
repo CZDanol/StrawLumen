@@ -40,9 +40,9 @@ public:
 
 	PresentationEngine *engine() const override;
 
-	bool activatePresentation() override;
+	void activatePresentation(int startingSlide) override;
 	void deactivatePresentation() override;
-	bool setSlide(int localSlideId) override;
+	void setSlide(int localSlideId) override;
 
 private:
 	Presentation_PowerPoint();

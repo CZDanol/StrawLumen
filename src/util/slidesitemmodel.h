@@ -15,6 +15,9 @@ class SlidesItemModel : public QAbstractTableModel
 public:
 	SlidesItemModel();
 
+signals:
+	void sigAfterSlidesChanged();
+
 public:
 	void setPlaylist(const QSharedPointer<Playlist> &playlist);
 
@@ -26,7 +29,7 @@ public:
 	QVariant data(const QModelIndex &index, int role) const override;
 
 private slots:
-	void resetModel();
+	void onSlidesChanged();
 
 private:
 	QSharedPointer<Playlist> playlist_;

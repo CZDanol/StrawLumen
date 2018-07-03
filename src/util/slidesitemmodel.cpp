@@ -28,7 +28,7 @@ void SlidesItemModel::setPlaylist(const QSharedPointer<Playlist> &playlist)
 	playlist_ = playlist;
 
 	if(playlist_)
-		connect(playlist_.data(), SIGNAL(sigSlidesChanged()), this, SLOT(resetModel()));
+		connect(playlist_.data(), SIGNAL(sigSlidesChanged()), this, SLOT(onSlidesChanged()));
 
 	endResetModel();
 }
@@ -119,8 +119,9 @@ QVariant SlidesItemModel::data(const QModelIndex &index, int role) const
 	return QVariant();
 }
 
-void SlidesItemModel::resetModel()
+void SlidesItemModel::onSlidesChanged()
 {
 	beginResetModel();
 	endResetModel();
+	emit sigAfterSlidesChanged();
 }
