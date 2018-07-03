@@ -12,6 +12,8 @@ class Presentation_PowerPoint : public Presentation
 {
 	Q_OBJECT
 
+	friend class PresentationPropertiesWidget_PowerPoint;
+
 	struct Slide {
 		/// Raw index in the Lumen presentation
 		int index;
@@ -34,6 +36,8 @@ public:
 	QString identification() const override;
 	QPixmap icon() const override;
 
+	QWidget *createPropertiesWidget(QWidget *parent) override;
+
 	int rawSlideCount() const override;
 	QString rawSlideIdentification(int i) const override;
 	QString rawSlideDescription(int i) const override;
@@ -53,6 +57,7 @@ private:
 	QString identification_;
 	QList<QSharedPointer<Slide>> slides_;
 	QWeakPointer<Presentation_PowerPoint> weakPtr_;
+	bool isAutoPresentation_ = false;
 
 };
 

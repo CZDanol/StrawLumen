@@ -13,10 +13,12 @@ PresentationEngine_PowerPoint::PresentationEngine_PowerPoint(QObject *parent) : 
 
 PresentationEngine_PowerPoint::~PresentationEngine_PowerPoint()
 {
-	activeXJobThread->executeBlocking([=]{
-		axApplication_ ->dynamicCall("Quit()");
-		delete axApplication_;
-	});
+	if(isInitialized_) {
+		activeXJobThread->executeBlocking([=]{
+			axApplication_->dynamicCall("Quit()");
+			delete axApplication_;
+		});
+	}
 }
 
 void PresentationEngine_PowerPoint::activateEngine()

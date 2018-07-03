@@ -46,13 +46,17 @@ SOURCES += main.cpp \
     presentation/presentationengine.cpp \
     presentation/presentationengine_powerpoint.cpp \
     presentation/presentationmanager.cpp \
-    gui/activexdebugdialog.cpp
+    gui/activexdebugdialog.cpp \
+    gui/presentationpropertieswidget.cpp \
+    gui/presentationpropertieswidget_powerpoint.cpp
 
 FORMS += \
     gui/mainwindow.ui \
     gui/splashscreen.ui \
     gui/mainwindow_presentationmode.ui \
-    gui/activexdebugdialog.ui
+    gui/activexdebugdialog.ui \
+    gui/presentationpropertieswidget.ui \
+    gui/presentationpropertieswidget_powerpoint.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -72,7 +76,9 @@ HEADERS += \
     presentation/presentationengine.h \
     presentation/presentationengine_powerpoint.h \
     presentation/presentationmanager.h \
-    gui/activexdebugdialog.h
+    gui/activexdebugdialog.h \
+    gui/presentationpropertieswidget.h \
+    gui/presentationpropertieswidget_powerpoint.h
 
 RESOURCES += \
     ../res/resources.qrc

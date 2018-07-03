@@ -20,11 +20,12 @@ public:
 public:
 	virtual ~Presentation() {}
 
+signals:
+	void sigSlidesChanged();
+
 public:
 	/// Slide count, not considering custom ordering
-	virtual int rawSlideCount() const {
-		return 0;
-	}
+	virtual int rawSlideCount() const = 0;
 
 	virtual QString rawSlideIdentification(int) const = 0;
 	virtual QString rawSlideDescription(int) const = 0;
@@ -32,30 +33,20 @@ public:
 	/// Slide count considering custom ordering
 	int slideCount() const;
 
-	inline QString slideIdentification(int i) const {
-		return slideOrder_.size() > i ? rawSlideIdentification(slideOrder_[i]) : QString();
-	}
+	QString slideIdentification(int i) const;
+	QString slideDescription(int i) const;
 
-	inline QString slideDescription(int i) const {
-		return slideOrder_.size() > i ? rawSlideDescription(slideOrder_[i]) : tr("## SNÍMEK NEEXISTUJE ##");
-	}
-
-	inline Playlist *playlist() const {
-		return playlist_;
-	}
-
-	inline int positionInPlaylist() const {
-		return positionInPlaylist_;
-	}
+	Playlist *playlist() const;
+	int positionInPlaylist() const;
 
 	/// Offset of the slides in the playlist (globalSlideId of the first slide of this presentation)
-	inline int globalSlideIdOffset() const {
-		return globalSlideIdOffset_;
-	}
+	int globalSlideIdOffset() const;
 
 public:
 	virtual QString identification() const = 0;
 	virtual QPixmap icon() const = 0;
+
+	virtual QWidget *createPropertiesWidget(QWidget *parent) = 0;
 
 public:
 	virtual PresentationEngine *engine() const = 0;

@@ -24,6 +24,8 @@ public:
 
 public slots:
 	void setSlide(const Playlist *playlist, int globalSlideId);
+	void setSlide(const QSharedPointer<Presentation> &presentation, int localSlideId);
+
 	void nextSlide();
 	void previousSlide();
 	void nextPresentation();
@@ -31,6 +33,8 @@ public slots:
 
 	void setActive(bool set);
 	void setBlackScreen(bool set);
+
+	void reinitializeCurrentPresentation();
 
 signals:
 	void sigActiveChanged(bool newValue);

@@ -82,7 +82,7 @@ void PresentationManager::previousPresentation()
 
 void PresentationManager::setSlide(const Playlist* playlist, int globalSlideId)
 {
-	if(playlist->slideCount() == 0)
+	if(!playlist || playlist->slideCount() == 0)
 		return setActive(false);
 
 	if(globalSlideId >= playlist->slideCount())
@@ -94,6 +94,19 @@ void PresentationManager::setSlide(const Playlist* playlist, int globalSlideId)
 	auto presentation = playlist->presentationOfSlide(globalSlideId);
 	int localSlideId = globalSlideId - presentation->globalSlideIdOffset();
 
+	setSlide(presentation, localSlideId);
+}
+
+void PresentationManager::setSlide(const QSharedPointer<Presentation> &presentation, int localSlideId)
+{
+	if(!presentation || !presentation->slideCount())
+			return setActive(false);
+
+	if(localSlideId < 0)
+		localSlideId = 0;
+	else if(localSlideId >= presentation->slideCount())
+		localSlideId = presentation->slideCount() - 1;
+
 	setBlackScreen(false);
 	setPresentation(presentation, localSlideId);
 
@@ -102,7 +115,7 @@ void PresentationManager::setSlide(const Playlist* playlist, int globalSlideId)
 		currentLocalSlideId_ = localSlideId;
 	}
 
-	emit sigCurrentSlideChanged(globalSlideId);
+	emit sigCurrentSlideChanged(presentation->globalSlideIdOffset() + localSlideId);
 }
 
 void PresentationManager::setActive(bool set)
@@ -126,6 +139,15 @@ void PresentationManager::setBlackScreen(bool set)
 	emit sigBlackScreenChanged(set);
 }
 
+void PresentationManager::reinitializeCurrentPresentation()
+{
+	auto presentation =	currentPresentation_;
+	int localSlideId = currentLocalSlideId_;
+
+	setActive(false);
+	setSlide(presentation, localSlideId);
+}
+
 void PresentationManager::setPresentation(const QSharedPointer<Presentation> &presentation, int startingSlide)
 {
 	if(currentPresentation_ == presentation)
@@ -145,7 +167,6 @@ void PresentationManager::setPresentation(const QSharedPointer<Presentation> &pr
 	currentEngine_->setBlackScreen(isBlackScren_);
 
 	currentPresentation_ = presentation;
-	currentLocalSlideId_ = startingSlide;
 }
 
 void PresentationManager::setEngine(PresentationEngine *engine)

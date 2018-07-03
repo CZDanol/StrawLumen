@@ -35,15 +35,16 @@ private slots:
 	void onPlaylistForceSelection(int first, int last);
 	void onMgrCurrentSlideChanged(int globalSlideId);
 	void onSlideSelected(const QModelIndex &current);
+	void onPresentationSelected(const QModelIndex &current);
 	void onAfterSlidesViewSlidesChanged();
 
 private slots:
 	void on_btnEnableProjection_clicked(bool checked);
-
 	void on_tvPlaylist_activated(const QModelIndex &index);
 
 private:
 	Ui::MainWindow_PresentationMode *ui;
+	QWidget *presentationPropertiesWidget_ = nullptr;
 	QTimer currentTimeTimer_;
 
 	QSharedPointer<Playlist> playlist_;

@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include <QShortcut>
 
+#include "gui/presentationpropertieswidget.h"
 #include "presentation/playlist.h"
 #include "presentation/presentationmanager.h"
 #include "presentation/presentation_powerpoint.h"
@@ -31,6 +32,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		ui->tvPlaylist->setModel(&playlistItemModel_);
 
 		connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
+		connect(ui->tvPlaylist->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onPresentationSelected(QModelIndex)));
 	}
 
 	// Slides tab
@@ -70,6 +72,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		new QShortcut(Qt::Key_PageUp, ui->btnPreviousSlide, SLOT(click()));
 		new QShortcut(Qt::Key_B, ui->btnBlackScreen, SLOT(click()));
 	}
+
+	ui->twLeftBottom->setTabEnabled(ui->twLeftBottom->indexOf(ui->tabPresentationProperties), false);
 
 	updateControlsUIEnabled();
 }
@@ -154,15 +158,38 @@ void MainWindow_PresentationMode::onMgrCurrentSlideChanged(int globalSlideId)
 void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
 {
 	presentationManager->setSlide(playlist_.data(), current.row());
+
+	auto presentation = presentationManager->currentPresentation();
+	if(presentation)
+		ui->tvPlaylist->setCurrentIndex(playlistItemModel_.index(presentation->positionInPlaylist(), 0));
+}
+
+void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &current)
+{
+	ui->twLeftBottom->setTabEnabled(ui->twLeftBottom->indexOf(ui->tabPresentationProperties), current.isValid());
+
+	if(!current.isValid())
+		return;
+
+	if(presentationPropertiesWidget_)
+		delete presentationPropertiesWidget_;
+
+	auto presentation = playlist_->items()[current.row()];
+	presentationPropertiesWidget_ = new PresentationPropertiesWidget(presentation, this);
+	ui->saPresentationProperties->setWidget(presentationPropertiesWidget_);
+	ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
 }
 
 void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
 {
+	auto presentation = presentationManager->currentPresentation();
+
 	// If the current item was removed
-	if(presentationManager->currentPresentation().isNull() || !presentationManager->currentPresentation()->playlist())
+	if(presentation.isNull() || !presentation->playlist())
 		return presentationManager->setActive(false);
 
-	presentationManager->setSlide(playlist_.data(), presentationManager->currentGlobalSlideId());
+	// In case presentation slide count changed to ensure to stay in the current presentation
+	presentationManager->setSlide(playlist_.data(), presentation->globalSlideIdOffset() + qMin(presentationManager->currentLocalSlideId(), presentation->slideCount()-1));
 }
 
 void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)

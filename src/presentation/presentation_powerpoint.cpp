@@ -8,6 +8,7 @@
 #include <QStandardPaths>
 
 #include "gui/splashscreen.h"
+#include "gui/presentationpropertieswidget_powerpoint.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentationengine_powerpoint.h"
 #include "util/standarddialogs.h"
@@ -133,6 +134,11 @@ QPixmap Presentation_PowerPoint::icon() const
 	return icon_;
 }
 
+QWidget *Presentation_PowerPoint::createPropertiesWidget(QWidget *parent)
+{
+	return new PresentationPropertiesWidget_PowerPoint(weakPtr_, parent);
+}
+
 int Presentation_PowerPoint::rawSlideCount() const
 {
 	return rawSlideCount_;
@@ -140,12 +146,12 @@ int Presentation_PowerPoint::rawSlideCount() const
 
 QString Presentation_PowerPoint::rawSlideIdentification(int i) const
 {
-	return tr("%1").arg(i+1);
+	return i == -1 ? "" : tr("%1").arg(i+1);
 }
 
 QString Presentation_PowerPoint::rawSlideDescription(int i) const
 {
-	return slides_[i]->text;
+	return i == -1 ? tr("(automatická prezentace)") : slides_[i]->text;
 }
 
 PresentationEngine *Presentation_PowerPoint::engine() const
@@ -170,8 +176,13 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 
 		pe.axSSSettings_ = pe.axPresentation_->querySubObject("SlideShowSettings");
 		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", (int) Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk);
-		pe.axSSSettings_->dynamicCall("SetAdvanceMode(Office::PpSlideShowAdvanceMode )", (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance);
 		// Crashes for unknown reason pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
+
+		pe.axSSSettings_->dynamicCall(
+					"SetAdvanceMode(Office::PpSlideShowAdvanceMode )",
+					(isAutoPresentation_ ? (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowUseSlideTimings : (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance)
+					);
+
 		pe.axSSSettings_->dynamicCall("Run()");
 
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
