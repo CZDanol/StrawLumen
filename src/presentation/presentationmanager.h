@@ -18,6 +18,7 @@ public:
 
 public:
 	bool isActive() const;
+	PresentationEngine *currentEngine() const;
 	QSharedPointer<Presentation> currentPresentation() const;
 	int currentLocalSlideId() const;
 	int currentGlobalSlideId() const;

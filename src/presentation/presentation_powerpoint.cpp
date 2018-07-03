@@ -6,9 +6,12 @@
 #include <QDir>
 #include <QRegularExpression>
 #include <QStandardPaths>
+#include <QApplication>
+#include <QDesktopWidget>
 
 #include "gui/splashscreen.h"
 #include "gui/presentationpropertieswidget_powerpoint.h"
+#include "gui/settingsdialog.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentationengine_powerpoint.h"
 #include "util/standarddialogs.h"
@@ -179,8 +182,9 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 
-	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
 	int startingSlide_ = slides_[startingSlide]->ppIndex;
+
+	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
 	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide_]{
 		auto &pe = *presentationEngine_PowerPoint;
 
@@ -203,8 +207,9 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
-		//pe.axPresentationWindow_->dynamicCall("SetWidth(double)", 600);
 	});
+
+	presentationEngine_PowerPoint->setDisplay(settingsDialog->projectionDisplayGeometry());
 }
 
 void Presentation_PowerPoint::deactivatePresentation()

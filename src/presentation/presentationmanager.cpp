@@ -21,6 +21,11 @@ bool PresentationManager::isActive() const
 	return isActive_;
 }
 
+PresentationEngine *PresentationManager::currentEngine() const
+{
+	return currentEngine_;
+}
+
 QSharedPointer<Presentation> PresentationManager::currentPresentation() const
 {
 	return currentPresentation_;

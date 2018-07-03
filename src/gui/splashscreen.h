@@ -24,12 +24,18 @@ public:
 	/// Blockingly shows the splashscreen until the job is done
 	void asyncAction(const QString &splashMessage, bool enableStorno, JobThread &jobThread, const JobThread::Job &job);
 
+	/// Blockingly shows the splashscreen until the job is done / uses QtConcurrent::run
+	void asyncAction(const QString &splashMessage, bool enableStorno, const JobThread::Job &job);
+
 	void setProgress(int val, int max);
 
 	bool isStornoPressed();
 
 protected:
 	void reject() override;
+
+private:
+	void _asyncAction(const QString &splashMessage, bool enableStorno, const JobThread::Job &job, const std::function<void(const JobThread::Job &)> &issueFunc);
 
 private slots:
 	void onAnimation();

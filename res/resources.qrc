@@ -79,5 +79,7 @@
         <file>icons/16/Timeline_16px.png</file>
         <file>icons/16/Repeat_16px.png</file>
         <file>icons/32/Trash Can_32px.png</file>
+        <file>icons/16/Settings_16px.png</file>
+        <file>icons/16/Monitor_16px.png</file>
     </qresource>
 </RCC>

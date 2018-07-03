@@ -23,6 +23,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	setAcceptDrops(true);
 
 	playlist_.reset(new Playlist());
+	connect(playlist_.data(), SIGNAL(sigSlidesChanged()), this, SLOT(updateControlsUIEnabled()));
 
 	// Playlist tab
 	{
@@ -67,6 +68,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 	// Presentation control tab
 	{
+		ui->btnEnableProjection->setEnabled(false);
+
 		connect(presentationManager, SIGNAL(sigActiveChanged(bool)), this, SLOT(updateControlsUIEnabled()));
 		connect(presentationManager, SIGNAL(sigCurrentSlideChanged(int)), this, SLOT(updateControlsUIEnabled()));
 		connect(presentationManager, SIGNAL(sigBlackScreenChanged(bool)), ui->btnBlackScreen, SLOT(setChecked(bool)));
@@ -143,6 +146,7 @@ void MainWindow_PresentationMode::updateControlsUIEnabled()
 	bool isLastSlide = isActive && presentationManager->currentGlobalSlideId() == playlist_->slideCount() - 1;
 
 	ui->btnEnableProjection->setChecked(isActive);
+	ui->btnEnableProjection->setEnabled(playlist_->slideCount() > 0);
 
 	ui->btnPreviousPresentation->setEnabled(isActive && !isFirstSlide);
 	ui->btnPreviousSlide->setEnabled(isActive && !isFirstSlide);

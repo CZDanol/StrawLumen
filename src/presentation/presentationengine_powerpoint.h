@@ -23,6 +23,7 @@ public:
 	void deactivateEngine() override;
 
 	void setBlackScreen(bool set) override;
+	void setDisplay(const QRect &rect) override;
 
 private slots:
 	void onActivateTimer();

@@ -16,6 +16,7 @@ public:
 	virtual void deactivateEngine() = 0;
 
 	virtual void setBlackScreen(bool set) = 0;
+	virtual void setDisplay(const QRect &rect) = 0;
 
 };
 

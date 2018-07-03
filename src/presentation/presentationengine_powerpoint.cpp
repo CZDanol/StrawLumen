@@ -46,6 +46,21 @@ void PresentationEngine_PowerPoint::setBlackScreen(bool set)
 	});
 }
 
+void PresentationEngine_PowerPoint::setDisplay(const QRect &rect)
+{
+	activeXJobThread->executeNonblocking([this, rect]{
+		if(!axPresentation_)
+			return;
+
+		// Magical constant that makes everything work. Microsoft...
+		const double ratio = (3.0/4.0);
+		axPresentationWindow_->dynamicCall("SetLeft(double)", (double) rect.left() * ratio);
+		axPresentationWindow_->dynamicCall("SetTop(double)", (double) rect.top() * ratio);
+		axPresentationWindow_->dynamicCall("SetWidth(double)", (double) rect.width() * ratio);
+		axPresentationWindow_->dynamicCall("SetHeight(double)", (double) rect.height() * ratio);
+	});
+}
+
 void PresentationEngine_PowerPoint::onActivateTimer()
 {
 	activeXJobThread->executeNonblocking([=]{

@@ -1,6 +1,7 @@
 #include "splashscreen.h"
 #include "ui_splashscreen.h"
 
+#include <QtConcurrent/QtConcurrent>
 #include <QCloseEvent>
 #include <QEventLoop>
 
@@ -31,27 +32,16 @@ Splashscreen::~Splashscreen()
 
 void Splashscreen::asyncAction(const QString &splashMessage, bool enableStorno, JobThread &jobThread, const JobThread::Job &job)
 {
-	QEventLoop eventLoop;
-
-	jobThread.executeNonblocking([&]{
-		job();
-		QMetaObject::invokeMethod(&eventLoop, "quit");
+	_asyncAction(splashMessage, enableStorno, job, [&jobThread](const JobThread::Job &job){
+		jobThread.executeNonblocking(job);
 	});
+}
 
-	ui->lblMessage->setText(tr("%1...").arg(splashMessage));
-	animTimer_.start();
-
-	ui->wgtStack->setCurrentWidget(ui->wgtPageAnim);
-	isStornoPressed_ = false;
-
-	setWindowFlag(Qt::WindowCloseButtonHint, enableStorno);
-	show();
-
-	eventLoop.exec();
-
-	canClose_ = true;
-	close();
-	animTimer_.stop();
+void Splashscreen::asyncAction(const QString &splashMessage, bool enableStorno, const std::function<void ()> &job)
+{
+	_asyncAction(splashMessage, enableStorno, job, [](const JobThread::Job &job){
+		QtConcurrent::run(job);
+	});
 }
 
 void Splashscreen::setProgress(int val, int max)
@@ -78,6 +68,31 @@ void Splashscreen::reject()
 
 	canClose_ = false;
 	QDialog::reject();
+}
+
+void Splashscreen::_asyncAction(const QString &splashMessage, bool enableStorno, const JobThread::Job &job, const std::function<void (const JobThread::Job &)> &issueFunc)
+{
+	QEventLoop eventLoop;
+
+	issueFunc([&]{
+		job();
+		QMetaObject::invokeMethod(&eventLoop, "quit");
+	});
+
+	ui->lblMessage->setText(tr("%1...").arg(splashMessage));
+	animTimer_.start();
+
+	ui->wgtStack->setCurrentWidget(ui->wgtPageAnim);
+	isStornoPressed_ = false;
+
+	setWindowFlag(Qt::WindowCloseButtonHint, enableStorno);
+	show();
+
+	eventLoop.exec();
+
+	canClose_ = true;
+	close();
+	animTimer_.stop();
 }
 
 void Splashscreen::onAnimation()
