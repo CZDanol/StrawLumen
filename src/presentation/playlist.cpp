@@ -6,7 +6,7 @@
 
 Playlist::Playlist()
 {
-	connect(this, SIGNAL(sigItemsChanged()), this, SLOT(onItemsChanged()));
+
 }
 
 bool Playlist::addItem(const QSharedPointer<Presentation> &item)
@@ -17,14 +17,23 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	Q_ASSERT(!item->playlist_);
 
 	item->playlist_ = this;
-	item->positionInPlaylist_ = items_.size();
 
 	items_.append(item);
-	connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(onItemsChanged()));
+	connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
 
-	emit sigItemsChanged();
-
+	emitItemsChanged();
 	return true;
+}
+
+void Playlist::deleteItem(const QSharedPointer<Presentation> &item)
+{
+	if(!item || item->playlist() != this)
+		return;
+
+	item->playlist_ = nullptr;
+	items_.remove(item->positionInPlaylist_);
+
+	emitItemsChanged();
 }
 
 QSharedPointer<Presentation> Playlist::presentationOfSlide(int globalSlideId) const
@@ -74,12 +83,27 @@ int Playlist::moveItems(const QVector<int> &itemIndexes, int targetPosition)
 	for(int i = 0; i < items_.size(); i++)
 		items_[i]->positionInPlaylist_ = i;
 
-	emit sigItemsChanged();
+	emitItemsChanged();
 
 	return movedItems[0]->positionInPlaylist_;
 }
 
-void Playlist::onItemsChanged()
+void Playlist::emitItemsChanged()
+{
+	updatePlaylistData();
+
+	emit sigItemsChanged();
+	emit sigSlidesChanged();
+}
+
+void Playlist::emitSlidesChanged()
+{
+	updatePlaylistData();
+
+	emit sigSlidesChanged();
+}
+
+void Playlist::updatePlaylistData()
 {
 	slideCount_ = 0;
 	itemOffsets_.resize(items_.count());
@@ -87,9 +111,8 @@ void Playlist::onItemsChanged()
 	for(int i = 0; i < items_.size(); i ++ ) {
 		auto item = items_[i];
 		item->globalSlideIdOffset_ = slideCount_;
+		item->positionInPlaylist_ = i;
 		itemOffsets_[i] = slideCount_;
 		slideCount_ += item->slideCount();
 	}
-
-	emit sigSlidesChanged();
 }

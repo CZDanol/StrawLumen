@@ -28,7 +28,7 @@ private slots:
 	void onActivateTimer();
 
 private:
-	QAxObject *axApplication_, *axPresentations_, *axPresentation_ = nullptr, *axPresentationWindow_, *axSlides_, *axSSSettings_, *axSSView_;
+	QAxObject *axPresentations_, *axPresentation_ = nullptr, *axPresentationWindow_, *axSlides_, *axSSSettings_, *axSSView_;
 	bool isInitialized_ = false;
 	QTimer activateTimer_;
 

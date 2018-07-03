@@ -40,6 +40,7 @@ private slots:
 
 private:
 	QSharedPointer<Playlist> playlist_;
+	int prevRowCount_ = 0;
 
 };
 

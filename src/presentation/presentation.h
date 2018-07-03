@@ -27,13 +27,15 @@ public:
 	/// Slide count, not considering custom ordering
 	virtual int rawSlideCount() const = 0;
 
-	virtual QString rawSlideIdentification(int) const = 0;
+	virtual QString rawSlideIdentification(int) const;
+	virtual QPixmap rawSlideIdentificationIcon(int) const;
 	virtual QString rawSlideDescription(int) const = 0;
 
 	/// Slide count considering custom ordering
 	int slideCount() const;
 
 	QString slideIdentification(int i) const;
+	QPixmap slideIdentificationIcon(int i) const;
 	QString slideDescription(int i) const;
 
 	Playlist *playlist() const;

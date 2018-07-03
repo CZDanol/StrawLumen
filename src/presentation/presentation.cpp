@@ -1,5 +1,15 @@
 #include "presentation.h"
 
+QString Presentation::rawSlideIdentification(int) const
+{
+	return QString();
+}
+
+QPixmap Presentation::rawSlideIdentificationIcon(int) const
+{
+	return QPixmap();
+}
+
 int Presentation::slideCount() const
 {
 	return slideOrder_.size();
@@ -7,12 +17,17 @@ int Presentation::slideCount() const
 
 QString Presentation::slideIdentification(int i) const
 {
-	return slideOrder_.size() > i ? rawSlideIdentification(slideOrder_[i]) : QString();
+	return i < slideOrder_.size() ? rawSlideIdentification(slideOrder_[i]) : QString();
+}
+
+QPixmap Presentation::slideIdentificationIcon(int i) const
+{
+	return i < slideOrder_.size() ? rawSlideIdentificationIcon(slideOrder_[i]) : QPixmap();
 }
 
 QString Presentation::slideDescription(int i) const
 {
-	return slideOrder_.size() > i ? rawSlideDescription(slideOrder_[i]) : tr("## SNÍMEK NEEXISTUJE ##");
+	return i < slideOrder_.size() ? rawSlideDescription(slideOrder_[i]) : tr("## SNÍMEK NEEXISTUJE ##");
 }
 
 Playlist *Presentation::playlist() const

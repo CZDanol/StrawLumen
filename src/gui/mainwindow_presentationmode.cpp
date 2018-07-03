@@ -27,12 +27,24 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	// Playlist tab
 	{
 		ui->twPlaylist->setCornerWidget(ui->twPlaylistCorner);
-		playlistItemModel_.setPlaylist(playlist_);
 
-		ui->tvPlaylist->setModel(&playlistItemModel_);
+		// Model & selection
+		{
+			playlistItemModel_.setPlaylist(playlist_);
+			ui->tvPlaylist->setModel(&playlistItemModel_);
 
-		connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
-		connect(ui->tvPlaylist->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onPresentationSelected(QModelIndex)));
+			connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
+			connect(&playlistItemModel_, SIGNAL(modelReset()), this, SLOT(onPlaylistModelReset()));
+			connect(ui->tvPlaylist->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onPresentationSelected(QModelIndex)));
+		}
+
+		// Menu & controls
+		{
+			playlistContextMenu_ = new QMenu();
+			playlistContextMenu_->addAction(ui->actionDeletePresentation);
+
+			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
+		}
 	}
 
 	// Slides tab
@@ -71,6 +83,11 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		new QShortcut(Qt::Key_PageDown, ui->btnNextSlide, SLOT(click()));
 		new QShortcut(Qt::Key_PageUp, ui->btnPreviousSlide, SLOT(click()));
 		new QShortcut(Qt::Key_B, ui->btnBlackScreen, SLOT(click()));
+
+		{
+			auto sc = new QShortcut(Qt::Key_Delete, ui->tvPlaylist);
+			connect(sc, SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
+		}
 	}
 
 	ui->twLeftBottom->setTabEnabled(ui->twLeftBottom->indexOf(ui->tabPresentationProperties), false);
@@ -111,7 +128,7 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 			QString extension = QFileInfo(filename).suffix();
 
 			if(!Presentation_PowerPoint::allowedExtensions.contains(extension))
-				return standardErrorDialog(tr("Soubor '%1' s příponou '%2' není podporován.").arg(filename, extension));
+				return standardErrorDialog(tr("Soubor \"%1\" s příponou \"%2\" není podporován.").arg(filename, extension));
 
 			if(!playlist_->addItem(Presentation_PowerPoint::create(filename)))
 				return;
@@ -171,10 +188,15 @@ void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &curr
 	if(!current.isValid())
 		return;
 
-	if(presentationPropertiesWidget_)
-		delete presentationPropertiesWidget_;
-
 	auto presentation = playlist_->items()[current.row()];
+
+	if(presentationPropertiesWidget_) {
+		if(presentationPropertiesWidget_->presentation() == presentation)
+			return;
+
+		delete presentationPropertiesWidget_;
+	}
+
 	presentationPropertiesWidget_ = new PresentationPropertiesWidget(presentation, this);
 	ui->saPresentationProperties->setWidget(presentationPropertiesWidget_);
 	ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
@@ -190,6 +212,19 @@ void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
 
 	// In case presentation slide count changed to ensure to stay in the current presentation
 	presentationManager->setSlide(playlist_.data(), presentation->globalSlideIdOffset() + qMin(presentationManager->currentLocalSlideId(), presentation->slideCount()-1));
+}
+
+void MainWindow_PresentationMode::onPlaylistModelReset()
+{
+	onPresentationSelected(QModelIndex());
+}
+
+void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &point)
+{
+	if(ui->tvPlaylist->currentIndex().row() == -1)
+		return;
+
+	playlistContextMenu_->popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
 }
 
 void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)
@@ -212,4 +247,22 @@ void MainWindow_PresentationMode::on_tvPlaylist_activated(const QModelIndex &ind
 		return;
 
 	presentationManager->setSlide(playlist_.data(), playlist_->items()[index.row()]->globalSlideIdOffset());
+}
+
+void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
+{
+	const int index = ui->tvPlaylist->currentIndex().row();
+	if(index == -1)
+		return;
+
+	auto presentation = playlist_->items()[index];
+	if(!deleteConfirmDialog(tr("Opravdu smazat prezentaci \"%1\"?").arg(presentation->identification())))
+		return;
+
+	playlist_->deleteItem(presentation);
+}
+
+void MainWindow_PresentationMode::on_btnAddPresentation_clicked()
+{
+
 }

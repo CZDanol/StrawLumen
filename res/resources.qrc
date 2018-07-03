@@ -78,5 +78,6 @@
         <file>icons/16/Purchase Order_16px.png</file>
         <file>icons/16/Timeline_16px.png</file>
         <file>icons/16/Repeat_16px.png</file>
+        <file>icons/32/Trash Can_32px.png</file>
     </qresource>
 </RCC>

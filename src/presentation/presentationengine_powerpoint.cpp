@@ -13,12 +13,8 @@ PresentationEngine_PowerPoint::PresentationEngine_PowerPoint(QObject *parent) : 
 
 PresentationEngine_PowerPoint::~PresentationEngine_PowerPoint()
 {
-	if(isInitialized_) {
-		activeXJobThread->executeBlocking([=]{
-			axApplication_->dynamicCall("Quit()");
-			delete axApplication_;
-		});
-	}
+	// Prevent destroying the engine before deactivateEngine is possibly called on the activeX thread
+	activeXJobThread->waitJobsDone();
 }
 
 void PresentationEngine_PowerPoint::activateEngine()
@@ -31,14 +27,9 @@ void PresentationEngine_PowerPoint::activateEngine()
 	isInitialized_ = true;
 
 	activeXJobThread->executeNonblocking([&]{
-		axApplication_ = new QAxObject();
+		auto axApplication = activeXJobThread->axPowerPointApplication;
 
-		if(!axApplication_->setControl("PowerPoint.Application"))
-			return standardErrorDialog(tr("Nepodařilo se spustit prezentaci PowerPoint: instalace programu PowerPoint nenalazena."));
-
-		//connect(axApplication_, SIGNAL(signal(QString, int, void*)), this, SLOT(onPPEvent(QString)));
-
-		axPresentations_ = axApplication_->querySubObject("Presentations");
+		axPresentations_ = axApplication->querySubObject("Presentations");
 	});
 }
 

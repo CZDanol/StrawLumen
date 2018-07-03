@@ -18,6 +18,7 @@ public:
 
 public:
 	bool addItem(const QSharedPointer<Presentation> &item);
+	void deleteItem(const QSharedPointer<Presentation> &item);
 
 public:
 	inline const QVector<QSharedPointer<Presentation> > &items() const {
@@ -35,11 +36,16 @@ public:
 	int moveItems(const QVector<int> &itemIndexes, int targetPosition);
 
 signals:
+	// Do not emit these signals on your own, rather use emitItems/slides changed
 	void sigItemsChanged();
 	void sigSlidesChanged();
 
-private slots:
-	void onItemsChanged();
+public slots:
+	void emitItemsChanged();
+	void emitSlidesChanged();
+
+private:
+	void updatePlaylistData();
 
 private:
 	QVector<QSharedPointer<Presentation>> items_;

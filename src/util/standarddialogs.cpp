@@ -11,13 +11,17 @@ bool deleteConfirmDialog(const QString message, QWidget *parent)
 	mb->setParent( parent );
 	mb->setWindowModality( Qt::ApplicationModal );
 
-	mb->addButton( QObject::tr("Ano"), QMessageBox::YesRole );
+	auto yesBtn = mb->addButton( QObject::tr("Ano"), QMessageBox::YesRole );
 	auto noBtn = mb->addButton( QObject::tr("Ne"), QMessageBox::NoRole );
 
 	mb->setEscapeButton(noBtn);
-	mb->setDefaultButton(noBtn);
+	mb->setDefaultButton(yesBtn);
 
-	return mb->exec() == QMessageBox::Yes;
+	static QPixmap iconPixmap(":/icons/32/Trash Can_32px.png");
+	mb->setIconPixmap(iconPixmap);
+
+	mb->exec();
+	return mb->clickedButton() == yesBtn;
 }
 
 void standardErrorDialog(const QString message, QWidget *parent)
@@ -41,11 +45,15 @@ bool standardConfirmDialog(const QString message, QWidget *parent)
 	mb->setParent( parent );
 	mb->setWindowModality( Qt::ApplicationModal );
 
-	mb->addButton( QObject::tr("Ano"), QMessageBox::YesRole );
+	auto yesBtn = mb->addButton( QObject::tr("Ano"), QMessageBox::YesRole );
 	auto noBtn = mb->addButton( QObject::tr("Ne"), QMessageBox::NoRole );
 
 	mb->setEscapeButton(noBtn);
-	mb->setDefaultButton(noBtn);
+	mb->setDefaultButton(yesBtn);
 
-	return mb->exec() == QMessageBox::Yes;
+	static QPixmap iconPixmap(":/icons/32/Help_32px.png");
+	mb->setIconPixmap(iconPixmap);
+
+	mb->exec();
+	return mb->clickedButton() == yesBtn;
 }

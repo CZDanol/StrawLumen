@@ -22,32 +22,36 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 {
 	QSharedPointer<Presentation_PowerPoint> result_;
 
-	splashscreen->asyncAction(tr("Načítání '%1'").arg(QFileInfo(filename).fileName()), true, *activeXJobThread, [&]{
+	splashscreen->asyncAction(tr("Načítání \"%1\"").arg(QFileInfo(filename).fileName()), true, *activeXJobThread, [&]{
 		QSharedPointer<Presentation_PowerPoint> result(new Presentation_PowerPoint());
 
 		result->filePath_ = filename;
 		result->identification_ = QFileInfo(filename).completeBaseName();
 
-		QAxObject axApplication;
-		if(!axApplication.setControl("PowerPoint.Application"))
+		QAxObject *axApplication = activeXJobThread->axPowerPointApplication;
+
+		if(!axApplication)
 			return standardErrorDialog(tr("Program nedetekoval instalaci PowerPointu. Bez nainstalového PowerPointu nelze pracovat s powerpointovými prezentacemi."));
 
 		if(splashscreen->isStornoPressed())
 			return;
 
-		auto axPresentations = axApplication.querySubObject("Presentations");
+		auto axPresentations = axApplication->querySubObject("Presentations");
 		auto axPresentation = axPresentations->querySubObject(
 					"Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)",
 					QDir::toNativeSeparators(filename), true, false, false
 					);
 
 		if(!axPresentation)
-			return standardErrorDialog(tr("Nepodařilo se načíst prezentaci '%1'.").arg(filename));
+			return standardErrorDialog(tr("Nepodařilo se načíst prezentaci \"%1\".").arg(filename));
+
+		SCOPE_EXIT({
+			axPresentation->dynamicCall("Close()");
+			delete axPresentation;
+		});
 
 		if(splashscreen->isStornoPressed())
 			return;
-
-		//SCOPE_EXIT(presentation->dynamicCall("Quit()"));
 
 		auto axSlides = axPresentation->querySubObject("Slides");
 		const int slideCount = axSlides->property("Count").toInt();
@@ -123,6 +127,12 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 	return result_;
 }
 
+Presentation_PowerPoint::~Presentation_PowerPoint()
+{
+	// Prevent destroying the engine before deactivatePresentation is possibly called on the activeX thread
+	activeXJobThread->waitJobsDone();
+}
+
 QString Presentation_PowerPoint::identification() const
 {
 	return identification_;
@@ -149,6 +159,12 @@ QString Presentation_PowerPoint::rawSlideIdentification(int i) const
 	return i == -1 ? "" : tr("%1").arg(i+1);
 }
 
+QPixmap Presentation_PowerPoint::rawSlideIdentificationIcon(int i) const
+{
+	static QPixmap autoSlidePixmap(":/icons/16/Repeat_16px.png");
+	return i == -1 ? autoSlidePixmap : QPixmap();
+}
+
 QString Presentation_PowerPoint::rawSlideDescription(int i) const
 {
 	return i == -1 ? tr("(automatická prezentace)") : slides_[i]->text;
@@ -170,7 +186,7 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 
 		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
 		if(!pe.axPresentation_)
-			return standardErrorDialog(tr("Nepodařilo se otevřít prezentaci '%1'.").arg(filePath_));
+			return standardErrorDialog(tr("Nepodařilo se spustit prezentaci \"%1\".").arg(filePath_));
 
 		pe.axSlides_ = pe.axPresentation_->querySubObject("Slides");
 
@@ -198,6 +214,8 @@ void Presentation_PowerPoint::deactivatePresentation()
 		auto &pe = *presentationEngine_PowerPoint;
 
 		pe.axPresentation_->dynamicCall("Close()");
+		delete pe.axPresentation_;
+
 		pe.axPresentation_ = nullptr;
 	});
 }
@@ -207,6 +225,9 @@ void Presentation_PowerPoint::setSlide(int localSlideId)
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 	activeXJobThread->executeNonblocking([this, selfPtr, localSlideId]{
 		auto &pe = *presentationEngine_PowerPoint;
+
+		if(!pe.axPresentation_)
+			return;
 
 		pe.axSSView_->dynamicCall("GotoSlide(int)", slides_[localSlideId]->ppIndex);
 	});

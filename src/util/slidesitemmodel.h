@@ -13,6 +13,18 @@ class SlidesItemModel : public QAbstractTableModel
 	Q_OBJECT
 
 public:
+	enum class Column : int {
+		presentation,
+		id,
+		text
+	};
+
+	enum class UserData : int {
+		isLastInPresentation = Qt::UserRole,
+		customIcon
+	};
+
+public:
 	SlidesItemModel();
 
 signals:

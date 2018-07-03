@@ -32,6 +32,8 @@ public:
 	/// Attempts to create a powerpoint presentation. Shows splashscreen during the loading. Can fail and return null.
 	static QSharedPointer<Presentation_PowerPoint> create(const QString &filename);
 
+	~Presentation_PowerPoint();
+
 public:
 	QString identification() const override;
 	QPixmap icon() const override;
@@ -40,6 +42,7 @@ public:
 
 	int rawSlideCount() const override;
 	QString rawSlideIdentification(int i) const override;
+	QPixmap rawSlideIdentificationIcon(int i) const;
 	QString rawSlideDescription(int i) const override;
 
 	PresentationEngine *engine() const override;

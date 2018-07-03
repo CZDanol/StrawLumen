@@ -2,6 +2,7 @@
 #define ACTIVEXJOBTHREAD_H
 
 #include <QObject>
+#include <QAxObject>
 
 #include "util/jobthread.h"
 
@@ -38,10 +39,14 @@ namespace Office {
 }
 
 class ActiveXJobThread : public JobThread {
+	Q_OBJECT
 
 public:
 	explicit ActiveXJobThread(QObject *parent = nullptr);
 	~ActiveXJobThread();
+
+public:
+	QAxObject *axPowerPointApplication = nullptr;
 
 };
 

@@ -18,10 +18,14 @@ public:
 	explicit PresentationPropertiesWidget(const QSharedPointer<Presentation> &presentation, QWidget *parent = 0);
 	~PresentationPropertiesWidget();
 
+public:
+	QSharedPointer<Presentation> presentation() const;
+
 private:
 	Ui::PresentationPropertiesWidget *ui;
 	QSharedPointer<Presentation> presentation_;
 	QWidget *propertiesWidget_;
+
 };
 
 #endif // PRESENTATIONPROPERTIESWIDGET_H

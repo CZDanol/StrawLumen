@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QMenu>
 
 #include "util/playlistitemmodel.h"
 #include "util/slidesitemmodel.h"
@@ -11,6 +12,8 @@
 namespace Ui {
 	class MainWindow_PresentationMode;
 }
+
+class PresentationPropertiesWidget;
 
 class MainWindow_PresentationMode : public QWidget
 {
@@ -37,16 +40,22 @@ private slots:
 	void onSlideSelected(const QModelIndex &current);
 	void onPresentationSelected(const QModelIndex &current);
 	void onAfterSlidesViewSlidesChanged();
+	void onPlaylistModelReset();
+	void onPlaylistContextMenuRequested(const QPoint &point);
 
 private slots:
 	void on_btnEnableProjection_clicked(bool checked);
 	void on_tvPlaylist_activated(const QModelIndex &index);
+	void on_actionDeletePresentation_triggered();
+	void on_btnAddPresentation_clicked();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;
-	QWidget *presentationPropertiesWidget_ = nullptr;
+	PresentationPropertiesWidget *presentationPropertiesWidget_ = nullptr;
 	QTimer currentTimeTimer_;
+	QMenu *playlistContextMenu_ = nullptr;
 
+private:
 	QSharedPointer<Playlist> playlist_;
 	PlaylistItemModel playlistItemModel_;
 	SlidesItemModel slidesItemModel_;

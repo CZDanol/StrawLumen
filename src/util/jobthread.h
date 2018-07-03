@@ -24,6 +24,9 @@ public:
 	void executeNonblocking(Job job);
 	void executeBlocking(Job job);
 
+	/// Waits until all jobs currently in the queue are done
+	void waitJobsDone();
+
 private:
 	void threadFunction();
 

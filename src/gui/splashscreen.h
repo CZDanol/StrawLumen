@@ -42,7 +42,7 @@ private:
 	QVector<QPixmap> animImages_;
 	int animStep_ = 0;
 	QTimer animTimer_;
-	bool isStornoPressed_;
+	bool isStornoPressed_ = false;
 
 };
 

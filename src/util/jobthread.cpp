@@ -20,6 +20,9 @@ JobThread::~JobThread()
 
 void JobThread::executeNonblocking(JobThread::Job job)
 {
+	if(std::this_thread::get_id() == thread_.get_id())
+		return job();
+
 	QMutexLocker ml(&mutex_);
 	jobQueue_.enqueue(job);
 	wakeCondition_.wakeOne();
@@ -27,6 +30,9 @@ void JobThread::executeNonblocking(JobThread::Job job)
 
 void JobThread::executeBlocking(JobThread::Job job)
 {
+	if(std::this_thread::get_id() == thread_.get_id())
+		return job();
+
 	QMutex m;
 	QWaitCondition c;
 
@@ -39,6 +45,11 @@ void JobThread::executeBlocking(JobThread::Job job)
 	});
 
 	c.wait(&m);
+}
+
+void JobThread::waitJobsDone()
+{
+	executeBlocking([](){});
 }
 
 void JobThread::threadFunction()

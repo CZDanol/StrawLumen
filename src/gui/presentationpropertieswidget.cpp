@@ -14,10 +14,15 @@ PresentationPropertiesWidget::PresentationPropertiesWidget(const QSharedPointer<
 	ui->lblTitle->setText(presentation->identification());
 
 	propertiesWidget_ = presentation->createPropertiesWidget(this);
-	ui->ltMain->insertWidget(2, propertiesWidget_);
+	ui->ltMain->insertWidget(1, propertiesWidget_);
 }
 
 PresentationPropertiesWidget::~PresentationPropertiesWidget()
 {
 	delete ui;
+}
+
+QSharedPointer<Presentation> PresentationPropertiesWidget::presentation() const
+{
+	return presentation_;
 }
