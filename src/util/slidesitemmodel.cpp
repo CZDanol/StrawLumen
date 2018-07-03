@@ -83,7 +83,7 @@ QVariant SlidesItemModel::data(const QModelIndex &index, int role) const
 		return QVariant();
 
 	auto presentation = playlist_->presentationOfSlide(index.row());
-	auto slideId = index.row() - presentation->firstSlideOffsetInPlaylist();
+	auto slideId = index.row() - presentation->globalSlideIdOffset();
 
 	const auto column = index.column();
 

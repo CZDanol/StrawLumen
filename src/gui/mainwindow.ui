@@ -53,7 +53,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Presentation_16px.png</normaloff>:/icons/16/Presentation_16px.png</iconset>
+              <normaloff>:/icons/16/Video Projector_16px.png</normaloff>:/icons/16/Video Projector_16px.png</iconset>
             </property>
             <property name="checkable">
              <bool>true</bool>

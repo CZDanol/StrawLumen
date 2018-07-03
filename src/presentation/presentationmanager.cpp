@@ -2,6 +2,7 @@
 
 #include "presentation/presentationengine.h"
 #include "presentation/presentation.h"
+#include "presentation/playlist.h"
 
 PresentationManager *presentationManager = nullptr;
 
@@ -20,9 +21,45 @@ QSharedPointer<Presentation> PresentationManager::currentPresentation() const
 	return currentPresentation_;
 }
 
-int PresentationManager::currentSlideId() const
+int PresentationManager::currentLocalSlideId() const
 {
-	return currentSlideId_;
+	return currentLocalSlideId_;
+}
+
+int PresentationManager::currentGlobalSlideId() const
+{
+	if(currentPresentation_.isNull() || currentLocalSlideId_ == -1)
+		return -1;
+
+	return currentPresentation_->globalSlideIdOffset() + currentLocalSlideId_;
+}
+
+bool PresentationManager::nextSlide()
+{
+	if(currentPresentation_.isNull())
+		return false;
+
+	return setSlide(currentPresentation_->playlist(), currentGlobalSlideId() + 1);
+}
+
+bool PresentationManager::setSlide(const Playlist* playlist, int globalSlideId)
+{
+	if( globalSlideId < 0 || globalSlideId >= playlist->slideCount() )
+		setPresentation(nullptr); // TODO black screen instead
+
+	auto presentation = playlist->presentationOfSlide(globalSlideId);
+	int localSlideId = globalSlideId - presentation->globalSlideIdOffset();
+
+	if( !setPresentation(presentation) )
+		return false;
+
+	if( !presentation->setSlide(localSlideId) ) {
+		setActive(false);
+		return false;
+	}
+
+	emit sigCurrentSlideChanged();
+	return true;
 }
 
 bool PresentationManager::setPresentation(const QSharedPointer<Presentation> &presentation)
@@ -33,11 +70,11 @@ bool PresentationManager::setPresentation(const QSharedPointer<Presentation> &pr
 	if(!currentPresentation_.isNull()) {
 		currentPresentation_->deactivatePresentation();
 		currentPresentation_.clear();
-		currentSlideId_ = -1;
+		currentLocalSlideId_ = -1;
 	}
 
 	if(presentation.isNull()) {
-		setEngine(nullptr);
+		setActive(false);
 		return true;
 	}
 
@@ -45,12 +82,12 @@ bool PresentationManager::setPresentation(const QSharedPointer<Presentation> &pr
 		return false;
 
 	if(!presentation->activatePresentation()) {
-		setEngine(nullptr);
+		setActive(false);
 		return false;
 	}
 
 	currentPresentation_ = presentation;
-	currentSlideId_ = 0;
+	currentLocalSlideId_ = -1;
 
 	return true;
 }
@@ -66,12 +103,34 @@ bool PresentationManager::setEngine(PresentationEngine *engine)
 	}
 
 	currentPresentation_.clear();
-	currentSlideId_ = -1;
+	currentLocalSlideId_ = -1;
 
-	if(engine && !engine->activateEngine())
+	if(engine && !engine->activateEngine()) {
+		_changeActive(false);
 		return false;
+	}
 
 	currentEngine_ = engine;
+	_changeActive(currentEngine_ != nullptr);
 
 	return true;
+}
+
+bool PresentationManager::setActive(bool set)
+{
+	if(!set)
+		return setEngine(nullptr);
+
+	// TODO Turn on on black screen
+	else
+		return false;
+}
+
+void PresentationManager::_changeActive(bool set)
+{
+	if(isActive_ == set)
+		return;
+
+	isActive_ = set;
+	emit sigActiveChanged(set);
 }

@@ -30,10 +30,11 @@ protected:
 private slots:
 	void onCurrentTimeTimer();
 	void onPlaylistForceSelection(int first, int last);
+	void onMgrCurrentSlideChanged();
+	void onSlideSelected(const QModelIndex &current);
 
+private slots:
 	void on_btnEnableProjection_toggled(bool checked);
-
-	void on_tvSlides_activated(const QModelIndex &index);
 
 private:
 	Ui::MainWindow_PresentationMode *ui;

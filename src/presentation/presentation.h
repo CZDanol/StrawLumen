@@ -40,8 +40,13 @@ public:
 		return slideOrder_.size() > i ? rawSlideDescription(slideOrder_[i]) : tr("## SNÍMEK NEEXISTUJE ##");
 	}
 
-	inline int firstSlideOffsetInPlaylist() const {
-		return firstSlideOffsetInPlaylist_;
+	inline Playlist *playlist() const {
+		return playlist_;
+	}
+
+	/// Offset of the slides in the playlist (globalSlideId of the first slide of this presentation)
+	inline int globalSlideIdOffset() const {
+		return globalSlideIdOffset_;
 	}
 
 public:
@@ -50,8 +55,10 @@ public:
 
 public:
 	virtual PresentationEngine *engine() const = 0;
+
 	virtual bool activatePresentation() = 0;
 	virtual void deactivatePresentation() = 0;
+	virtual bool setSlide(int localSlideId) = 0;
 
 protected:
 	Presentation() {}
@@ -64,7 +71,7 @@ protected:
 private:
 	Playlist *playlist_ = nullptr;
 	int positionInPlaylist_ = -1;
-	int firstSlideOffsetInPlaylist_ = -1;
+	int globalSlideIdOffset_ = -1;
 
 };
 

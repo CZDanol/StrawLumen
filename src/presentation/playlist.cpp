@@ -34,7 +34,7 @@ QSharedPointer<Presentation> Playlist::presentationOfSlide(int globalSlideId) co
 	int lower = 0, upper = itemOffsets_.size();
 	while(lower < upper-1) {
 		int current = (lower + upper) / 2;
-		int val = items_[current]->firstSlideOffsetInPlaylist();
+		int val = items_[current]->globalSlideIdOffset();
 
 		if(globalSlideId >= val)
 			lower = current;
@@ -84,7 +84,7 @@ void Playlist::onItemsChanged()
 
 	for(int i = 0; i < items_.size(); i ++ ) {
 		auto item = items_[i];
-		item->firstSlideOffsetInPlaylist_ = slideCount_;
+		item->globalSlideIdOffset_ = slideCount_;
 		itemOffsets_[i] = slideCount_;
 		slideCount_ += item->slideCount();
 	}

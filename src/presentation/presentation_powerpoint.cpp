@@ -7,14 +7,13 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 
-#include <QDebug>
-
 #include "gui/splashscreen.h"
-#include "gui/activexdebugdialog.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentationengine_powerpoint.h"
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
+
+#include "gui/activexdebugdialog.h"
 
 const QStringList Presentation_PowerPoint::allowedExtensions {"ppt", "pptx"};
 
@@ -63,11 +62,12 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 			auto axSlide = axSlides->querySubObject("Item(QVariant)", slideI);
 			auto axTransition = axSlide->querySubObject("SlideShowTransition");
 
-			QSharedPointer<Slide> slide(new Slide());
-			result->slides_.append(slide);
-
 			if(axTransition->property("Hidden").toInt() == (int) Office::MsoTriState::msoTrue)
 				continue;
+
+			QSharedPointer<Slide> slide(new Slide());
+			result->slides_.append(slide);
+			slide->ppIndex = slideI;
 
 			// Obtain slide text
 			{
@@ -156,9 +156,9 @@ PresentationEngine *Presentation_PowerPoint::engine() const
 bool Presentation_PowerPoint::activatePresentation()
 {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
-	bool result = false;
 
-	splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
+	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
+	activeXJobThread->executeNonblocking([this, selfPtr]{
 		auto &pe = *presentationEngine_PowerPoint;
 
 		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
@@ -173,13 +173,11 @@ bool Presentation_PowerPoint::activatePresentation()
 		pe.axSSSettings_->dynamicCall("Run()");
 
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
-
-		activeXDebugDialog->show(pe.axApplication_->generateDocumentation());
-
-		result = true;
+		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
+		//pe.axPresentationWindow_->dynamicCall("SetWidth(double)", 600);
 	});
 
-	return result;
+	return true;
 }
 
 void Presentation_PowerPoint::deactivatePresentation()
@@ -191,6 +189,18 @@ void Presentation_PowerPoint::deactivatePresentation()
 		pe.axPresentation_->dynamicCall("Close()");
 		pe.axPresentation_ = nullptr;
 	});
+}
+
+bool Presentation_PowerPoint::setSlide(int localSlideId)
+{
+	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
+	activeXJobThread->executeNonblocking([this, selfPtr, localSlideId]{
+		auto &pe = *presentationEngine_PowerPoint;
+
+		pe.axSSView_->dynamicCall("GotoSlide(int)", slides_[localSlideId]->ppIndex);
+	});
+
+	return true;
 }
 
 Presentation_PowerPoint::Presentation_PowerPoint()

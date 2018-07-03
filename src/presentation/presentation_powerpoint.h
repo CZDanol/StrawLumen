@@ -39,8 +39,10 @@ public:
 	QString rawSlideDescription(int i) const override;
 
 	PresentationEngine *engine() const override;
+
 	bool activatePresentation() override;
 	void deactivatePresentation() override;
+	bool setSlide(int localSlideId) override;
 
 private:
 	Presentation_PowerPoint();

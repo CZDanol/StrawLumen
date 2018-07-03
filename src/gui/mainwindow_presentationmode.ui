@@ -319,10 +319,10 @@
          <widget class="QWidget" name="tab">
           <attribute name="icon">
            <iconset resource="../../res/resources.qrc">
-            <normaloff>:/icons/16/Video Playlist_16px.png</normaloff>:/icons/16/Video Playlist_16px.png</iconset>
+            <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
           </attribute>
           <attribute name="title">
-           <string>Playlist</string>
+           <string>Program</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="leftMargin">
@@ -402,7 +402,7 @@
             <normaloff>:/icons/16/New Property_16px.png</normaloff>:/icons/16/New Property_16px.png</iconset>
           </attribute>
           <attribute name="title">
-           <string>Vlastnosti položky</string>
+           <string>Položka</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <property name="leftMargin">
@@ -508,7 +508,7 @@
          <widget class="QWidget" name="tab_5">
           <attribute name="icon">
            <iconset resource="../../res/resources.qrc">
-            <normaloff>:/icons/16/icons8_Movie_16px.png</normaloff>:/icons/16/icons8_Movie_16px.png</iconset>
+            <normaloff>:/icons/16/Mockup_16px.png</normaloff>:/icons/16/Mockup_16px.png</iconset>
           </attribute>
           <attribute name="title">
            <string>Snímky</string>

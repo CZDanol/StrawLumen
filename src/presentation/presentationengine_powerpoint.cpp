@@ -24,12 +24,11 @@ bool PresentationEngine_PowerPoint::activateEngine()
 	activateTimer_.start();
 
 	if(isInitialized_)
-		return isValid_;
+		return true;
 
 	isInitialized_ = true;
-	bool result = false;
 
-	activeXJobThread->executeBlocking([&]{
+	activeXJobThread->executeNonblocking([&]{
 		axApplication_ = new QAxObject();
 
 		if(!axApplication_->setControl("PowerPoint.Application"))
@@ -38,12 +37,9 @@ bool PresentationEngine_PowerPoint::activateEngine()
 		//connect(axApplication_, SIGNAL(signal(QString, int, void*)), this, SLOT(onPPEvent(QString)));
 
 		axPresentations_ = axApplication_->querySubObject("Presentations");
-
-		result = true;
 	});
 
-	isValid_ = result;
-	return result;
+	return true;
 }
 
 void PresentationEngine_PowerPoint::deactivateEngine()

@@ -20,20 +20,33 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	ui->setupUi(this);
 	setAcceptDrops(true);
 
+	playlist_.reset(new Playlist());
 	ui->twPlaylist->setCornerWidget(ui->twPlaylistCorner);
 
-	playlist_.reset(new Playlist());
-	playlistItemModel_.setPlaylist(playlist_);
-	slidesItemModel_.setPlaylist(playlist_);
+	// Playlist view setup
+	{
+		playlistItemModel_.setPlaylist(playlist_);
 
-	connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
+		ui->tvPlaylist->setModel(&playlistItemModel_);
 
-	ui->tvPlaylist->setModel(&playlistItemModel_);
-	ui->tvSlides->setModel(&slidesItemModel_);
-	ui->tvSlides->setItemDelegate(&slidesItemDelegate_);
+		connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
+	}
+
+	// Slides view setup
+	{
+		slidesItemModel_.setPlaylist(playlist_);
+
+		ui->tvSlides->setModel(&slidesItemModel_);
+		ui->tvSlides->setItemDelegate(&slidesItemDelegate_);
+
+		connect(ui->tvSlides->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onSlideSelected(QModelIndex)));
+	}
 
 	connect(&currentTimeTimer_, SIGNAL(timeout()), this, SLOT(onCurrentTimeTimer()));
 	currentTimeTimer_.start();
+
+	connect(presentationManager, SIGNAL(sigActiveChanged(bool)), ui->btnEnableProjection, SLOT(setChecked(bool)));
+	connect(ui->btnEnableProjection, SIGNAL(clicked(bool)), presentationManager, SLOT(setActive(bool)));
 
 	on_btnEnableProjection_toggled(false);
 }
@@ -95,6 +108,16 @@ void MainWindow_PresentationMode::onPlaylistForceSelection(int first, int last)
 		model->select(playlistItemModel_.index(i, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 }
 
+void MainWindow_PresentationMode::onMgrCurrentSlideChanged()
+{
+	ui->tvSlides->setCurrentIndex(slidesItemModel_.index(presentationManager->currentGlobalSlideId(), 0));
+}
+
+void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
+{
+	presentationManager->setSlide(playlist_.data(), current.row());
+}
+
 void MainWindow_PresentationMode::on_btnEnableProjection_toggled(bool checked)
 {
 	ui->btnPreviousPresentation->setEnabled(checked);
@@ -102,18 +125,4 @@ void MainWindow_PresentationMode::on_btnEnableProjection_toggled(bool checked)
 	ui->btnNextSlide->setEnabled(checked);
 	ui->btnNextPresentation->setEnabled(checked);
 	ui->btnBlackScreen->setEnabled(checked);
-}
-
-void MainWindow_PresentationMode::on_tvSlides_activated(const QModelIndex &index)
-{
-	if(!index.isValid()) {
-		presentationManager->setPresentation(nullptr);
-		return;
-	}
-
-	int globalSlideId = index.row();
-	auto presentation = playlist_->presentationOfSlide(globalSlideId);
-	int localSlideId = globalSlideId - presentation->firstSlideOffsetInPlaylist();
-
-	presentationManager->setPresentation(presentation);
 }
