@@ -7,7 +7,8 @@ PresentationEngine_PowerPoint *presentationEngine_PowerPoint = nullptr;
 
 PresentationEngine_PowerPoint::PresentationEngine_PowerPoint(QObject *parent) : PresentationEngine(parent)
 {
-
+	activateTimer_.setInterval(500);
+	connect(&activateTimer_, SIGNAL(timeout()), this, SLOT(onActivateTimer()));
 }
 
 PresentationEngine_PowerPoint::~PresentationEngine_PowerPoint()
@@ -20,6 +21,8 @@ PresentationEngine_PowerPoint::~PresentationEngine_PowerPoint()
 
 bool PresentationEngine_PowerPoint::activateEngine()
 {
+	activateTimer_.start();
+
 	if(isInitialized_)
 		return isValid_;
 
@@ -32,6 +35,8 @@ bool PresentationEngine_PowerPoint::activateEngine()
 		if(!axApplication_->setControl("PowerPoint.Application"))
 			return standardErrorDialog(tr("Nepodařilo se spustit prezentaci PowerPoint: instalace programu PowerPoint nenalazena."));
 
+		//connect(axApplication_, SIGNAL(signal(QString, int, void*)), this, SLOT(onPPEvent(QString)));
+
 		axPresentations_ = axApplication_->querySubObject("Presentations");
 
 		result = true;
@@ -43,5 +48,13 @@ bool PresentationEngine_PowerPoint::activateEngine()
 
 void PresentationEngine_PowerPoint::deactivateEngine()
 {
+	activateTimer_.stop();
+}
 
+void PresentationEngine_PowerPoint::onActivateTimer()
+{
+	activeXJobThread->executeNonblocking([=]{
+		if(axPresentation_)
+			axPresentationWindow_->dynamicCall("Activate()");
+	});
 }

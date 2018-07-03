@@ -2,6 +2,7 @@
 #define PRESENTATIONENGINE_POWERPOINT_H
 
 #include <QAxObject>
+#include <QTimer>
 
 #include "presentationengine.h"
 
@@ -21,10 +22,13 @@ public:
 	bool activateEngine() override;
 	void deactivateEngine() override;
 
-public:
-	QAxObject *axApplication_, *axPresentations_, *axPresentation_, *axSlides_, *axSSSettings_;
-	bool isInitialized_ = false, isValid_ = false;
+private slots:
+	void onActivateTimer();
 
+private:
+	QAxObject *axApplication_, *axPresentations_, *axPresentation_ = nullptr, *axPresentationWindow_, *axSlides_, *axSSSettings_;
+	bool isInitialized_ = false, isValid_ = false;
+	QTimer activateTimer_;
 
 };
 

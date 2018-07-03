@@ -44,8 +44,10 @@ bool PresentationManager::setPresentation(const QSharedPointer<Presentation> &pr
 	if(!setEngine(presentation->engine()))
 		return false;
 
-	if(!presentation->activatePresentation())
+	if(!presentation->activatePresentation()) {
+		setEngine(nullptr);
 		return false;
+	}
 
 	currentPresentation_ = presentation;
 	currentSlideId_ = 0;

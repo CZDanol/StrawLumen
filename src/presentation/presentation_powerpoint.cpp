@@ -10,6 +10,7 @@
 #include <QDebug>
 
 #include "gui/splashscreen.h"
+#include "gui/activexdebugdialog.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentationengine_powerpoint.h"
 #include "util/standarddialogs.h"
@@ -171,6 +172,10 @@ bool Presentation_PowerPoint::activatePresentation()
 		pe.axSSSettings_->dynamicCall("SetAdvanceMode(Office::PpSlideShowAdvanceMode )", (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance);
 		pe.axSSSettings_->dynamicCall("Run()");
 
+		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
+
+		activeXDebugDialog->show(pe.axApplication_->generateDocumentation());
+
 		result = true;
 	});
 
@@ -181,7 +186,10 @@ void Presentation_PowerPoint::deactivatePresentation()
 {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 	activeXJobThread->executeNonblocking([this, selfPtr]{
-		presentationEngine_PowerPoint->axPresentation_->dynamicCall("Close()");
+		auto &pe = *presentationEngine_PowerPoint;
+
+		pe.axPresentation_->dynamicCall("Close()");
+		pe.axPresentation_ = nullptr;
 	});
 }
 

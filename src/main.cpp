@@ -4,6 +4,7 @@
 
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
+#include "gui/activexdebugdialog.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentation.h"
 #include "presentation/presentationengine_powerpoint.h"
@@ -49,6 +50,7 @@ void initApplication() {
 
 	mainWindow = new MainWindow(nullptr);
 	splashscreen = new Splashscreen(mainWindow);
+	activeXDebugDialog = new ActiveXDebugDialog(mainWindow);
 }
 
 void uninitApplication() {
