@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QList>
 #include <QStringList>
+#include <QFileInfo>
 
 #include "presentation.h"
 
@@ -27,7 +28,9 @@ class Presentation_PowerPoint : public Presentation
 	};
 
 public:
-	static const QStringList allowedExtensions;
+	static const QStringList validExtensions;
+
+	static bool isPowerpointFile(const QFileInfo &file);
 
 	/// Attempts to create a powerpoint presentation. Shows splashscreen during the loading. Can fail and return null.
 	static QSharedPointer<Presentation_PowerPoint> create(const QString &filename);

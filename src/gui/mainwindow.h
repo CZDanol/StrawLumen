@@ -15,6 +15,9 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+protected:
+	void closeEvent(QCloseEvent *e) override;
+
 private slots:
 	void on_actionSettings_triggered();
 

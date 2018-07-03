@@ -10,6 +10,11 @@ QPixmap Presentation::rawSlideIdentificationIcon(int) const
 	return QPixmap();
 }
 
+QString Presentation::rawSlideDescription(int) const
+{
+	return QString();
+}
+
 int Presentation::slideCount() const
 {
 	return slideOrder_.size();
@@ -43,6 +48,11 @@ int Presentation::positionInPlaylist() const
 int Presentation::globalSlideIdOffset() const
 {
 	return globalSlideIdOffset_;
+}
+
+QWidget *Presentation::createPropertiesWidget(QWidget *)
+{
+	return nullptr;
 }
 
 void Presentation::initDefaultSlideOrder()

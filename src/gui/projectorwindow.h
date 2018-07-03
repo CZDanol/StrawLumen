@@ -17,10 +17,13 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent *) override;
+	void changeEvent(QEvent *) override;
 
 private:
 	Ui::ProjectorWindow *ui;
 
 };
+
+extern ProjectorWindow *projectorWindow;
 
 #endif // PROJECTORWINDOW_H

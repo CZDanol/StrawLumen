@@ -7,11 +7,14 @@
 #include <QStringList>
 #include <QDateTime>
 #include <QShortcut>
+#include <QFileDialog>
 
 #include "gui/presentationpropertieswidget.h"
+#include "gui/settingsdialog.h"
 #include "presentation/playlist.h"
 #include "presentation/presentationmanager.h"
 #include "presentation/presentation_powerpoint.h"
+#include "presentation/presentation_blackscreen.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
 
@@ -41,8 +44,12 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 		// Menu & controls
 		{
-			playlistContextMenu_ = new QMenu();
+			playlistContextMenu_ = new QMenu(this);
 			playlistContextMenu_->addAction(ui->actionDeletePresentation);
+
+			addPresentationMenu_ = new QMenu(this);
+			addPresentationMenu_->addAction(ui->actionAddPowerpointPresentation);
+			addPresentationMenu_->addAction(ui->actionAddBlackScreen);
 
 			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
 		}
@@ -54,6 +61,9 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 		ui->tvSlides->setModel(&slidesItemModel_);
 		ui->tvSlides->setItemDelegate(&slidesItemDelegate_);
+		ui->tvSlides->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+		ui->tvSlides->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+		ui->tvSlides->header()->setSectionResizeMode(2, QHeaderView::Stretch);
 
 		connect(ui->tvSlides->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onSlideSelected(QModelIndex)));
 		connect(presentationManager, SIGNAL(sigCurrentSlideChanged(int)), this, SLOT(onMgrCurrentSlideChanged(int)));
@@ -68,7 +78,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 	// Presentation control tab
 	{
-		ui->btnEnableProjection->setEnabled(false);
+		ui->twControls->setCornerWidget(ui->twControlsCorner);
 
 		connect(presentationManager, SIGNAL(sigActiveChanged(bool)), this, SLOT(updateControlsUIEnabled()));
 		connect(presentationManager, SIGNAL(sigCurrentSlideChanged(int)), this, SLOT(updateControlsUIEnabled()));
@@ -128,10 +138,10 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 	execOnMainThread([=]{
 		for(QUrl url : urls) {
 			QString filename = url.toLocalFile();
-			QString extension = QFileInfo(filename).suffix();
+			QFileInfo fileInfo(filename);
 
-			if(!Presentation_PowerPoint::allowedExtensions.contains(extension))
-				return standardErrorDialog(tr("Soubor \"%1\" s příponou \"%2\" není podporován.").arg(filename, extension));
+			if(!Presentation_PowerPoint::isPowerpointFile(fileInfo))
+				return standardErrorDialog(tr("Soubor \"%1\" není podporován.").arg(filename));
 
 			if(!playlist_->addItem(Presentation_PowerPoint::create(filename)))
 				return;
@@ -268,5 +278,35 @@ void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
 
 void MainWindow_PresentationMode::on_btnAddPresentation_clicked()
 {
+	addPresentationMenu_->popup(cursor().pos());
+}
 
+void MainWindow_PresentationMode::on_actionAddBlackScreen_triggered()
+{
+	playlist_->addItem(Presentation_BlackScreen::create());
+}
+
+void MainWindow_PresentationMode::on_btnSettings_clicked()
+{
+	settingsDialog->show();
+}
+
+void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
+{
+	static const QIcon icon(":/icons/16/Microsoft PowerPoint_16px.png");
+
+	QFileDialog dlg(this);
+	dlg.setFileMode(QFileDialog::ExistingFiles);
+	dlg.setAcceptMode(QFileDialog::AcceptOpen);
+	dlg.setNameFilter(tr("PowerPoint prezentace (%1)").arg((Presentation_PowerPoint::validExtensions.isEmpty() ? "" : "*.") + Presentation_PowerPoint::validExtensions.join(" *.")));
+	dlg.setWindowIcon(icon);
+	dlg.setWindowTitle(tr("Import prezentace PowerPoint"));
+
+	if(!dlg.exec())
+		return;
+
+	for(auto &filename : dlg.selectedFiles()) {
+		if(!playlist_->addItem(Presentation_PowerPoint::create(filename)))
+			break;
+	}
 }

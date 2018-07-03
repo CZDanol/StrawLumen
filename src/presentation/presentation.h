@@ -29,7 +29,7 @@ public:
 
 	virtual QString rawSlideIdentification(int) const;
 	virtual QPixmap rawSlideIdentificationIcon(int) const;
-	virtual QString rawSlideDescription(int) const = 0;
+	virtual QString rawSlideDescription(int) const;
 
 	/// Slide count considering custom ordering
 	int slideCount() const;
@@ -48,7 +48,7 @@ public:
 	virtual QString identification() const = 0;
 	virtual QPixmap icon() const = 0;
 
-	virtual QWidget *createPropertiesWidget(QWidget *parent) = 0;
+	virtual QWidget *createPropertiesWidget(QWidget *parent);
 
 public:
 	virtual PresentationEngine *engine() const = 0;

@@ -51,7 +51,10 @@ SOURCES += main.cpp \
     gui/presentationpropertieswidget_powerpoint.cpp \
     gui/projectorwindow.cpp \
     gui/settingsdialog.cpp \
-    gui/displayselectionwidget.cpp
+    gui/displayselectionwidget.cpp \
+    presentation/presentationengine_native.cpp \
+    presentation/presentation_blackscreen.cpp \
+    presentation/presentation_nativepresentation.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -87,7 +90,10 @@ HEADERS += \
     gui/presentationpropertieswidget_powerpoint.h \
     gui/projectorwindow.h \
     gui/settingsdialog.h \
-    gui/displayselectionwidget.h
+    gui/displayselectionwidget.h \
+    presentation/presentationengine_native.h \
+    presentation/presentation_blackscreen.h \
+    presentation/presentation_nativepresentation.h
 
 RESOURCES += \
     ../res/resources.qrc

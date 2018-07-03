@@ -1,7 +1,6 @@
 #include "presentation_powerpoint.h"
 
 #include <QAxObject>
-#include <QFileInfo>
 #include <QFile>
 #include <QDir>
 #include <QRegularExpression>
@@ -19,7 +18,12 @@
 
 #include "gui/activexdebugdialog.h"
 
-const QStringList Presentation_PowerPoint::allowedExtensions {"ppt", "pptx"};
+const QStringList Presentation_PowerPoint::validExtensions {"ppt", "pptx"};
+
+bool Presentation_PowerPoint::isPowerpointFile(const QFileInfo &file)
+{
+	return validExtensions.contains(file.suffix());
+}
 
 QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QString &filename)
 {
@@ -143,8 +147,8 @@ QString Presentation_PowerPoint::identification() const
 
 QPixmap Presentation_PowerPoint::icon() const
 {
-	static QPixmap icon_(":/icons/16/Microsoft PowerPoint_16px.png");
-	return icon_;
+	static QPixmap icon(":/icons/16/Microsoft PowerPoint_16px.png");
+	return icon;
 }
 
 QWidget *Presentation_PowerPoint::createPropertiesWidget(QWidget *parent)
@@ -170,7 +174,7 @@ QPixmap Presentation_PowerPoint::rawSlideIdentificationIcon(int i) const
 
 QString Presentation_PowerPoint::rawSlideDescription(int i) const
 {
-	return i == -1 ? tr("(automatická prezentace)") : slides_[i]->text;
+	return i == -1 ? QString() : slides_[i]->text;
 }
 
 PresentationEngine *Presentation_PowerPoint::engine() const

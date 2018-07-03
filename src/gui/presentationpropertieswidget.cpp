@@ -14,7 +14,8 @@ PresentationPropertiesWidget::PresentationPropertiesWidget(const QSharedPointer<
 	ui->lblTitle->setText(presentation->identification());
 
 	propertiesWidget_ = presentation->createPropertiesWidget(this);
-	ui->ltMain->insertWidget(1, propertiesWidget_);
+	if(propertiesWidget_)
+		ui->ltMain->insertWidget(1, propertiesWidget_);
 }
 
 PresentationPropertiesWidget::~PresentationPropertiesWidget()

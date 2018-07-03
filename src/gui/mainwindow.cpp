@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "gui/settingsdialog.h"
+#include "gui/projectorwindow.h"
 
 MainWindow *mainWindow = nullptr;
 
@@ -18,6 +19,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+	projectorWindow->close();
+	QMainWindow::closeEvent(e);
 }
 
 void MainWindow::on_actionSettings_triggered()
