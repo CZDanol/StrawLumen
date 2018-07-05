@@ -22,6 +22,7 @@ public:
 
 signals:
 	void sigSlidesChanged();
+	void sigItemChanged(Presentation *presentation);
 
 public:
 	/// Slide count, not considering custom ordering
@@ -47,6 +48,7 @@ public:
 public:
 	virtual QString identification() const = 0;
 	virtual QPixmap icon() const = 0;
+	virtual QPixmap specialIcon() const;
 
 	virtual QWidget *createPropertiesWidget(QWidget *parent);
 

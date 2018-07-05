@@ -151,6 +151,12 @@ QPixmap Presentation_PowerPoint::icon() const
 	return icon;
 }
 
+QPixmap Presentation_PowerPoint::specialIcon() const
+{
+	static QPixmap autoSlidePixmap(":/icons/16/Repeat_16px.png");
+	return isAutoPresentation_ ? autoSlidePixmap : QPixmap();
+}
+
 QWidget *Presentation_PowerPoint::createPropertiesWidget(QWidget *parent)
 {
 	return new PresentationPropertiesWidget_PowerPoint(weakPtr_, parent);
@@ -187,9 +193,10 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 
 	int startingSlide_ = slides_[startingSlide]->ppIndex;
+	QRect rect = settingsDialog->projectionDisplayGeometry();
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
-	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide_]{
+	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide_, rect]{
 		auto &pe = *presentationEngine_PowerPoint;
 
 		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
@@ -200,7 +207,10 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 
 		pe.axSSSettings_ = pe.axPresentation_->querySubObject("SlideShowSettings");
 		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", (int) Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk);
-		// Crashes for unknown reason pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
+
+		/*pe.axSSSettings_->dynamicCall("SetRangeType(int)", (int) Office::PowerPoint::PpSlideShowRangeType::ppShowSlideRange);
+		pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
+		pe.axSSSettings_->dynamicCall("SetEndingSlide(int)", startingSlide_+1); Does not work like expected*/
 
 		pe.axSSSettings_->dynamicCall(
 					"SetAdvanceMode(Office::PpSlideShowAdvanceMode )",
@@ -211,9 +221,11 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
-	});
 
-	presentationEngine_PowerPoint->setDisplay(settingsDialog->projectionDisplayGeometry());
+		pe.axSSView_->dynamicCall("GotoSlide(int)", startingSlide_);
+		presentationEngine_PowerPoint->setDisplay(rect);
+
+	});
 }
 
 void Presentation_PowerPoint::deactivatePresentation()

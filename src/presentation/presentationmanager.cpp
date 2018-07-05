@@ -172,6 +172,7 @@ void PresentationManager::setPresentation(const QSharedPointer<Presentation> &pr
 	currentEngine_->setBlackScreen(isBlackScren_);
 
 	currentPresentation_ = presentation;
+	currentLocalSlideId_ = startingSlide;
 }
 
 void PresentationManager::setEngine(PresentationEngine *engine)

@@ -20,6 +20,7 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 
 	items_.append(item);
 	connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
+	connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
 
 	emitItemsChanged();
 	return true;

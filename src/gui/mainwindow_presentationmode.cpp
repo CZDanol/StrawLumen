@@ -37,6 +37,9 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			playlistItemModel_.setPlaylist(playlist_);
 			ui->tvPlaylist->setModel(&playlistItemModel_);
 
+			ui->tvPlaylist->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+			ui->tvPlaylist->header()->setSectionResizeMode(1, QHeaderView::Stretch);
+
 			connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
 			connect(&playlistItemModel_, SIGNAL(modelReset()), this, SLOT(onPlaylistModelReset()));
 			connect(ui->tvPlaylist->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onPresentationSelected(QModelIndex)));
@@ -235,7 +238,7 @@ void MainWindow_PresentationMode::onPlaylistModelReset()
 
 void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &point)
 {
-	if(ui->tvPlaylist->currentIndex().row() == -1)
+	if(!ui->tvPlaylist->selectionModel()->selectedRows().count())
 		return;
 
 	playlistContextMenu_->popup(ui->tvPlaylist->viewport()->mapToGlobal(point));

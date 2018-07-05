@@ -23,8 +23,10 @@ void PlaylistItemModel::setPlaylist(const QSharedPointer<Playlist> &playlist)
 
 	playlist_ = playlist;
 
-	if(playlist_)
+	if(playlist_) {
 		connect(playlist_.data(), SIGNAL(sigItemsChanged()), this, SLOT(onItemsChanged()));
+		connect(playlist_.data(), SIGNAL(sigItemChanged(Presentation*)), this, SLOT(onItemChanged(Presentation*)));
+	}
 
 	endResetModel();
 }
@@ -39,27 +41,7 @@ int PlaylistItemModel::rowCount(const QModelIndex &) const
 
 int PlaylistItemModel::columnCount(const QModelIndex &) const
 {
-	return 1;
-}
-
-QVariant PlaylistItemModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-	if(role != Qt::DisplayRole)
-		return QVariant();
-
-	if(orientation != Qt::Horizontal)
-		return QVariant();
-
-	switch(section) {
-
-	case 0:
-		return tr("Položka");
-
-
-	default:
-		return QVariant();
-
-	}
+	return 2;
 }
 
 QVariant PlaylistItemModel::data(const QModelIndex &index, int role) const
@@ -80,7 +62,7 @@ QVariant PlaylistItemModel::data(const QModelIndex &index, int role) const
 	if (role == Qt::DisplayRole) {
 		switch(column) {
 
-		case 0:
+		case 1:
 			return item->identification();
 
 		default:
@@ -89,8 +71,18 @@ QVariant PlaylistItemModel::data(const QModelIndex &index, int role) const
 		}
 
 	} else if(role == Qt::DecorationRole) {
-		return column == 0 ? item->icon() : QVariant();
+		switch(column) {
 
+		case 0:
+			return item->icon();
+
+		case 1:
+			return item->specialIcon();
+
+		default:
+			return QVariant();
+
+		}
 	}
 
 	return QVariant();
@@ -119,8 +111,10 @@ QMimeData *PlaylistItemModel::mimeData(const QModelIndexList &indexes) const
 	QByteArray data;
 	QDataStream stream(&data, QIODevice::WriteOnly);
 
-	for(auto &index : indexes)
-		stream << index.row();
+	for(auto &index : indexes) {
+		if(index.column() == 0)
+			stream << index.row();
+	}
 
 	mimeData->setData("application/straw.lumen.playlist.items", data);
 	return mimeData;
@@ -168,4 +162,9 @@ void PlaylistItemModel::onItemsChanged()
 {
 	beginResetModel();
 	endResetModel();
+}
+
+void PlaylistItemModel::onItemChanged(Presentation *item)
+{
+	emit dataChanged(index(item->positionInPlaylist(), 0), index(item->positionInPlaylist(), columnCount(QModelIndex())-1));
 }

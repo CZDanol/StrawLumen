@@ -8,6 +8,8 @@
 #include "gui/settingsdialog.h"
 #include "gui/projectorwindow.h"
 #include "job/activexjobthread.h"
+#include "job/db.h"
+#include "job/settings.h"
 #include "presentation/presentation.h"
 #include "presentation/presentationengine_powerpoint.h"
 #include "presentation/presentationengine_native.h"
@@ -31,21 +33,15 @@ int main(int argc, char *argv[]) {
 	return result;
 }
 
+void setupStylesheet();
+
 void initApplication() {
 	qRegisterMetaType<QSharedPointer<Presentation>>();
 
-	// Setup stylesheet
-	{
-		qApp->setStyle(QStyleFactory::create("Fusion"));
+	setupStylesheet();
 
-		QPalette p = qApp->palette();
-		p.setColor(QPalette::Light, QColor("#ddd") );
-		qApp->setPalette(p);
-
-		QFile f( ":/stylesheet.css" );
-		f.open( QFile::ReadOnly );
-		qApp->setStyleSheet( QString( f.readAll() ) );
-	}
+	initSettings();
+	initDb();
 
 	activeXJobThread = new ActiveXJobThread();
 	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
@@ -68,4 +64,19 @@ void uninitApplication() {
 	delete activeXJobThread;
 
 	delete projectorWindow;
+
+	uninitDb();
+	uninitSettings();
+}
+
+void setupStylesheet() {
+	qApp->setStyle(QStyleFactory::create("Fusion"));
+
+	QPalette p = qApp->palette();
+	p.setColor(QPalette::Light, QColor("#ddd") );
+	qApp->setPalette(p);
+
+	QFile f( ":/stylesheet.css" );
+	f.open( QFile::ReadOnly );
+	qApp->setStyleSheet( QString( f.readAll() ) );
 }

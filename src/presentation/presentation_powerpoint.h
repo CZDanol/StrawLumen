@@ -40,6 +40,7 @@ public:
 public:
 	QString identification() const override;
 	QPixmap icon() const override;
+	QPixmap specialIcon() const override;
 
 	QWidget *createPropertiesWidget(QWidget *parent) override;
 

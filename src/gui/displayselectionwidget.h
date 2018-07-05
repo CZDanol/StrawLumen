@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QScreen>
+#include <QPair>
 
 namespace Ui {
 	class DisplaySelectionWidget;
@@ -11,6 +12,7 @@ namespace Ui {
 class DisplaySelectionWidget : public QWidget
 {
 	Q_OBJECT
+	Q_PROPERTY(bool preferNonprimaryScreens MEMBER isPreferNonprimaryScreens_)
 
 public:
 	explicit DisplaySelectionWidget(QWidget *parent = 0);
@@ -22,16 +24,21 @@ signals:
 public:
 	QScreen *selectedScreen() const;
 
+	QPair<QRect,QString> selectedScreenId();
+	void setSelectedScreen(const QPair<QRect,QString> &id);
+
 public slots:
 	void updateScreenList();
 
 private slots:
-	void onCurrentIndexChanged(int current);
+	void onItemActivated(int current);
 
 private:
 	Ui::DisplaySelectionWidget *ui;
 	QList<QScreen*> screenList_;
 	QScreen *primaryScreen_;
+	int primaryScreenIndex_ = 0, anyNonprimaryScreenIndex_ = 0;
+	bool isPreferNonprimaryScreens_ = false;
 
 };
 

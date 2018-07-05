@@ -1,0 +1,23 @@
+In VS2015 console, call configure.bat in Qt/SRC folder
+
+This is how it works: from your Qt SDK installation, with QtCreator open D:\Qt\4.5.1\src\plugins\sqldrivers\sqlite\sqlite.pro (this is the sqlite sql driver)
+
+And add this, after the first DEFINES += :
+
+DEFINES += SQLITE_ENABLE_FTS3 SQLITE_ENABLE_FTS3_PARENTHESIS
+
+Eventually, change the source paths to a most recent version of SQLite sources (the ‘amalgamon’ version)
+
+Build and voila, now you are able do this in your projects:
+
+if (!query.exec("Select Path, Snippet(FTS3Component, '**','**','') as Snippet "
+"from FTS3Component WHERE "
+"Content MATCH 'file_dump'"))
+
+and
+
+if (!query.exec("CREATE VIRTUAL TABLE FTS3Component"
+" USING FTS3(Path TEXT, Content TEXT,"
+" tokenize simple 'dummy' ' .;:!,[]')"))
+
+That’s it, Happy Indexing

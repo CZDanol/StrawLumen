@@ -1,0 +1,6 @@
+#ifndef DBMIGRATION_H
+#define DBMIGRATION_H
+
+#define CURRENT_DB_VERSION 1
+
+#endif // DBMIGRATION_H

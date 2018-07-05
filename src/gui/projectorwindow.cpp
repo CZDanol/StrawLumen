@@ -32,4 +32,6 @@ void ProjectorWindow::changeEvent(QEvent *e)
 {
 	if(this->isActiveWindow())
 		mainWindow->activateWindow();
+
+	QMainWindow::changeEvent(e);
 }

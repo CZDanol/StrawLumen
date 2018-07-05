@@ -35,6 +35,12 @@ namespace Office {
 			ppSlideShowWhiteScreen = 4
 		};
 
+		enum class PpSlideShowRangeType  : int {
+			ppShowAll = 1,
+			ppShowNamedSlideShow = 3,
+			ppShowSlideRange = 2
+		};
+
 	}
 }
 

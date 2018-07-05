@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport widgets axcontainer
+QT       += core gui printsupport widgets axcontainer sql
 
 # For debugging purposes
 # CONFIG += console
@@ -54,7 +54,12 @@ SOURCES += main.cpp \
     gui/displayselectionwidget.cpp \
     presentation/presentationengine_native.cpp \
     presentation/presentation_blackscreen.cpp \
-    presentation/presentation_nativepresentation.cpp
+    presentation/presentation_nativepresentation.cpp \
+    gui/mainwindow_songsmode.cpp \
+    job/dbmanager.cpp \
+    job/db.cpp \
+    gui/songlistwidget.cpp \
+    job/settings.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -65,7 +70,9 @@ FORMS += \
     gui/presentationpropertieswidget_powerpoint.ui \
     gui/projectorwindow.ui \
     gui/settingsdialog.ui \
-    gui/displayselectionwidget.ui
+    gui/displayselectionwidget.ui \
+    gui/mainwindow_songsmode.ui \
+    gui/songlistwidget.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -93,7 +100,13 @@ HEADERS += \
     gui/displayselectionwidget.h \
     presentation/presentationengine_native.h \
     presentation/presentation_blackscreen.h \
-    presentation/presentation_nativepresentation.h
+    presentation/presentation_nativepresentation.h \
+    gui/mainwindow_songsmode.h \
+    job/dbmanager.h \
+    job/db.h \
+    job/dbmigration.h \
+    gui/songlistwidget.h \
+    job/settings.h
 
 RESOURCES += \
     ../res/resources.qrc

@@ -50,6 +50,11 @@ int Presentation::globalSlideIdOffset() const
 	return globalSlideIdOffset_;
 }
 
+QPixmap Presentation::specialIcon() const
+{
+	return QPixmap();
+}
+
 QWidget *Presentation::createPropertiesWidget(QWidget *)
 {
 	return nullptr;

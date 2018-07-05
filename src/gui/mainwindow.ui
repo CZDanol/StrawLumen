@@ -47,7 +47,7 @@
            <number>4</number>
           </property>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="btnPresentationMode">
             <property name="text">
              <string> Promítání</string>
             </property>
@@ -59,15 +59,18 @@
              <bool>true</bool>
             </property>
             <property name="checked">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="flat">
              <bool>true</bool>
             </property>
+            <attribute name="buttonGroup">
+             <string notr="true">bgMode</string>
+            </attribute>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="btnSongsMode">
             <property name="text">
              <string> Písně</string>
             </property>
@@ -75,9 +78,15 @@
              <iconset resource="../../res/resources.qrc">
               <normaloff>:/icons/16/Musical Notes_16px.png</normaloff>:/icons/16/Musical Notes_16px.png</iconset>
             </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
             <property name="flat">
              <bool>true</bool>
             </property>
+            <attribute name="buttonGroup">
+             <string notr="true">bgMode</string>
+            </attribute>
            </widget>
           </item>
          </layout>
@@ -98,6 +107,7 @@
        </sizepolicy>
       </property>
       <widget class="MainWindow_PresentationMode" name="wgtPresentationMode"/>
+      <widget class="MainWindow_SongsMode" name="wgtSongsMode"/>
      </widget>
     </item>
    </layout>
@@ -136,6 +146,12 @@
    <header>gui/mainwindow_presentationmode.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>MainWindow_SongsMode</class>
+   <extends>QWidget</extends>
+   <header>mainwindow_songsmode.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
   <include location="../../res/resources.qrc"/>
@@ -143,4 +159,7 @@
   <include location="../../res/resources.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="bgMode"/>
+ </buttongroups>
 </ui>

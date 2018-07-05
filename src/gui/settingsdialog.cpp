@@ -1,8 +1,12 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
+#include "job/settings.h"
 #include "presentation/presentationengine.h"
 #include "presentation/presentationmanager.h"
+
+#define SETTINGS_FACTORY(F) \
+	F(display, dsDisplay)
 
 SettingsDialog *settingsDialog = nullptr;
 
@@ -13,6 +17,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	ui->setupUi(this);
 
 	connect(ui->dsDisplay, SIGNAL(sigCurrentChanged(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
+
+#define F(name, control)\
+		loadSetting(#name, ui->control);\
+		connect(ui->control, settingsControlChangeSignal(ui->control), [this]{\
+			saveSetting(#name, ui->control);\
+		});
+
+	SETTINGS_FACTORY(F)
+#undef F
 }
 
 SettingsDialog::~SettingsDialog()

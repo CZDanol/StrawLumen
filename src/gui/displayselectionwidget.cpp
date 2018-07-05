@@ -12,7 +12,7 @@ DisplaySelectionWidget::DisplaySelectionWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	connect(ui->cmb, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
+	connect(ui->cmb, SIGNAL(activated(int)), this, SLOT(onItemActivated(int)));
 
 	updateScreenList();
 }
@@ -27,6 +27,44 @@ QScreen *DisplaySelectionWidget::selectedScreen() const
 	return ui->cmb->currentIndex() == -1 ? primaryScreen_ : screenList_[ui->cmb->currentIndex()];
 }
 
+QPair<QRect, QString> DisplaySelectionWidget::selectedScreenId()
+{
+	auto screen = selectedScreen();
+	return QPair<QRect, QString>(screen->geometry(), screen->name());
+}
+
+void DisplaySelectionWidget::setSelectedScreen(const QPair<QRect, QString> &id)
+{
+	int bestCoverage = 0;
+	int bestIndex = -1;
+
+	for(int i = 0; i < screenList_.size(); i++) {
+		QScreen *screen = screenList_[i];
+
+		// Name match - use that
+		if(screen->name() == id.second) {
+			ui->cmb->setCurrentIndex(i);
+			return;
+		}
+
+		const QRect intersection = screen->geometry().intersected(id.first);
+		const int coverage = intersection.width() * intersection.height();
+
+		if(coverage > bestCoverage) {
+			bestIndex = i;
+			bestCoverage = coverage;
+		}
+	}
+
+	// Best coverage - use that
+	if(bestIndex != -1) {
+		ui->cmb->setCurrentIndex(bestIndex);
+		return;
+	}
+
+	ui->cmb->setCurrentIndex(isPreferNonprimaryScreens_ ? anyNonprimaryScreenIndex_ : primaryScreenIndex_);
+}
+
 void DisplaySelectionWidget::updateScreenList()
 {
 	ui->cmb->clear();
@@ -35,14 +73,19 @@ void DisplaySelectionWidget::updateScreenList()
 	primaryScreen_ = QGuiApplication::primaryScreen();
 	QPoint primaryScreenCenter = primaryScreen_->geometry().center();
 
+	anyNonprimaryScreenIndex_ = 0;
+
 	for(int i = 0; i < screenList_.size(); i ++) {
 		QScreen *screen = screenList_[i];
 		QString positionStr;
 
-		if(screen == primaryScreen_)
+		if(screen == primaryScreen_) {
 			positionStr = tr("hlavní");
+			primaryScreenIndex_ = i;
+		}
 
 		else {
+			anyNonprimaryScreenIndex_ = i;
 			QPoint center = screen->geometry().center();
 			if(abs(center.x() - primaryScreenCenter.x()) > abs(center.y() - primaryScreenCenter.y())) {
 				if(center.x() > primaryScreenCenter.x())
@@ -61,7 +104,7 @@ void DisplaySelectionWidget::updateScreenList()
 	}
 }
 
-void DisplaySelectionWidget::onCurrentIndexChanged(int current)
+void DisplaySelectionWidget::onItemActivated(int current)
 {
 	if(current == -1)
 		return;

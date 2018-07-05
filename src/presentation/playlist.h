@@ -39,6 +39,7 @@ signals:
 	// Do not emit these signals on your own, rather use emitItems/slides changed
 	void sigItemsChanged();
 	void sigSlidesChanged();
+	void sigItemChanged(Presentation *item); // When item icon/identification/whatever changes
 
 public slots:
 	void emitItemsChanged();

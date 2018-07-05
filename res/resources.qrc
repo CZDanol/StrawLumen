@@ -52,7 +52,6 @@
         <file>icons/16/Virtual Machine_16px.png</file>
         <file>icons/16/Musical Notes_16px.png</file>
         <file>icon.ico</file>
-        <file>resources.qrc</file>
         <file>icons/16/Load_16px.png</file>
         <file>icons/16/TV Off_16px.png</file>
         <file>icons/32/Prev_32px.png</file>
@@ -81,5 +80,26 @@
         <file>icons/32/Trash Can_32px.png</file>
         <file>icons/16/Settings_16px.png</file>
         <file>icons/16/Monitor_16px.png</file>
+        <file>icons/16/Align Left_16px.png</file>
+        <file>icons/16/Audio File_16px.png</file>
+        <file>icons/16/Down Arrow_16px.png</file>
+        <file>icons/16/Guitar_16px.png</file>
+        <file>icons/16/Music Notation_16px.png</file>
+        <file>icons/16/Music_16px.png</file>
+        <file>icons/16/Piano_16px.png</file>
+        <file>icons/16/Smart Playlist_16px.png</file>
+        <file>icons/16/Term_16px.png</file>
+        <file>icons/16/Treble Clef_16px.png</file>
+        <file>icons/16/Up_16px.png</file>
+        <file>icons/16/Document_16px.png</file>
+        <file>icons/16/Folder_16px.png</file>
+        <file>icons/16/Search_16px.png</file>
+        <file>icons/16/Administrator Male_16px.png</file>
+        <file>icons/16/Compose_16px.png</file>
+        <file>icons/16/Dog Tag_16px.png</file>
+        <file>icons/16/Identification Documents_16px.png</file>
+        <file>icons/16/Person_16px.png</file>
+        <file>icons/16/School Director_16px.png</file>
+        <file>icons/16/Edit_16px.png</file>
     </qresource>
 </RCC>

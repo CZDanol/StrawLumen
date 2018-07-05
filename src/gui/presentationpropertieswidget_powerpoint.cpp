@@ -28,6 +28,7 @@ void PresentationPropertiesWidget_PowerPoint::on_cbAutoPresentation_clicked(bool
 	} else
 		presentation_->initDefaultSlideOrder();
 
+	emit presentation_->sigItemChanged(presentation_.data());
 	emit presentation_->sigSlidesChanged();
 
 	if(presentationManager->currentPresentation() == presentation_)
