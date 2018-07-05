@@ -48,7 +48,6 @@ private slots:
 	void on_btnEnableProjection_clicked(bool checked);
 	void on_tvPlaylist_activated(const QModelIndex &index);
 	void on_actionDeletePresentation_triggered();
-	void on_btnAddPresentation_clicked();
 	void on_actionAddBlackScreen_triggered();
 	void on_btnSettings_clicked();
 	void on_actionAddPowerpointPresentation_triggered();

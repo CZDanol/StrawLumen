@@ -42,25 +42,18 @@
        <number>0</number>
       </property>
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QTabWidget" name="twControls_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -103,6 +96,19 @@
          </layout>
         </widget>
        </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
@@ -337,7 +343,7 @@
           <item>
            <widget class="QPushButton" name="btnAddPresentation">
             <property name="text">
-             <string> Přidat...</string>
+             <string> Přidat</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -379,8 +385,8 @@
              <property name="acceptDrops">
               <bool>true</bool>
              </property>
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
              </property>
              <property name="dragEnabled">
               <bool>true</bool>
@@ -520,8 +526,8 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="QTreeView" name="tvSlides">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
              </property>
              <property name="alternatingRowColors">
               <bool>true</bool>

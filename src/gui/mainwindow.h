@@ -15,6 +15,9 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+public:
+	void editSong(qlonglong songId);
+
 protected:
 	void closeEvent(QCloseEvent *e) override;
 

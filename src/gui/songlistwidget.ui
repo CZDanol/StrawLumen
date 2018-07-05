@@ -52,26 +52,22 @@
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
      </property>
      <property name="uniformRowHeights">
       <bool>true</bool>
      </property>
+     <property name="itemsExpandable">
+      <bool>false</bool>
+     </property>
      <property name="allColumnsShowFocus">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="lblDisplayLimit">
-     <property name="text">
-      <string>Zobrazeno prvních 1000 výsledků.</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="wordWrap">
       <bool>true</bool>
      </property>
     </widget>

@@ -59,7 +59,13 @@ SOURCES += main.cpp \
     job/dbmanager.cpp \
     job/db.cpp \
     gui/songlistwidget.cpp \
-    job/settings.cpp
+    job/settings.cpp \
+    util/chord.cpp \
+    util/songcontentsyntaxhiglighter.cpp \
+    util/songcontenttextedit.cpp \
+    util/songsection.cpp \
+    util/extendedlineedit.cpp \
+    util/wordcompletinglineedit.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -106,7 +112,13 @@ HEADERS += \
     job/db.h \
     job/dbmigration.h \
     gui/songlistwidget.h \
-    job/settings.h
+    job/settings.h \
+    util/chord.h \
+    util/songcontentsyntaxhiglighter.h \
+    util/songcontenttextedit.h \
+    util/songsection.h \
+    util/extendedlineedit.h \
+    util/wordcompletinglineedit.h
 
 RESOURCES += \
     ../res/resources.qrc

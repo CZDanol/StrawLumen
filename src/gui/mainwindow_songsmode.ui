@@ -42,7 +42,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QTabWidget" name="twControls_2">
+       <widget class="QTabWidget" name="twEdit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -55,10 +55,10 @@
         <widget class="QWidget" name="tab_9">
          <attribute name="icon">
           <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/16/Clock_16px.png</normaloff>:/icons/16/Clock_16px.png</iconset>
+           <normaloff>:/icons/16/Design_16px.png</normaloff>:/icons/16/Design_16px.png</iconset>
          </attribute>
          <attribute name="title">
-          <string>Aktuální čas</string>
+          <string>Úpravy</string>
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <property name="leftMargin">
@@ -74,16 +74,94 @@
            <number>4</number>
           </property>
           <item>
-           <widget class="QLabel" name="lblCurrentTime">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
+           <widget class="QPushButton" name="btnInsertSection">
+            <property name="text">
+             <string> Vložit sekci</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Term_16px.png</normaloff>:/icons/16/Term_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnDiscardChanges_3">
+            <property name="text">
+             <string> Vložit akord</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Guitar_16px.png</normaloff>:/icons/16/Guitar_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="twTranspose">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_10">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Split Vertical_16px.png</normaloff>:/icons/16/Split Vertical_16px.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Transponovat</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnDiscardChanges_7">
+            <property name="text">
+             <string> Nahoru</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Up_16px.png</normaloff>:/icons/16/Up_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnDiscardChanges_8">
+            <property name="text">
+             <string> Dolů</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Down Arrow_16px.png</normaloff>:/icons/16/Down Arrow_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -160,18 +238,6 @@
            <string> Písně</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_6">
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>4</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>4</number>
-           </property>
            <item>
             <widget class="SongListWidget" name="wgtSongList" native="true">
              <property name="sizePolicy">
@@ -291,7 +357,7 @@
             </widget>
            </item>
            <item row="4" column="0" colspan="8">
-            <widget class="QTextEdit" name="teContent">
+            <widget class="SongContentTextEdit" name="teContent">
              <property name="acceptRichText">
               <bool>false</bool>
              </property>
@@ -333,7 +399,7 @@
             </spacer>
            </item>
            <item row="2" column="7">
-            <widget class="QLineEdit" name="lnSlideOrder"/>
+            <widget class="WordCompletingLineEdit" name="lnSlideOrder"/>
            </item>
            <item row="3" column="1" colspan="7">
             <widget class="QLabel" name="label_8">
@@ -378,7 +444,7 @@
            <item row="3" column="0">
             <widget class="QLabel" name="label_7">
              <property name="pixmap">
-              <pixmap resource="../../res/resources.qrc">:/icons/16/Term_16px.png</pixmap>
+              <pixmap resource="../../res/resources.qrc">:/icons/16/Document_16px.png</pixmap>
              </property>
             </widget>
            </item>
@@ -422,17 +488,34 @@
    <header>gui/songlistwidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>SongContentTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>util/songcontenttextedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WordCompletingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>util/wordcompletinglineedit.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>twSongs</tabstop>
   <tabstop>btnNew</tabstop>
+  <tabstop>twSong</tabstop>
   <tabstop>btnEdit</tabstop>
   <tabstop>btnSaveChanges</tabstop>
   <tabstop>btnDiscardChanges</tabstop>
   <tabstop>lnName</tabstop>
   <tabstop>lnAuthor</tabstop>
-  <tabstop>lnSlideOrder</tabstop>
   <tabstop>teContent</tabstop>
+  <tabstop>lnSlideOrder</tabstop>
+  <tabstop>twEdit</tabstop>
+  <tabstop>btnInsertSection</tabstop>
+  <tabstop>btnDiscardChanges_3</tabstop>
+  <tabstop>twTranspose</tabstop>
+  <tabstop>btnDiscardChanges_7</tabstop>
+  <tabstop>btnDiscardChanges_8</tabstop>
  </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>

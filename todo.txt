@@ -1,3 +1,5 @@
+- Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
+
 Automatická powerpoint prezentace:
 - přejít na další prezentaci v takový a takový čas
 - přejít na další prezentaci po (čas)
@@ -5,5 +7,3 @@ Automatická powerpoint prezentace:
 - Možnost opakovat celý program
 
 - Uložit/načíst playlist
-
-- Ukládat složku pro přidání powerpoint prezentace

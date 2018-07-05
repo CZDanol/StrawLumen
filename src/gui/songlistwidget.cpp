@@ -25,7 +25,7 @@ SongListWidget::SongListWidget(QWidget *parent) :
 	connect(ui->tvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentChanged(QModelIndex,QModelIndex)));
 	connect(ui->tvList, SIGNAL(activated(QModelIndex)), this, SIGNAL(sigItemActivated()));
 
-	new QShortcut(Qt::Key_Escape, ui->lnSearch, SLOT(clear()), nullptr, Qt::WidgetShortcut);
+	new QShortcut(Qt::Key_Escape, ui->lnSearch, SLOT(clear()), SLOT(clear()), Qt::WidgetShortcut);
 
 	{
 		auto sc = new QShortcut(Qt::CTRL | Qt::Key_F, ui->lnSearch);
@@ -68,14 +68,12 @@ void SongListWidget::requery()
 						"FROM songs "
 						"INNER JOIN songs_fulltext ON songs.id = songs_fulltext.docid "
 						"WHERE songs_fulltext MATCH ? "
-						"ORDER BY songs.name ASC "
-						"LIMIT 1000";
+						"ORDER BY songs.name ASC ";
 
 	} else {
 		query = "SELECT id, name AS '%1', author AS '%2' "
 						"FROM songs "
-						"ORDER BY name ASC "
-						"LIMIT 1000";
+						"ORDER BY name ASC ";
 	}
 
 	QSqlQuery q(db->database());
@@ -90,9 +88,11 @@ void SongListWidget::requery()
 	}
 
 	q.last();
-	ui->lblDisplayLimit->setVisible(q.at() + 1 == 1000);
 
 	model_.setQuery(q);
+
+	while(model_.canFetchMore())
+		model_.fetchMore();
 
 	ui->tvList->setColumnHidden(0, true);
 	ui->tvList->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);

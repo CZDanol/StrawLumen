@@ -56,7 +56,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			addPresentationMenu_->addAction(ui->actionAddPowerpointPresentation);
 			addPresentationMenu_->addAction(ui->actionAddBlackScreen);
 
-			connect(new QShortcut(Qt::Key_Delete, this), SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
+			ui->btnAddPresentation->setMenu(addPresentationMenu_);
 
 			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
 		}
@@ -105,10 +105,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		new QShortcut(Qt::Key_B, ui->btnBlackScreen, SLOT(click()));
 		new QShortcut(Qt::Key_Escape, this, SLOT(disablePresentation()));
 
-		{
-			auto sc = new QShortcut(Qt::Key_Delete, ui->tvPlaylist);
-			connect(sc, SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
-		}
+		connect(new QShortcut(Qt::Key_Delete, ui->tvPlaylist), SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
 	}
 
 	ui->twLeftBottom->setTabEnabled(ui->twLeftBottom->indexOf(ui->tabPresentationProperties), false);
@@ -287,11 +284,6 @@ void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
 		return;
 
 	playlist_->deleteItem(presentation);
-}
-
-void MainWindow_PresentationMode::on_btnAddPresentation_clicked()
-{
-	addPresentationMenu_->popup(cursor().pos());
 }
 
 void MainWindow_PresentationMode::on_actionAddBlackScreen_triggered()

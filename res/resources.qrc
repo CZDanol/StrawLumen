@@ -101,5 +101,21 @@
         <file>icons/16/Person_16px.png</file>
         <file>icons/16/School Director_16px.png</file>
         <file>icons/16/Edit_16px.png</file>
+        <file>icons/16/Design_16px.png</file>
+        <file>icons/16/Align Text Left_16px.png</file>
+        <file>icons/16/Split Vertical_16px.png</file>
+        <file>icons/16/Circled 2 C_16px.png</file>
+        <file>icons/16/Circled 3 C_16px.png</file>
+        <file>icons/16/Circled 4 C_16px.png</file>
+        <file>icons/16/Circled 5 C_16px.png</file>
+        <file>icons/16/Circled 6 C_16px.png</file>
+        <file>icons/16/Level 1_16px.png</file>
+        <file>icons/16/Circle_16px.png</file>
+        <file>icons/16/Curved Arrow_16px.png</file>
+        <file>icons/16/Internal_16px.png</file>
+        <file>icons/16/Login_16px.png</file>
+        <file>icons/16/Right 2_16px.png</file>
+        <file>icons/16/Sign Out_16px.png</file>
+        <file>icons/16/Quote Left_16px.png</file>
     </qresource>
 </RCC>

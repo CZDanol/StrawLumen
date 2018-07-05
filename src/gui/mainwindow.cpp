@@ -33,6 +33,12 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::editSong(qlonglong songId)
+{
+	ui->btnSongsMode->click();
+	ui->wgtSongsMode->editSong(songId);
+}
+
 void MainWindow::closeEvent(QCloseEvent *e)
 {
 	projectorWindow->close();

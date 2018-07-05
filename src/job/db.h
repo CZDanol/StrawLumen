@@ -2,6 +2,7 @@
 #define DB_H
 
 #include <QSqlError>
+#include <QSqlQuery>
 
 #include "job/dbmanager.h"
 

@@ -5,6 +5,7 @@
 #include <QUuid>
 #include <QShortcut>
 #include <QMenu>
+#include <QStringList>
 
 #include "util/standarddialogs.h"
 #include "job/db.h"
@@ -29,8 +30,39 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	new QShortcut(Qt::CTRL | Qt::Key_S, ui->btnSaveChanges, SLOT(click()));
 	new QShortcut(Qt::CTRL | Qt::Key_N, ui->btnNew, SLOT(click()));
 	new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
+	new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
 
-	//connect(new QShortcut(Qt::Key_Delete, this), SIGNAL(activated()), ui->actionDeleteSong, SLOT(trigger()));
+	connect(new QShortcut(Qt::Key_Delete, this), SIGNAL(activated()), ui->actionDeleteSong, SLOT(trigger()));
+
+	// Slide order completer
+	{
+		slideOrderCompleter_.setModel(&slideOrderCompleterModel_);
+		slideOrderCompleter_.setCaseSensitivity(Qt::CaseInsensitive);
+
+		ui->lnSlideOrder->setCompleter(&slideOrderCompleter_);
+	}
+
+	// Insert song section menu
+	{
+		const QStringList sectionNames {
+			"C", "V1", "V2", "V3", "B", "I", "O"
+		};
+
+		insertSectionMenu = new QMenu();
+		for(auto &sectionName : sectionNames) {
+			SongSection section(sectionName);
+			insertSectionMenu->addAction(section.icon(), section.userFriendlyName(), [=]{
+				insertSongSection(section);
+			});
+		}
+
+		SongSection customSection = SongSection::customSection("");
+		insertSectionMenu->addAction(customSection.icon(), tr("Vlastní název"), [=]{
+			insertSongSection(customSection);
+		});
+
+		ui->btnInsertSection->setMenu(insertSectionMenu);
+	}
 
 	// To force update
 	isSongEditMode_ = true;
@@ -47,6 +79,12 @@ QWidget *MainWindow_SongsMode::menuWidget()
 	return ui->wgtMenu;
 }
 
+void MainWindow_SongsMode::editSong(qlonglong songId)
+{
+	onCurrentSongChanged(songId, ui->wgtSongList->currentRowId());
+	ui->btnEdit->click();
+}
+
 void MainWindow_SongsMode::setSongEditMode(bool set)
 {
 	if(isSongEditMode_ == set) {
@@ -60,6 +98,9 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 	ui->btnNew->setEnabled(!set);
 	ui->btnSaveChanges->setVisible(set);
 	ui->btnDiscardChanges->setVisible(set);
+
+	ui->twEdit->setVisible(set);
+	ui->twTranspose->setVisible(set);
 
 #define F(control) \
 	ui->control->setReadOnly(!set);\
@@ -78,6 +119,18 @@ void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
 
 	ui->btnEdit->setEnabled(enabled);
 	ui->actionDeleteSong->setEnabled(enabled);
+}
+
+void MainWindow_SongsMode::insertSongSection(const SongSection &section)
+{
+	if(!isSongEditMode_)
+		return;
+
+	if(ui->teContent->textCursor().positionInBlock() != 0)
+		ui->teContent->insertPlainText("\n");
+
+	ui->teContent->insertPlainText("\n" + section.annotation() + "\n");
+	ui->teContent->setFocus();
 }
 
 void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
@@ -127,8 +180,15 @@ void MainWindow_SongsMode::on_btnNew_clicked()
 
 void MainWindow_SongsMode::on_btnDiscardChanges_clicked()
 {
+	if(!standardConfirmDialog(tr("Opravdu zahodit provedené úpravy?")))
+		return;
+
 	setSongEditMode(false);
-	onCurrentSongChanged(currentSongId_, ui->wgtSongList->currentRowId());
+
+	// Force update
+	const qlonglong songId = currentSongId_;
+	currentSongId_ = -1;
+	onCurrentSongChanged(songId, ui->wgtSongList->currentRowId());
 }
 
 void MainWindow_SongsMode::on_btnSaveChanges_clicked()
@@ -171,4 +231,13 @@ void MainWindow_SongsMode::on_actionDeleteSong_triggered()
 	db->commitTransaction();
 
 	ui->wgtSongList->requery();
+}
+
+void MainWindow_SongsMode::on_lnSlideOrder_sigFocused()
+{
+	QStringList lst;
+	for(SongSection &section : SongSection::songSections(ui->teContent->toPlainText()))
+		lst.append(section.standardName());
+
+	slideOrderCompleterModel_.setStringList(lst);
 }

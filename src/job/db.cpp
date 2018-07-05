@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QRegularExpression>
+#include <QUuid>
 
 #include "util/standarddialogs.h"
 #include "job/dbmigration.h"
@@ -107,6 +108,45 @@ void createDb() {
 						 "author TEXT,"
 						 "content TEXT"
 						 ")");
+	}
+
+	if(false) {
+		db->beginTransaction();
+
+		QSqlQuery q(db->database());
+		QSqlQuery q2(db->database());
+
+		q.prepare("INSERT INTO songs(uid, name, author, content, slideOrder) VALUES(?, ?, ?, ?, 'V1 C V2')");
+		q2.prepare("INSERT INTO songs_fulltext(docid, name, author, content) VALUES (?, ?, ?, ?)");
+
+		for(int i = 0; i < 100000; i++) {
+
+			QString name;
+			name.resize(2+qrand()%8);
+			for(int i = 0; i < name.size(); i++)
+				name[i] = 'a' + qrand() % ('z' - 'a');
+
+			QString author;
+			author.resize(2+qrand()%8);
+			for(int i = 0; i < author.size(); i++)
+				author[i] = 'a' + qrand() % ('z' - 'a');
+
+			QString content = "Hokus pokus";
+
+			q.bindValue(0, QUuid::createUuid().toString());
+			q.bindValue(1, name);
+			q.bindValue(2, author);
+			q.bindValue(3, content);
+			q.exec();
+
+			q2.bindValue(0, q.lastInsertId());
+			q2.bindValue(1, collate(name));
+			q2.bindValue(2, collate(author));
+			q2.bindValue(3, collate(content));
+			q2.exec();
+		}
+
+		db->commitTransaction();
 	}
 }
 

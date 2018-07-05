@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="ltMain">
    <item>
-    <widget class="QFrame" name="">
+    <widget class="QFrame" name="frame">
      <property name="styleSheet">
       <string notr="true">QFrame {
 	background: palette(alternate-base);
