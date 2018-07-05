@@ -88,7 +88,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnDiscardChanges_3">
+           <widget class="QPushButton" name="btnInsertChord">
             <property name="text">
              <string> Vložit akord</string>
             </property>
@@ -138,7 +138,7 @@
            <number>4</number>
           </property>
           <item>
-           <widget class="QPushButton" name="btnDiscardChanges_7">
+           <widget class="QPushButton" name="btnTransposeUp">
             <property name="text">
              <string> Nahoru</string>
             </property>
@@ -152,7 +152,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnDiscardChanges_8">
+           <widget class="QPushButton" name="btnTransposeDown">
             <property name="text">
              <string> Dolů</string>
             </property>
@@ -358,13 +358,22 @@
            </item>
            <item row="4" column="0" colspan="8">
             <widget class="SongContentTextEdit" name="teContent">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
              <property name="acceptRichText">
               <bool>false</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="3">
-            <widget class="QLineEdit" name="lnAuthor"/>
+            <widget class="QLineEdit" name="lnAuthor">
+             <property name="placeholderText">
+              <string>např. Jan Novák</string>
+             </property>
+            </widget>
            </item>
            <item row="2" column="2">
             <spacer name="horizontalSpacer_3">
@@ -399,7 +408,11 @@
             </spacer>
            </item>
            <item row="2" column="7">
-            <widget class="WordCompletingLineEdit" name="lnSlideOrder"/>
+            <widget class="WordCompletingLineEdit" name="lnSlideOrder">
+             <property name="placeholderText">
+              <string>nevyplněno = jako v textu</string>
+             </property>
+            </widget>
            </item>
            <item row="3" column="1" colspan="7">
             <widget class="QLabel" name="label_8">
@@ -497,6 +510,9 @@
    <class>WordCompletingLineEdit</class>
    <extends>QLineEdit</extends>
    <header>util/wordcompletinglineedit.h</header>
+   <slots>
+    <signal>sigFocused()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -512,10 +528,10 @@
   <tabstop>lnSlideOrder</tabstop>
   <tabstop>twEdit</tabstop>
   <tabstop>btnInsertSection</tabstop>
-  <tabstop>btnDiscardChanges_3</tabstop>
+  <tabstop>btnInsertChord</tabstop>
   <tabstop>twTranspose</tabstop>
-  <tabstop>btnDiscardChanges_7</tabstop>
-  <tabstop>btnDiscardChanges_8</tabstop>
+  <tabstop>btnTransposeUp</tabstop>
+  <tabstop>btnTransposeDown</tabstop>
  </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>

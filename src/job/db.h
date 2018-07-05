@@ -11,6 +11,8 @@ extern DBManager *db;
 void initDb();
 void uninitDb();
 
+void createDb();
+
 QString collate(const QString &str);
 QString collateFulltextQuery(const QString &str);
 

@@ -105,7 +105,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		new QShortcut(Qt::Key_B, ui->btnBlackScreen, SLOT(click()));
 		new QShortcut(Qt::Key_Escape, this, SLOT(disablePresentation()));
 
-		connect(new QShortcut(Qt::Key_Delete, ui->tvPlaylist), SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
+		connect(new QShortcut(Qt::Key_Delete, ui->tvPlaylist, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
 	}
 
 	ui->twLeftBottom->setTabEnabled(ui->twLeftBottom->indexOf(ui->tabPresentationProperties), false);
@@ -140,6 +140,7 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 {
 	auto urls = e->mimeData()->urls();
 
+	// The exec is there so the explorer the file is dragged from is not frozen while loading
 	execOnMainThread([=]{
 		for(QUrl url : urls) {
 			QString filename = url.toLocalFile();
@@ -280,7 +281,7 @@ void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
 		return;
 
 	auto presentation = playlist_->items()[index];
-	if(!deleteConfirmDialog(tr("Opravdu smazat prezentaci \"%1\"?").arg(presentation->identification())))
+	if(!standardDeleteConfirmDialog(tr("Opravdu smazat prezentaci \"%1\"?").arg(presentation->identification())))
 		return;
 
 	playlist_->deleteItem(presentation);

@@ -1,19 +1,16 @@
 #include "settings.h"
 
 #include <QDir>
-#include <QStandardPaths>
 
 #include "gui/settingsdialog.h"
 #include "util/standarddialogs.h"
+#include "main.h"
 
 QSettings *settings = nullptr;
 
 void initSettings()
 {
-	QDir settingsDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
-	settingsDir.mkpath(".");
-
-	settings = new QSettings(settingsDir.absoluteFilePath("settings.ini"), QSettings::IniFormat);
+	settings = new QSettings(appDataDirectory.absoluteFilePath("settings.ini"), QSettings::IniFormat);
 
 	if(!settings->isWritable())
 		standardErrorDialog(SettingsDialog::tr("Nepodařilo se otevřít nastavení programu pro zápis. Nastavení se nebude ukládat."));

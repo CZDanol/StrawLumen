@@ -17,7 +17,7 @@ public:
 	~SettingsDialog();
 
 public:
-	QRect projectionDisplayGeometry();
+	QRect projectionDisplayGeometry() const;
 
 private slots:
 	void onDisplayChanged(QScreen *current);

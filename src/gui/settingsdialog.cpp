@@ -4,6 +4,7 @@
 #include "job/settings.h"
 #include "presentation/presentationengine.h"
 #include "presentation/presentationmanager.h"
+#include "util/chord.h"
 
 #define SETTINGS_FACTORY(F) \
 	F(display, dsDisplay)
@@ -33,7 +34,7 @@ SettingsDialog::~SettingsDialog()
 	delete ui;
 }
 
-QRect SettingsDialog::projectionDisplayGeometry()
+QRect SettingsDialog::projectionDisplayGeometry() const
 {
 	return ui->dsDisplay->selectedScreen()->geometry();
 }

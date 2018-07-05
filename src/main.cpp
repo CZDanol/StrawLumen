@@ -1,12 +1,17 @@
+#include "main.h"
+
 #include <QApplication>
 #include <QStyleFactory>
 #include <QFile>
+#include <QStandardPaths>
 
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
 #include "gui/activexdebugdialog.h"
 #include "gui/settingsdialog.h"
 #include "gui/projectorwindow.h"
+#include "gui/backgrounddialog.h"
+#include "gui/stylesdialog.h"
 #include "job/activexjobthread.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -14,9 +19,9 @@
 #include "presentation/presentationengine_powerpoint.h"
 #include "presentation/presentationengine_native.h"
 #include "presentation/presentationmanager.h"
+#include "util/standarddialogs.h"
 
-void initApplication();
-void uninitApplication();
+QDir appDataDirectory;
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
@@ -33,10 +38,13 @@ int main(int argc, char *argv[]) {
 	return result;
 }
 
-void setupStylesheet();
-
 void initApplication() {
 	qRegisterMetaType<QSharedPointer<Presentation>>();
+
+	appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+
+	if( !appDataDirectory.mkpath(".") )
+		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));
 
 	setupStylesheet();
 
@@ -53,6 +61,8 @@ void initApplication() {
 	settingsDialog = new SettingsDialog(mainWindow);
 	splashscreen = new Splashscreen(mainWindow);
 	activeXDebugDialog = new ActiveXDebugDialog(mainWindow);
+	backgroundDialog = new BackgroundDialog(mainWindow);
+	stylesDialog = new StylesDialog(mainWindow);
 }
 
 void uninitApplication() {
@@ -79,4 +89,10 @@ void setupStylesheet() {
 	QFile f( ":/stylesheet.css" );
 	f.open( QFile::ReadOnly );
 	qApp->setStyleSheet( QString( f.readAll() ) );
+}
+
+void criticalBootError(const QString &message) {
+	standardErrorDialog(message, nullptr);
+	qApp->exec();
+	exit(-1);
 }

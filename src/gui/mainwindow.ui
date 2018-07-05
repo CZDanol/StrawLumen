@@ -125,6 +125,8 @@
     <property name="title">
      <string>Program</string>
     </property>
+    <addaction name="actionBackgrounds"/>
+    <addaction name="actionStyles"/>
     <addaction name="actionSettings"/>
    </widget>
    <addaction name="menuProgram"/>
@@ -136,6 +138,24 @@
    </property>
    <property name="text">
     <string>Nastavení</string>
+   </property>
+  </action>
+  <action name="actionBackgrounds">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Full Image_16px.png</normaloff>:/icons/16/Full Image_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Správa pozadí</string>
+   </property>
+  </action>
+  <action name="actionStyles">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Paint Palette_16px.png</normaloff>:/icons/16/Paint Palette_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Správa stylů</string>
    </property>
   </action>
  </widget>

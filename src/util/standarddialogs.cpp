@@ -5,7 +5,7 @@
 
 #include "util/execonmainthread.h"
 
-bool deleteConfirmDialog(const QString message, QWidget *parent)
+bool standardDeleteConfirmDialog(const QString message, QWidget *parent)
 {
 	QMessageBox *mb = new QMessageBox( QMessageBox::Question, QObject::tr("Potvrdit smazání"), message );
 	mb->setParent( parent );

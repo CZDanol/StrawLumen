@@ -2,7 +2,7 @@
 #define PRESENTATION_POWERPOINT_H
 
 #include <QSharedPointer>
-#include <QImage>
+#include <QPixmap>
 #include <QList>
 #include <QStringList>
 #include <QFileInfo>
@@ -24,7 +24,7 @@ class Presentation_PowerPoint : public Presentation
 
 		QString text;
 
-		QImage thumbnail;
+		QPixmap thumbnail;
 	};
 
 public:

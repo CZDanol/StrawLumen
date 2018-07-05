@@ -4,6 +4,8 @@
 #include "util/standarddialogs.h"
 #include "gui/settingsdialog.h"
 #include "gui/projectorwindow.h"
+#include "gui/backgrounddialog.h"
+#include "gui/stylesdialog.h"
 #include "gui/mainwindow_songsmode.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -65,4 +67,14 @@ void MainWindow::on_btnSongsMode_clicked()
 {
 	ui->swModes->setCurrentWidget(ui->wgtSongsMode);
 	ui->swMenu->setCurrentWidget(ui->wgtSongsMode->menuWidget());
+}
+
+void MainWindow::on_actionBackgrounds_triggered()
+{
+	backgroundDialog->showInMgmtMode();
+}
+
+void MainWindow::on_actionStyles_triggered()
+{
+	stylesDialog->showInMgmtMode();
 }

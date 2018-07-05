@@ -65,7 +65,9 @@ SOURCES += main.cpp \
     util/songcontenttextedit.cpp \
     util/songsection.cpp \
     util/extendedlineedit.cpp \
-    util/wordcompletinglineedit.cpp
+    util/wordcompletinglineedit.cpp \
+    gui/backgrounddialog.cpp \
+    gui/stylesdialog.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -78,7 +80,9 @@ FORMS += \
     gui/settingsdialog.ui \
     gui/displayselectionwidget.ui \
     gui/mainwindow_songsmode.ui \
-    gui/songlistwidget.ui
+    gui/songlistwidget.ui \
+    gui/backgrounddialog.ui \
+    gui/stylesdialog.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -118,7 +122,10 @@ HEADERS += \
     util/songcontenttextedit.h \
     util/songsection.h \
     util/extendedlineedit.h \
-    util/wordcompletinglineedit.h
+    util/wordcompletinglineedit.h \
+    gui/backgrounddialog.h \
+    main.h \
+    gui/stylesdialog.h
 
 RESOURCES += \
     ../res/resources.qrc

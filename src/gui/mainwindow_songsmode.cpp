@@ -6,8 +6,10 @@
 #include <QShortcut>
 #include <QMenu>
 #include <QStringList>
+#include <QDateTime>
 
 #include "util/standarddialogs.h"
+#include "util/chord.h"
 #include "job/db.h"
 
 // F(ui->control)
@@ -32,7 +34,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
 	new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
 
-	connect(new QShortcut(Qt::Key_Delete, this), SIGNAL(activated()), ui->actionDeleteSong, SLOT(trigger()));
+	connect(new QShortcut(Qt::Key_Delete, this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDeleteSong, SLOT(trigger()));
 
 	// Slide order completer
 	{
@@ -206,7 +208,10 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 	const QString author = ui->lnAuthor->text();
 	const QString content = ui->teContent->toPlainText();
 
-	db->exec("UPDATE songs SET name = ?, author = ?, content = ?, slideOrder = ? WHERE id = ?", {name, author, content, ui->lnSlideOrder->text(), currentSongId_});
+	db->exec(
+				"UPDATE songs SET name = ?, author = ?, content = ?, slideOrder = ?, lastEdit = ? WHERE id = ?",
+				{name, author, content, ui->lnSlideOrder->text(), QDateTime::currentMSecsSinceEpoch(), currentSongId_}
+				);
 	db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {currentSongId_, collate(name), collate(author), collate(content)});
 	db->commitTransaction();
 
@@ -222,7 +227,10 @@ void MainWindow_SongsMode::on_btnEdit_clicked()
 
 void MainWindow_SongsMode::on_actionDeleteSong_triggered()
 {
-	if(!deleteConfirmDialog(tr("Opravdu smazat píseň \"%1\"?").arg(ui->lnName->text())))
+	if(currentSongId_ == -1)
+		return;
+
+	if(!standardDeleteConfirmDialog(tr("Opravdu smazat píseň \"%1\"?").arg(ui->lnName->text())))
 		return;
 
 	db->beginTransaction();
@@ -240,4 +248,34 @@ void MainWindow_SongsMode::on_lnSlideOrder_sigFocused()
 		lst.append(section.standardName());
 
 	slideOrderCompleterModel_.setStringList(lst);
+}
+
+void MainWindow_SongsMode::on_btnInsertChord_clicked()
+{
+	if(!isSongEditMode_)
+		return;
+
+	const QString insertStr = "[C]";
+
+	ui->teContent->setFocus();
+
+	QTextCursor tc = ui->teContent->textCursor();
+	tc.insertText(insertStr);
+	tc.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, insertStr.length()-1);
+	tc.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, insertStr.length()-2);
+	ui->teContent->setTextCursor(tc);
+}
+
+void MainWindow_SongsMode::on_btnTransposeUp_clicked()
+{
+	QString song = ui->teContent->toPlainText();
+	transposeSong(song, 1);
+	ui->teContent->setPlainText(song);
+}
+
+void MainWindow_SongsMode::on_btnTransposeDown_clicked()
+{
+	QString song = ui->teContent->toPlainText();
+	transposeSong(song, -1);
+	ui->teContent->setPlainText(song);
 }

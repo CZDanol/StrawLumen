@@ -15,11 +15,10 @@ protected:
 	void highlightBlock(const QString &text) override;
 
 private:
-	QTextCharFormat chordFormat_;
-	QTextCharFormat sectionFormat_;
+	QTextCharFormat chordFormat_, chordAnnotationSymbolFormat_;
+	QTextCharFormat sectionFormat_, sectionAnnotationSymbolFormat_;
 
 private:
-	QTextCharFormat annotationSymbolsFormat_;
 	QTextCharFormat invalidAnnotationFormat_;
 
 };

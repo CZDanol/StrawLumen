@@ -3,34 +3,20 @@
 #include <QCoreApplication>
 #include <QFileInfo>
 #include <QDir>
-#include <QStandardPaths>
 #include <QRegularExpression>
 #include <QUuid>
 
+#include "main.h"
 #include "util/standarddialogs.h"
 #include "job/dbmigration.h"
 
 DBManager *db = nullptr;
 
-void createDb();
-
-void criticalBootError(const QString &message) {
-	standardErrorDialog(message, nullptr);
-	qApp->exec();
-	exit(-1);
-}
-
 void initDb()
 {
 	db = new DBManager();
 
-	const QString dbPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-	const QDir dbDir(dbPath);
-
-	if( !dbDir.mkpath(".") )
-		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro databázi: \"%1\"").arg(dbPath));
-
-	const QString dbFilepath = dbDir.absoluteFilePath("db.sqlite");
+	const QString dbFilepath = appDataDirectory.absoluteFilePath("db.sqlite");
 	bool dbExists = QFileInfo(dbFilepath).exists();
 
 	// Open the database
@@ -72,7 +58,8 @@ void createDb() {
 						 "name TEXT,"
 						 "author TEXT,"
 						 "content TEXT,"
-						 "slideOrder TEXT"
+						 "slideOrder TEXT,"
+						 "lastEdit INTEGER"
 						 ")");
 
 		db->exec("CREATE INDEX i_songs_uid ON songs (uid)");
@@ -82,9 +69,20 @@ void createDb() {
 
 	// STYLES
 	{
-		db->exec("CREATE TABLE styles("
+		db->exec("CREATE TABLE styles ("
 						 "id INTEGER PRIMARY KEY,"
 						 "name STRING,"
+						 "data BLOB"
+						 ")");
+
+		db->exec("CREATE INDEX i_styles_name ON styles (name)");
+	}
+
+	// BACKGROUNDS
+	{
+		db->exec("CREATE TABLE backgrounds ("
+						 "id INTEGER PRIMARY KEY,"
+						 "thumbnail BLOB,"
 						 "data BLOB"
 						 ")");
 	}
@@ -98,7 +96,9 @@ void createDb() {
 
 		db->exec("CREATE INDEX i_keyValueAssoc_key ON keyValueAssoc(key)");
 
-		db->exec("INSERT INTO keyValueAssoc(key, value) VALUES('database.version', 1)");
+		db->exec("INSERT INTO keyValueAssoc(key, value)"
+						 "VALUES"
+						 "('database.version', 1)");
 	}
 
 	// SONGS_FULLTEXT

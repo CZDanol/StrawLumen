@@ -43,6 +43,9 @@ private slots:
 	void on_btnEdit_clicked();
 	void on_actionDeleteSong_triggered();
 	void on_lnSlideOrder_sigFocused();
+	void on_btnInsertChord_clicked();
+	void on_btnTransposeUp_clicked();
+	void on_btnTransposeDown_clicked();
 
 private:
 	Ui::MainWindow_SongsMode *ui;

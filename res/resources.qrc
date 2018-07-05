@@ -74,13 +74,11 @@
         <file>icons/32/Help_32px.png</file>
         <file>icons/16/Mockup_16px.png</file>
         <file>icons/16/Numeric_16px.png</file>
-        <file>icons/16/Purchase Order_16px.png</file>
         <file>icons/16/Timeline_16px.png</file>
         <file>icons/16/Repeat_16px.png</file>
         <file>icons/32/Trash Can_32px.png</file>
         <file>icons/16/Settings_16px.png</file>
         <file>icons/16/Monitor_16px.png</file>
-        <file>icons/16/Align Left_16px.png</file>
         <file>icons/16/Audio File_16px.png</file>
         <file>icons/16/Down Arrow_16px.png</file>
         <file>icons/16/Guitar_16px.png</file>
@@ -95,8 +93,6 @@
         <file>icons/16/Folder_16px.png</file>
         <file>icons/16/Search_16px.png</file>
         <file>icons/16/Administrator Male_16px.png</file>
-        <file>icons/16/Compose_16px.png</file>
-        <file>icons/16/Dog Tag_16px.png</file>
         <file>icons/16/Identification Documents_16px.png</file>
         <file>icons/16/Person_16px.png</file>
         <file>icons/16/School Director_16px.png</file>
@@ -112,10 +108,16 @@
         <file>icons/16/Level 1_16px.png</file>
         <file>icons/16/Circle_16px.png</file>
         <file>icons/16/Curved Arrow_16px.png</file>
-        <file>icons/16/Internal_16px.png</file>
-        <file>icons/16/Login_16px.png</file>
         <file>icons/16/Right 2_16px.png</file>
-        <file>icons/16/Sign Out_16px.png</file>
         <file>icons/16/Quote Left_16px.png</file>
+        <file>icons/16/Fill Color_16px.png</file>
+        <file>icons/16/Full Image_16px.png</file>
+        <file>icons/16/Swatch_16px.png</file>
+        <file>icons/16/Medium Icons_16px.png</file>
+        <file>icons/16/Paint Palette_16px.png</file>
+        <file>icons/16/Eye_16px.png</file>
+        <file>icons/16/Select_16px.png</file>
+        <file>icons/16/Header_16px.png</file>
+        <file>icons/16/Typography_16px.png</file>
     </qresource>
 </RCC>

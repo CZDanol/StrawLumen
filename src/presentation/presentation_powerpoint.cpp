@@ -114,7 +114,7 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 				const QString filename = QDir::toNativeSeparators(tmpDir.absoluteFilePath("strawLumenThumbTmp.png"));
 
 				axSlide->dynamicCall("Export(QString,QString,Long,Long)", filename, "PNG", 512, 512).toBool();
-				slide->thumbnail = QImage(filename);
+				slide->thumbnail = QPixmap(filename);
 				QFile(filename).remove();
 
 			} while(false);*/

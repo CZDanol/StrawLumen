@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>521</width>
+    <width>514</width>
     <height>124</height>
    </rect>
   </property>
@@ -134,8 +134,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
  </resources>
  <connections/>
