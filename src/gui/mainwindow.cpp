@@ -4,6 +4,7 @@
 #include "util/standarddialogs.h"
 #include "gui/settingsdialog.h"
 #include "gui/projectorwindow.h"
+#include "gui/mainwindow_songsmode.h"
 #include "job/db.h"
 #include "job/settings.h"
 
@@ -17,12 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->swMenu->addWidget(ui->wgtPresentationMode->menuWidget());
 	ui->swMenu->addWidget(ui->wgtSongsMode->menuWidget());
 
-	ui->btnPresentationMode->click();
-
 	setWindowTitle(tr("Straw Lumen v%1").arg(PROGRAM_VERSION));
 	restoreGeometry(settings->value("window.mainWindow.geometry").toByteArray());
 
 	connect(db, SIGNAL(sigQueryError(QString,QString)), this, SLOT(onDbQueryError(QString,QString)));
+
+	ui->btnPresentationMode->click();
 }
 
 MainWindow::~MainWindow()

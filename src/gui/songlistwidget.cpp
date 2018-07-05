@@ -131,3 +131,8 @@ void SongListWidget::onCurrentChanged(const QModelIndex &index, const QModelInde
 	else
 		emit sigSelectionChanged(model_.data(model_.index(index.row(), 0)).toLongLong(), prevIndex.row());
 }
+
+void SongListWidget::onCustomContextMenuRequested(const QPoint &pos)
+{
+	emit sigCustomContextMenuRequested(ui->tvList->viewport()->mapToGlobal(pos));
+}

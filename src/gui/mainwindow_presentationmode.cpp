@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include <QShortcut>
 #include <QFileDialog>
+#include <QStandardPaths>
 
 #include "gui/presentationpropertieswidget.h"
 #include "gui/settingsdialog.h"
@@ -15,6 +16,7 @@
 #include "presentation/presentationmanager.h"
 #include "presentation/presentation_powerpoint.h"
 #include "presentation/presentation_blackscreen.h"
+#include "job/settings.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
 
@@ -53,6 +55,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			addPresentationMenu_ = new QMenu(this);
 			addPresentationMenu_->addAction(ui->actionAddPowerpointPresentation);
 			addPresentationMenu_->addAction(ui->actionAddBlackScreen);
+
+			connect(new QShortcut(Qt::Key_Delete, this), SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
 
 			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
 		}
@@ -99,6 +103,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		new QShortcut(Qt::Key_PageDown, ui->btnNextSlide, SLOT(click()));
 		new QShortcut(Qt::Key_PageUp, ui->btnPreviousSlide, SLOT(click()));
 		new QShortcut(Qt::Key_B, ui->btnBlackScreen, SLOT(click()));
+		new QShortcut(Qt::Key_Escape, this, SLOT(disablePresentation()));
 
 		{
 			auto sc = new QShortcut(Qt::Key_Delete, ui->tvPlaylist);
@@ -166,6 +171,11 @@ void MainWindow_PresentationMode::updateControlsUIEnabled()
 	ui->btnNextSlide->setEnabled(isActive && !isLastSlide);
 	ui->btnNextPresentation->setEnabled(isActive && !isLastSlide);
 	ui->btnBlackScreen->setEnabled(isActive);
+}
+
+void MainWindow_PresentationMode::disablePresentation()
+{
+	presentationManager->setActive(false);
 }
 
 void MainWindow_PresentationMode::onCurrentTimeTimer()
@@ -304,9 +314,12 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 	dlg.setNameFilter(tr("PowerPoint prezentace (%1)").arg((Presentation_PowerPoint::validExtensions.isEmpty() ? "" : "*.") + Presentation_PowerPoint::validExtensions.join(" *.")));
 	dlg.setWindowIcon(icon);
 	dlg.setWindowTitle(tr("Import prezentace PowerPoint"));
+	dlg.setDirectory(settings->value("dialog.addPowerpointPresentation.directory", QStandardPaths::writableLocation(QStandardPaths::DataLocation)).toString());
 
 	if(!dlg.exec())
 		return;
+
+	settings->setValue("dialog.addPowerpointPresentation.directory", dlg.directory().absolutePath());
 
 	for(auto &filename : dlg.selectedFiles()) {
 		if(!playlist_->addItem(Presentation_PowerPoint::create(filename)))

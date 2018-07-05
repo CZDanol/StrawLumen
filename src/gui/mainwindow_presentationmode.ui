@@ -563,9 +563,6 @@
    <property name="text">
     <string>Smazat</string>
    </property>
-   <property name="shortcut">
-    <string>Del</string>
-   </property>
    <property name="shortcutVisibleInContextMenu">
     <bool>true</bool>
    </property>
@@ -589,8 +586,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
  </resources>
  <connections/>

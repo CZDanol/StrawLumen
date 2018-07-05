@@ -22,6 +22,7 @@ signals:
 	/// Beware - first is songId (not row id), second is rowid in the view
 	void sigSelectionChanged(qlonglong songId, int previousRowId);
 	void sigItemActivated();
+	void sigCustomContextMenuRequested(const QPoint &globalPos);
 
 public:
 	int currentRowId();
@@ -38,6 +39,7 @@ protected:
 
 private slots:
 	void onCurrentChanged(const QModelIndex &index, const QModelIndex &prevIndex);
+	void onCustomContextMenuRequested(const QPoint &pos);
 
 private:
 	Ui::SongListWidget *ui;
