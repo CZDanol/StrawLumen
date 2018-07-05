@@ -3,7 +3,7 @@
 
 #include <QCompleter>
 
-#include "util/extendedlineedit.h"
+#include "wgt/extendedlineedit.h"
 
 class WordCompletingLineEdit : public ExtendedLineEdit
 {

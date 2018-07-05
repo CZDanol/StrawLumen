@@ -504,12 +504,12 @@
   <customwidget>
    <class>SongContentTextEdit</class>
    <extends>QTextEdit</extends>
-   <header>util/songcontenttextedit.h</header>
+   <header>wgt/songcontenttextedit.h</header>
   </customwidget>
   <customwidget>
    <class>WordCompletingLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>util/wordcompletinglineedit.h</header>
+   <header>wgt/wordcompletinglineedit.h</header>
    <slots>
     <signal>sigFocused()</signal>
    </slots>

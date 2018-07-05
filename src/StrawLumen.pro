@@ -35,23 +35,23 @@ SOURCES += main.cpp \
     job/activexjobthread.cpp \
     gui/splashscreen.cpp \
     presentation/playlist.cpp \
-    util/playlistitemmodel.cpp \
+    modelview/playlistitemmodel.cpp \
     gui/mainwindow_presentationmode.cpp \
     util/standarddialogs.cpp \
     util/execonmainthread.cpp \
     util/scopeexit.cpp \
-    util/slidesitemmodel.cpp \
-    util/slidesitemdelegate.cpp \
+    modelview/slidesitemmodel.cpp \
+    modelview/slidesitemdelegate.cpp \
     presentation/presentation_powerpoint.cpp \
     presentation/presentationengine.cpp \
     presentation/presentationengine_powerpoint.cpp \
     presentation/presentationmanager.cpp \
     gui/activexdebugdialog.cpp \
-    gui/presentationpropertieswidget.cpp \
-    gui/presentationpropertieswidget_powerpoint.cpp \
+    gui/presentationproperties/presentationpropertieswidget.cpp \
+    gui/presentationproperties/presentationpropertieswidget_powerpoint.cpp \
     gui/projectorwindow.cpp \
     gui/settingsdialog.cpp \
-    gui/displayselectionwidget.cpp \
+    wgt/displayselectionwidget.cpp \
     presentation/presentationengine_native.cpp \
     presentation/presentation_blackscreen.cpp \
     presentation/presentation_nativepresentation.cpp \
@@ -62,27 +62,29 @@ SOURCES += main.cpp \
     job/settings.cpp \
     util/chord.cpp \
     util/songcontentsyntaxhiglighter.cpp \
-    util/songcontenttextedit.cpp \
+    wgt/songcontenttextedit.cpp \
     util/songsection.cpp \
-    util/extendedlineedit.cpp \
-    util/wordcompletinglineedit.cpp \
+    wgt/extendedlineedit.cpp \
+    wgt/wordcompletinglineedit.cpp \
     gui/backgrounddialog.cpp \
-    gui/stylesdialog.cpp
+    gui/stylesdialog.cpp \
+    wgt/colorselectionwidget.cpp
 
 FORMS += \
     gui/mainwindow.ui \
     gui/splashscreen.ui \
     gui/mainwindow_presentationmode.ui \
     gui/activexdebugdialog.ui \
-    gui/presentationpropertieswidget.ui \
-    gui/presentationpropertieswidget_powerpoint.ui \
+    gui/presentationproperties/presentationpropertieswidget.ui \
+    gui/presentationproperties/presentationpropertieswidget_powerpoint.ui \
     gui/projectorwindow.ui \
     gui/settingsdialog.ui \
-    gui/displayselectionwidget.ui \
+    wgt/displayselectionwidget.ui \
     gui/mainwindow_songsmode.ui \
     gui/songlistwidget.ui \
     gui/backgrounddialog.ui \
-    gui/stylesdialog.ui
+    gui/stylesdialog.ui \
+    wgt/colorselectionwidget.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -91,23 +93,23 @@ HEADERS += \
     job/activexjobthread.h \
     gui/splashscreen.h \
     presentation/playlist.h \
-    util/playlistitemmodel.h \
+    modelview/playlistitemmodel.h \
     gui/mainwindow_presentationmode.h \
     util/standarddialogs.h \
     util/execonmainthread.h \
     util/scopeexit.h \
-    util/slidesitemmodel.h \
-    util/slidesitemdelegate.h \
+    modelview/slidesitemmodel.h \
+    modelview/slidesitemdelegate.h \
     presentation/presentation_powerpoint.h \
     presentation/presentationengine.h \
     presentation/presentationengine_powerpoint.h \
     presentation/presentationmanager.h \
     gui/activexdebugdialog.h \
-    gui/presentationpropertieswidget.h \
-    gui/presentationpropertieswidget_powerpoint.h \
+    gui/presentationproperties/presentationpropertieswidget.h \
+    gui/presentationproperties/presentationpropertieswidget_powerpoint.h \
     gui/projectorwindow.h \
     gui/settingsdialog.h \
-    gui/displayselectionwidget.h \
+    wgt/displayselectionwidget.h \
     presentation/presentationengine_native.h \
     presentation/presentation_blackscreen.h \
     presentation/presentation_nativepresentation.h \
@@ -119,13 +121,14 @@ HEADERS += \
     job/settings.h \
     util/chord.h \
     util/songcontentsyntaxhiglighter.h \
-    util/songcontenttextedit.h \
+    wgt/songcontenttextedit.h \
     util/songsection.h \
-    util/extendedlineedit.h \
-    util/wordcompletinglineedit.h \
+    wgt/extendedlineedit.h \
+    wgt/wordcompletinglineedit.h \
     gui/backgrounddialog.h \
     main.h \
-    gui/stylesdialog.h
+    gui/stylesdialog.h \
+    wgt/colorselectionwidget.h
 
 RESOURCES += \
     ../res/resources.qrc

@@ -3,7 +3,7 @@
 
 #include <QSettings>
 
-#include "gui/displayselectionwidget.h"
+#include "wgt/displayselectionwidget.h"
 
 extern QSettings *settings;
 

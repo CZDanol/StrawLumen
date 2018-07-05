@@ -131,7 +131,7 @@ void BackgroundDialog::loadBackgrounds(bool force)
 	});
 
 	for(QListWidgetItem *item : data) {
-		itemsByID_.insert(item->data(idrFilename).toString(), item);
+		itemsByFilename_.insert(item->data(idrFilename).toString(), item);
 		ui->lwList->addItem(item);
 	}
 
@@ -209,7 +209,7 @@ bool BackgroundDialog::addBackground(const QString &filename)
 	});
 
 	if(result) {
-		itemsByID_.insert(result->data(idrFilename).toString(), result);
+		itemsByFilename_.insert(result->data(idrFilename).toString(), result);
 		ui->lwList->addItem(result);
 	}
 
@@ -223,6 +223,7 @@ void BackgroundDialog::setMgmtMode(bool set)
 	ui->btnClose->setVisible(set);
 
 	ui->twGallery->setTabEnabled(ui->twGallery->indexOf(ui->tabFillColor), !set);
+	ui->twPreview->setVisible(!set);
 
 	isMgmtMode_ = set;
 }

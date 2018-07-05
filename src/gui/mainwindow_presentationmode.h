@@ -5,9 +5,9 @@
 #include <QTimer>
 #include <QMenu>
 
-#include "util/playlistitemmodel.h"
-#include "util/slidesitemmodel.h"
-#include "util/slidesitemdelegate.h"
+#include "modelview/playlistitemmodel.h"
+#include "modelview/slidesitemmodel.h"
+#include "modelview/slidesitemdelegate.h"
 
 namespace Ui {
 	class MainWindow_PresentationMode;

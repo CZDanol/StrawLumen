@@ -1,6 +1,6 @@
 #include "slidesitemdelegate.h"
 
-#include "util/slidesitemmodel.h"
+#include "modelview/slidesitemmodel.h"
 
 #include <QPainter>
 

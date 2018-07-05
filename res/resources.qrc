@@ -119,5 +119,11 @@
         <file>icons/16/Select_16px.png</file>
         <file>icons/16/Header_16px.png</file>
         <file>icons/16/Typography_16px.png</file>
+        <file>icons/16/Bold_16px.png</file>
+        <file>icons/16/Color Dropper_16px.png</file>
+        <file>icons/16/Choose Font_16px.png</file>
+        <file>icons/16/Italic_16px.png</file>
+        <file>icons/16/Lowercase_16px.png</file>
+        <file>icons/16/Type_16px.png</file>
     </qresource>
 </RCC>

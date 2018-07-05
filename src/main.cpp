@@ -4,6 +4,8 @@
 #include <QStyleFactory>
 #include <QFile>
 #include <QStandardPaths>
+#include <QLibraryInfo>
+#include <QTranslator>
 
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
@@ -40,6 +42,11 @@ int main(int argc, char *argv[]) {
 
 void initApplication() {
 	qRegisterMetaType<QSharedPointer<Presentation>>();
+
+	QString translatorFileName ="qt_" + QLocale::system().name();
+	QTranslator *translator = new QTranslator(qApp);
+	if(translator->load(translatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+			qApp->installTranslator(translator);
 
 	appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
 

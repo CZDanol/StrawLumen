@@ -9,7 +9,7 @@
 #include <QDesktopWidget>
 
 #include "gui/splashscreen.h"
-#include "gui/presentationpropertieswidget_powerpoint.h"
+#include "gui/presentationproperties/presentationpropertieswidget_powerpoint.h"
 #include "gui/settingsdialog.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentationengine_powerpoint.h"

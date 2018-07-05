@@ -1,4 +1,8 @@
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
+- oddělat vlastní názvy sekcí
+- prezentace obrázků
+- u pozadí možnost nastavit překryv barvou + solidbní barvu/přechod
+- štítky u písní
 
 Automatická powerpoint prezentace:
 - přejít na další prezentaci v takový a takový čas

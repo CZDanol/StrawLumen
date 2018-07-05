@@ -10,7 +10,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 
-#include "gui/presentationpropertieswidget.h"
+#include "gui/presentationproperties/presentationpropertieswidget.h"
 #include "gui/settingsdialog.h"
 #include "presentation/playlist.h"
 #include "presentation/presentationmanager.h"

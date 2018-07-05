@@ -129,7 +129,7 @@
   <customwidget>
    <class>DisplaySelectionWidget</class>
    <extends>QWidget</extends>
-   <header>gui/displayselectionwidget.h</header>
+   <header>wgt/displayselectionwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
