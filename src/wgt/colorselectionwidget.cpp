@@ -1,13 +1,18 @@
 #include "colorselectionwidget.h"
 #include "ui_colorselectionwidget.h"
 
-#include <QColorDialog>
-
 ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::ColorSelectionWidget)
 {
 	ui->setupUi(this);
+	ui->wgtC1->setComponent(ColorComponentWidget::ccHue);
+	ui->wgtC2->setComponent(ColorComponentWidget::ccSaturation);
+	ui->wgtC3->setComponent(ColorComponentWidget::ccValue);
+
+	connect(ui->wgtC1, SIGNAL(sigColorChanged(QColor)), this, SLOT(setColor(QColor)));
+	connect(ui->wgtC2, SIGNAL(sigColorChanged(QColor)), this, SLOT(setColor(QColor)));
+	connect(ui->wgtC3, SIGNAL(sigColorChanged(QColor)), this, SLOT(setColor(QColor)));
 }
 
 ColorSelectionWidget::~ColorSelectionWidget()
@@ -15,9 +20,16 @@ ColorSelectionWidget::~ColorSelectionWidget()
 	delete ui;
 }
 
-void ColorSelectionWidget::on_btnSelect_clicked()
+void ColorSelectionWidget::setColor(const QColor &color)
 {
-	QColorDialog dlg(this);
-	dlg.setOption(QColorDialog::ShowAlphaChannel);
-	dlg.exec();
+	if(currentColor_ == color)
+		return;
+
+	currentColor_ = color;
+
+	ui->wgtC1->setColor(color);
+	ui->wgtC2->setColor(color);
+	ui->wgtC3->setColor(color);
+
+	emit sigColorChanged(color);
 }

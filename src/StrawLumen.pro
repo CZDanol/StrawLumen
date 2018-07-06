@@ -68,7 +68,12 @@ SOURCES += main.cpp \
     wgt/wordcompletinglineedit.cpp \
     gui/backgrounddialog.cpp \
     gui/stylesdialog.cpp \
-    wgt/colorselectionwidget.cpp
+    wgt/colorselectionwidget.cpp \
+    wgt/colorcomponentwidget.cpp \
+    wgt/fontselectionwidget.cpp \
+    wgt/textstylewidget.cpp \
+    wgt/textstylepreviewwidget.cpp \
+    util/textstyle.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -84,7 +89,9 @@ FORMS += \
     gui/songlistwidget.ui \
     gui/backgrounddialog.ui \
     gui/stylesdialog.ui \
-    wgt/colorselectionwidget.ui
+    wgt/colorselectionwidget.ui \
+    wgt/fontselectionwidget.ui \
+    wgt/textstylewidget.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -128,7 +135,12 @@ HEADERS += \
     gui/backgrounddialog.h \
     main.h \
     gui/stylesdialog.h \
-    wgt/colorselectionwidget.h
+    wgt/colorselectionwidget.h \
+    wgt/colorcomponentwidget.h \
+    wgt/fontselectionwidget.h \
+    wgt/textstylewidget.h \
+    wgt/textstylepreviewwidget.h \
+    util/textstyle.h
 
 RESOURCES += \
     ../res/resources.qrc

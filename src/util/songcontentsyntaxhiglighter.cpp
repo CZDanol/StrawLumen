@@ -24,6 +24,7 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 
 		sectionAnnotationSymbolFormat_.setForeground(Qt::transparent);
 		sectionAnnotationSymbolFormat_.setBackground(Qt::black);
+		sectionAnnotationSymbolFormat_.setFontLetterSpacing(400);
 	}
 
 	invalidAnnotationFormat_.setForeground(Qt::red);

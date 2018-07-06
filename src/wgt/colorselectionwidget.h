@@ -15,11 +15,15 @@ public:
 	explicit ColorSelectionWidget(QWidget *parent = 0);
 	~ColorSelectionWidget();
 
-private slots:
-	void on_btnSelect_clicked();
+signals:
+	void sigColorChanged(QColor newColor);
+
+public slots:
+	void setColor(const QColor &color);
 
 private:
 	Ui::ColorSelectionWidget *ui;
+	QColor currentColor_;
 
 };
 

@@ -1,3 +1,5 @@
+- color picker alpha
+
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
 - oddělat vlastní názvy sekcí
 - prezentace obrázků

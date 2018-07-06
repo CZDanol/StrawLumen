@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>24</height>
+    <width>396</width>
+    <height>16</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,45 +27,63 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="frame">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+    <widget class="ColorComponentWidget" name="wgtC1" native="true">
      <property name="minimumSize">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>128</width>
+       <height>14</height>
       </size>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>14</height>
+      </size>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="btnSelect">
-     <property name="text">
-      <string> Vybrat</string>
+    <widget class="ColorComponentWidget" name="wgtC2" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>128</width>
+       <height>14</height>
+      </size>
      </property>
-     <property name="icon">
-      <iconset resource="../../res/resources.qrc">
-       <normaloff>:/icons/16/Color Dropper_16px.png</normaloff>:/icons/16/Color Dropper_16px.png</iconset>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>14</height>
+      </size>
      </property>
-     <property name="flat">
-      <bool>true</bool>
+    </widget>
+   </item>
+   <item>
+    <widget class="ColorComponentWidget" name="wgtC3" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>128</width>
+       <height>14</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>14</height>
+      </size>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../res/resources.qrc"/>
- </resources>
+ <customwidgets>
+  <customwidget>
+   <class>ColorComponentWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/colorcomponentwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
  <connections/>
 </ui>
