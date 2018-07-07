@@ -10,19 +10,73 @@
 struct ComponentRecord {
 	std::function<qreal(const QColor)> getterFunc;
 	std::function<void(qreal, QColor&)> setterFunc;
+	std::function<void(qreal, QColor&)> previewSetterFunc;
 };
 
 static const ComponentRecord componentRecords[ColorComponentWidget::_ccCount] = {
-	ComponentRecord{[](const QColor &c){return c.hueF();}, [](qreal val, QColor &c){c.setHsvF(val, c.saturationF(), c.valueF(), c.alphaF());}}, // H
-	ComponentRecord{[](const QColor &c){return c.saturationF();}, [](qreal val, QColor &c){c.setHsvF(c.hueF(), val, c.valueF(), c.alphaF());}}, // S
-	ComponentRecord{[](const QColor &c){return c.valueF();}, [](qreal val, QColor &c){c.setHsvF(c.hueF(), c.saturationF(), val, c.alphaF());}}, // V
-	ComponentRecord{[](const QColor &c){return c.lightnessF();}, [](qreal val, QColor &c){c.setHslF(c.hueF(), c.saturationF(), val, c.alphaF());}}, // L
+	// Hsv H
+	ComponentRecord{
+		[](const QColor &c){return c.hsvHueF();},
+		[](qreal val, QColor &c){c.setHsvF(val, c.hsvSaturationF(), c.valueF(), c.alphaF());},
+		[](qreal val, QColor &c){c.setHsvF(val, 1, 1);}
+	},
+	// Hsv S
+	ComponentRecord{
+		[](const QColor &c){return c.hsvSaturationF();},
+		[](qreal val, QColor &c){c.setHsvF(c.hsvHueF(), val, c.valueF(), c.alphaF());},
+		[](qreal val, QColor &c){c.setHsvF(c.hsvHueF(), val, 1);}
+	},
+	// Hsv V
+	ComponentRecord{
+		[](const QColor &c){return c.valueF();},
+		[](qreal val, QColor &c){c.setHsvF(c.hsvHueF(), c.hsvSaturationF(), val, c.alphaF());},
+		[](qreal val, QColor &c){c.setHsvF(c.hsvHueF(), 1, val);}
+	},
 
-	ComponentRecord{[](const QColor &c){return c.redF();}, [](qreal val, QColor &c){c.setRedF(val);}}, // R
-	ComponentRecord{[](const QColor &c){return c.greenF();}, [](qreal val, QColor &c){c.setGreenF(val);}}, // G
-	ComponentRecord{[](const QColor &c){return c.blueF();}, [](qreal val, QColor &c){c.setBlueF(val);}}, // B
+	// Hsl H
+	ComponentRecord{
+		[](const QColor &c){return c.hslHueF();},
+		[](qreal val, QColor &c){c.setHslF(val, c.hslSaturationF(), c.lightnessF(), c.alphaF());},
+		[](qreal val, QColor &c){c.setHslF(val, 1, 0.5);}
+	},
+	// Hsl S
+	ComponentRecord{
+		[](const QColor &c){return c.hslSaturationF();},
+		[](qreal val, QColor &c){c.setHslF(c.hslHueF(), val, c.lightnessF(), c.alphaF());},
+		[](qreal val, QColor &c){c.setHslF(c.hslHueF(), val, 0.5);}
+	},
+	// Hsl L
+	ComponentRecord{
+		[](const QColor &c){return c.lightnessF();},
+		[](qreal val, QColor &c){c.setHslF(c.hslHueF(), c.hslSaturationF(), val, c.alphaF());},
+		[](qreal val, QColor &c){c.setHslF(c.hslHueF(), 1, val);},
+	},
 
-	ComponentRecord{[](const QColor &c){return c.alphaF();}, [](qreal val, QColor &c){c.setAlphaF(val);}} // A
+	// Rgb R
+	ComponentRecord{
+		[](const QColor &c){return c.redF();},
+		[](qreal val, QColor &c){c.setRedF(val);},
+		[](qreal val, QColor &c){c.setRgbF(val, c.greenF(), c.blueF());}
+	},
+	// RGB G
+	ComponentRecord{
+		[](const QColor &c){return c.greenF();},
+		[](qreal val, QColor &c){c.setGreenF(val);},
+		[](qreal val, QColor &c){c.setRgbF(c.redF(), val, c.blueF());}
+	},
+	// RGB B
+	ComponentRecord{
+		[](const QColor &c){return c.blueF();},
+		[](qreal val, QColor &c){c.setBlueF(val);},
+		[](qreal val, QColor &c){c.setRgbF(c.redF(), c.greenF(), val);}
+	},
+
+	// Alpha
+	ComponentRecord{
+		[](const QColor &c){return c.alphaF();},
+		[](qreal val, QColor &c){c.setAlphaF(val);},
+		[](qreal val, QColor &c){c.setAlphaF(val);}
+	}
 };
 
 ColorComponentWidget::ColorComponentWidget(QWidget *parent) : QWidget(parent)
@@ -42,10 +96,14 @@ void ColorComponentWidget::setComponent(ColorComponentWidget::ColorComponent com
 
 void ColorComponentWidget::setColor(const QColor &color)
 {
-	if(color == currentColor_)
-		return;
+	const ComponentRecord &componentRecord = componentRecords[component_];
+
+	// Cannot be because comparison converts to RGB -> in some cases saturation information can be lost
+	/*if(color == currentColor_)
+		return;*/
 
 	currentColor_ = color;
+
 	updateCache();
 	update();
 }
@@ -65,8 +123,12 @@ void ColorComponentWidget::paintEvent(QPaintEvent *)
 	const qreal radius = (height()-2)/2;
 
 	static const QPen pen(Qt::black);
+	QColor c = currentColor_;
+	if(component_ != ccAlpha)
+		c.setAlphaF(1);
+
 	p.setPen(pen);
-	p.setBrush(currentColor_);
+	p.setBrush(c);
 	p.drawEllipse(QPointF(x, height()/2), radius, radius);
 }
 
@@ -96,16 +158,36 @@ void ColorComponentWidget::updateCache()
 	QPainter p(&backgroundCache);
 	barRect_ = QRect(height()/2, BAR_PADDING, width()-height(), height() - BAR_PADDING*2);
 
+	// Checkerboard pattern
+	if(component_ == ccAlpha) {
+		static const QColor c1("#ddd"), c2("#aaa");
+
+		p.fillRect(barRect_, c1);
+		p.setClipRect(barRect_);
+		p.setClipping(true);
+
+		QMatrix m;
+		m.scale(4,4);
+
+		p.save();
+		p.setWorldMatrix(m, true);
+		p.setPen(Qt::NoPen);
+		p.setBrush(QBrush(c2, Qt::Dense4Pattern));
+		p.drawRect(m.inverted().mapRect(barRect_));
+		p.restore();
+
+		p.setClipping(false);
+	}
+
 	{
 		const qreal progressInc = 1.0 / (qreal) barRect_.width();
 		qreal progress = 0;
 		QColor color = currentColor_;
-		color.setAlphaF(1);
 		QBrush brush = Qt::transparent;
 
 		QRect currentRect(barRect_.left(), barRect_.top(), 1, barRect_.height());
 		while(currentRect.left() <= barRect_.right()) {
-			componentRecord.setterFunc(progress, color);
+			componentRecord.previewSetterFunc(progress, color);
 			brush.setColor(color);
 			p.fillRect(currentRect, brush);
 
@@ -133,5 +215,5 @@ void ColorComponentWidget::pickColor(QPoint &pos)
 				currentColor_
 				);
 	update();
-	emit sigColorChanged(currentColor_);
+	emit sigColorChangedByUser(currentColor_);
 }

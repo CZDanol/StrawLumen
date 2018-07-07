@@ -18,7 +18,7 @@ public:
 	~FontSelectionWidget();
 
 signals:
-	void sigFontChanged(const QFont &newFont);
+	void sigFontChangedByUser(const QFont &newFont);
 
 public:
 	const QFont &selectedFont() const;

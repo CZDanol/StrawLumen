@@ -34,6 +34,22 @@ void TextStylePreviewWidget::paintEvent(QPaintEvent *e)
 	p.setRenderHint(QPainter::Antialiasing);
 	p.setPen(Qt::transparent);
 
+	// Checkerboard pattern
+	{
+		static const QColor c1("#ddd"), c2("#aaa");
+
+		p.fillRect(rect(), c1);
+
+		QMatrix m;
+		m.scale(8,8);
+
+		p.save();
+		p.setWorldMatrix(m, true);
+		p.setBrush(QBrush(c2, Qt::Dense4Pattern));
+		p.drawRect(m.inverted().mapRect(rect()));
+		p.restore();
+	}
+
 	QRect textRect;
 	textRect.setSize(previewTextRect_.size());
 	textRect.moveCenter(rect().center());

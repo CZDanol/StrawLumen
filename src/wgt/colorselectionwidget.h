@@ -10,20 +10,32 @@ namespace Ui {
 class ColorSelectionWidget : public QWidget
 {
 	Q_OBJECT
+	Q_PROPERTY(bool alphaChannelEnabled READ isAlphaChannelEnabled() WRITE setAlphaChannelEnabled())
 
 public:
 	explicit ColorSelectionWidget(QWidget *parent = 0);
 	~ColorSelectionWidget();
 
 signals:
-	void sigColorChanged(QColor newColor);
+	void sigColorChangedByUser(QColor newColor);
 
 public slots:
 	void setColor(const QColor &color);
+	void setAlphaChannelEnabled(bool set);
+
+public:
+	bool isAlphaChannelEnabled() const;
+
+private slots:
+	void onComponentColorChangedByUser(const QColor &newColor);
+
+private slots:
+	void on_wgtHex_editingFinished();
 
 private:
 	Ui::ColorSelectionWidget *ui;
 	QColor currentColor_;
+	bool isAlphaChannelEnabled_ = true;
 
 };
 

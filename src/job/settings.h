@@ -32,7 +32,7 @@ inline auto settingsControlChangeSignal(T*) { ERROR; }
 	}
 
 
-SETTING_HEADERS(DisplaySelectionWidget, &DisplaySelectionWidget::sigCurrentChanged)
+SETTING_HEADERS(DisplaySelectionWidget, &DisplaySelectionWidget::sigCurrentChangedByUser)
 
 #undef SETTING_HEADERS
 

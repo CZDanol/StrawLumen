@@ -72,6 +72,7 @@ void createDb() {
 		db->exec("CREATE TABLE styles ("
 						 "id INTEGER PRIMARY KEY,"
 						 "name STRING,"
+						 "isInternal bool,"
 						 "data BLOB"
 						 ")");
 

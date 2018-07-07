@@ -17,7 +17,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	connect(ui->dsDisplay, SIGNAL(sigCurrentChanged(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
+	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
 
 #define F(name, control)\
 		loadSetting(#name, ui->control);\

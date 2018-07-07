@@ -19,7 +19,7 @@ public:
 	~DisplaySelectionWidget();
 
 signals:
-	void sigCurrentChanged(QScreen* current);
+	void sigCurrentChangedByUser(QScreen* current);
 
 public:
 	QScreen *selectedScreen() const;

@@ -10,7 +10,8 @@ class ColorComponentWidget : public QWidget
 
 public:
 	enum ColorComponent {
-		ccHue, ccSaturation, ccValue, ccLightness,
+		ccHsvHue, ccHsvSaturation, ccValue,
+		ccHslHue, ccHslSaturation, ccLightness,
 		ccRed, ccGreen, ccBlue,
 		ccAlpha,
 		_ccCount
@@ -20,7 +21,7 @@ public:
 	explicit ColorComponentWidget(QWidget *parent = nullptr);
 
 signals:
-	void sigColorChanged(QColor newColor);
+	void sigColorChangedByUser(QColor newColor);
 
 public:
 	void setComponent(ColorComponent component);
@@ -40,7 +41,7 @@ private:
 private:
 	QColor currentColor_;
 	QPixmap backgroundCache_;
-	ColorComponent component_ = ccHue;
+	ColorComponent component_ = ccHsvHue;
 	QRect barRect_;
 
 };

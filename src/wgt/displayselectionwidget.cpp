@@ -109,5 +109,5 @@ void DisplaySelectionWidget::onItemActivated(int current)
 	if(current == -1)
 		return;
 
-	emit sigCurrentChanged(selectedScreen());
+	emit sigCurrentChangedByUser(selectedScreen());
 }
