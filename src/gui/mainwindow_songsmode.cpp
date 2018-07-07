@@ -9,7 +9,7 @@
 #include <QDateTime>
 
 #include "util/standarddialogs.h"
-#include "util/chord.h"
+#include "rec/chord.h"
 #include "job/db.h"
 
 // F(ui->control)

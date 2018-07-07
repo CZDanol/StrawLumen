@@ -1,4 +1,6 @@
 - color picker alpha
+- nefungujou stylename
+- 1,5 px to point nestačí (pro jiné DPI displeje)
 
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
 - oddělat vlastní názvy sekcí

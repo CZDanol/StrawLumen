@@ -4,7 +4,7 @@
 #include <QFrame>
 #include <QPainterPath>
 
-#include "util/textstyle.h"
+#include "rec/textstyle.h"
 
 class TextStylePreviewWidget : public QFrame
 {

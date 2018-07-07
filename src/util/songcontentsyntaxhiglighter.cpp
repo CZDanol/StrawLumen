@@ -3,8 +3,8 @@
 #include <QRegularExpressionMatchIterator>
 #include <QTextDocument>
 
-#include "util/chord.h"
-#include "util/songsection.h"
+#include "rec/chord.h"
+#include "rec/songsection.h"
 
 SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
 {

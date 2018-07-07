@@ -60,10 +60,10 @@ SOURCES += main.cpp \
     job/db.cpp \
     gui/songlistwidget.cpp \
     job/settings.cpp \
-    util/chord.cpp \
+    rec/chord.cpp \
     util/songcontentsyntaxhiglighter.cpp \
     wgt/songcontenttextedit.cpp \
-    util/songsection.cpp \
+    rec/songsection.cpp \
     wgt/extendedlineedit.cpp \
     wgt/wordcompletinglineedit.cpp \
     gui/backgrounddialog.cpp \
@@ -73,7 +73,7 @@ SOURCES += main.cpp \
     wgt/fontselectionwidget.cpp \
     wgt/textstylewidget.cpp \
     wgt/textstylepreviewwidget.cpp \
-    util/textstyle.cpp
+    rec/textstyle.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -126,10 +126,10 @@ HEADERS += \
     job/dbmigration.h \
     gui/songlistwidget.h \
     job/settings.h \
-    util/chord.h \
+    rec/chord.h \
     util/songcontentsyntaxhiglighter.h \
     wgt/songcontenttextedit.h \
-    util/songsection.h \
+    rec/songsection.h \
     wgt/extendedlineedit.h \
     wgt/wordcompletinglineedit.h \
     gui/backgrounddialog.h \
@@ -140,7 +140,7 @@ HEADERS += \
     wgt/fontselectionwidget.h \
     wgt/textstylewidget.h \
     wgt/textstylepreviewwidget.h \
-    util/textstyle.h
+    rec/textstyle.h
 
 RESOURCES += \
     ../res/resources.qrc

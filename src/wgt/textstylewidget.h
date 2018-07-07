@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "util/textstyle.h"
+#include "rec/textstyle.h"
 
 namespace Ui {
 	class TextStyleWidget;

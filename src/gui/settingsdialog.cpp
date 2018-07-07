@@ -4,7 +4,7 @@
 #include "job/settings.h"
 #include "presentation/presentationengine.h"
 #include "presentation/presentationmanager.h"
-#include "util/chord.h"
+#include "rec/chord.h"
 
 #define SETTINGS_FACTORY(F) \
 	F(display, dsDisplay)

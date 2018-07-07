@@ -7,7 +7,7 @@
 #include <QStringList>
 #include <QStringListModel>
 
-#include "util/songsection.h"
+#include "rec/songsection.h"
 
 namespace Ui {
 	class MainWindow_SongsMode;
