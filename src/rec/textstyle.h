@@ -3,6 +3,7 @@
 
 #include <QFont>
 #include <QColor>
+#include <QTextOption>
 
 struct TextStyle {
 
@@ -26,7 +27,7 @@ public:
 	QColor backgroundColor = QColor(0,0,0,128);
 
 public:
-	void drawText(QPainter &p, const QRect &rect, const QString &str, int align = Qt::AlignCenter, int flags = fScaleDownToFitRect);
+	void drawText(QPainter &p, const QRect &rect, const QString &str, const QTextOption &option = QTextOption(Qt::AlignCenter), int flags = fScaleDownToFitRect);
 
 public:
 	bool operator==(const TextStyle &other) const;

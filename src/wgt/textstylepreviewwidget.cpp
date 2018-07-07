@@ -5,7 +5,7 @@
 
 TextStylePreviewWidget::TextStylePreviewWidget(QWidget *parent) : QFrame(parent)
 {
-	previewText_ = tr("Žluťoučký kůň...", "Preview sample text");
+	previewText_ = tr("Příliš žluťoučký kůň úpěl ďábelské ódy", "Preview sample text");
 }
 
 void TextStylePreviewWidget::setTextStyle(const TextStyle &style)
@@ -45,7 +45,7 @@ void TextStylePreviewWidget::paintEvent(QPaintEvent *e)
 		p.restore();
 	}
 
-	textStyle_.drawText(p, rect(), previewText_, Qt::AlignCenter, 0);
+	textStyle_.drawText(p, rect(), previewText_, QTextOption(Qt::AlignCenter), 0);
 
 	QFrame::paintEvent(e);
 }
