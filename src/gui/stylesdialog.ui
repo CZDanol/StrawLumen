@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>764</width>
-    <height>409</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,6 +105,18 @@
         <attribute name="title">
          <string>Náhled</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="PresentationStylePreviewWidget" name="wgtPreview" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>200</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </item>
@@ -360,6 +372,15 @@
    <class>TextStyleWidget</class>
    <extends>QWidget</extends>
    <header>wgt/textstylewidget.h</header>
+   <container>1</container>
+   <slots>
+    <signal>sigTextStyleChangedByUser(TextStyle)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>PresentationStylePreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/presentationstylepreviewwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

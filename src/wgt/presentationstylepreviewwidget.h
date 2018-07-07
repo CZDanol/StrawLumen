@@ -15,8 +15,11 @@ public:
 public slots:
 	void setPresentationStyle(const PresentationStyle &style);
 
+protected:
+	void paintEvent(QPaintEvent *event) override;
+
 private:
-	PresentationStyle style_;
+	PresentationStyle presentationStyle_;
 
 };
 

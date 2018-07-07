@@ -36,7 +36,7 @@ void StylesDialog::setMgmtMode(bool set)
 
 void StylesDialog::onStyleChanged()
 {
-
+	ui->wgtPreview->setPresentationStyle(presentationStyle_);
 }
 
 void StylesDialog::on_widget_sigTextStyleChangedByUser(const TextStyle &style)

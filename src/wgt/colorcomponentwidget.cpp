@@ -210,6 +210,9 @@ void ColorComponentWidget::pickColor(QPoint &pos)
 {
 	const ComponentRecord &componentRecord = componentRecords[component_];
 
+	if(!isEnabled())
+		return;
+
 	componentRecord.setterFunc(
 				qMax<qreal>(0,qMin<qreal>(1,(pos.x() - barRect_.left())/(qreal) barRect_.width())),
 				currentColor_

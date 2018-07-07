@@ -4,7 +4,7 @@
 #include <QPainterPath>
 #include <QFontMetrics>
 
-void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, const QTextOption &option, int flags)
+void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, const QTextOption &option, int flags) const
 {
 	p.save();
 	p.translate(rect.topLeft());
@@ -31,7 +31,6 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	QSize size;
 
 	// Lay out lines
-	qreal y = 0;
 	for(const QString &line : str.split('\n')) {
 		const int lineWidth = metrics.horizontalAdvance(line);
 		if(lineWidth > size.width())

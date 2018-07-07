@@ -1,5 +1,9 @@
 #include "presentationstylepreviewwidget.h"
 
+#include <QPainter>
+
+#include "gui/settingsdialog.h"
+
 PresentationStylePreviewWidget::PresentationStylePreviewWidget(QWidget *parent) : QWidget(parent)
 {
 
@@ -7,6 +11,25 @@ PresentationStylePreviewWidget::PresentationStylePreviewWidget(QWidget *parent) 
 
 void PresentationStylePreviewWidget::setPresentationStyle(const PresentationStyle &style)
 {
-	style_ = style;
+	presentationStyle_ = style;
 	update();
+}
+
+void PresentationStylePreviewWidget::paintEvent(QPaintEvent *event)
+{
+	QRect screenRect = settingsDialog->projectionDisplayGeometry();
+	QRect previewRect;
+	previewRect.setSize(screenRect.size().scaled(size(), Qt::KeepAspectRatio));
+	previewRect.moveCenter(rect().center());
+
+	qreal scaleRatio = previewRect.width() / (qreal) screenRect.width();
+
+	QPainter p(this);
+	p.setRenderHint(QPainter::SmoothPixmapTransform);
+	p.setRenderHint(QPainter::Antialiasing);
+
+	p.translate(previewRect.topLeft());
+	p.scale(scaleRatio, scaleRatio);
+
+	presentationStyle_.drawSlide(p, QRect(QPoint(), screenRect.size()), tr("Příliš žluťoučký kůň\núpěl dábělské ódy.", "Slide preview main text"), tr("Název písně"), tr("Autor"));
 }
