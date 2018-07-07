@@ -10,6 +10,8 @@ StylesDialog::StylesDialog(QWidget *parent) :
 	ui->setupUi(this);
 	ui->twGallery->setCornerWidget(ui->twGalleryCorner);
 	ui->twProperties->setCornerWidget(ui->twPropertiesCorner);
+
+	connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 }
 
 StylesDialog::~StylesDialog()
@@ -30,4 +32,14 @@ void StylesDialog::setMgmtMode(bool set)
 	ui->btnClose->setVisible(set);
 
 	isMgmtMode_ = set;
+}
+
+void StylesDialog::onStyleChanged()
+{
+
+}
+
+void StylesDialog::on_widget_sigTextStyleChangedByUser(const TextStyle &style)
+{
+	presentationStyle_.setMainTextStyle(style);
 }

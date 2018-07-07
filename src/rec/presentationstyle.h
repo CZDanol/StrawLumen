@@ -21,6 +21,12 @@ public slots:
 public:
 	const TextStyle &mainTextStyle() const;
 
+public:
+	void drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title, const QString &author) const;
+
+public:
+	void operator=(const PresentationStyle &other);
+
 private:
 	TextStyle mainTextStyle_;
 

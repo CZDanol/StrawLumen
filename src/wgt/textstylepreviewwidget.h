@@ -2,7 +2,6 @@
 #define TEXTSTYLEPREVIEWWIDGET_H
 
 #include <QFrame>
-#include <QPainterPath>
 
 #include "rec/textstyle.h"
 
@@ -24,10 +23,6 @@ private:
 	TextStyle textStyle_;
 	QString previewText_;
 	bool wasFirstUpdate_ = false;
-
-private:
-	QRect previewTextRect_;
-	QPainterPath textPath_;
 
 };
 

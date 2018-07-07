@@ -74,7 +74,8 @@ SOURCES += main.cpp \
     wgt/textstylewidget.cpp \
     wgt/textstylepreviewwidget.cpp \
     rec/textstyle.cpp \
-    rec/presentationstyle.cpp
+    rec/presentationstyle.cpp \
+    wgt/presentationstylepreviewwidget.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -142,7 +143,8 @@ HEADERS += \
     wgt/textstylewidget.h \
     wgt/textstylepreviewwidget.h \
     rec/textstyle.h \
-    rec/presentationstyle.h
+    rec/presentationstyle.h \
+    wgt/presentationstylepreviewwidget.h
 
 RESOURCES += \
     ../res/resources.qrc

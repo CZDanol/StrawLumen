@@ -3,6 +3,9 @@
 
 #include <QDialog>
 
+#include "rec/presentationstyle.h"
+#include "rec/textstyle.h"
+
 namespace Ui {
 	class StylesDialog;
 }
@@ -21,8 +24,15 @@ public:
 private:
 	void setMgmtMode(bool set);
 
+private slots:
+	void onStyleChanged();
+
+private slots:
+	void on_widget_sigTextStyleChangedByUser(const TextStyle &);
+
 private:
 	Ui::StylesDialog *ui;
+	PresentationStyle presentationStyle_;
 	bool isMgmtMode_;
 
 };

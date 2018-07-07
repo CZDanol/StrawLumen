@@ -7,6 +7,11 @@
 struct TextStyle {
 
 public:
+	enum Flags : int {
+		fScaleDownToFitRect = 0b1
+	};
+
+public:
 	QFont font = QFont("Tahoma", 12);
 	QColor color = Qt::white;
 
@@ -19,6 +24,9 @@ public:
 	bool backgroundEnabled = false;
 	int backgroundPadding = 20;
 	QColor backgroundColor = QColor(0,0,0,128);
+
+public:
+	void drawText(QPainter &p, const QRect &rect, const QString &str, int align = Qt::AlignCenter, int flags = fScaleDownToFitRect);
 
 public:
 	bool operator==(const TextStyle &other) const;
