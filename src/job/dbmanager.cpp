@@ -120,13 +120,16 @@ QVariant DBManager::selectValue(const QString &query, const DBManager::Args &arg
 QSqlQuery DBManager::selectQueryAssoc(const QString &query, const DBManager::AssocArgs &args)
 {
 	QSqlQuery q(db_);
-	q.prepare(query);
+	if(!q.prepare(query)) {
+		emit sigQueryError(query, q.lastError().databaseText());
+		return q;
+	}
 
 	for(AssocArg arg : args)
 		q.bindValue(arg.first, arg.second);
 
 	if(!q.exec())
-		emit sigQueryError(query, q.lastError().text());
+		emit sigQueryError(query, q.lastError().databaseText());
 
 	return q;
 }
@@ -134,13 +137,16 @@ QSqlQuery DBManager::selectQueryAssoc(const QString &query, const DBManager::Ass
 QSqlQuery DBManager::selectQuery(const QString &query, const DBManager::Args &args)
 {
 	QSqlQuery q(db_);
-	q.prepare(query);
+	if(!q.prepare(query)) {
+		emit sigQueryError(query, q.lastError().databaseText());
+		return q;
+	}
 
 	for(int i = 0; i < args.length(); i ++)
 		q.bindValue(i, args[i]);
 
 	if(!q.exec())
-		emit sigQueryError(query, q.lastError().text());
+		emit sigQueryError(query, q.lastError().databaseText());
 
 	return q;
 }

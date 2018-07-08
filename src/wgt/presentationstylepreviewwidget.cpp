@@ -15,7 +15,7 @@ void PresentationStylePreviewWidget::setPresentationStyle(const PresentationStyl
 	update();
 }
 
-void PresentationStylePreviewWidget::paintEvent(QPaintEvent *event)
+void PresentationStylePreviewWidget::paintEvent(QPaintEvent *)
 {
 	QRect screenRect = settingsDialog->projectionDisplayGeometry();
 	QRect previewRect;

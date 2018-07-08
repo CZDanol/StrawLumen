@@ -43,11 +43,6 @@ int main(int argc, char *argv[]) {
 void initApplication() {
 	qRegisterMetaType<QSharedPointer<Presentation>>();
 
-	QString translatorFileName ="qt_" + QLocale::system().name();
-	QTranslator *translator = new QTranslator(qApp);
-	if(translator->load(translatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-			qApp->installTranslator(translator);
-
 	appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
 
 	if( !appDataDirectory.mkpath(".") )

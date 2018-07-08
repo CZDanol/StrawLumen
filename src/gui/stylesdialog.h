@@ -2,7 +2,7 @@
 #define STYLESDIALOG_H
 
 #include <QDialog>
-
+#include <QMenu>
 #include <QSqlQueryModel>
 
 #include "rec/presentationstyle.h"
@@ -23,29 +23,43 @@ public:
 public:
 	void showInMgmtMode();
 
+protected:
+	void showEvent(QShowEvent *e) override;
+	void reject() override;
+
 private:
 	void setMgmtMode(bool set);
 	void setEditMode(bool set);
 	bool tryCloseEditMode();
 
 private slots:
-	void onStyleChanged();
-	void onCurrentStyleChanged(const QModelIndex &newIndex, const QModelIndex &oldIndex);
 	void fillStyleData();
+	void requeryList();
+	void updateManipulationButtonsEnabled();
 
 private slots:
-	void on_widget_sigTextStyleChangedByUser(const TextStyle &);
+	void onStyleChanged();
+	void onCurrentStyleChanged(const QModelIndex &newIndex, const QModelIndex &oldIndex);
+	void onNameChanged();
+
+private slots:
 	void on_btnAdd_clicked();
 	void on_btnDiscardChanges_clicked();
+	void on_btnSaveChanges_clicked();
+	void on_btnEdit_clicked();
+	void on_lvList_customContextMenuRequested(const QPoint &pos);
+	void on_actionDeleteStyle_triggered();
 
 private:
 	Ui::StylesDialog *ui;
+	QMenu *listContextMenu_;
 	QSqlQueryModel styleListModel_;
 	PresentationStyle presentationStyle_;
 
 private:
 	bool isMgmtMode_, isEditMode_ = false;
-	qlonglong currentStyleId_;
+	qlonglong currentStyleId_ = -1;
+	bool currentStyleIsInternal_;
 
 };
 

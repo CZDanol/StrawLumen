@@ -75,7 +75,10 @@ SOURCES += main.cpp \
     wgt/textstylepreviewwidget.cpp \
     rec/textstyle.cpp \
     rec/presentationstyle.cpp \
-    wgt/presentationstylepreviewwidget.cpp
+    wgt/presentationstylepreviewwidget.cpp \
+    job/jsonautomation.cpp \
+    job/fontdatabase.cpp \
+    rec/presentationbackground.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -144,7 +147,10 @@ HEADERS += \
     wgt/textstylepreviewwidget.h \
     rec/textstyle.h \
     rec/presentationstyle.h \
-    wgt/presentationstylepreviewwidget.h
+    wgt/presentationstylepreviewwidget.h \
+    job/jsonautomation.h \
+    job/fontdatabase.h \
+    rec/presentationbackground.h
 
 RESOURCES += \
     ../res/resources.qrc

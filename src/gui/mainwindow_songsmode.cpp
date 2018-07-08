@@ -167,6 +167,9 @@ void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPo
 
 void MainWindow_SongsMode::fillSongData()
 {
+	if(currentSongId_ == -1)
+		return;
+
 	QSqlRecord r = db->selectRow("SELECT * FROM songs WHERE id = ?", {currentSongId_});
 	ui->lnName->setText(r.value("name").toString());
 	ui->lnAuthor->setText(r.value("author").toString());
@@ -234,6 +237,9 @@ void MainWindow_SongsMode::on_actionDeleteSong_triggered()
 	if(currentSongId_ == -1)
 		return;
 
+	if(isSongEditMode_)
+		return standardErrorDialog(tr("V režimu úprav nelze mazat písně. Ukončete úpravy a zkuste to znovu."));
+
 	if(!standardDeleteConfirmDialog(tr("Opravdu smazat píseň \"%1\"?").arg(ui->lnName->text())))
 		return;
 
@@ -242,7 +248,9 @@ void MainWindow_SongsMode::on_actionDeleteSong_triggered()
 	db->exec("DELETE FROM songs WHERE id = ?", {currentSongId_});
 	db->commitTransaction();
 
+	currentSongId_ = -1;
 	ui->wgtSongList->requery();
+	updateSongManipulationButtonsEnabled();
 }
 
 void MainWindow_SongsMode::on_lnSlideOrder_sigFocused()

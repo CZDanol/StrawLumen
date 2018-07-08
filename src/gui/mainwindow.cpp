@@ -47,9 +47,9 @@ void MainWindow::closeEvent(QCloseEvent *e)
 	QMainWindow::closeEvent(e);
 }
 
-void MainWindow::onDbQueryError(const QString &error, const QString &sql)
+void MainWindow::onDbQueryError(const QString &query, const QString &error)
 {
-	standardErrorDialog(tr("Chyba databáze: %1\n\n%2").arg(error, sql));
+	standardErrorDialog(tr("Chyba databáze: %1\n\n%2").arg(error, query));
 }
 
 void MainWindow::on_actionSettings_triggered()

@@ -22,7 +22,7 @@ protected:
 	void closeEvent(QCloseEvent *e) override;
 
 private slots:
-	void onDbQueryError(const QString &error, const QString &sql);
+	void onDbQueryError(const QString &query, const QString &error);
 
 private slots:
 	void on_actionSettings_triggered();

@@ -45,7 +45,7 @@ BackgroundDialog::BackgroundDialog(QWidget *parent) :
 	if(!backgroundsDirectory_.mkpath("."))
 		criticalBootError(tr("Nepodařilo se vytvořit složku pro pozadí"));
 
-	galleryContextMenu_ = new QMenu();
+	galleryContextMenu_ = new QMenu(this);
 	galleryContextMenu_->addAction(ui->actionDelete);
 }
 
@@ -57,7 +57,7 @@ BackgroundDialog::~BackgroundDialog()
 void BackgroundDialog::showInMgmtMode()
 {
 	setMgmtMode(true);
-	loadBackgrounds();
+	ui->lwList->setCurrentRow(0);
 	QDialog::show();
 }
 
@@ -90,6 +90,12 @@ void BackgroundDialog::dropEvent(QDropEvent *e)
 				return;
 		}
 	});
+}
+
+void BackgroundDialog::showEvent(QShowEvent *e)
+{
+	loadBackgrounds();
+	QDialog::showEvent(e);
 }
 
 void BackgroundDialog::loadBackgrounds(bool force)

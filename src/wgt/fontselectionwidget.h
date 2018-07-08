@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QStringListModel>
-#include <QFontDatabase>
 
 namespace Ui {
 	class FontSelectionWidget;
@@ -42,7 +41,6 @@ private:
 	QFont selectedFont_;
 	QStringListModel fontListModel_;
 	QStringListModel fontStyleListModel_;
-	QFontDatabase fontDatabase_;
 
 };
 

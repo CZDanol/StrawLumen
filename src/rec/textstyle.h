@@ -4,6 +4,20 @@
 #include <QFont>
 #include <QColor>
 #include <QTextOption>
+#include <QJsonValue>
+
+// F(identifier, capitalizedIdentifier, Type, defaultValue)
+#define TEXT_STYLE_FIELD_FACTORY(F)\
+	F(font, Font, QFont, QFont("Tahoma", 12))\
+	F(color, Color, QColor, Qt::white)\
+	\
+	F(outlineEnabled, OutlineEnabled, bool, false)\
+	F(outlineWidth, OutlineWidth, int, 8)\
+	F(outlineColor, OutlineColor, QColor, Qt::black)\
+	\
+	F(backgroundEnabled, BackgroundEnabled, bool, false)\
+	F(backgroundPadding, BackgroundPadding, int, 20)\
+	F(backgroundColor, BackgroundColor, QColor, QColor(0,0,0,128))
 
 struct TextStyle {
 
@@ -13,21 +27,19 @@ public:
 	};
 
 public:
-	QFont font = QFont("Tahoma", 12);
-	QColor color = Qt::white;
+	static TextStyle fromJSON(const QJsonValue &json);
 
 public:
-	bool outlineEnabled = false;
-	int outlineWidth = 8;
-	QColor outlineColor = Qt::black;
-
-public:
-	bool backgroundEnabled = false;
-	int backgroundPadding = 20;
-	QColor backgroundColor = QColor(0,0,0,128);
+#define F(identifier, capitalizedIdentifier, Type, defaultValue) Type identifier = defaultValue;
+	TEXT_STYLE_FIELD_FACTORY(F)
+#undef F
 
 public:
 	void drawText(QPainter &p, const QRect &rect, const QString &str, const QTextOption &option = QTextOption(Qt::AlignCenter), int flags = fScaleDownToFitRect) const;
+
+public:
+	void loadFromJSON(const QJsonValue &json);
+	QJsonValue toJSON() const;
 
 public:
 	bool operator==(const TextStyle &other) const;

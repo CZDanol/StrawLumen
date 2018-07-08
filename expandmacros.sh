@@ -1,0 +1,1 @@
+g++ -E $1 -I /mnt/d/Programy/Qt/5.11.0/msvc2015/include/QtCore/ -I /mnt/d/Programy/Qt/5.11.0/msvc2015/include/QtWidgets/ -I /mnt/d/Programy/Qt/5.11.0/msvc2015/include -I /mnt/d/Programy/Qt/5.11.0/msvc2015/include/QtSql/ -I /mnt/d/Programy/Qt/5.11.0/msvc2015/include/QtGui/ -I /mnt/d/Programy/Qt/5.11.0/msvc2015/include/QtSql/ -I src

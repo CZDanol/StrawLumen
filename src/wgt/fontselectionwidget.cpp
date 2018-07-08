@@ -1,7 +1,7 @@
 #include "fontselectionwidget.h"
 #include "ui_fontselectionwidget.h"
 
-#include <QFontDatabase>
+#include "job/fontdatabase.h"
 
 FontSelectionWidget::FontSelectionWidget(QWidget *parent) :
 	QWidget(parent),
@@ -26,7 +26,7 @@ const QFont &FontSelectionWidget::selectedFont() const
 
 void FontSelectionWidget::updateFontList()
 {
-	fontListModel_.setStringList(fontDatabase_.families());
+	fontListModel_.setStringList(fontDatabase().families());
 }
 
 void FontSelectionWidget::setSelectedFont(const QFont &font)
@@ -54,7 +54,7 @@ void FontSelectionWidget::setReadOnly(bool set)
 
 void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
 {
-	fontStyleListModel_.setStringList(fontDatabase_.styles(selectedFont_.family()));
+	fontStyleListModel_.setStringList(fontDatabase().styles(selectedFont_.family()));
 
 	const QStringList stringList = fontStyleListModel_.stringList();
 	int pos = stringList.indexOf(setStyle);
@@ -64,7 +64,7 @@ void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
 	ui->cmbFontStyle->setCurrentIndex(pos);
 
 	if(stringList.size())
-		selectedFont_ = fontDatabase_.font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());
+		selectedFont_ = fontDatabase().font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());
 }
 
 void FontSelectionWidget::on_cmbFont_activated(const QString &arg1)
@@ -84,7 +84,7 @@ void FontSelectionWidget::on_cmbFontStyle_activated(const QString &arg1)
 	if(selectedFont_.styleName() == arg1)
 		return;
 
-	selectedFont_ = fontDatabase_.font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());
+	selectedFont_ = fontDatabase().font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());
 
 	emit sigFontChangedByUser(selectedFont_);
 }

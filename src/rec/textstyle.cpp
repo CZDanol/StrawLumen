@@ -3,6 +3,16 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QFontMetrics>
+#include <QJsonObject>
+
+#include "job/jsonautomation.h"
+
+TextStyle TextStyle::fromJSON(const QJsonValue &json)
+{
+	TextStyle result;
+	result.loadFromJSON(json);
+	return result;
+}
 
 void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, const QTextOption &option, int flags) const
 {
@@ -56,10 +66,36 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	}
 
 	if(outlineEnabled)
-		p.strokePath(path, QPen(outlineColor, outlineWidth/scaleFactor));
+		p.strokePath(path, QPen(outlineColor, outlineWidth/scaleFactor, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
 	p.fillPath(path, color);
 	p.restore();
+}
+
+void TextStyle::loadFromJSON(const QJsonValue &val)
+{
+	const QJsonObject json = val.toObject();
+
+#define F(identifier, capitalizedIdentifier, Type, defaultValue)\
+	identifier = defaultValue;\
+	::loadFromJSON<Type>(identifier, json[#identifier]);
+
+	TEXT_STYLE_FIELD_FACTORY(F)
+#undef F
+
+}
+
+QJsonValue TextStyle::toJSON() const
+{
+	QJsonObject json;
+
+#define F(identifier, capitalizedIdentifier, Type, defaultValue)\
+	json[#identifier] = ::toJSON<Type>(identifier);
+
+	TEXT_STYLE_FIELD_FACTORY(F)
+#undef F
+
+	return json;
 }
 
 bool TextStyle::operator==(const TextStyle &other) const

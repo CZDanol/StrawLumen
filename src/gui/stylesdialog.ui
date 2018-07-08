@@ -80,6 +80,9 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QListView" name="lvList">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
            <property name="uniformItemSizes">
             <bool>true</bool>
            </property>
@@ -197,7 +200,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <property name="quickEditStyle" stdset="0">
       <bool>true</bool>
@@ -312,6 +315,11 @@
       <attribute name="title">
        <string>Titulek</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="TextStyleWidget" name="wgtTitleTextStyle" native="true"/>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
@@ -369,6 +377,18 @@
     </layout>
    </item>
   </layout>
+  <action name="actionDeleteStyle">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Trash Can_16px.png</normaloff>:/icons/16/Trash Can_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Smazat</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

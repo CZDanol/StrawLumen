@@ -2,6 +2,8 @@
 #include "ui_stylesdialog.h"
 
 #include <QSqlRecord>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "util/standarddialogs.h"
 #include "job/db.h"
@@ -24,8 +26,18 @@ StylesDialog::StylesDialog(QWidget *parent) :
 
 	ui->lvList->setModel(&styleListModel_);
 
+	connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(accept()));
+	connect(ui->btnSelect, SIGNAL(clicked(bool)), this, SLOT(accept()));
+	connect(ui->btnStorno, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(ui->lvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentStyleChanged(QModelIndex,QModelIndex)));
+	connect(ui->wgtMainTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setMainTextStyle);
+	connect(ui->lnName, &QLineEdit::editingFinished, this, &StylesDialog::onNameChanged);
+
+	{
+		listContextMenu_ = new QMenu(this);
+		listContextMenu_->addAction(ui->actionDeleteStyle);
+	}
 
 	isEditMode_ = true;
 	setEditMode(false);
@@ -40,6 +52,21 @@ void StylesDialog::showInMgmtMode()
 {
 	setMgmtMode(true);
 	QDialog::show();
+	ui->lvList->setCurrentIndex(styleListModel_.index(0,0));
+}
+
+void StylesDialog::showEvent(QShowEvent *e)
+{
+	requeryList();
+	QDialog::showEvent(e);
+}
+
+void StylesDialog::reject()
+{
+	if(!tryCloseEditMode())
+		return;
+
+	QDialog::reject();
 }
 
 void StylesDialog::setMgmtMode(bool set)
@@ -53,6 +80,8 @@ void StylesDialog::setMgmtMode(bool set)
 
 void StylesDialog::setEditMode(bool set)
 {
+	isEditMode_ = set;
+
 	ui->btnSaveChanges->setVisible(set);
 	ui->btnDiscardChanges->setVisible(set);
 	ui->btnEdit->setVisible(!set);
@@ -66,6 +95,8 @@ void StylesDialog::setEditMode(bool set)
 
 	STYLE_FIELDS_FACTORY(F)
 		#undef F
+
+	updateManipulationButtonsEnabled();
 }
 
 bool StylesDialog::tryCloseEditMode()
@@ -80,6 +111,42 @@ bool StylesDialog::tryCloseEditMode()
 	return true;
 }
 
+void StylesDialog::fillStyleData()
+{
+	if(currentStyleId_ == -1)
+		return;
+
+	QSqlRecord r = db->selectRow("SELECT isInternal, data FROM styles WHERE id = ?", {currentStyleId_});
+
+	currentStyleIsInternal_ = r.value("isInternal").toBool();
+	ui->btnEdit->setEnabled(!currentStyleIsInternal_);
+
+	const QJsonObject json = QJsonDocument::fromJson(r.value("data").toByteArray()).object();
+	presentationStyle_.loadFromJSON(json);
+
+	ui->lnName->setText(presentationStyle_.name());
+	ui->wgtMainTextStyle->setTextStyle(presentationStyle_.mainTextStyle());
+}
+
+void StylesDialog::requeryList()
+{
+	const int rowId = ui->lvList->currentIndex().row();
+	const qlonglong id = currentStyleId_;
+
+	styleListModel_.setQuery(db->selectQuery(QString("SELECT (CASE WHEN isInternal THEN (name || ?) ELSE name END) AS displayName, id FROM styles ORDER BY name ASC"), {tr(" (interní)")}));
+
+	if(rowId != -1 && styleListModel_.record(rowId).value("id").toLongLong() == id)
+		ui->lvList->setCurrentIndex(styleListModel_.index(rowId, 0));
+}
+
+void StylesDialog::updateManipulationButtonsEnabled()
+{
+	const bool enabled = currentStyleId_ != -1 && !currentStyleIsInternal_ && !isEditMode_;
+
+	ui->btnEdit->setEnabled(enabled);
+	ui->actionDeleteStyle->setEnabled(enabled);
+}
+
 void StylesDialog::onStyleChanged()
 {
 	ui->wgtPreview->setPresentationStyle(presentationStyle_);
@@ -87,9 +154,6 @@ void StylesDialog::onStyleChanged()
 
 void StylesDialog::onCurrentStyleChanged(const QModelIndex &newIndex, const QModelIndex &oldIndex)
 {
-	if(!newIndex.isValid())
-		return;
-
 	const qlonglong newId = styleListModel_.record(newIndex.row()).value("id").toLongLong();
 	if(newId == currentStyleId_)
 		return;
@@ -101,21 +165,19 @@ void StylesDialog::onCurrentStyleChanged(const QModelIndex &newIndex, const QMod
 
 	currentStyleId_ = newId;
 	fillStyleData();
+	updateManipulationButtonsEnabled();
 }
 
-void StylesDialog::fillStyleData()
+void StylesDialog::onNameChanged()
 {
-	QSqlRecord rec = db->selectRow("SELECT * FROM styles WHERE id = ?", {currentStyleId_});
-}
-
-void StylesDialog::on_widget_sigTextStyleChangedByUser(const TextStyle &style)
-{
-	presentationStyle_.setMainTextStyle(style);
+	presentationStyle_.setName(ui->lnName->text());
 }
 
 void StylesDialog::on_btnAdd_clicked()
 {
 	currentStyleId_ = -1;
+	currentStyleIsInternal_ = false;
+	ui->lnName->setText(tr("Nový styl"));
 	setEditMode(true);
 }
 
@@ -126,4 +188,53 @@ void StylesDialog::on_btnDiscardChanges_clicked()
 
 	setEditMode(false);
 	fillStyleData(); // Reload original values
+}
+
+void StylesDialog::on_btnSaveChanges_clicked()
+{
+	if(currentStyleIsInternal_)
+		return;
+
+	if(currentStyleId_ == -1)
+		currentStyleId_ = db->insert("INSERT INTO styles(isInternal) VALUES(FALSE)").toLongLong();
+
+	db->exec("UPDATE styles SET name = ?, data = ? WHERE id = ?", {
+						 presentationStyle_.name(),
+						 QJsonDocument(presentationStyle_.toJSON()).toJson(QJsonDocument::Compact),
+						 currentStyleId_
+					 });
+
+	setEditMode(false);
+	requeryList();
+}
+
+void StylesDialog::on_btnEdit_clicked()
+{
+	setEditMode(true);
+}
+
+void StylesDialog::on_lvList_customContextMenuRequested(const QPoint &pos)
+{
+	if(currentStyleId_ == -1)
+		return;
+
+	listContextMenu_->popup(ui->lvList->viewport()->mapToGlobal(pos));
+}
+
+void StylesDialog::on_actionDeleteStyle_triggered()
+{
+	if(currentStyleId_ == -1)
+		return;
+
+	if(isEditMode_)
+		return standardErrorDialog(tr("V režimu úprav nelze mazat styly. Ukončete úpravy a zkuste to znovu."));
+
+	if(!standardDeleteConfirmDialog(tr("Opravdu smazat styl \"%1\"?").arg(ui->lnName->text())))
+		return;
+
+	db->exec("DELETE FROM styles WHERE id = ?", {currentStyleId_});
+
+	currentStyleId_ = -1;
+	requeryList();
+	updateManipulationButtonsEnabled();
 }

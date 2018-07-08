@@ -6,8 +6,8 @@
 #include "util/standarddialogs.h"
 #include "main.h"
 
-#define SETTING_SAVE(Type) template<> void saveSetting<Type>(const QString &name, const Type *widget)
-#define SETTING_LOAD(Type) template<> void loadSetting<Type>(const QString &name, Type *widget)
+#define SETTING_SAVE(T) template<> void saveSetting<T>(const QString &name, const T *widget)
+#define SETTING_LOAD(T) template<> void loadSetting<T>(const QString &name, T *widget)
 
 QSettings *settings = nullptr;
 

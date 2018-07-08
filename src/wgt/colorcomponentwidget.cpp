@@ -120,12 +120,12 @@ void ColorComponentWidget::paintEvent(QPaintEvent *)
 	const qreal x = barRect_.left() + barRect_.width() * componentRecord.getterFunc(currentColor_);
 	const qreal radius = (height()-2)/2;
 
-	static const QPen pen(Qt::black);
 	QColor c = currentColor_;
 	if(component_ != ccAlpha)
 		c.setAlphaF(1);
 
-	p.setPen(pen);
+	static const QPen pen(Qt::black), disabledPen(Qt::gray);
+	p.setPen(isEnabled() ? pen : disabledPen);
 	p.setBrush(c);
 	p.drawEllipse(QPointF(x, height()/2), radius, radius);
 }
