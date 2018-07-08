@@ -6,12 +6,14 @@
 #include <QJsonObject>
 
 #include "rec/textstyle.h"
+#include "rec/presentationbackground.h"
 
 // F(identifier, capitalizedIdentifier, Type)
 #define PRESENTATION_STYLE_FIELD_FACTORY(F)\
 	F(name, Name, QString)\
 	F(mainTextStyle, MainTextStyle, TextStyle)\
-	F(titleTextStyle, TitleTextStyle, TextStyle)
+	F(titleTextStyle, TitleTextStyle, TextStyle)\
+	F(background, Background, PresentationBackground)
 
 class PresentationStyle : public QObject
 {
@@ -22,6 +24,19 @@ public:
 
 signals:
 	void sigChanged();
+
+
+public:
+	bool usesBackground(const QString &filename);
+
+	void drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const;
+
+public:
+	void loadFromJSON(const QJsonValue &val);
+	QJsonObject toJSON() const;
+
+public:
+	void operator=(const PresentationStyle &other);
 
 public slots:
 	// Field setters
@@ -34,16 +49,6 @@ public:
 #define F(identifier, capitalizedIdentifier, Type) const Type &identifier() const;
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
 #undef F
-
-public:
-	void loadFromJSON(const QJsonValue &val);
-	QJsonObject toJSON() const;
-
-public:
-	void drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title, const QString &author) const;
-
-public:
-	void operator=(const PresentationStyle &other);
 
 private:
 	// Fields

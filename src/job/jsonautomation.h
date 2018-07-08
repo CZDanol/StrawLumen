@@ -7,6 +7,7 @@
 #include <QFont>
 
 #include "rec/textstyle.h"
+#include "rec/presentationbackground.h"
 
 template<typename T>
 inline void loadFromJSON(T &subj, const QJsonValue &json) { Q_UNUSED(subj); Q_UNUSED(json); __ERROR__; }
@@ -26,6 +27,7 @@ JSON_HEADERS(QColor)
 JSON_HEADERS(QFont)
 
 JSON_HEADERS(TextStyle)
+JSON_HEADERS(PresentationBackground)
 
 #undef JSON_HEADERS
 

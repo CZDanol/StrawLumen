@@ -10,6 +10,11 @@ PresentationStyle::PresentationStyle(QObject *parent) : QObject(parent)
 
 }
 
+bool PresentationStyle::usesBackground(const QString &filename)
+{
+	return background_.filename == filename;
+}
+
 void PresentationStyle::loadFromJSON(const QJsonValue &val)
 {
 	const QJsonObject json = val.toObject();
@@ -36,19 +41,25 @@ QJsonObject PresentationStyle::toJSON() const
 	return json;
 }
 
-void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title, const QString &author) const
+void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const
 {
-	const int mv = (int)( rect.width() * 0.05 );
-	const QMargins m(mv,mv,mv,mv);
+	const int mw = (int)( rect.width() * 0.05 );
+	const int mh = (int)( rect.height() * 0.05 );
+	const QMargins m(mw,mh,mw,mh);
 
-	p.fillRect(rect, Qt::black);
+	background_.draw(p, rect);
 	mainTextStyle_.drawText(p, rect.marginsRemoved(m), text);
-	titleTextStyle_.drawText(p, rect.marginsRemoved(m), text, QTextOption(Qt::AlignHCenter | Qt::AlignBottom));
+	titleTextStyle_.drawText(p, rect.marginsRemoved(m), title, QTextOption(Qt::AlignHCenter | Qt::AlignBottom));
 }
 
 void PresentationStyle::operator=(const PresentationStyle &other)
 {
-	mainTextStyle_ = other.mainTextStyle_;
+#define F(identifier, capitalizedIdentifier, Type)\
+	identifier ## _ = other.identifier ## _;
+
+	PRESENTATION_STYLE_FIELD_FACTORY(F)
+#undef F
+
 	emit sigChanged();
 }
 

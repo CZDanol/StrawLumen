@@ -17,6 +17,7 @@
 #include "job/activexjobthread.h"
 #include "job/db.h"
 #include "job/settings.h"
+#include "job/backgroundmanager.h"
 #include "presentation/presentation.h"
 #include "presentation/powerpoint/presentationengine_powerpoint.h"
 #include "presentation/native/presentationengine_native.h"
@@ -53,6 +54,8 @@ void initApplication() {
 	initSettings();
 	initDb();
 
+	backgroundManager = new BackgroundManager();
+
 	activeXJobThread = new ActiveXJobThread();
 	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
 	presentationEngine_Native = new PresentationEngine_Native();
@@ -60,6 +63,7 @@ void initApplication() {
 
 	mainWindow = new MainWindow();
 	projectorWindow = new ProjectorWindow();
+
 	settingsDialog = new SettingsDialog(mainWindow);
 	splashscreen = new Splashscreen(mainWindow);
 	activeXDebugDialog = new ActiveXDebugDialog(mainWindow);
@@ -68,14 +72,15 @@ void initApplication() {
 }
 
 void uninitApplication() {
-	delete mainWindow;
-
 	delete presentationManager;
 	delete presentationEngine_Native;
 	delete presentationEngine_PowerPoint;
 	delete activeXJobThread;
 
+	delete mainWindow;
 	delete projectorWindow;
+
+	delete backgroundManager;
 
 	uninitDb();
 	uninitSettings();

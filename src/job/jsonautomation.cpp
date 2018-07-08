@@ -55,3 +55,10 @@ JSON_FROM(TextStyle) {
 JSON_TO(TextStyle) {
 	return subj.toJSON();
 }
+
+JSON_FROM(PresentationBackground) {
+	subj.loadFromJSON(json);
+}
+JSON_TO(PresentationBackground) {
+	return subj.toJSON();
+}

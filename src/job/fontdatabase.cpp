@@ -4,14 +4,14 @@
 
 QFontDatabase &fontDatabase()
 {
-	static QFontDatabase *db = nullptr;
+	static QFontDatabase *inst = nullptr;
 
-	if(!db) {
-		db = new QFontDatabase();
-		QObject::connect(qApp, &QCoreApplication::aboutToQuit, [=](){
-			delete db;
+	if(!inst) {
+		inst = new QFontDatabase();
+		QObject::connect(qApp, &QCoreApplication::aboutToQuit, []{
+			delete inst;
 		});
 	}
 
-	return *db;
+	return *inst;
 }

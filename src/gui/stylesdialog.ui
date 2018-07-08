@@ -169,6 +169,9 @@
          <iconset resource="../../res/resources.qrc">
           <normaloff>:/icons/16/Checkmark_16px.png</normaloff>:/icons/16/Checkmark_16px.png</iconset>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
         <property name="flat">
          <bool>true</bool>
         </property>
@@ -182,6 +185,9 @@
         <property name="icon">
          <iconset resource="../../res/resources.qrc">
           <normaloff>:/icons/16/Edit_16px.png</normaloff>:/icons/16/Edit_16px.png</iconset>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -200,7 +206,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="quickEditStyle" stdset="0">
       <bool>true</bool>
@@ -254,23 +260,6 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="btnSelectBackground">
-         <property name="text">
-          <string> Vybrat</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/16/Select_16px.png</normaloff>:/icons/16/Select_16px.png</iconset>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="1">
         <widget class="QLabel" name="label_4">
          <property name="text">
@@ -290,6 +279,9 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="3">
+        <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true"/>
        </item>
       </layout>
      </widget>
@@ -405,6 +397,15 @@
    <extends>QWidget</extends>
    <header>wgt/presentationstylepreviewwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PresentationBackgroundSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/presentationbackgroundselectionwidget.h</header>
+   <container>1</container>
+   <slots>
+    <signal>sigPresentationBackgroundChangedByUser(PresentationBackground)</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>

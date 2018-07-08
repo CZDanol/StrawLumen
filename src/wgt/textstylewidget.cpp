@@ -63,6 +63,9 @@ void TextStyleWidget::setReadOnly(bool set)
 	ui->wgtFont->setReadOnly(set);
 	ui->wgtOutlineColor->setReadOnly(set);
 
+	ui->sbBackgroundPadding->setReadOnly(set);
+	ui->sbOutlineWidth->setReadOnly(set);
+
 	ui->cbBackground->setEnabled(!set);
 	ui->cbOutline->setEnabled(!set);
 }

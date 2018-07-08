@@ -16,6 +16,7 @@
 #include "util/execonmainthread.h"
 #include "util/standarddialogs.h"
 #include "job/settings.h"
+#include "job/backgroundmanager.h"
 #include "main.h"
 
 BackgroundDialog *backgroundDialog = nullptr;
@@ -41,10 +42,6 @@ BackgroundDialog::BackgroundDialog(QWidget *parent) :
 
 	connect(new QShortcut(Qt::Key_Delete, this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDelete, SLOT(trigger()));
 
-	backgroundsDirectory_ = QDir(appDataDirectory.absoluteFilePath("backgrounds"));
-	if(!backgroundsDirectory_.mkpath("."))
-		criticalBootError(tr("Nepodařilo se vytvořit složku pro pozadí"));
-
 	galleryContextMenu_ = new QMenu(this);
 	galleryContextMenu_->addAction(ui->actionDelete);
 }
@@ -59,6 +56,19 @@ void BackgroundDialog::showInMgmtMode()
 	setMgmtMode(true);
 	ui->lwList->setCurrentRow(0);
 	QDialog::show();
+}
+
+const PresentationBackground &BackgroundDialog::showInSelectionMode(const PresentationBackground &background)
+{
+	presentationBackground_ = background;
+	ui->lwList->setCurrentItem(itemsByFilename_.value(presentationBackground_.filename, nullptr));
+	ui->wgtColor->setColor(presentationBackground_.color);
+	ui->twGallery->setCurrentIndex(0);
+
+	setMgmtMode(false);
+	updatePreview();
+
+	return QDialog::exec() == QDialog::Accepted ? presentationBackground_ : background;
 }
 
 const QDir &BackgroundDialog::backgroundsDirectory() const
@@ -132,8 +142,8 @@ void BackgroundDialog::loadBackgrounds(bool force)
 			}
 		};
 
-		addFromDirectory(backgroundsDirectory_.absolutePath(), false);
-		addFromDirectory(QDir(qApp->applicationDirPath()).absoluteFilePath("../backgrounds"), true);
+		addFromDirectory(backgroundManager->userBackgroundDirectory().absolutePath(), false);
+		addFromDirectory(backgroundManager->internalBackgroundDirectory().absolutePath(), true);
 	});
 
 	for(QListWidgetItem *item : data) {
@@ -234,6 +244,14 @@ void BackgroundDialog::setMgmtMode(bool set)
 	isMgmtMode_ = set;
 }
 
+void BackgroundDialog::updatePreview()
+{
+	if(isMgmtMode_)
+		return;
+
+	ui->wgtPreview->setPresentationBackground(presentationBackground_);
+}
+
 void BackgroundDialog::onLwGalleryContextMenuRequested(const QPoint &pos)
 {
 	if(!ui->lwList->currentItem())
@@ -270,9 +288,8 @@ void BackgroundDialog::on_btnAdd_clicked()
 void BackgroundDialog::on_lwList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *)
 {
 	ui->actionDelete->setEnabled(current && !current->data(idrIsIntegratedBackground).toBool());
-
-	if(current)
-		resultBackground_ = current->data(idrFilename).toString();
+	presentationBackground_.filename = current ? current->data(idrFilename).toString() : QString();
+	updatePreview();
 }
 
 void BackgroundDialog::on_actionDelete_triggered()
@@ -287,4 +304,10 @@ void BackgroundDialog::on_actionDelete_triggered()
 	QFile(item->data(idrFilePath).toString()).remove();
 	QFile(item->data(idrThumbnailFilePath).toString()).remove();
 	delete item;
+}
+
+void BackgroundDialog::on_wgtColor_sigColorChangedByUser(const QColor &newColor)
+{
+	presentationBackground_.color = newColor;
+	updatePreview();
 }

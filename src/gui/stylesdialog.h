@@ -26,6 +26,7 @@ public:
 protected:
 	void showEvent(QShowEvent *e) override;
 	void reject() override;
+	void accept() override;
 
 private:
 	void setMgmtMode(bool set);

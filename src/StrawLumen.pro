@@ -78,7 +78,10 @@ SOURCES += main.cpp \
     wgt/presentationstylepreviewwidget.cpp \
     job/jsonautomation.cpp \
     job/fontdatabase.cpp \
-    rec/presentationbackground.cpp
+    rec/presentationbackground.cpp \
+    wgt/presentationbackgroundpreviewwidget.cpp \
+    job/backgroundmanager.cpp \
+    wgt/presentationbackgroundselectionwidget.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -96,7 +99,8 @@ FORMS += \
     gui/stylesdialog.ui \
     wgt/colorselectionwidget.ui \
     wgt/fontselectionwidget.ui \
-    wgt/textstylewidget.ui
+    wgt/textstylewidget.ui \
+    wgt/presentationbackgroundselectionwidget.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -150,7 +154,10 @@ HEADERS += \
     wgt/presentationstylepreviewwidget.h \
     job/jsonautomation.h \
     job/fontdatabase.h \
-    rec/presentationbackground.h
+    rec/presentationbackground.h \
+    wgt/presentationbackgroundpreviewwidget.h \
+    job/backgroundmanager.h \
+    wgt/presentationbackgroundselectionwidget.h
 
 RESOURCES += \
     ../res/resources.qrc

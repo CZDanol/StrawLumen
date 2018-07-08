@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>677</width>
-    <height>334</height>
+    <width>650</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -69,6 +69,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -122,6 +128,24 @@
         <attribute name="title">
          <string>Barva</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="ColorSelectionWidget" name="wgtColor" native="true"/>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
       </widget>
      </item>
@@ -144,7 +168,18 @@
         <attribute name="title">
          <string>Náhled</string>
         </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_3"/>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="PresentationBackgroundPreviewWidget" name="wgtPreview" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>200</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </item>
@@ -214,6 +249,23 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/colorselectionwidget.h</header>
+   <container>1</container>
+   <slots>
+    <signal>sigColorChanged(QColor)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>PresentationBackgroundPreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/presentationbackgroundpreviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

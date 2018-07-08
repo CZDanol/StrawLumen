@@ -8,11 +8,12 @@
 #include "util/standarddialogs.h"
 #include "job/db.h"
 
-//F(settingsName, uiControl)
+//F( uiControl)
 #define STYLE_FIELDS_FACTORY(F) \
-	F("name", lnName) \
-	F("mainTextStyle", wgtMainTextStyle)
-	//F("background", btn)
+	F(lnName) \
+	F(wgtMainTextStyle)\
+	F(wgtTitleTextStyle)\
+	F(wgtBackground)
 
 extern StylesDialog *stylesDialog = nullptr;
 
@@ -31,8 +32,11 @@ StylesDialog::StylesDialog(QWidget *parent) :
 	connect(ui->btnStorno, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(ui->lvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentStyleChanged(QModelIndex,QModelIndex)));
+
 	connect(ui->wgtMainTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setMainTextStyle);
+	connect(ui->wgtTitleTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setTitleTextStyle);
 	connect(ui->lnName, &QLineEdit::editingFinished, this, &StylesDialog::onNameChanged);
+	connect(ui->wgtBackground, &PresentationBackgroundSelectionWidget::sigPresentationBackgroundChangedByUser, &presentationStyle_, &PresentationStyle::setBackground);
 
 	{
 		listContextMenu_ = new QMenu(this);
@@ -69,6 +73,14 @@ void StylesDialog::reject()
 	QDialog::reject();
 }
 
+void StylesDialog::accept()
+{
+	if(!tryCloseEditMode())
+		return;
+
+	QDialog::accept();
+}
+
 void StylesDialog::setMgmtMode(bool set)
 {
 	ui->btnStorno->setVisible(!set);
@@ -88,7 +100,7 @@ void StylesDialog::setEditMode(bool set)
 
 	ui->btnAdd->setEnabled(!set);
 
-#define F(settingsName, uiControl) \
+#define F(uiControl) \
 	ui->uiControl->setReadOnly(!set);\
 	ui->uiControl->style()->unpolish(ui->uiControl); \
 	ui->uiControl->style()->polish(ui->uiControl);
@@ -107,6 +119,7 @@ bool StylesDialog::tryCloseEditMode()
 	if(!standardDeleteConfirmDialog(tr("Aktuální styl je otevřený pro editaci. Chcete pokračovat a zahodit provedené úpravy?")))
 		return false;
 
+	fillStyleData();
 	setEditMode(false);
 	return true;
 }
@@ -126,6 +139,8 @@ void StylesDialog::fillStyleData()
 
 	ui->lnName->setText(presentationStyle_.name());
 	ui->wgtMainTextStyle->setTextStyle(presentationStyle_.mainTextStyle());
+	ui->wgtTitleTextStyle->setTextStyle(presentationStyle_.titleTextStyle());
+	ui->wgtBackground->setPresentationBackground(presentationStyle_.background());
 }
 
 void StylesDialog::requeryList()
