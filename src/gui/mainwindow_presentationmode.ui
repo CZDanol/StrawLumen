@@ -587,7 +587,7 @@
   <customwidget>
    <class>SongListWidget</class>
    <extends>QWidget</extends>
-   <header>gui/songlistwidget.h</header>
+   <header>wgt/songlistwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

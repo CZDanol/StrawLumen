@@ -12,7 +12,7 @@
 #include "rec/chord.h"
 #include "job/db.h"
 
-// F(ui->control)
+// F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
 	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent)
 
@@ -50,21 +50,24 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 			"C", "V1", "V2", "V3", "B", "I", "O"
 		};
 
-		insertSectionMenu = new QMenu();
+		insertSectionMenu_ = new QMenu(this);
 		for(auto &sectionName : sectionNames) {
 			SongSection section(sectionName);
-			insertSectionMenu->addAction(section.icon(), section.userFriendlyName(), [=]{
+			insertSectionMenu_->addAction(section.icon(), section.userFriendlyName(), [=]{
 				insertSongSection(section);
 			});
 		}
 
 		SongSection customSection = SongSection::customSection("");
-		insertSectionMenu->addAction(customSection.icon(), tr("Vlastní název"), [=]{
+		insertSectionMenu_->addAction(customSection.icon(), tr("Vlastní název"), [=]{
 			insertSongSection(customSection);
 		});
 
-		ui->btnInsertSection->setMenu(insertSectionMenu);
+		ui->btnInsertSection->setMenu(insertSectionMenu_);
 	}
+
+	addCustomSlideOrderItemMenu_ = new QMenu(this);
+	ui->btnAddCustomSlideOrderItem->setMenu(addCustomSlideOrderItemMenu_);
 
 	// To force update
 	isSongEditMode_ = true;
@@ -104,10 +107,12 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 	ui->twEdit->setVisible(set);
 	ui->twTranspose->setVisible(set);
 
-#define F(control) \
-	ui->control->setReadOnly(!set);\
-	ui->control->style()->unpolish(ui->control); \
-	ui->control->style()->polish(ui->control);
+	ui->btnAddCustomSlideOrderItem->setEnabled(set);
+
+#define F(uiControl) \
+	ui->uiControl->setReadOnly(!set);\
+	ui->uiControl->style()->unpolish(ui->uiControl); \
+	ui->uiControl->style()->polish(ui->uiControl);
 
 	SONG_FIELDS_FACTORY(F)
 #undef F
@@ -140,7 +145,7 @@ void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
 	if(songId == currentSongId_)
 		return;
 
-	if(isSongEditMode_ && !standardConfirmDialog(tr("Aktuální píseň je otevřená pro editaci. Chcete pokračovat a zahodit změny?"))) {
+	if(isSongEditMode_ && !standardConfirmDialog(tr("Aktuální píseň je otevřená pro editaci. Chcete pokračovat a zahodit provedené úpravy?"))) {
 		ui->wgtSongList->selectRow(prevRowId);
 		return;
 	}
@@ -149,14 +154,8 @@ void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
 		return;
 
 	currentSongId_ = songId;
-
 	setSongEditMode(false);
-
-	QSqlRecord r = db->selectRow("SELECT * FROM songs WHERE id = ?", {songId});
-	ui->lnName->setText(r.value("name").toString());
-	ui->lnAuthor->setText(r.value("author").toString());
-	ui->lnSlideOrder->setText(r.value("slideOrder").toString());
-	ui->teContent->setText(r.value("content").toString());
+	fillSongData();
 }
 
 void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPos)
@@ -164,6 +163,15 @@ void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPo
 	QMenu menu;
 	menu.addAction(ui->actionDeleteSong);
 	menu.popup(globalPos);
+}
+
+void MainWindow_SongsMode::fillSongData()
+{
+	QSqlRecord r = db->selectRow("SELECT * FROM songs WHERE id = ?", {currentSongId_});
+	ui->lnName->setText(r.value("name").toString());
+	ui->lnAuthor->setText(r.value("author").toString());
+	ui->lnSlideOrder->setText(r.value("slideOrder").toString());
+	ui->teContent->setText(r.value("content").toString());
 }
 
 void MainWindow_SongsMode::on_btnNew_clicked()
@@ -186,11 +194,7 @@ void MainWindow_SongsMode::on_btnDiscardChanges_clicked()
 		return;
 
 	setSongEditMode(false);
-
-	// Force update
-	const qlonglong songId = currentSongId_;
-	currentSongId_ = -1;
-	onCurrentSongChanged(songId, ui->wgtSongList->currentRowId());
+	fillSongData(); // Load original data
 }
 
 void MainWindow_SongsMode::on_btnSaveChanges_clicked()
@@ -278,4 +282,15 @@ void MainWindow_SongsMode::on_btnTransposeDown_clicked()
 	QString song = ui->teContent->toPlainText();
 	transposeSong(song, -1);
 	ui->teContent->setPlainText(song);
+}
+
+void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed()
+{
+	addCustomSlideOrderItemMenu_->clear();
+
+	for(SongSection section : SongSection::songSections(ui->teContent->toPlainText()))
+		addCustomSlideOrderItemMenu_->addAction(section.icon(), section.userFriendlyName(), [this, section]{
+			const QString text = ui->lnSlideOrder->text();
+			ui->lnSlideOrder->setText((text.isEmpty() ? "" : text + " ") + section.standardName());
+		});
 }

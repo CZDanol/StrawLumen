@@ -2,7 +2,7 @@
 
 #include "presentation/presentationengine.h"
 #include "presentation/presentation.h"
-#include "presentation/playlist.h"
+#include "rec/playlist.h"
 
 PresentationManager *presentationManager = nullptr;
 

@@ -6,6 +6,9 @@
 #include "util/standarddialogs.h"
 #include "main.h"
 
+#define SETTING_SAVE(Type) template<> void saveSetting<Type>(const QString &name, const Type *widget)
+#define SETTING_LOAD(Type) template<> void loadSetting<Type>(const QString &name, Type *widget)
+
 QSettings *settings = nullptr;
 
 void initSettings()
@@ -21,21 +24,19 @@ void uninitSettings()
 	delete settings;
 }
 
-#define SAVE_SETTING(Type) template<> void saveSetting<Type>(const QString &name, Type *control)
-#define LOAD_SETTING(Type) template<> void loadSetting<Type>(const QString &name, Type *control)
 
-SAVE_SETTING(DisplaySelectionWidget)
+SETTING_SAVE(DisplaySelectionWidget)
 {
-	auto id = control->selectedScreenId();
+	auto id = widget->selectedScreenId();
 	settings->setValue(name + ".geometry", id.first);
 	settings->setValue(name + ".name", id.second);
 }
 
-LOAD_SETTING(DisplaySelectionWidget)
+SETTING_LOAD(DisplaySelectionWidget)
 {
 	QPair<QRect, QString> id(
 				settings->value(name + ".geometry").toRect(),
 				settings->value(name + ".name").toString()
 				);
-	control->setSelectedScreen(id);
+	widget->setSelectedScreen(id);
 }

@@ -23,8 +23,11 @@ const TextStyle &PresentationStyle::mainTextStyle() const
 
 void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title, const QString &author) const
 {
+	const int mv = (int)( rect.width() * 0.05 );
+	const QMargins m(mv,mv,mv,mv);
+
 	p.fillRect(rect, Qt::black);
-	mainTextStyle_.drawText(p, rect, text);
+	mainTextStyle_.drawText(p, rect.marginsRemoved(m), text);
 }
 
 void PresentationStyle::operator=(const PresentationStyle &other)

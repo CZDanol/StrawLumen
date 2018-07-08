@@ -36,7 +36,7 @@ SongSection::SongSection(const QString &str)
 																				"(?:"
 																				"([VCBIO])([1-9][0-9]*)?" // Standard section format
 																				"|"
-																				"\"([^\"]+)\"" // Custom section name
+																				"\"([a-zA-Z0-9_-]+)\"" // Custom section name
 																				")"
 																				"$", QRegularExpression::UseUnicodePropertiesOption);
 
@@ -76,12 +76,12 @@ QString SongSection::standardName() const
 
 QString SongSection::userFriendlyName() const
 {
-	static QHash<QString,const char*> userFriendlyNames {
-		{"C", QT_TR_NOOP("Refrén")},
-		{"V", QT_TR_NOOP("Sloka")},
-		{"I", QT_TR_NOOP("Intro")},
-		{"O", QT_TR_NOOP("Outro")},
-		{"B", QT_TR_NOOP("Bridge")},
+	static QHash<QString,QString> userFriendlyNames {
+		{"C", tr("Refrén")},
+		{"V", tr("Sloka")},
+		{"I", tr("Intro")},
+		{"O", tr("Outro")},
+		{"B", tr("Bridge")},
 	};
 
 	if(!isValid_)
@@ -90,7 +90,7 @@ QString SongSection::userFriendlyName() const
 	if(!isStandard_)
 		return name_;
 
-	return index_.isEmpty() ? tr(userFriendlyNames[name_]) : tr("%1 %2").arg(tr(userFriendlyNames[name_]), index_);
+	return index_.isEmpty() ? userFriendlyNames[name_] : tr("%1 %2").arg(userFriendlyNames[name_], index_);
 }
 
 QString SongSection::annotation() const
@@ -107,9 +107,7 @@ QString SongSection::annotation() const
 QPixmap SongSection::icon() const
 {
 	static const QHash<QString, QPixmap> map {
-		{"C", QPixmap(":/icons/16/Repeat_16px.png")},
-		{"C1", QPixmap(":/icons/16/Repeat_16px.png")},
-
+		{"C", QPixmap(":/icons/16/Synchronize_16px.png")},
 		{"I", QPixmap(":/icons/16/Curved Arrow_16px.png")},
 		{"O", QPixmap(":/icons/16/Right 2_16px.png")},
 		{"B", QPixmap(":/icons/16/Circle_16px.png")},
@@ -129,5 +127,6 @@ QPixmap SongSection::icon() const
 	if(!isStandard_)
 		return customSectionPixmap;
 
-	return map.value(standardName(), QPixmap());
+	// First, try standard name with index, then without index
+	return map.value(standardName(), map.value(name_, QPixmap()));
 }

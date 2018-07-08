@@ -22,6 +22,7 @@ signals:
 public slots:
 	void setColor(const QColor &color);
 	void setAlphaChannelEnabled(bool set);
+	void setReadOnly(bool set);
 
 public:
 	bool isAlphaChannelEnabled() const;
@@ -30,11 +31,12 @@ private slots:
 	void onComponentColorChangedByUser(const QColor &newColor);
 
 private slots:
-	void on_wgtHex_editingFinished();
+	void on_lnHex_editingFinished();
 
 private:
 	Ui::ColorSelectionWidget *ui;
 	QColor currentColor_;
+	bool isReadOnly_ = false;
 	bool isAlphaChannelEnabled_ = true;
 
 };

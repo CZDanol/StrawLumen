@@ -35,7 +35,7 @@ void ColorSelectionWidget::setColor(const QColor &color)
 	ui->wgtC3->setColor(color);
 	ui->wgtCAlpha->setColor(color);
 
-	ui->wgtHex->setText(color.name(isAlphaChannelEnabled_ ? QColor::HexArgb : QColor::HexRgb));
+	ui->lnHex->setText(color.name(isAlphaChannelEnabled_ ? QColor::HexArgb : QColor::HexRgb));
 }
 
 void ColorSelectionWidget::setAlphaChannelEnabled(bool set)
@@ -45,6 +45,19 @@ void ColorSelectionWidget::setAlphaChannelEnabled(bool set)
 
 	isAlphaChannelEnabled_ = set;
 	ui->wgtCAlpha->setVisible(set);
+}
+
+void ColorSelectionWidget::setReadOnly(bool set)
+{
+	if(isReadOnly_ == set)
+		return;
+
+	isReadOnly_ = set;
+	ui->lnHex->setReadOnly(set);
+	ui->wgtC1->setEnabled(!set);
+	ui->wgtC2->setEnabled(!set);
+	ui->wgtC3->setEnabled(!set);
+	ui->wgtCAlpha->setEnabled(!set);
 }
 
 bool ColorSelectionWidget::isAlphaChannelEnabled() const
@@ -58,8 +71,8 @@ void ColorSelectionWidget::onComponentColorChangedByUser(const QColor &newColor)
 	emit sigColorChangedByUser(newColor);
 }
 
-void ColorSelectionWidget::on_wgtHex_editingFinished()
+void ColorSelectionWidget::on_lnHex_editingFinished()
 {
-	setColor(QColor(ui->wgtHex->text()));
+	setColor(QColor(ui->lnHex->text()));
 	emit sigColorChangedByUser(currentColor_);
 }

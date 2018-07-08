@@ -96,8 +96,6 @@ void ColorComponentWidget::setComponent(ColorComponentWidget::ColorComponent com
 
 void ColorComponentWidget::setColor(const QColor &color)
 {
-	const ComponentRecord &componentRecord = componentRecords[component_];
-
 	// Cannot be because comparison converts to RGB -> in some cases saturation information can be lost
 	/*if(color == currentColor_)
 		return;*/

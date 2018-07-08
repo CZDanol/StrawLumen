@@ -28,9 +28,7 @@ private slots:
 	void on_actionSettings_triggered();
 	void on_btnPresentationMode_clicked();
 	void on_btnSongsMode_clicked();
-
 	void on_actionBackgrounds_triggered();
-
 	void on_actionStyles_triggered();
 
 private:

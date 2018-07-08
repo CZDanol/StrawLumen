@@ -26,6 +26,7 @@ public:
 public slots:
 	void setTextStyle(const TextStyle &style);
 	void forceSetTextStyle(const TextStyle &style);
+	void setReadOnly(bool set);
 
 private slots:
 	void on_wgtFont_sigFontChangedByUser(const QFont &);
@@ -40,6 +41,7 @@ private slots:
 private:
 	Ui::TextStyleWidget *ui;
 	TextStyle textStyle_;
+	bool isReadOnly_ = false;
 	bool isSettingUp_ = false;
 
 };

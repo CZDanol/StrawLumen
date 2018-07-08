@@ -34,7 +34,7 @@ SOURCES += main.cpp \
     util/jobthread.cpp \
     job/activexjobthread.cpp \
     gui/splashscreen.cpp \
-    presentation/playlist.cpp \
+    rec/playlist.cpp \
     modelview/playlistitemmodel.cpp \
     gui/mainwindow_presentationmode.cpp \
     util/standarddialogs.cpp \
@@ -42,23 +42,23 @@ SOURCES += main.cpp \
     util/scopeexit.cpp \
     modelview/slidesitemmodel.cpp \
     modelview/slidesitemdelegate.cpp \
-    presentation/presentation_powerpoint.cpp \
+    presentation/powerpoint/presentation_powerpoint.cpp \
     presentation/presentationengine.cpp \
-    presentation/presentationengine_powerpoint.cpp \
+    presentation/powerpoint/presentationengine_powerpoint.cpp \
     presentation/presentationmanager.cpp \
     gui/activexdebugdialog.cpp \
-    gui/presentationproperties/presentationpropertieswidget.cpp \
-    gui/presentationproperties/presentationpropertieswidget_powerpoint.cpp \
+    presentation/presentationpropertieswidget.cpp \
+    presentation/powerpoint/presentationpropertieswidget_powerpoint.cpp \
     gui/projectorwindow.cpp \
     gui/settingsdialog.cpp \
     wgt/displayselectionwidget.cpp \
-    presentation/presentationengine_native.cpp \
-    presentation/presentation_blackscreen.cpp \
-    presentation/presentation_nativepresentation.cpp \
+    presentation/native/presentationengine_native.cpp \
+    presentation/native/presentation_blackscreen.cpp \
+    presentation/native/presentation_nativepresentation.cpp \
     gui/mainwindow_songsmode.cpp \
     job/dbmanager.cpp \
     job/db.cpp \
-    gui/songlistwidget.cpp \
+    wgt/songlistwidget.cpp \
     job/settings.cpp \
     rec/chord.cpp \
     util/songcontentsyntaxhiglighter.cpp \
@@ -82,13 +82,13 @@ FORMS += \
     gui/splashscreen.ui \
     gui/mainwindow_presentationmode.ui \
     gui/activexdebugdialog.ui \
-    gui/presentationproperties/presentationpropertieswidget.ui \
-    gui/presentationproperties/presentationpropertieswidget_powerpoint.ui \
+    presentation/presentationpropertieswidget.ui \
+    presentation/powerpoint/presentationpropertieswidget_powerpoint.ui \
     gui/projectorwindow.ui \
     gui/settingsdialog.ui \
     wgt/displayselectionwidget.ui \
     gui/mainwindow_songsmode.ui \
-    gui/songlistwidget.ui \
+    wgt/songlistwidget.ui \
     gui/backgrounddialog.ui \
     gui/stylesdialog.ui \
     wgt/colorselectionwidget.ui \
@@ -101,7 +101,7 @@ HEADERS += \
     util/jobthread.h \
     job/activexjobthread.h \
     gui/splashscreen.h \
-    presentation/playlist.h \
+    rec/playlist.h \
     modelview/playlistitemmodel.h \
     gui/mainwindow_presentationmode.h \
     util/standarddialogs.h \
@@ -109,24 +109,24 @@ HEADERS += \
     util/scopeexit.h \
     modelview/slidesitemmodel.h \
     modelview/slidesitemdelegate.h \
-    presentation/presentation_powerpoint.h \
+    presentation/powerpoint/presentation_powerpoint.h \
     presentation/presentationengine.h \
-    presentation/presentationengine_powerpoint.h \
+    presentation/powerpoint/presentationengine_powerpoint.h \
     presentation/presentationmanager.h \
     gui/activexdebugdialog.h \
-    gui/presentationproperties/presentationpropertieswidget.h \
-    gui/presentationproperties/presentationpropertieswidget_powerpoint.h \
+    presentation/presentationpropertieswidget.h \
+    presentation/powerpoint/presentationpropertieswidget_powerpoint.h \
     gui/projectorwindow.h \
     gui/settingsdialog.h \
     wgt/displayselectionwidget.h \
-    presentation/presentationengine_native.h \
-    presentation/presentation_blackscreen.h \
-    presentation/presentation_nativepresentation.h \
+    presentation/native/presentationengine_native.h \
+    presentation/native/presentation_blackscreen.h \
+    presentation/native/presentation_nativepresentation.h \
     gui/mainwindow_songsmode.h \
     job/dbmanager.h \
     job/db.h \
     job/dbmigration.h \
-    gui/songlistwidget.h \
+    wgt/songlistwidget.h \
     job/settings.h \
     rec/chord.h \
     util/songcontentsyntaxhiglighter.h \
@@ -155,7 +155,7 @@ DEPENDPATH += $$PWD/../include
 Debug:LIBS += -L$$PWD/../lib/debug/
 Release:LIBS += -L$$PWD/../lib/release/
 
-Release:DESTDIR =/../bin/bin_x86
+Release:DESTDIR = ../bin/bin_x86
 Debug:DESTDIR = ../bin/bin_x86_debug
 
 Release:OBJECTS_DIR = release/.obj

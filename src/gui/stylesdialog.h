@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include <QSqlQueryModel>
+
 #include "rec/presentationstyle.h"
 #include "rec/textstyle.h"
 
@@ -23,17 +25,27 @@ public:
 
 private:
 	void setMgmtMode(bool set);
+	void setEditMode(bool set);
+	bool tryCloseEditMode();
 
 private slots:
 	void onStyleChanged();
+	void onCurrentStyleChanged(const QModelIndex &newIndex, const QModelIndex &oldIndex);
+	void fillStyleData();
 
 private slots:
 	void on_widget_sigTextStyleChangedByUser(const TextStyle &);
+	void on_btnAdd_clicked();
+	void on_btnDiscardChanges_clicked();
 
 private:
 	Ui::StylesDialog *ui;
+	QSqlQueryModel styleListModel_;
 	PresentationStyle presentationStyle_;
-	bool isMgmtMode_;
+
+private:
+	bool isMgmtMode_, isEditMode_ = false;
+	qlonglong currentStyleId_;
 
 };
 

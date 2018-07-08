@@ -18,8 +18,8 @@
 #include "job/db.h"
 #include "job/settings.h"
 #include "presentation/presentation.h"
-#include "presentation/presentationengine_powerpoint.h"
-#include "presentation/presentationengine_native.h"
+#include "presentation/powerpoint/presentationengine_powerpoint.h"
+#include "presentation/native/presentationengine_native.h"
 #include "presentation/presentationmanager.h"
 #include "util/standarddialogs.h"
 

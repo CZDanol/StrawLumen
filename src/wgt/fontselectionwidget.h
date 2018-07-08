@@ -26,6 +26,7 @@ public:
 public slots:
 	void updateFontList();
 	void setSelectedFont(const QFont &font);
+	void setReadOnly(bool set);
 
 private slots:
 	void updateFontStyleList(const QString &setStyle);
@@ -37,6 +38,7 @@ private slots:
 
 private:
 	Ui::FontSelectionWidget *ui;
+	bool isReadOnly_ = false;
 	QFont selectedFont_;
 	QStringListModel fontListModel_;
 	QStringListModel fontStyleListModel_;

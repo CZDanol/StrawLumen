@@ -36,6 +36,8 @@ private slots:
 	void onCurrentSongChanged(qlonglong songId, int prevRowId);
 	void onSongListContextMenuRequested(const QPoint &globalPos);
 
+	void fillSongData();
+
 private slots:
 	void on_btnNew_clicked();
 	void on_btnDiscardChanges_clicked();
@@ -46,10 +48,12 @@ private slots:
 	void on_btnInsertChord_clicked();
 	void on_btnTransposeUp_clicked();
 	void on_btnTransposeDown_clicked();
+	void on_btnAddCustomSlideOrderItem_pressed();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
-	QMenu *insertSectionMenu;
+	QMenu *insertSectionMenu_;
+	QMenu *addCustomSlideOrderItemMenu_;
 
 private:
 	QCompleter slideOrderCompleter_;

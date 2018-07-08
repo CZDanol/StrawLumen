@@ -1,6 +1,6 @@
 #include "slidesitemmodel.h"
 
-#include "presentation/playlist.h"
+#include "rec/playlist.h"
 #include "presentation/presentation.h"
 
 SlidesItemModel::SlidesItemModel()

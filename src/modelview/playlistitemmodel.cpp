@@ -2,7 +2,7 @@
 
 #include <QMimeData>
 
-#include "presentation/playlist.h"
+#include "rec/playlist.h"
 #include "presentation/presentation.h"
 
 PlaylistItemModel::PlaylistItemModel()

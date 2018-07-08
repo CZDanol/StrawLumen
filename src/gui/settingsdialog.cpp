@@ -6,8 +6,9 @@
 #include "presentation/presentationmanager.h"
 #include "rec/chord.h"
 
+// F(settingsName, uiControl)
 #define SETTINGS_FACTORY(F) \
-	F(display, dsDisplay)
+	F("display", dsDisplay)
 
 SettingsDialog *settingsDialog = nullptr;
 
@@ -19,10 +20,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
 
-#define F(name, control)\
-		loadSetting(#name, ui->control);\
-		connect(ui->control, settingsControlChangeSignal(ui->control), [this]{\
-			saveSetting(#name, ui->control);\
+#define F(settingsName, uiControl)\
+		loadSetting(settingsName, ui->uiControl);\
+		connect(ui->uiControl, settingsControlChangeSignal(ui->uiControl), [this]{\
+			saveSetting(settingsName, ui->uiControl);\
 		});
 
 	SETTINGS_FACTORY(F)

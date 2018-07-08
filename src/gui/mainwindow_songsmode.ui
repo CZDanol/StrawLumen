@@ -407,13 +407,6 @@
              </property>
             </spacer>
            </item>
-           <item row="2" column="7">
-            <widget class="WordCompletingLineEdit" name="lnSlideOrder">
-             <property name="placeholderText">
-              <string>nevyplněno = jako v textu</string>
-             </property>
-            </widget>
-           </item>
            <item row="3" column="1" colspan="7">
             <widget class="QLabel" name="label_8">
              <property name="text">
@@ -475,6 +468,28 @@
              </property>
             </widget>
            </item>
+           <item row="2" column="7">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="WordCompletingLineEdit" name="lnSlideOrder">
+               <property name="placeholderText">
+                <string>nevyplněno = jako v textu</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnAddCustomSlideOrderItem">
+               <property name="text">
+                <string> Vložit</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../res/resources.qrc">
+                 <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </widget>
         </widget>
@@ -498,7 +513,7 @@
   <customwidget>
    <class>SongListWidget</class>
    <extends>QWidget</extends>
-   <header>gui/songlistwidget.h</header>
+   <header>wgt/songlistwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -526,6 +541,7 @@
   <tabstop>lnAuthor</tabstop>
   <tabstop>teContent</tabstop>
   <tabstop>lnSlideOrder</tabstop>
+  <tabstop>btnAddCustomSlideOrderItem</tabstop>
   <tabstop>twEdit</tabstop>
   <tabstop>btnInsertSection</tabstop>
   <tabstop>btnInsertChord</tabstop>

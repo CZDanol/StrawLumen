@@ -27,7 +27,7 @@ QScreen *DisplaySelectionWidget::selectedScreen() const
 	return ui->cmb->currentIndex() == -1 ? primaryScreen_ : screenList_[ui->cmb->currentIndex()];
 }
 
-QPair<QRect, QString> DisplaySelectionWidget::selectedScreenId()
+QPair<QRect, QString> DisplaySelectionWidget::selectedScreenId() const
 {
 	auto screen = selectedScreen();
 	return QPair<QRect, QString>(screen->geometry(), screen->name());

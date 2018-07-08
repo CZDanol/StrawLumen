@@ -41,6 +41,17 @@ void FontSelectionWidget::setSelectedFont(const QFont &font)
 	updateFontStyleList(font.styleName());
 }
 
+void FontSelectionWidget::setReadOnly(bool set)
+{
+	if(isReadOnly_ == set)
+		return;
+
+	isReadOnly_ = set;
+	ui->cmbFont->setEnabled(!set);
+	ui->cmbFontStyle->setEnabled(!set);
+	ui->sbSize->setReadOnly(set);
+}
+
 void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
 {
 	fontStyleListModel_.setStringList(fontDatabase_.styles(selectedFont_.family()));

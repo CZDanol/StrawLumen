@@ -52,6 +52,21 @@ void TextStyleWidget::forceSetTextStyle(const TextStyle &style)
 	isSettingUp_ = false;
 }
 
+void TextStyleWidget::setReadOnly(bool set)
+{
+	if(isReadOnly_ == set)
+		return;
+
+	isReadOnly_ = set;
+	ui->wgtBackgroundColor->setReadOnly(set);
+	ui->wgtColor->setReadOnly(set);
+	ui->wgtFont->setReadOnly(set);
+	ui->wgtOutlineColor->setReadOnly(set);
+
+	ui->cbBackground->setEnabled(!set);
+	ui->cbOutline->setEnabled(!set);
+}
+
 void TextStyleWidget::on_wgtFont_sigFontChangedByUser(const QFont &font)
 {
 	textStyle_.font = font;

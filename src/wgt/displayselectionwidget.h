@@ -23,8 +23,7 @@ signals:
 
 public:
 	QScreen *selectedScreen() const;
-
-	QPair<QRect,QString> selectedScreenId();
+	QPair<QRect,QString> selectedScreenId() const;
 	void setSelectedScreen(const QPair<QRect,QString> &id);
 
 public slots:

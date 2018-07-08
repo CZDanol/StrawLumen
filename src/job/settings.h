@@ -11,25 +11,18 @@ void initSettings();
 void uninitSettings();
 
 template<typename T>
-inline void saveSetting(const QString&, T*) { ERROR; }
+inline void saveSetting(const QString &name, const T *widget) { Q_UNUSED(name); Q_UNUSED(widget); __ERROR__; }
 
 template<typename T>
-inline void loadSetting(const QString&, T*) { ERROR; }
+inline void loadSetting(const QString &name, T *widget) { Q_UNUSED(name); Q_UNUSED(widget); __ERROR__; }
 
 template<typename T>
-inline auto settingsControlChangeSignal(T*) { ERROR; }
+inline auto settingsControlChangeSignal(T *widget) { Q_UNUSED(widget); __ERROR__; }
 
 #define SETTING_HEADERS(Type, signal)\
-	template<>\
-	void saveSetting<Type>(const QString &name, Type *control);\
-	\
-	template<>\
-	void loadSetting<Type>(const QString &name, Type *control);\
-	\
-	template<>\
-	inline auto settingsControlChangeSignal<Type>(Type*) {\
-		return signal;\
-	}
+	template<> void saveSetting<Type>(const QString &name, const Type *widget);\
+	template<> void loadSetting<Type>(const QString &name, Type *widget);\
+	template<> inline auto settingsControlChangeSignal<Type>(Type*) {return signal;}
 
 
 SETTING_HEADERS(DisplaySelectionWidget, &DisplaySelectionWidget::sigCurrentChangedByUser)

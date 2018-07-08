@@ -14,7 +14,7 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 		chordFormat_.setFontWeight(QFont::Bold);
 
 		chordAnnotationSymbolFormat_.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
-		//chordAnnotationSymbolFormat_.setForeground(Qt::gray);
+		chordAnnotationSymbolFormat_.setForeground(Qt::gray);
 	}
 
 	{
@@ -24,7 +24,7 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 
 		sectionAnnotationSymbolFormat_.setForeground(Qt::transparent);
 		sectionAnnotationSymbolFormat_.setBackground(Qt::black);
-		sectionAnnotationSymbolFormat_.setFontLetterSpacing(400);
+		//sectionAnnotationSymbolFormat_.setFontStretch(400);
 	}
 
 	invalidAnnotationFormat_.setForeground(Qt::red);

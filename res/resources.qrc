@@ -126,5 +126,6 @@
         <file>icons/16/Lowercase_16px.png</file>
         <file>icons/16/Type_16px.png</file>
         <file>icons/16/Line Width_16px.png</file>
+        <file>icons/16/Synchronize_16px.png</file>
     </qresource>
 </RCC>
