@@ -13,6 +13,8 @@ class Presentation_Song : public Presentation_NativePresentation
 {
 	Q_OBJECT
 
+	friend class PresentationPropertiesWidget_Song;
+
 	struct SlideData {
 		QString content_;
 		QString description_;
@@ -36,6 +38,8 @@ public:
 public:
 	QString identification() const override;
 	QPixmap icon() const override;
+
+	QWidget *createPropertiesWidget(QWidget *parent) override;
 
 	int slideCount() const override;
 	QString slideIdentification(int i) const override;

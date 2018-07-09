@@ -34,7 +34,11 @@ public:
 
 	QJsonObject toJSON() const;
 
+	/// Returns -1 if style was not loaded from db or the style has been altered
+	qlonglong styleId() const;
+
 public:
+	bool operator==(const PresentationStyle &other) const;
 	void operator=(const PresentationStyle &other);
 
 private slots:

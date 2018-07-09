@@ -51,8 +51,7 @@ void initApplication() {
 
 	setupStylesheet();
 
-	initSettings();
-
+	settings = new SettingsManager();
 	db = new DatabaseManager();
 	backgroundManager = new BackgroundManager();
 
@@ -82,8 +81,7 @@ void uninitApplication() {
 
 	delete backgroundManager;
 	delete db;
-
-	uninitSettings();
+	delete settings;
 }
 
 void setupStylesheet() {

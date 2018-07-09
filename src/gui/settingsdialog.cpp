@@ -8,7 +8,6 @@
 #include "job/db.h"
 #include "presentation/presentationengine.h"
 #include "presentation/presentationmanager.h"
-#include "rec/chord.h"
 
 // F(settingsName, uiControl)
 #define SETTINGS_FACTORY(F) \
@@ -21,7 +20,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	ui(new Ui::SettingsDialog)
 {
 	ui->setupUi(this);
-	settings_.reset(new Settings(this));
 
 	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
 
@@ -34,17 +32,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	SETTINGS_FACTORY(F)
 #undef F
 
-	defaultPresentationStyle_.loadFromDb(db->selectValueDef("SELECT id FROM styles LIMIT 1").toLongLong());
+	PresentationStyle style;
+	style.loadFromDb(settings->value("song.defaultStyleId", 1).toLongLong());
+	ui->wgtDefaultPresentationStyle->setPresentationStyle(style);
 }
 
 SettingsDialog::~SettingsDialog()
 {
 	delete ui;
-}
-
-const SettingsDialog::Settings &SettingsDialog::settings() const
-{
-	return *settings_;
 }
 
 void SettingsDialog::onDisplayChanged(QScreen *current)
@@ -58,17 +53,7 @@ void SettingsDialog::on_btnClose_clicked()
 	accept();
 }
 
-SettingsDialog::Settings::Settings(SettingsDialog *dlg) : dlg(*dlg)
+void SettingsDialog::on_wgtDefaultPresentationStyle_sigPresentationStyleChangedByUser()
 {
-
-}
-
-QRect SettingsDialog::Settings::projectionDisplayGeometry() const
-{
-	return dlg.ui->dsDisplay->selectedScreen()->geometry();
-}
-
-const PresentationStyle &SettingsDialog::Settings::defaultPresentationStyle() const
-{
-	return dlg.defaultPresentationStyle_;
+	settings->setValue("song.defaultStyleId", ui->wgtDefaultPresentationStyle->presentationStyle().styleId());
 }

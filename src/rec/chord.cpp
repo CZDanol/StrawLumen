@@ -1,7 +1,5 @@
 #include "chord.h"
 
-#include "gui/settingsdialog.h"
-
 Chord::Chord()
 {
 	isValid_ = false;

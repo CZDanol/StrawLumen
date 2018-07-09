@@ -10,6 +10,8 @@ PresentationBackgroundSelectionWidget::PresentationBackgroundSelectionWidget(QWi
 	ui(new Ui::PresentationBackgroundSelectionWidget)
 {
 	ui->setupUi(this);
+
+	connect(&presentationBackground_, SIGNAL(sigChanged()), this, SLOT(updateLabel()));
 }
 
 PresentationBackgroundSelectionWidget::~PresentationBackgroundSelectionWidget()
@@ -20,7 +22,6 @@ PresentationBackgroundSelectionWidget::~PresentationBackgroundSelectionWidget()
 void PresentationBackgroundSelectionWidget::setPresentationBackground(const PresentationBackground &background)
 {
 	presentationBackground_ = background;
-	updateLabel();
 }
 
 void PresentationBackgroundSelectionWidget::setReadOnly(bool set)
@@ -34,11 +35,11 @@ void PresentationBackgroundSelectionWidget::setReadOnly(bool set)
 
 void PresentationBackgroundSelectionWidget::updateLabel()
 {
-	ui->lblLabel->setText(presentationBackground_.caption());
+	ui->btnSelect->setText(" " + presentationBackground_.caption());
 }
 
 void PresentationBackgroundSelectionWidget::on_btnSelect_clicked()
 {
-	presentationBackground_ = backgroundDialog->showInSelectionMode(presentationBackground_);
-	emit sigPresentationBackgroundChangedByUser(presentationBackground_);
+	if(backgroundDialog->showInSelectionMode(presentationBackground_))
+		emit sigPresentationBackgroundChangedByUser(presentationBackground_);
 }

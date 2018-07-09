@@ -22,6 +22,7 @@ public:
 
 public:
 	void showInMgmtMode();
+	bool showInSelectionMode(PresentationStyle &style);
 
 protected:
 	void showEvent(QShowEvent *e) override;
@@ -50,6 +51,7 @@ private slots:
 	void on_btnEdit_clicked();
 	void on_lvList_customContextMenuRequested(const QPoint &pos);
 	void on_actionDeleteStyle_triggered();
+	void on_lvList_activated(const QModelIndex &index);
 
 private:
 	Ui::StylesDialog *ui;

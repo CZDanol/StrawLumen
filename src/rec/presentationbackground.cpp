@@ -17,10 +17,10 @@ PresentationBackground::PresentationBackground(const PresentationBackground &oth
 
 QString PresentationBackground::caption() const
 {
-	if(color_.alpha() == 255)
+	if(color_.alpha() == 0)
 		return tr("Obrázek");
 
-	if(color_.alpha() == 0)
+	if(color_.alpha() == 255)
 		return tr("Barva");
 
 	return tr("Obrázek s %1% barvou").arg(floor(color_.alphaF() * 100));

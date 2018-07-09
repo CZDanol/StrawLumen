@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>514</width>
-    <height>124</height>
+    <height>235</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -86,6 +86,70 @@
     </widget>
    </item>
    <item>
+    <widget class="QTabWidget" name="tabWidget_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="icon">
+       <iconset resource="../../res/resources.qrc">
+        <normaloff>:/icons/16/Musical Notes_16px.png</normaloff>:/icons/16/Musical Notes_16px.png</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Písně</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Výchozí styl:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Preferred</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>17</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="3">
+        <widget class="StyleSelectionWidget" name="wgtDefaultPresentationStyle" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="preferNonprimaryScreens" stdset="0">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -129,6 +193,12 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>StyleSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/styleselectionwidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>DisplaySelectionWidget</class>
    <extends>QWidget</extends>

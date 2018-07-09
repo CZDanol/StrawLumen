@@ -82,7 +82,9 @@ SOURCES += main.cpp \
     wgt/presentationbackgroundpreviewwidget.cpp \
     job/backgroundmanager.cpp \
     wgt/presentationbackgroundselectionwidget.cpp \
-    presentation/native/presentation_song.cpp
+    presentation/native/presentation_song.cpp \
+    wgt/styleselectionwidget.cpp \
+    presentation/native/presentationpropertieswidget_song.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -101,7 +103,9 @@ FORMS += \
     wgt/colorselectionwidget.ui \
     wgt/fontselectionwidget.ui \
     wgt/textstylewidget.ui \
-    wgt/presentationbackgroundselectionwidget.ui
+    wgt/presentationbackgroundselectionwidget.ui \
+    wgt/styleselectionwidget.ui \
+    presentation/native/presentationpropertieswidget_song.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -159,7 +163,9 @@ HEADERS += \
     wgt/presentationbackgroundpreviewwidget.h \
     job/backgroundmanager.h \
     wgt/presentationbackgroundselectionwidget.h \
-    presentation/native/presentation_song.h
+    presentation/native/presentation_song.h \
+    wgt/styleselectionwidget.h \
+    presentation/native/presentationpropertieswidget_song.h
 
 RESOURCES += \
     ../res/resources.qrc

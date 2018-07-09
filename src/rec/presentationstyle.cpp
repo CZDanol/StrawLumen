@@ -59,7 +59,27 @@ QJsonObject PresentationStyle::toJSON() const
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
 #undef F
 
-	return json;
+			return json;
+}
+
+qlonglong PresentationStyle::styleId() const
+{
+	return styleId_;
+}
+
+bool PresentationStyle::operator==(const PresentationStyle &other) const
+{
+	if(styleId_ != other.styleId_)
+		return false;
+
+#define F(identifier, capitalizedIdentifier, Type)\
+	if(!(identifier ## _ == other.identifier ## _))
+		return false;
+
+	PRESENTATION_STYLE_FIELD_FACTORY(F)
+#undef F
+
+	return true;
 }
 
 void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const

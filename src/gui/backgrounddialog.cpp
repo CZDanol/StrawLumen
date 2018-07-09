@@ -58,7 +58,7 @@ void BackgroundDialog::showInMgmtMode()
 	QDialog::show();
 }
 
-const PresentationBackground &BackgroundDialog::showInSelectionMode(const PresentationBackground &background)
+bool BackgroundDialog::showInSelectionMode(PresentationBackground &background)
 {
 	presentationBackground_ = background;
 	ui->lwList->setCurrentItem(itemsByFilename_.value(presentationBackground_.filename(), nullptr));
@@ -68,7 +68,11 @@ const PresentationBackground &BackgroundDialog::showInSelectionMode(const Presen
 	setMgmtMode(false);
 	updatePreview();
 
-	return QDialog::exec() == QDialog::Accepted ? presentationBackground_ : background;
+	const bool accepted = QDialog::exec() == QDialog::Accepted;
+	if(accepted)
+		background = presentationBackground_;
+
+	return accepted;
 }
 
 const QDir &BackgroundDialog::backgroundsDirectory() const
@@ -238,7 +242,7 @@ void BackgroundDialog::setMgmtMode(bool set)
 	ui->btnSelect->setVisible(!set);
 	ui->btnClose->setVisible(set);
 
-	ui->twGallery->setTabEnabled(ui->twGallery->indexOf(ui->tabFillColor), !set);
+	ui->twColor->setVisible(!set);
 	ui->twPreview->setVisible(!set);
 
 	isMgmtMode_ = set;

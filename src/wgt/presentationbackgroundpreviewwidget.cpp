@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "gui/settingsdialog.h"
+#include "job/settings.h"
 
 PresentationBackgroundPreviewWidget::PresentationBackgroundPreviewWidget(QWidget *parent) : QWidget(parent)
 {
@@ -17,7 +17,7 @@ void PresentationBackgroundPreviewWidget::setPresentationBackground(const Presen
 void PresentationBackgroundPreviewWidget::paintEvent(QPaintEvent *)
 {
 	QRect previewRect;
-	previewRect.setSize(settingsDialog->settings().projectionDisplayGeometry().size().scaled(size(), Qt::KeepAspectRatio));
+	previewRect.setSize(settings->projectionDisplayGeometry().size().scaled(size(), Qt::KeepAspectRatio));
 	previewRect.moveCenter(rect().center());
 
 	QPainter p(this);

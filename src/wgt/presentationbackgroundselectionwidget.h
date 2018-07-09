@@ -24,7 +24,7 @@ public slots:
 	void setPresentationBackground(const PresentationBackground &background);
 	void setReadOnly(bool set);
 
-private:
+private slots:
 	void updateLabel();
 
 private slots:

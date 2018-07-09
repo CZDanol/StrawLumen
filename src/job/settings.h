@@ -4,11 +4,28 @@
 #include <QSettings>
 
 #include "wgt/displayselectionwidget.h"
+#include "rec/presentationstyle.h"
 
-extern QSettings *settings;
+class SettingsManager {
 
-void initSettings();
-void uninitSettings();
+public:
+	SettingsManager();
+	~SettingsManager();
+
+public:
+	void setValue(const QString &key, const QVariant &value);
+	QVariant value(const QString &key, const QVariant &def = QVariant()) const;
+
+public:
+	QRect projectionDisplayGeometry() const;
+	const PresentationStyle &defaultPresentationStyle() const;
+
+private:
+	QSettings settings_;
+
+};
+
+extern SettingsManager *settings;
 
 template<typename T>
 inline void saveSetting(const QString &name, const T *widget) { Q_UNUSED(name); Q_UNUSED(widget); __ERROR__; }

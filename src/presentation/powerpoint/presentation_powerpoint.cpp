@@ -10,7 +10,7 @@
 
 #include "gui/splashscreen.h"
 #include "presentation/powerpoint/presentationpropertieswidget_powerpoint.h"
-#include "gui/settingsdialog.h"
+#include "job/settings.h"
 #include "job/activexjobthread.h"
 #include "presentation/powerpoint/presentationengine_powerpoint.h"
 #include "util/standarddialogs.h"
@@ -192,7 +192,7 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 
 	int startingSlide_ = slides_[startingSlide]->ppIndex;
-	QRect rect = settingsDialog->settings().projectionDisplayGeometry();
+	QRect rect = settings->projectionDisplayGeometry();
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
 	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide_, rect]{

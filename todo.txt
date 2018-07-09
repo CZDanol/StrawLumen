@@ -1,4 +1,5 @@
-- settingsDialog->settings() předělat do settings
+- padding settings u stylů
+- offthread slide rendering
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
@@ -6,8 +7,6 @@
 
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
 - prezentace obrázků
-- u pozadí možnost nastavit překryv barvou + solidbní barvu/přechod
-- spíš možnost u stylu nastavit "maximální světelnost pozadí"?
 - štítky u písní
 
 Automatická powerpoint prezentace:

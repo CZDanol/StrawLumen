@@ -1,7 +1,7 @@
 #include "presentationengine_native.h"
 
 #include "gui/projectorwindow.h"
-#include "gui/settingsdialog.h"
+#include "job/settings.h"
 
 PresentationEngine_Native *presentationEngine_Native = nullptr;
 
@@ -45,7 +45,7 @@ int PresentationEngine_Native::currentSlide() const
 
 void PresentationEngine_Native::activateEngine()
 {
-	projectorWindow->setGeometry(settingsDialog->settings().projectionDisplayGeometry());
+	projectorWindow->setGeometry(settings->projectionDisplayGeometry());
 	projectorWindow->show();
 }
 

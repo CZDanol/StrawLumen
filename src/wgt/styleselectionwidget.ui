@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PresentationBackgroundSelectionWidget</class>
- <widget class="QWidget" name="PresentationBackgroundSelectionWidget">
+ <class>StyleSelectionWidget</class>
+ <widget class="QWidget" name="StyleSelectionWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
-    <height>24</height>
+    <width>320</width>
+    <height>23</height>
    </rect>
   </property>
   <property name="windowTitle">

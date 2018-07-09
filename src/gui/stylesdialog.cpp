@@ -58,7 +58,26 @@ void StylesDialog::showInMgmtMode()
 {
 	setMgmtMode(true);
 	QDialog::show();
-	ui->lvList->setCurrentIndex(styleListModel_.index(0,0));
+
+	if(!ui->lvList->currentIndex().isValid())
+		ui->lvList->setCurrentIndex(styleListModel_.index(0,0));
+}
+
+bool StylesDialog::showInSelectionMode(PresentationStyle &style)
+{
+	presentationStyle_ = style;
+
+	int row = db->selectValue("SELECT COUNT(*) FROM styles WHERE (name < ?) OR ((name = ?) AND (id < ?))", {style.name(), style.name(), style.styleId()}).toInt();
+	requeryList();
+	ui->lvList->setCurrentIndex(styleListModel_.index(row,0));
+
+	setMgmtMode(false);
+
+	const bool accepted = QDialog::exec() == QDialog::Accepted;
+	if(accepted)
+		style = presentationStyle_;
+
+	return accepted;
 }
 
 void StylesDialog::showEvent(QShowEvent *e)
@@ -147,7 +166,7 @@ void StylesDialog::requeryList()
 	const int rowId = ui->lvList->currentIndex().row();
 	const qlonglong id = currentStyleId_;
 
-	styleListModel_.setQuery(db->selectQuery(QString("SELECT (CASE WHEN isInternal THEN (name || ?) ELSE name END) AS displayName, id FROM styles ORDER BY name ASC"), {tr(" (interní)")}));
+	styleListModel_.setQuery(db->selectQuery(QString("SELECT (CASE WHEN isInternal THEN (name || ?) ELSE name END) AS displayName, id FROM styles ORDER BY name ASC, id ASC"), {tr(" (interní)")}));
 
 	if(rowId != -1 && styleListModel_.record(rowId).value("id").toLongLong() == id)
 		ui->lvList->setCurrentIndex(styleListModel_.index(rowId, 0));
@@ -251,4 +270,12 @@ void StylesDialog::on_actionDeleteStyle_triggered()
 	emit db->sigStyleChanged(currentStyleId_);
 	currentStyleId_ = -1;
 	updateManipulationButtonsEnabled();
+}
+
+void StylesDialog::on_lvList_activated(const QModelIndex &index)
+{
+	if(isMgmtMode_)
+		ui->btnEdit->click();
+	else
+		accept();
 }

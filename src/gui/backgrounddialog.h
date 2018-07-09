@@ -25,7 +25,7 @@ public:
 
 public:
 	void showInMgmtMode();
-	const PresentationBackground &showInSelectionMode(const PresentationBackground &selection);
+	bool showInSelectionMode(PresentationBackground &background);
 
 	const QDir &backgroundsDirectory() const;
 

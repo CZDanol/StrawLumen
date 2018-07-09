@@ -2,9 +2,10 @@
 
 #include "job/db.h"
 #include "job/backgroundmanager.h"
+#include "job/settings.h"
 #include "rec/chord.h"
-#include "gui/settingsdialog.h"
 #include "gui/projectorwindow.h"
+#include "presentation/native/presentationpropertieswidget_song.h"
 
 #include <QDebug>
 
@@ -14,7 +15,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 	result->blockSignals(true);
 
 	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
-	result->style_ = settingsDialog->settings().defaultPresentationStyle();
+	result->style_ = settings->defaultPresentationStyle();
 	result->loadFromDb(songId);
 
 	result->blockSignals(false);
@@ -35,6 +36,11 @@ QPixmap Presentation_Song::icon() const
 {
 	static QPixmap icon(":/icons/16/Musical Notes_16px.png");
 	return icon;
+}
+
+QWidget *Presentation_Song::createPropertiesWidget(QWidget *parent)
+{
+	return new PresentationPropertiesWidget_Song(weakPtr_.toStrongRef().staticCast<Presentation_Song>(), parent);
 }
 
 int Presentation_Song::slideCount() const
@@ -149,5 +155,5 @@ void Presentation_Song::onStyleChanged()
 
 void Presentation_Song::onStyleBackgroundChanged()
 {
-	backgroundManager->preloadBackground(style_.background().filename(), settingsDialog->settings().projectionDisplayGeometry().size());
+	backgroundManager->preloadBackground(style_.background().filename(), settings->projectionDisplayGeometry().size());
 }
