@@ -30,6 +30,10 @@ public slots:
 
 private:
 	void setSongEditMode(bool set);
+
+	/// Returns false if the user does not wish do close the edit mode
+	bool askFinishEditMode();
+
 	void updateSongManipulationButtonsEnabled();
 	void insertSongSection(const SongSection &section);
 

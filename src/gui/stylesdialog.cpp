@@ -13,7 +13,8 @@
 	F(lnName) \
 	F(wgtMainTextStyle)\
 	F(wgtTitleTextStyle)\
-	F(wgtBackground)
+	F(wgtBackground)\
+	F(sbTopPadding) F(sbBottomPadding) F(sbLeftPadding) F(sbRightPadding) F(sbTitleTextPadding)
 
 extern StylesDialog *stylesDialog = nullptr;
 
@@ -39,6 +40,12 @@ StylesDialog::StylesDialog(QWidget *parent) :
 	connect(ui->wgtTitleTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setTitleTextStyle);
 	connect(ui->lnName, &QLineEdit::editingFinished, this, &StylesDialog::onNameChanged);
 	connect(ui->wgtBackground, &PresentationBackgroundSelectionWidget::sigPresentationBackgroundChangedByUser, &presentationStyle_, &PresentationStyle::setBackground);
+
+	connect(ui->sbTopPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setTopPadding);
+	connect(ui->sbBottomPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setBottomPadding);
+	connect(ui->sbLeftPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setLeftPadding);
+	connect(ui->sbRightPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setRightPadding);
+	connect(ui->sbTitleTextPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setTitleTextPadding);
 
 	{
 		listContextMenu_ = new QMenu(this);
@@ -88,7 +95,7 @@ void StylesDialog::showEvent(QShowEvent *e)
 
 void StylesDialog::reject()
 {
-	if(!tryCloseEditMode())
+	if(!askFinishEditMode())
 		return;
 
 	QDialog::reject();
@@ -96,7 +103,7 @@ void StylesDialog::reject()
 
 void StylesDialog::accept()
 {
-	if(!tryCloseEditMode())
+	if(!askFinishEditMode())
 		return;
 
 	QDialog::accept();
@@ -132,16 +139,19 @@ void StylesDialog::setEditMode(bool set)
 	updateManipulationButtonsEnabled();
 }
 
-bool StylesDialog::tryCloseEditMode()
+bool StylesDialog::askFinishEditMode()
 {
 	if(!isEditMode_)
 		return true;
 
-	if(!standardDeleteConfirmDialog(tr("Aktuální styl je otevřený pro editaci. Chcete pokračovat a zahodit provedené úpravy?")))
-		return false;
+	if(standardConfirmDialog(tr("Aktuální styl je otevřený pro editaci. Chcete uložit provedené úpravy?")))
+		ui->btnSaveChanges->click();
+	else {
+		setEditMode(false);
+		fillStyleData();
+	}
 
-	fillStyleData();
-	setEditMode(false);
+	// TODO: maybe add close button?
 	return true;
 }
 
@@ -159,6 +169,12 @@ void StylesDialog::fillStyleData()
 	ui->wgtMainTextStyle->setTextStyle(presentationStyle_.mainTextStyle());
 	ui->wgtTitleTextStyle->setTextStyle(presentationStyle_.titleTextStyle());
 	ui->wgtBackground->setPresentationBackground(presentationStyle_.background());
+
+	ui->sbTopPadding->setValue(presentationStyle_.topPadding());
+	ui->sbBottomPadding->setValue(presentationStyle_.bottomPadding());
+	ui->sbLeftPadding->setValue(presentationStyle_.leftPadding());
+	ui->sbRightPadding->setValue(presentationStyle_.rightPadding());
+	ui->sbTitleTextPadding->setValue(presentationStyle_.titleTextPadding());
 }
 
 void StylesDialog::requeryList()
@@ -191,7 +207,7 @@ void StylesDialog::onCurrentStyleChanged(const QModelIndex &newIndex, const QMod
 	if(newId == currentStyleId_)
 		return;
 
-	if(!tryCloseEditMode()) {
+	if(!askFinishEditMode()) {
 		ui->lvList->setCurrentIndex(oldIndex);
 		return;
 	}
@@ -272,7 +288,7 @@ void StylesDialog::on_actionDeleteStyle_triggered()
 	updateManipulationButtonsEnabled();
 }
 
-void StylesDialog::on_lvList_activated(const QModelIndex &index)
+void StylesDialog::on_lvList_activated(const QModelIndex &)
 {
 	if(isMgmtMode_)
 		ui->btnEdit->click();

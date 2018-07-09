@@ -32,7 +32,9 @@ protected:
 private:
 	void setMgmtMode(bool set);
 	void setEditMode(bool set);
-	bool tryCloseEditMode();
+
+	/// Returns false if the user does not wish do close the edit mode
+	bool askFinishEditMode();
 
 private slots:
 	void fillStyleData();

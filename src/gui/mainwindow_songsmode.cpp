@@ -120,7 +120,23 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 	SONG_FIELDS_FACTORY(F)
 #undef F
 
-	updateSongManipulationButtonsEnabled();
+			updateSongManipulationButtonsEnabled();
+}
+
+bool MainWindow_SongsMode::askFinishEditMode()
+{
+	if(!isSongEditMode_)
+		return true;
+
+	if(standardConfirmDialog(tr("Píseň je otevřena pro editaci. Chcete uložit provedené úpravy?")))
+		ui->btnSaveChanges->click();
+	else {
+		setSongEditMode(false);
+		fillSongData();
+	}
+
+	// TODO: maybe add close button?
+	return true;
 }
 
 void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
@@ -148,7 +164,7 @@ void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
 	if(songId == currentSongId_)
 		return;
 
-	if(isSongEditMode_ && !standardConfirmDialog(tr("Aktuální píseň je otevřená pro editaci. Chcete pokračovat a zahodit provedené úpravy?"))) {
+	if(!askFinishEditMode()) {
 		ui->wgtSongList->selectRow(prevRowId);
 		return;
 	}

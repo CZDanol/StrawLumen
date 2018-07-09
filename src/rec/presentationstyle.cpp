@@ -80,15 +80,15 @@ bool PresentationStyle::operator==(const PresentationStyle &other) const
 
 void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const
 {
-	const int mw = (int)( rect.width() * 0.05 );
-	const int mh = (int)( rect.height() * 0.03 );
-	const QMargins m(mw,mh,mw,mh);
+	const auto marg = [&](qreal l, qreal t, qreal r, qreal b) {
+		return QMargins(l * rect.width() * 0.01, t * rect.height() * 0.01, r * rect.width() * 0.01, b * rect.height() * 0.01);
+	};
 
 	background_.draw(p, rect);
 
-	titleTextStyle_.drawText(p, rect.marginsRemoved(m), title, QTextOption(Qt::AlignHCenter | Qt::AlignBottom));
+	titleTextStyle_.drawText(p, QRect(rect.bottomLeft(), rect.bottomRight()).marginsRemoved(marg(leftPadding(), -titleTextPadding()-bottomPadding(), rightPadding(), bottomPadding())), title, QTextOption(Qt::AlignHCenter | Qt::AlignBottom));
 
-	mainTextStyle_.drawText(p, rect.marginsRemoved(QMargins(mw,mh*2,mw,mh*2)), text);
+	mainTextStyle_.drawText(p, rect.marginsRemoved(marg(leftPadding(), topPadding(), rightPadding(), titleTextPadding()+bottomPadding())), text);
 }
 
 void PresentationStyle::operator=(const PresentationStyle &other)

@@ -127,5 +127,7 @@
         <file>icons/16/Type_16px.png</file>
         <file>icons/16/Line Width_16px.png</file>
         <file>icons/16/Synchronize_16px.png</file>
+        <file>icons/16/Add White Space_16px.png</file>
+        <file>icons/16/Collect_16px.png</file>
     </qresource>
 </RCC>

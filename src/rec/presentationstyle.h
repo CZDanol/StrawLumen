@@ -13,7 +13,8 @@
 	F(name, Name, QString)\
 	F(mainTextStyle, MainTextStyle, TextStyle)\
 	F(titleTextStyle, TitleTextStyle, TextStyle)\
-	F(background, Background, PresentationBackground)
+	F(background, Background, PresentationBackground)\
+	F(topPadding, TopPadding, int) F(bottomPadding, BottomPadding, int) F(leftPadding, LeftPadding, int) F(rightPadding, RightPadding, int) F(titleTextPadding, TitleTextPadding, int)
 
 class PresentationStyle : public QObject
 {

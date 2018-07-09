@@ -42,11 +42,14 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 
 	// Lay out lines
 	for(const QString &line : str.split('\n')) {
+		if(size.height())
+			size.setHeight(size.height() + metrics.height());
+
 		const int lineWidth = metrics.horizontalAdvance(line);
 		if(lineWidth > size.width())
 			size.setWidth(lineWidth);
 
-		size.setHeight(size.height() + metrics.lineSpacing());
+		size.setHeight(size.height() + metrics.leading());
 		path.addText(-lineWidth*hAlignConst, size.height(), font, line);
 	}
 
@@ -58,7 +61,7 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 
 	p.translate(rect.width()*hAlignConst, rect.height()*vAlignConst);
 	p.scale(scaleFactor, scaleFactor);
-	p.translate(-pathBoundingRect.left()-pathBoundingRect.width()*hAlignConst, -pathBoundingRect.top()-pathBoundingRect.height()*vAlignConst);
+	p.translate(-pathBoundingRect.left()-size.width()*hAlignConst, -pathBoundingRect.top()-size.height()*vAlignConst);
 
 	if(backgroundEnabled) {
 		const qreal m = backgroundPadding;
