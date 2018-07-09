@@ -102,6 +102,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	// Song list
 	{
 		connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), this, SLOT(onSongListItemActivated(qlonglong)));
+
+		ui->wgtSongList->setMultiSelectionEnabled(true);
 	}
 
 	// Shortcuts
@@ -222,6 +224,7 @@ void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &curr
 	if(!current.isValid())
 		return;
 
+	ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
 	auto presentation = playlist_->items()[current.row()];
 
 	if(presentationPropertiesWidget_) {
@@ -233,7 +236,6 @@ void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &curr
 
 	presentationPropertiesWidget_ = new PresentationPropertiesWidget(presentation, this);
 	ui->saPresentationProperties->setWidget(presentationPropertiesWidget_);
-	ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
 }
 
 void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()

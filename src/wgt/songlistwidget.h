@@ -2,9 +2,10 @@
 #define SONGLISTWIDGET_H
 
 #include <QWidget>
-#include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QTimer>
+
+#include "modelview/songsitemmodel.h"
 
 namespace Ui {
 	class SongListWidget;
@@ -34,6 +35,8 @@ public slots:
 
 	void selectRow(int rowId);
 
+	void setMultiSelectionEnabled(bool set);
+
 protected:
 	void showEvent(QShowEvent *e) override;
 
@@ -44,7 +47,7 @@ private slots:
 
 private:
 	Ui::SongListWidget *ui;
-	QSqlQueryModel model_;
+	SongsItemModel model_;
 	QString currentFilterText_;
 	QTimer typingTimer_;
 

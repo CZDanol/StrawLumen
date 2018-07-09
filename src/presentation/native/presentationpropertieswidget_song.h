@@ -2,6 +2,10 @@
 #define PRESENTATIONPROPERTIESWIDGET_SONG_H
 
 #include <QWidget>
+#include <QRegularExpressionValidator>
+#include <QCompleter>
+#include <QStringListModel>
+#include <QMenu>
 
 #include "rec/presentationbackground.h"
 
@@ -25,10 +29,19 @@ private slots:
 private slots:
 	void onStyleChangedByUser();
 	void on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &);
+	void on_lnSlideOrder_editingFinished();
+	void on_lnSlideOrder_sigFocused();
+	void on_btnAddSlideOrderItem_pressed();
 
 private:
 	Ui::PresentationPropertiesWidget_Song *ui;
 	QSharedPointer<Presentation_Song> presentation_;
+
+private:
+	QRegularExpressionValidator slideOrderValidator_;
+	QCompleter slideOrderCompleter_;
+	QStringListModel slideOrderCompleterModel_;
+	QMenu *addCustomSlideOrderItemMenu_;
 
 };
 

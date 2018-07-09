@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>46</height>
+    <height>92</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,51 +26,17 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="1" column="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Pozadí:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_5">
      <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Full Image_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4">
-    <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Mockup_16px.png</pixmap>
      </property>
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Styl:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
+      <string>Pořadí snímků:</string>
      </property>
     </widget>
    </item>
@@ -90,18 +56,88 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="3">
-    <spacer name="horizontalSpacer_2">
+   <item row="3" column="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Pozadí:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Full Image_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="WordCompletingLineEdit" name="lnSlideOrder">
+       <property name="placeholderText">
+        <string>prázdné = výchozí pořadí</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnAddSlideOrderItem">
+       <property name="icon">
+        <iconset resource="../../../res/resources.qrc">
+         <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Styl:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
       <enum>QSizePolicy::Preferred</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>16</width>
-       <height>20</height>
+       <width>20</width>
+       <height>16</height>
       </size>
      </property>
     </spacer>
@@ -109,6 +145,14 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>WordCompletingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>wgt/wordcompletinglineedit.h</header>
+   <slots>
+    <signal>sigFocused()</signal>
+   </slots>
+  </customwidget>
   <customwidget>
    <class>StyleSelectionWidget</class>
    <extends>QWidget</extends>

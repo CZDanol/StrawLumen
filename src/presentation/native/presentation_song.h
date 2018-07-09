@@ -2,7 +2,7 @@
 #define PRESENTATION_SONG_H
 
 #include <QVector>
-#include <QHash>
+#include <QMap>
 #include <QSharedPointer>
 
 #include "presentation/native/presentation_nativepresentation.h"
@@ -62,7 +62,7 @@ private:
 	qlonglong songId_ = -1;
 	QString name_, author_, defaultSlideOrder_, customSlideOrder_;
 	PresentationStyle style_;
-	QHash<QString, SectionRec> sections_;
+	QMap<QString, SectionRec> sections_;
 	QVector<SlideRec> slides_;
 
 };

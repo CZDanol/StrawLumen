@@ -7,8 +7,6 @@
 #include "gui/projectorwindow.h"
 #include "presentation/native/presentationpropertieswidget_song.h"
 
-#include <QDebug>
-
 QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong songId)
 {
 	QSharedPointer<Presentation_Song> result(new Presentation_Song());
@@ -116,6 +114,7 @@ void Presentation_Song::loadFromDb(qlonglong songId)
 
 	blockSignals(oldBlockSignals);
 	emit sigItemChanged(this);
+	emit sigSlidesChanged();
 }
 
 void Presentation_Song::loadSlideOrder()
@@ -142,6 +141,9 @@ void Presentation_Song::onDbManagerSongChanged(qlonglong songId)
 		return;
 
 	loadFromDb(songId);
+
+	if(isActive())
+		projectorWindow->update();
 }
 
 void Presentation_Song::onStyleChanged()

@@ -4,6 +4,7 @@
 
 #include "rec/playlist.h"
 #include "presentation/presentation.h"
+#include "presentation/native/presentation_song.h"
 
 PlaylistItemModel::PlaylistItemModel()
 {
@@ -95,7 +96,7 @@ Qt::ItemFlags PlaylistItemModel::flags(const QModelIndex &index) const
 
 Qt::DropActions PlaylistItemModel::supportedDropActions() const
 {
-	return Qt::MoveAction;
+	return Qt::MoveAction | Qt::LinkAction;
 }
 
 QStringList PlaylistItemModel::mimeTypes() const
@@ -127,7 +128,10 @@ bool PlaylistItemModel::canDropMimeData(const QMimeData *data, Qt::DropAction ac
 	Q_UNUSED(column);
 	Q_UNUSED(parent);
 
-	return !playlist_.isNull() && data->hasFormat("application/straw.lumen.playlist.items");
+	return !playlist_.isNull() && (
+				data->hasFormat("application/straw.lumen.playlist.items")
+				|| data->hasFormat("application/straw.lumen.song.ids")
+				);
 }
 
 bool PlaylistItemModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
@@ -138,24 +142,43 @@ bool PlaylistItemModel::dropMimeData(const QMimeData *data, Qt::DropAction actio
 	if(action == Qt::IgnoreAction)
 		return true;
 
-	QVector<int> items;
-	QDataStream stream(data->data("application/straw.lumen.playlist.items"));
-	while(!stream.atEnd()) {
-		int row;
-		stream >> row;
-		items << row;
-	}
-
-	if(items.isEmpty())
-		return true;
-
 	if(row == -1)
 		row = playlist_->items().size();
 
-	int newPos = playlist_->moveItems(items, row);
-	emit sigForceSelection(newPos, newPos + items.size() - 1);
+	if(data->hasFormat("application/straw.lumen.playlist.items")) {
+		QVector<int> items;
+		QDataStream stream(data->data("application/straw.lumen.playlist.items"));
+		while(!stream.atEnd()) {
+			int row;
+			stream >> row;
+			items << row;
+		}
 
-	return true;
+		if(items.isEmpty())
+			return true;
+
+		int newPos = playlist_->moveItems(items, row);
+		emit sigForceSelection(newPos, newPos + items.size() - 1);
+
+		return true;
+	}
+
+	if(data->hasFormat("application/straw.lumen.song.ids")) {
+		QDataStream stream(data->data("application/straw.lumen.song.ids"));
+		QVector<QSharedPointer<Presentation>> items;
+
+		while(!stream.atEnd()) {
+			qlonglong songId;
+			stream >> songId;
+			items.append(Presentation_Song::createFromDb(songId));
+		}
+
+		playlist_->insertItems(row, items);
+		emit sigForceSelection(row, row + items.size() - 1);
+		return true;
+	}
+
+	return false;
 }
 
 void PlaylistItemModel::onItemsChanged()

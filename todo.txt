@@ -1,4 +1,5 @@
 - padding settings u stylů
+- potvrdit zahodit změny při skrytí songsmode
 - offthread slide rendering
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)

@@ -41,9 +41,13 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		slideOrderCompleter_.setModel(&slideOrderCompleterModel_);
 		slideOrderCompleter_.setCaseSensitivity(Qt::CaseInsensitive);
 
-		slideOrderValidator_.setRegularExpression(QRegularExpression("^($|[a-zA-Z0-9\\-_]+( [a-zA-Z0-9\\-_]*)*$)"));
+		slideOrderValidator_.setRegularExpression(songCustomSlideOrderRegex());
 
 		ui->lnSlideOrder->setCompleter(&slideOrderCompleter_);
+		ui->lnSlideOrder->setValidator(&slideOrderValidator_);
+
+		addCustomSlideOrderItemMenu_ = new QMenu(this);
+		ui->btnAddCustomSlideOrderItem->setMenu(addCustomSlideOrderItemMenu_);
 	}
 
 	// Insert song section menu
@@ -67,9 +71,6 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 		ui->btnInsertSection->setMenu(insertSectionMenu_);
 	}
-
-	addCustomSlideOrderItemMenu_ = new QMenu(this);
-	ui->btnAddCustomSlideOrderItem->setMenu(addCustomSlideOrderItemMenu_);
 
 	// To force update
 	isSongEditMode_ = true;

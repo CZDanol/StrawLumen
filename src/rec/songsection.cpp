@@ -166,3 +166,9 @@ const QRegularExpression &songSlideSeparatorRegex()
 	static const QRegularExpression result("\\{---\\}");
 	return result;
 }
+
+const QRegularExpression &songCustomSlideOrderRegex()
+{
+	static const QRegularExpression result("^($|[a-zA-Z0-9\\-_]+( [a-zA-Z0-9\\-_]*)*$)");
+	return result;
+}

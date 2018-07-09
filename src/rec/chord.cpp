@@ -23,7 +23,7 @@ Chord::Chord(const QString &str)
 	};
 
 	static const QHash<QChar, int> notePitches {
-		{'c', 0}, {'d', 2}, {'e', 4}, {'f', 5}, {'g', 7}, {'a', 9}, {'b', 11}, {'h', 11}
+		{'c', 0}, {'d', 2}, {'e', 4}, {'f', 5}, {'g', 7}, {'a', 9}, {'b', 10}, {'h', 11}
 	};
 
 	static const QHash<QString, int> noteModifierEffects {
@@ -111,19 +111,23 @@ Chord Chord::transposed(int by) const
 	return result;
 }
 
-QString Chord::toString() const
+QString Chord::toString(bool flatVariant) const
 {
 	static const QString variantStrings[_cvCount] = {"", "m", "maj", "aug", "dim"};
-	static const QString noteNames[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"};
+
+	static const QString noteNames[12] = {"C", "Cis", "D", "Dis", "E", "F", "Fis", "G", "Gis", "A", "Ais", "H"};
+	static const QString flatNoteNames[12] = {"C", "Des", "D", "Es", "E", "F", "Ges", "G", "As", "A", "Hes", "H"};
+
+	const auto &names = flatVariant ? flatNoteNames : noteNames;
 
 	if(!isValid_)
 		return "###";
 
-	QString result = noteNames[baseNote_] + variantStrings[quality_] + extra_;
+	QString result = names[baseNote_] + variantStrings[quality_] + extra_;
 
 	if(inversionNote_ != -1) {
 		result += "/";
-		result += noteNames[inversionNote_];
+		result += names[inversionNote_];
 	}
 
 	return result;
@@ -152,7 +156,7 @@ void transposeSong(QString &song, int by)
 	int posCorrection = 0;
 
 	for(ChordInSong &chs : songChords(song)) {
-		QString newChord = QString("[%1]").arg(chs.chord.transposed(by).toString());
+		QString newChord = QString("[%1]").arg(chs.chord.transposed(by).toString(by < 0));
 
 		song.replace(chs.annotationPos + posCorrection, chs.annotationLength, newChord);
 		posCorrection += newChord.length() - chs.annotationLength;

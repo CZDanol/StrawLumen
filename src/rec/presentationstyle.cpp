@@ -7,8 +7,6 @@
 #include "job/jsonautomation.h"
 #include "job/db.h"
 
-#include <QDebug>
-
 PresentationStyle::PresentationStyle(QObject *parent) : QObject(parent)
 {
 	connect(db, SIGNAL(sigStyleChanged(qlonglong)), this, SLOT(onDbStyleChanged(qlonglong)));
@@ -37,10 +35,8 @@ void PresentationStyle::loadFromDb(qlonglong styleId)
 	const bool oldBlockSignals = blockSignals(true);
 
 	QByteArray data = db->selectValueDef("SELECT data FROM styles WHERE id = ?", {styleId}).toByteArray();
-	if(data.isNull()) {
-		qDebug() << "LOAD FAILED";
+	if(data.isNull())
 		return;
-	}
 
 	loadFromJSON(QJsonDocument::fromJson(data).object());
 	styleId_ = styleId;
@@ -116,7 +112,6 @@ void PresentationStyle::onDbStyleChanged(qlonglong styleId)
 	if(styleId != styleId_)
 		return;
 
-	qDebug() << "STLYE CHANGED " << styleId;
 	loadFromDb(styleId_);
 }
 

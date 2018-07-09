@@ -41,6 +41,7 @@ struct SongSectionWithContent {
 const QRegularExpression &songSectionAnnotationRegex();
 
 const QRegularExpression &songSlideSeparatorRegex();
+const QRegularExpression &songCustomSlideOrderRegex();
 
 QVector<SongSection> songSections(const QString &song);
 QVector<SongSectionWithContent> songSectionsWithContent(const QString &song);

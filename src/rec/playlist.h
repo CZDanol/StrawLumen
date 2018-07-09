@@ -20,20 +20,16 @@ public:
 	bool addItem(const QSharedPointer<Presentation> &item);
 	void deleteItem(const QSharedPointer<Presentation> &item);
 
-public:
-	inline const QVector<QSharedPointer<Presentation> > &items() const {
-		return items_;
-	}
+	void insertItems(int pos, const QVector<QSharedPointer<Presentation>> &items);
 
-	inline int slideCount() const {
-		return slideCount_;
-	}
-
-	QSharedPointer<Presentation> presentationOfSlide(int globalSlideId) const;
-
-public:
 	/// Returns index of the first new item
 	int moveItems(const QVector<int> &itemIndexes, int targetPosition);
+
+public:
+	const QVector<QSharedPointer<Presentation> > &items() const;
+	int slideCount() const;
+
+	QSharedPointer<Presentation> presentationOfSlide(int globalSlideId) const;
 
 signals:
 	// Do not emit these signals on your own, rather use emitItems/slides changed

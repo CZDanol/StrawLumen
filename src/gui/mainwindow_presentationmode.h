@@ -52,7 +52,6 @@ private slots:
 	void on_actionAddBlackScreen_triggered();
 	void on_btnSettings_clicked();
 	void on_actionAddPowerpointPresentation_triggered();
-
 	void on_actionAddSong_triggered();
 
 private:

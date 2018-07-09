@@ -30,7 +30,7 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 	{
 		slideSeparatorFormat_.setFontWeight(QFont::Bold);
 		slideSeparatorFormat_.setForeground(Qt::white);
-		slideSeparatorFormat_.setBackground(QColor("#333"));
+		slideSeparatorFormat_.setBackground(QColor("#555"));
 	}
 
 	invalidAnnotationFormat_.setForeground(Qt::red);

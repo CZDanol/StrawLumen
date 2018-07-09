@@ -12,6 +12,20 @@ PresentationPropertiesWidget_Song::PresentationPropertiesWidget_Song(const QShar
 	connect(presentation.data(), SIGNAL(sigItemChanged(Presentation*)), this, SLOT(fillData()));
 	connect(ui->wgtStyle, SIGNAL(sigPresentationStyleChangedByUser()), this, SLOT(onStyleChangedByUser()));
 
+	// Slide order
+	{
+		slideOrderCompleter_.setModel(&slideOrderCompleterModel_);
+		slideOrderCompleter_.setCaseSensitivity(Qt::CaseInsensitive);
+
+		slideOrderValidator_.setRegularExpression(songCustomSlideOrderRegex());
+
+		ui->lnSlideOrder->setCompleter(&slideOrderCompleter_);
+		ui->lnSlideOrder->setValidator(&slideOrderValidator_);
+
+		addCustomSlideOrderItemMenu_ = new QMenu(this);
+		ui->btnAddSlideOrderItem->setMenu(addCustomSlideOrderItemMenu_);
+	}
+
 	fillData();
 }
 
@@ -36,4 +50,33 @@ void PresentationPropertiesWidget_Song::onStyleChangedByUser()
 void PresentationPropertiesWidget_Song::on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &background)
 {
 	presentation_->style_.setBackground(background);
+}
+
+void PresentationPropertiesWidget_Song::on_lnSlideOrder_editingFinished()
+{
+	presentation_->customSlideOrder_ = ui->lnSlideOrder->text();
+	presentation_->loadSlideOrder();
+}
+
+void PresentationPropertiesWidget_Song::on_lnSlideOrder_sigFocused()
+{
+	QStringList lst;
+	for(const Presentation_Song::SectionRec &sr : presentation_->sections_)
+		lst.append(sr.section.standardName());
+
+	slideOrderCompleterModel_.setStringList(lst);
+}
+
+void PresentationPropertiesWidget_Song::on_btnAddSlideOrderItem_pressed()
+{
+	addCustomSlideOrderItemMenu_->clear();
+
+	for(const Presentation_Song::SectionRec &sr : presentation_->sections_) {
+		SongSection section = sr.section;
+		addCustomSlideOrderItemMenu_->addAction(sr.section.icon(), sr.section.userFriendlyName(), [this, section]{
+			const QString text = ui->lnSlideOrder->text();
+			ui->lnSlideOrder->setText((text.isEmpty() ? "" : text + " ") + section.standardName());
+			on_lnSlideOrder_editingFinished();
+		});
+	}
 }

@@ -55,12 +55,12 @@ private slots:
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu *insertSectionMenu_;
-	QMenu *addCustomSlideOrderItemMenu_;
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;
 	QCompleter slideOrderCompleter_;
 	QStringListModel slideOrderCompleterModel_;
+	QMenu *addCustomSlideOrderItemMenu_;
 
 private:
 	qlonglong currentSongId_ = -1;

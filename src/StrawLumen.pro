@@ -84,7 +84,8 @@ SOURCES += main.cpp \
     wgt/presentationbackgroundselectionwidget.cpp \
     presentation/native/presentation_song.cpp \
     wgt/styleselectionwidget.cpp \
-    presentation/native/presentationpropertieswidget_song.cpp
+    presentation/native/presentationpropertieswidget_song.cpp \
+    modelview/songsitemmodel.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -165,7 +166,8 @@ HEADERS += \
     wgt/presentationbackgroundselectionwidget.h \
     presentation/native/presentation_song.h \
     wgt/styleselectionwidget.h \
-    presentation/native/presentationpropertieswidget_song.h
+    presentation/native/presentationpropertieswidget_song.h \
+    modelview/songsitemmodel.h
 
 RESOURCES += \
     ../res/resources.qrc

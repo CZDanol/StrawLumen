@@ -3,8 +3,6 @@
 
 #include "gui/backgrounddialog.h"
 
-#include <QDebug>
-
 PresentationBackgroundSelectionWidget::PresentationBackgroundSelectionWidget(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::PresentationBackgroundSelectionWidget)

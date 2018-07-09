@@ -27,7 +27,7 @@ public:
 
 	Chord transposed(int by) const;
 
-	QString toString() const;
+	QString toString(bool flatVariant = false) const;
 
 private:
 	bool isValid_;

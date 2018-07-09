@@ -55,6 +55,12 @@
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
      </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::DragOnly</enum>
+     </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>

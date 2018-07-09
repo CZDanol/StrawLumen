@@ -3,7 +3,6 @@
 
 #include <QShortcut>
 #include <QShowEvent>
-#include <QDebug>
 
 #include "job/db.h"
 
@@ -84,10 +83,8 @@ void SongListWidget::requery()
 	if(!filter.isEmpty())
 		q.bindValue(0, filter);
 
-	if(!q.exec()) {
-		qCritical() << q.lastError().text();
+	if(!q.exec())
 		return;
-	}
 
 	q.last();
 
@@ -116,6 +113,11 @@ void SongListWidget::requeryIfFilterChanged()
 void SongListWidget::selectRow(int rowId)
 {
 	ui->tvList->selectionModel()->select(model_.index(rowId,0), QItemSelectionModel::ClearAndSelect);
+}
+
+void SongListWidget::setMultiSelectionEnabled(bool set)
+{
+	ui->tvList->setSelectionMode(set ? QAbstractItemView::ExtendedSelection : QAbstractItemView::SingleSelection);
 }
 
 void SongListWidget::showEvent(QShowEvent *e)
