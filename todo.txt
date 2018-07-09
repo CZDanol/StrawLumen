@@ -1,4 +1,3 @@
-- padding settings u stylů
 - potvrdit zahodit změny při skrytí songsmode
 - offthread slide rendering
 

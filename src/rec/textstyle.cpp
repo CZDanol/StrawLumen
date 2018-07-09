@@ -16,6 +16,9 @@ TextStyle TextStyle::fromJSON(const QJsonValue &json)
 
 void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, const QTextOption &option, int flags) const
 {
+	if(str.isEmpty())
+		return;
+
 	p.save();
 	p.translate(rect.topLeft());
 

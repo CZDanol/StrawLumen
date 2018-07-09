@@ -27,6 +27,7 @@ class Presentation_Song : public Presentation_NativePresentation
 		QString name_;
 		QString content_;
 		QString description_;
+		QPixmap icon_;
 	};
 
 public:
@@ -44,6 +45,7 @@ public:
 	int slideCount() const override;
 	QString slideIdentification(int i) const override;
 	QString slideDescription(int i) const override;
+	QPixmap slideIdentificationIcon(int) const override;
 
 private:
 	Presentation_Song();
@@ -61,7 +63,12 @@ private slots:
 private:
 	qlonglong songId_ = -1;
 	QString name_, author_, defaultSlideOrder_, customSlideOrder_;
+	bool emptySlideBefore_, emptySlideAfter_;
+
+private:
 	PresentationStyle style_;
+
+private:
 	QMap<QString, SectionRec> sections_;
 	QVector<SlideRec> slides_;
 

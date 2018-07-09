@@ -129,5 +129,14 @@
         <file>icons/16/Synchronize_16px.png</file>
         <file>icons/16/Add White Space_16px.png</file>
         <file>icons/16/Collect_16px.png</file>
+        <file>icons/16/Login Rounded_16px.png</file>
+        <file>icons/16/Login_16px.png</file>
+        <file>icons/16/Login Rounded Up_16px.png</file>
+        <file>icons/16/Logout Rounded Down_16px.png</file>
+        <file>icons/16/Logout Rounded Up_16px.png</file>
+        <file>icons/16/Sign Out_16px.png</file>
+        <file>icons/16/Signin_16px.png</file>
+        <file>icons/16/Logout Rounded Left_16px.png</file>
+        <file>icons/16/0 Percent_16px.png</file>
     </qresource>
 </RCC>

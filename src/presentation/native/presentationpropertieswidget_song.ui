@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>92</height>
+    <height>163</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,6 +26,54 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" colspan="3">
+    <widget class="QCheckBox" name="cbEmptySlideAfter">
+     <property name="text">
+      <string>Prázdný snímek na konci</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="3">
+    <widget class="QCheckBox" name="cbEmptySlideBefore">
+     <property name="text">
+      <string>Prázdný snímek na začátku</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="4">
+    <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label_5">
      <property name="pixmap">
@@ -56,37 +104,17 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="2">
+   <item row="5" column="2">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Pozadí:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="5" column="0">
     <widget class="QLabel" name="label_3">
      <property name="pixmap">
       <pixmap resource="../../../res/resources.qrc">:/icons/16/Full Image_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="4">
-    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
-    <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
      </property>
     </widget>
    </item>
@@ -112,27 +140,27 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="2">
+   <item row="4" column="2">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Styl:</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="4" column="0">
     <widget class="QLabel" name="label">
      <property name="pixmap">
       <pixmap resource="../../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
+   <item row="3" column="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Preferred</enum>
+      <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>

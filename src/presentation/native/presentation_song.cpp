@@ -14,6 +14,9 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 
 	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
 	result->style_ = settings->defaultPresentationStyle();
+	result->emptySlideBefore_ = settings->value("song.emptySlideBefore").toBool();
+	result->emptySlideAfter_ = settings->value("song.emptySlideAfter", true).toBool();
+
 	result->loadFromDb(songId);
 
 	result->blockSignals(false);
@@ -54,6 +57,11 @@ QString Presentation_Song::slideIdentification(int i) const
 QString Presentation_Song::slideDescription(int i) const
 {
 	return slides_[i].description_;
+}
+
+QPixmap Presentation_Song::slideIdentificationIcon(int i) const
+{
+	return slides_[i].icon_;
 }
 
 Presentation_Song::Presentation_Song()
@@ -119,10 +127,15 @@ void Presentation_Song::loadFromDb(qlonglong songId)
 
 void Presentation_Song::loadSlideOrder()
 {
+	static const QPixmap emptySlidePixmap(":/icons/16/0 Percent_16px.png");
+
 	const QString slideOrderStr = customSlideOrder_.isEmpty() ? defaultSlideOrder_ : customSlideOrder_;
 	const QStringList slideOrder = slideOrderStr.split(' ');
 
 	slides_.clear();
+	if(emptySlideBefore_)
+		slides_.append(SlideRec{QString(), QString(), QString(), emptySlidePixmap});
+
 	for(const QString &sectionName : slideOrder) {
 		if(sectionName.isEmpty())
 			continue;
@@ -131,6 +144,9 @@ void Presentation_Song::loadSlideOrder()
 		for(const SlideData &slideData : sr.slides)
 			slides_.append(SlideRec{sr.section.standardName(), slideData.content_, slideData.description_});
 	}
+
+	if(emptySlideAfter_)
+		slides_.append(SlideRec{QString(), QString(), QString(), emptySlidePixmap});
 
 	emit sigSlidesChanged();
 }

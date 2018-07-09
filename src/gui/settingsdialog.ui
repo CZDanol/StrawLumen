@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>514</width>
-    <height>235</height>
+    <height>279</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -102,10 +102,17 @@
        <string>Písně</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_3">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbEmptySlideBeforeSong">
          <property name="text">
-          <string>Výchozí styl:</string>
+          <string>Prázdný snímek na začátku</string>
          </property>
         </widget>
        </item>
@@ -113,6 +120,13 @@
         <widget class="QLabel" name="label_4">
          <property name="pixmap">
           <pixmap resource="../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Výchozí styl:</string>
          </property>
         </widget>
        </item>
@@ -142,6 +156,20 @@
          </property>
          <property name="preferNonprimaryScreens" stdset="0">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbEmptySlideAfterSong">
+         <property name="text">
+          <string>Prázdní snímek na konci</string>
          </property>
         </widget>
        </item>
@@ -198,6 +226,9 @@
    <extends>QWidget</extends>
    <header>wgt/styleselectionwidget.h</header>
    <container>1</container>
+   <slots>
+    <signal>sigPresentationStyleChangedByUser()</signal>
+   </slots>
   </customwidget>
   <customwidget>
    <class>DisplaySelectionWidget</class>

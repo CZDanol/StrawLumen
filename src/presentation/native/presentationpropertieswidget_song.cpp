@@ -38,6 +38,9 @@ void PresentationPropertiesWidget_Song::fillData()
 {
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
+
+	ui->cbEmptySlideBefore->setChecked(presentation_->emptySlideBefore_);
+	ui->cbEmptySlideAfter->setChecked(presentation_->emptySlideAfter_);
 }
 
 void PresentationPropertiesWidget_Song::onStyleChangedByUser()
@@ -79,4 +82,16 @@ void PresentationPropertiesWidget_Song::on_btnAddSlideOrderItem_pressed()
 			on_lnSlideOrder_editingFinished();
 		});
 	}
+}
+
+void PresentationPropertiesWidget_Song::on_cbEmptySlideBefore_clicked(bool checked)
+{
+	presentation_->emptySlideBefore_ = checked;
+	presentation_->loadSlideOrder();
+}
+
+void PresentationPropertiesWidget_Song::on_cbEmptySlideAfter_clicked(bool checked)
+{
+	presentation_->emptySlideAfter_ = checked;
+	presentation_->loadSlideOrder();
 }
