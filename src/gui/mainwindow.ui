@@ -31,7 +31,7 @@
            <normaloff>:/icons/16/Virtual Machine_16px.png</normaloff>:/icons/16/Virtual Machine_16px.png</iconset>
          </attribute>
          <attribute name="title">
-          <string> Rozložení</string>
+          <string>Pracovní plocha</string>
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="leftMargin">

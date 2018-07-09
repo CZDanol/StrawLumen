@@ -292,15 +292,18 @@ void MainWindow_PresentationMode::on_tvPlaylist_activated(const QModelIndex &ind
 
 void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
 {
-	const int index = ui->tvPlaylist->currentIndex().row();
-	if(index == -1)
+	QModelIndexList selection = ui->tvPlaylist->selectionModel()->selectedRows();
+	if(selection.isEmpty())
 		return;
 
-	auto presentation = playlist_->items()[index];
-	if(!standardDeleteConfirmDialog(tr("Opravdu smazat prezentaci \"%1\"?").arg(presentation->identification())))
+	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané prezentace?")))
 		return;
 
-	playlist_->deleteItem(presentation);
+	QVector<QSharedPointer<Presentation>> items;
+	for(const QModelIndex &index : selection)
+		items.append(playlist_->items()[index.row()]);
+
+	playlist_->deleteItems(items);
 }
 
 void MainWindow_PresentationMode::on_actionAddBlackScreen_triggered()

@@ -138,5 +138,7 @@
         <file>icons/16/Signin_16px.png</file>
         <file>icons/16/Logout Rounded Left_16px.png</file>
         <file>icons/16/0 Percent_16px.png</file>
+        <file>icons/16/Import_16px.png</file>
+        <file>icons/16/OpenSong_16px.png</file>
     </qresource>
 </RCC>

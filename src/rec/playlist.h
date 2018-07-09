@@ -21,6 +21,7 @@ public:
 	void deleteItem(const QSharedPointer<Presentation> &item);
 
 	void insertItems(int pos, const QVector<QSharedPointer<Presentation>> &items);
+	void deleteItems(const QVector<QSharedPointer<Presentation>> &items);
 
 	/// Returns index of the first new item
 	int moveItems(const QVector<int> &itemIndexes, int targetPosition);

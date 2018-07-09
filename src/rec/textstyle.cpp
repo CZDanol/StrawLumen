@@ -46,14 +46,15 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	// Lay out lines
 	for(const QString &line : str.split('\n')) {
 		if(size.height())
-			size.setHeight(size.height() + metrics.height());
+			size.setHeight(size.height() + metrics.leading());
 
 		const int lineWidth = metrics.horizontalAdvance(line);
 		if(lineWidth > size.width())
 			size.setWidth(lineWidth);
 
-		size.setHeight(size.height() + metrics.leading());
+		size.setHeight(size.height() + metrics.ascent());
 		path.addText(-lineWidth*hAlignConst, size.height(), font, line);
+		size.setHeight(size.height() + metrics.descent());
 	}
 
 	const QRectF pathBoundingRect = path.boundingRect();
@@ -64,11 +65,12 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 
 	p.translate(rect.width()*hAlignConst, rect.height()*vAlignConst);
 	p.scale(scaleFactor, scaleFactor);
-	p.translate(-pathBoundingRect.left()-size.width()*hAlignConst, -pathBoundingRect.top()-size.height()*vAlignConst);
+	p.translate(0, -size.height()*vAlignConst);
 
 	if(backgroundEnabled) {
 		const qreal m = backgroundPadding;
-		p.fillRect(pathBoundingRect.marginsAdded(QMarginsF(m, m, m, m)), backgroundColor);
+		//p.fillRect(pathBoundingRect.marginsAdded(QMarginsF(m, m, m, m)), backgroundColor);
+		p.fillRect(QRectF(QPointF(-size.width()*hAlignConst, 0), size).marginsAdded(QMarginsF(m, m, m, m)), backgroundColor);
 	}
 
 	if(outlineEnabled)

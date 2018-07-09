@@ -90,6 +90,19 @@ void Playlist::insertItems(int pos, const QVector<QSharedPointer<Presentation> >
 	emitItemsChanged();
 }
 
+void Playlist::deleteItems(const QVector<QSharedPointer<Presentation> > &items)
+{
+	for(const QSharedPointer<Presentation> &item : items) {
+		if(!item || item->playlist() != this)
+			continue;
+
+		item->playlist_ = nullptr;
+		items_.removeOne(item);
+	}
+
+	emitItemsChanged();
+}
+
 const QVector<QSharedPointer<Presentation> > &Playlist::items() const
 {
 	return items_;

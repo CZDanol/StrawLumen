@@ -28,24 +28,36 @@ StylesDialog::StylesDialog(QWidget *parent) :
 
 	ui->lvList->setModel(&styleListModel_);
 
-	connect(db, SIGNAL(sigStyleListChanged()), this, SLOT(requeryList()));
+	{
+		connect(db, SIGNAL(sigStyleListChanged()), this, SLOT(requeryList()));
 
-	connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	connect(ui->btnSelect, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	connect(ui->btnStorno, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
-	connect(ui->lvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentStyleChanged(QModelIndex,QModelIndex)));
+		connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(accept()));
+		connect(ui->btnSelect, SIGNAL(clicked(bool)), this, SLOT(accept()));
+		connect(ui->btnStorno, SIGNAL(clicked(bool)), this, SLOT(reject()));
+		connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
+		connect(ui->lvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentStyleChanged(QModelIndex,QModelIndex)));
 
-	connect(ui->wgtMainTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setMainTextStyle);
-	connect(ui->wgtTitleTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setTitleTextStyle);
-	connect(ui->lnName, &QLineEdit::editingFinished, this, &StylesDialog::onNameChanged);
-	connect(ui->wgtBackground, &PresentationBackgroundSelectionWidget::sigPresentationBackgroundChangedByUser, &presentationStyle_, &PresentationStyle::setBackground);
+		connect(ui->wgtMainTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setMainTextStyle);
+		connect(ui->wgtTitleTextStyle, &TextStyleWidget::sigTextStyleChangedByUser, &presentationStyle_, &PresentationStyle::setTitleTextStyle);
+		connect(ui->lnName, &QLineEdit::editingFinished, this, &StylesDialog::onNameChanged);
+		connect(ui->wgtBackground, &PresentationBackgroundSelectionWidget::sigPresentationBackgroundChangedByUser, &presentationStyle_, &PresentationStyle::setBackground);
 
-	connect(ui->sbTopPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setTopPadding);
-	connect(ui->sbBottomPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setBottomPadding);
-	connect(ui->sbLeftPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setLeftPadding);
-	connect(ui->sbRightPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setRightPadding);
-	connect(ui->sbTitleTextPadding, QOverload<int>::of(&QSpinBox::valueChanged), &presentationStyle_, &PresentationStyle::setTitleTextPadding);
+		using PSMethod = void (PresentationStyle::*)(const int &);
+		const auto connectSb = [this](QSpinBox *spinBox, PSMethod method) {
+			connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [this, method](int newValue){
+				if(!isEditMode_)
+					return;
+
+				(presentationStyle_.*method)(newValue);
+			});
+		};
+
+		connectSb(ui->sbTopPadding, &PresentationStyle::setTopPadding);
+		connectSb(ui->sbBottomPadding, &PresentationStyle::setBottomPadding);
+		connectSb(ui->sbLeftPadding, &PresentationStyle::setLeftPadding);
+		connectSb(ui->sbRightPadding, &PresentationStyle::setRightPadding);
+		connectSb(ui->sbTitleTextPadding, &PresentationStyle::setTitleTextPadding);
+	}
 
 	{
 		listContextMenu_ = new QMenu(this);
@@ -81,6 +93,7 @@ bool StylesDialog::showInSelectionMode(PresentationStyle &style)
 	setMgmtMode(false);
 
 	const bool accepted = QDialog::exec() == QDialog::Accepted;
+
 	if(accepted)
 		style = presentationStyle_;
 
