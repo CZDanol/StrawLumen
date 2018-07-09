@@ -58,7 +58,7 @@
            <normaloff>:/icons/16/Design_16px.png</normaloff>:/icons/16/Design_16px.png</iconset>
          </attribute>
          <attribute name="title">
-          <string>Úpravy</string>
+          <string>Vložit</string>
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <property name="leftMargin">
@@ -76,7 +76,7 @@
           <item>
            <widget class="QPushButton" name="btnInsertSection">
             <property name="text">
-             <string> Vložit sekci</string>
+             <string> Sekci</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -90,11 +90,28 @@
           <item>
            <widget class="QPushButton" name="btnInsertChord">
             <property name="text">
-             <string> Vložit akord</string>
+             <string> Akord</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
               <normaloff>:/icons/16/Guitar_16px.png</normaloff>:/icons/16/Guitar_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnInsertSlideSeparator">
+            <property name="toolTip">
+             <string>Jedna sekce může být v prezentaci rozdělena do více snímků. Toto se řídí právě oddělovači.</string>
+            </property>
+            <property name="text">
+             <string> Oddělovač snímků</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Mockup_16px.png</normaloff>:/icons/16/Mockup_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>

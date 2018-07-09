@@ -5,15 +5,13 @@
 #include <QCoreApplication>
 #include <QPixmap>
 #include <QVector>
-#include <QPair>
+#include <QRegularExpression>
 
 class SongSection
 {
 	Q_DECLARE_TR_FUNCTIONS(SongSection)
 
 public:
-	static QVector<SongSection> songSections(const QString &song);
-
 	SongSection();
 	explicit SongSection(const QString &str);
 	static SongSection customSection(const QString &str);
@@ -33,5 +31,18 @@ private:
 	QString name_, index_;
 
 };
+
+struct SongSectionWithContent {
+	SongSection section;
+	QString content;
+};
+
+/// Captures: 0 - whole annotation; 1 - annotation prefix, 2 - section name, 3 - annotation suffix
+const QRegularExpression &songSectionAnnotationRegex();
+
+const QRegularExpression &songSlideSeparatorRegex();
+
+QVector<SongSection> songSections(const QString &song);
+QVector<SongSectionWithContent> songSectionsWithContent(const QString &song);
 
 #endif // SONGSECTION_H

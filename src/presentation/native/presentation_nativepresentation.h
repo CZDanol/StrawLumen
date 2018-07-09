@@ -1,6 +1,9 @@
 #ifndef PRESENTATION_NATIVEPRESENTATION_H
 #define PRESENTATION_NATIVEPRESENTATION_H
 
+#include <QPainter>
+#include <QRect>
+
 #include "presentation/presentation.h"
 
 class Presentation_NativePresentation : public Presentation
@@ -11,6 +14,11 @@ public:
 	virtual ~Presentation_NativePresentation();
 
 public:
+	virtual void drawSlide(QPainter &p, int slideId, const QRect &rect) = 0;
+
+public:
+	bool isActive() const;
+
 	PresentationEngine *engine() const override;
 
 	void activatePresentation(int startingSlide) override;
@@ -19,6 +27,12 @@ public:
 
 protected:
 	Presentation_NativePresentation();
+
+protected:
+	QWeakPointer<Presentation_NativePresentation> weakPtr_;
+
+private:
+	bool isActive_ = false;
 
 };
 

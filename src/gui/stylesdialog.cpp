@@ -27,6 +27,8 @@ StylesDialog::StylesDialog(QWidget *parent) :
 
 	ui->lvList->setModel(&styleListModel_);
 
+	connect(db, SIGNAL(sigStyleListChanged()), this, SLOT(requeryList()));
+
 	connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(accept()));
 	connect(ui->btnSelect, SIGNAL(clicked(bool)), this, SLOT(accept()));
 	connect(ui->btnStorno, SIGNAL(clicked(bool)), this, SLOT(reject()));
@@ -129,13 +131,10 @@ void StylesDialog::fillStyleData()
 	if(currentStyleId_ == -1)
 		return;
 
-	QSqlRecord r = db->selectRow("SELECT isInternal, data FROM styles WHERE id = ?", {currentStyleId_});
-
-	currentStyleIsInternal_ = r.value("isInternal").toBool();
+	currentStyleIsInternal_ = db->selectValue("SELECT isInternal FROM styles WHERE id = ?", {currentStyleId_}).toBool();
 	ui->btnEdit->setEnabled(!currentStyleIsInternal_);
 
-	const QJsonObject json = QJsonDocument::fromJson(r.value("data").toByteArray()).object();
-	presentationStyle_.loadFromJSON(json);
+	presentationStyle_.loadFromDb(currentStyleId_);
 
 	ui->lnName->setText(presentationStyle_.name());
 	ui->wgtMainTextStyle->setTextStyle(presentationStyle_.mainTextStyle());
@@ -220,7 +219,7 @@ void StylesDialog::on_btnSaveChanges_clicked()
 					 });
 
 	setEditMode(false);
-	requeryList();
+	emit db->sigStyleChanged(currentStyleId_);
 }
 
 void StylesDialog::on_btnEdit_clicked()
@@ -249,7 +248,7 @@ void StylesDialog::on_actionDeleteStyle_triggered()
 
 	db->exec("DELETE FROM styles WHERE id = ?", {currentStyleId_});
 
+	emit db->sigStyleChanged(currentStyleId_);
 	currentStyleId_ = -1;
-	requeryList();
 	updateManipulationButtonsEnabled();
 }

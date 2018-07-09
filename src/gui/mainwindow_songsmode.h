@@ -6,6 +6,7 @@
 #include <QCompleter>
 #include <QStringList>
 #include <QStringListModel>
+#include <QRegularExpressionValidator>
 
 #include "rec/songsection.h"
 
@@ -49,6 +50,7 @@ private slots:
 	void on_btnTransposeUp_clicked();
 	void on_btnTransposeDown_clicked();
 	void on_btnAddCustomSlideOrderItem_pressed();
+	void on_btnInsertSlideSeparator_clicked();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
@@ -56,6 +58,7 @@ private:
 	QMenu *addCustomSlideOrderItemMenu_;
 
 private:
+	QRegularExpressionValidator slideOrderValidator_;
 	QCompleter slideOrderCompleter_;
 	QStringListModel slideOrderCompleterModel_;
 

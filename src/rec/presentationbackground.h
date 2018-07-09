@@ -7,20 +7,28 @@
 #include <QCoreApplication>
 #include <QPainter>
 
-class PresentationBackground
+class PresentationBackground : public QObject
 {
-	Q_DECLARE_TR_FUNCTIONS(PresentationBackground)
+	Q_OBJECT
 
 public:
 	PresentationBackground();
+	PresentationBackground(const PresentationBackground &other);
 
-public:
-	QString filename;
-	QColor color = Qt::transparent;
+signals:
+	void sigChanged();
 
 public:
 	QString caption() const;
 
+	const QString &filename() const;
+	const QColor &color() const;
+
+public slots:
+	void setFilename(const QString &filename);
+	void setColor(const QColor &color);
+
+public:
 	void draw(QPainter &p, const QRect &rect) const;
 
 public:
@@ -29,6 +37,15 @@ public:
 
 public:
 	bool operator==(const PresentationBackground &other) const;
+
+	void operator=(const PresentationBackground &other);
+
+private slots:
+	void onBackgroundManagerBackgroundLoaded(const QString &filename);
+
+private:
+	QString filename_;
+	QColor color_ = Qt::transparent;
 
 };
 

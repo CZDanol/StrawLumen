@@ -1,7 +1,11 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include "job/settings.h"
+#include "job/db.h"
 #include "presentation/presentationengine.h"
 #include "presentation/presentationmanager.h"
 #include "rec/chord.h"
@@ -17,6 +21,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	ui(new Ui::SettingsDialog)
 {
 	ui->setupUi(this);
+	settings_.reset(new Settings(this));
 
 	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
 
@@ -28,6 +33,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 	SETTINGS_FACTORY(F)
 #undef F
+
+	defaultPresentationStyle_.loadFromDb(db->selectValueDef("SELECT id FROM styles LIMIT 1").toLongLong());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -35,9 +42,9 @@ SettingsDialog::~SettingsDialog()
 	delete ui;
 }
 
-QRect SettingsDialog::projectionDisplayGeometry() const
+const SettingsDialog::Settings &SettingsDialog::settings() const
 {
-	return ui->dsDisplay->selectedScreen()->geometry();
+	return *settings_;
 }
 
 void SettingsDialog::onDisplayChanged(QScreen *current)
@@ -49,4 +56,19 @@ void SettingsDialog::onDisplayChanged(QScreen *current)
 void SettingsDialog::on_btnClose_clicked()
 {
 	accept();
+}
+
+SettingsDialog::Settings::Settings(SettingsDialog *dlg) : dlg(*dlg)
+{
+
+}
+
+QRect SettingsDialog::Settings::projectionDisplayGeometry() const
+{
+	return dlg.ui->dsDisplay->selectedScreen()->geometry();
+}
+
+const PresentationStyle &SettingsDialog::Settings::defaultPresentationStyle() const
+{
+	return dlg.defaultPresentationStyle_;
 }

@@ -6,12 +6,28 @@
 
 #include "job/dbmanager.h"
 
-extern DBManager *db;
+class DatabaseManager : public DBManager
+{
+	Q_OBJECT
 
-void initDb();
-void uninitDb();
+public:
+	DatabaseManager();
+	~DatabaseManager();
 
-void createDb();
+signals:
+	void sigSongListChanged();
+	void sigStyleListChanged();
+
+	// Following signals automatically emit adequate sitXXXListChanged
+	void sigSongChanged(qlonglong songId);
+	void sigStyleChanged(qlonglong styleId);
+
+private:
+	void createDb();
+
+};
+
+extern DatabaseManager *db;
 
 QString collate(const QString &str);
 QString collateFulltextQuery(const QString &str);

@@ -16,11 +16,14 @@ public:
 	~Presentation_BlackScreen();
 
 public:
+	void drawSlide(QPainter &p, int slideId, const QRect &rect) override;
+
+public:
 	QString identification() const override;
 	QPixmap icon() const override;
 
-	int rawSlideCount() const override;
-	QPixmap rawSlideIdentificationIcon(int i) const;
+	int slideCount() const override;
+	QPixmap slideIdentificationIcon(int i) const;
 
 private:
 	Presentation_BlackScreen();

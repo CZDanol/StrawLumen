@@ -17,6 +17,7 @@ protected:
 private:
 	QTextCharFormat chordFormat_, chordAnnotationSymbolFormat_;
 	QTextCharFormat sectionFormat_, sectionAnnotationSymbolFormat_;
+	QTextCharFormat slideSeparatorFormat_;
 
 private:
 	QTextCharFormat invalidAnnotationFormat_;

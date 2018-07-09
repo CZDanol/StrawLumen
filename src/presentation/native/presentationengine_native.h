@@ -2,6 +2,7 @@
 #define PRESENTATIONENGINE_NATIVE_H
 
 #include "presentation/presentationengine.h"
+#include "presentation/native/presentation_nativepresentation.h"
 
 class PresentationEngine_Native : public PresentationEngine
 {
@@ -10,6 +11,14 @@ class PresentationEngine_Native : public PresentationEngine
 public:
 	explicit PresentationEngine_Native(QObject *parent = nullptr);
 	~PresentationEngine_Native();
+
+public slots:
+	void setPresentation(const QSharedPointer<Presentation_NativePresentation> &presentation);
+	void setSlide(int localSlideId);
+
+public:
+	const QSharedPointer<Presentation_NativePresentation> &currentPresentation() const;
+	int currentSlide() const;
 
 public:
 	void activateEngine() override;
@@ -20,6 +29,8 @@ public:
 
 private:
 	bool isBlackScreen_ = false;
+	QSharedPointer<Presentation_NativePresentation> currentPresentation_;
+	int currentSlide_ = -1;
 
 };
 

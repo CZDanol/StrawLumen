@@ -25,19 +25,11 @@ signals:
 	void sigItemChanged(Presentation *presentation);
 
 public:
-	/// Slide count, not considering custom ordering
-	virtual int rawSlideCount() const = 0;
+	virtual int slideCount() const = 0;
 
-	virtual QString rawSlideIdentification(int) const;
-	virtual QPixmap rawSlideIdentificationIcon(int) const;
-	virtual QString rawSlideDescription(int) const;
-
-	/// Slide count considering custom ordering
-	int slideCount() const;
-
-	QString slideIdentification(int i) const;
-	QPixmap slideIdentificationIcon(int i) const;
-	QString slideDescription(int i) const;
+	virtual QString slideIdentification(int) const;
+	virtual QPixmap slideIdentificationIcon(int) const;
+	virtual QString slideDescription(int) const;
 
 	Playlist *playlist() const;
 	int positionInPlaylist() const;
@@ -65,11 +57,6 @@ public:
 
 protected:
 	Presentation() {}
-
-	void initDefaultSlideOrder();
-
-protected:
-	QVector<int> slideOrder_;
 
 private:
 	Playlist *playlist_ = nullptr;

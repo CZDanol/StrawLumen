@@ -25,7 +25,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	ui->twSongs->setCornerWidget(ui->twSongsCorner);
 
 	connect(ui->wgtSongList, SIGNAL(sigSelectionChanged(qlonglong,int)), this, SLOT(onCurrentSongChanged(qlonglong, int)));
-	connect(ui->wgtSongList, SIGNAL(sigItemActivated()), ui->btnEdit, SLOT(click()));
+	connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), ui->btnEdit, SLOT(click()));
 	connect(ui->wgtSongList, SIGNAL(sigCustomContextMenuRequested(QPoint)), this, SLOT(onSongListContextMenuRequested(QPoint)));
 
 	new QShortcut(Qt::CTRL | Qt::Key_Return, ui->btnSaveChanges, SLOT(click()));
@@ -36,10 +36,12 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 	connect(new QShortcut(Qt::Key_Delete, this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDeleteSong, SLOT(trigger()));
 
-	// Slide order completer
+	// Slide order
 	{
 		slideOrderCompleter_.setModel(&slideOrderCompleterModel_);
 		slideOrderCompleter_.setCaseSensitivity(Qt::CaseInsensitive);
+
+		slideOrderValidator_.setRegularExpression(QRegularExpression("^($|[a-zA-Z0-9\\-_]+( [a-zA-Z0-9\\-_]*)*$)"));
 
 		ui->lnSlideOrder->setCompleter(&slideOrderCompleter_);
 	}
@@ -222,8 +224,8 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 	db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {currentSongId_, collate(name), collate(author), collate(content)});
 	db->commitTransaction();
 
-	ui->wgtSongList->requery();
 	updateSongManipulationButtonsEnabled();
+	emit db->sigSongChanged(currentSongId_);
 }
 
 void MainWindow_SongsMode::on_btnEdit_clicked()
@@ -248,15 +250,15 @@ void MainWindow_SongsMode::on_actionDeleteSong_triggered()
 	db->exec("DELETE FROM songs WHERE id = ?", {currentSongId_});
 	db->commitTransaction();
 
+	emit db->sigSongChanged(currentSongId_);
 	currentSongId_ = -1;
-	ui->wgtSongList->requery();
 	updateSongManipulationButtonsEnabled();
 }
 
 void MainWindow_SongsMode::on_lnSlideOrder_sigFocused()
 {
 	QStringList lst;
-	for(SongSection &section : SongSection::songSections(ui->teContent->toPlainText()))
+	for(SongSection &section : songSections(ui->teContent->toPlainText()))
 		lst.append(section.standardName());
 
 	slideOrderCompleterModel_.setStringList(lst);
@@ -296,9 +298,18 @@ void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed()
 {
 	addCustomSlideOrderItemMenu_->clear();
 
-	for(SongSection section : SongSection::songSections(ui->teContent->toPlainText()))
+	for(SongSection section : songSections(ui->teContent->toPlainText()))
 		addCustomSlideOrderItemMenu_->addAction(section.icon(), section.userFriendlyName(), [this, section]{
 			const QString text = ui->lnSlideOrder->text();
 			ui->lnSlideOrder->setText((text.isEmpty() ? "" : text + " ") + section.standardName());
 		});
+}
+
+void MainWindow_SongsMode::on_btnInsertSlideSeparator_clicked()
+{
+	if(!isSongEditMode_)
+		return;
+
+	ui->teContent->setFocus();
+	ui->teContent->insertPlainText("{---}");
 }

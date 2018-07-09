@@ -1,9 +1,6 @@
+- settingsDialog->settings() předělat do settings
+
 - 1,5 px to point nestačí (pro jiné DPI displeje)
-- validátor pro vlastní pořadí písní
-- pro vlastní pořadí písní tlačítko přidat
-- slidy prezentací - každý slide má string id
-- u každé prezentace možnost vlastního pořadí - spíš ne
-- speciální globální ID pro černou obrazovku
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
 - nastavení songové prezentace - dávat na první, případně poslední místo slide s pozadím
 

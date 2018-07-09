@@ -25,18 +25,23 @@ public:
 signals:
 	void sigChanged();
 
-
 public:
-	bool usesBackground(const QString &filename);
-
 	void drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const;
 
 public:
 	void loadFromJSON(const QJsonValue &val);
+	void loadFromDb(qlonglong styleId);
+
 	QJsonObject toJSON() const;
 
 public:
 	void operator=(const PresentationStyle &other);
+
+private slots:
+	void onDbStyleChanged(qlonglong styleId);
+
+private:
+	qlonglong styleId_ = -1;
 
 public slots:
 	// Field setters

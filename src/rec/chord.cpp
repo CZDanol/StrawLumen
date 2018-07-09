@@ -1,7 +1,5 @@
 #include "chord.h"
 
-#include <QRegularExpression>
-
 #include "gui/settingsdialog.h"
 
 Chord::Chord()
@@ -14,8 +12,8 @@ Chord::Chord(const QString &str)
 	static const QRegularExpression chordRegex(
 				"^"
 				"([a-hA-H])(s|S|is|IS|es|ES|#|b)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
-				"([0-9/(#+-][0-9a-zA-Z/()#+\\-]*)?" // Extra
-				"(?:\\s*/\\s*([a-hA-H])(s|S|is|IS|es|ES|#|b)?)?" // Inversions
+				"([0-9/(#+\\-][0-9a-zA-Z/()#+\\-]*)?" // Extra
+				"(?:/([a-hA-H])(s|S|is|IS|es|ES|#|b)?)?" // Inversions
 				"$"
 				);
 
@@ -135,14 +133,12 @@ QString Chord::toString() const
 
 QVector<ChordInSong> songChords(const QString &song)
 {
-	static const QRegularExpression chordRegex("\\[([^]]+)\\]");
-
 	QVector<ChordInSong> result;
-	QRegularExpressionMatchIterator it = chordRegex.globalMatch(song);
+	QRegularExpressionMatchIterator it = songChordRegex().globalMatch(song);
 
 	while(it.hasNext()) {
 		QRegularExpressionMatch m = it.next();
-		const Chord ch(m.captured(1));
+		const Chord ch(m.captured(2));
 
 		if(!ch.isValid())
 			continue;
@@ -163,4 +159,10 @@ void transposeSong(QString &song, int by)
 		song.replace(chs.annotationPos + posCorrection, chs.annotationLength, newChord);
 		posCorrection += newChord.length() - chs.annotationLength;
 	}
+}
+
+const QRegularExpression &songChordRegex()
+{
+	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#]+)(\\])");
+	return result;
 }

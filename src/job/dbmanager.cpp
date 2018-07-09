@@ -117,6 +117,26 @@ QVariant DBManager::selectValue(const QString &query, const DBManager::Args &arg
 	return q.value(0);
 }
 
+QVariant DBManager::selectValueDefAssoc(const QString &query, const DBManager::AssocArgs &args, const QVariant &def)
+{
+	QSqlQuery q = selectQueryAssoc(query, args);
+
+	if(!q.next())
+		return def;
+
+	return q.value(0);
+}
+
+QVariant DBManager::selectValueDef(const QString &query, const DBManager::Args &args, const QVariant &def)
+{
+	QSqlQuery q = selectQuery(query, args);
+
+	if(!q.next())
+		return def;
+
+	return q.value(0);
+}
+
 QSqlQuery DBManager::selectQueryAssoc(const QString &query, const DBManager::AssocArgs &args)
 {
 	QSqlQuery q(db_);

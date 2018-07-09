@@ -18,12 +18,14 @@ SongListWidget::SongListWidget(QWidget *parent) :
 	typingTimer_.setSingleShot(true);
 	typingTimer_.setInterval(500);
 
-	connect(ui->lnSearch, SIGNAL(editingFinished()), this, SLOT(requeryIfNecessary()));
+	connect(db, SIGNAL(sigSongListChanged()), this, SLOT(requery()));
+
+	connect(ui->lnSearch, SIGNAL(editingFinished()), this, SLOT(requeryIfFilterChanged()));
 	connect(ui->lnSearch, SIGNAL(textChanged(QString)), &typingTimer_, SLOT(start()));
-	connect(&typingTimer_, SIGNAL(timeout()), this, SLOT(requeryIfNecessary()));
+	connect(&typingTimer_, SIGNAL(timeout()), this, SLOT(requeryIfFilterChanged()));
 
 	connect(ui->tvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentChanged(QModelIndex,QModelIndex)));
-	connect(ui->tvList, SIGNAL(activated(QModelIndex)), this, SIGNAL(sigItemActivated()));
+	connect(ui->tvList, SIGNAL(activated(QModelIndex)), this, SLOT(onItemActivated(QModelIndex)));
 
 	new QShortcut(Qt::Key_Escape, ui->lnSearch, SLOT(clear()), SLOT(clear()), Qt::WidgetShortcut);
 
@@ -55,7 +57,7 @@ void SongListWidget::unselect()
 void SongListWidget::requery()
 {
 	const int prevRow = ui->tvList->currentIndex().row();
-	const qlonglong prevSelectId = prevRow < 0 ? -1 : model_.data(model_.index(prevRow, 0)).toLongLong();
+	const qlonglong prevSelectId = prevRow < 0 ? -1 : model_.record(prevRow).value("id").toLongLong();
 
 	QString query;
 	DBManager::Args args;
@@ -98,12 +100,12 @@ void SongListWidget::requery()
 	ui->tvList->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 	ui->tvList->header()->setSectionResizeMode(2, QHeaderView::Stretch);
 
-	const qlonglong newSelectId = prevRow < 0 ? -1 : model_.data(model_.index(prevRow, 0)).toLongLong();
+	const qlonglong newSelectId = prevRow < 0 ? -1 : model_.record(prevRow).value("id").toLongLong();
 	if(prevSelectId == newSelectId)
 		ui->tvList->selectionModel()->setCurrentIndex(model_.index(prevRow, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 }
 
-void SongListWidget::requeryIfNecessary()
+void SongListWidget::requeryIfFilterChanged()
 {
 	if(currentFilterText_ == ui->lnSearch->text())
 		return;
@@ -129,10 +131,18 @@ void SongListWidget::onCurrentChanged(const QModelIndex &index, const QModelInde
 	if(!index.isValid())
 		emit sigSelectionChanged(-1, prevIndex.row());
 	else
-		emit sigSelectionChanged(model_.data(model_.index(index.row(), 0)).toLongLong(), prevIndex.row());
+		emit sigSelectionChanged(model_.record(index.row()).value("id").toLongLong(), prevIndex.row());
 }
 
 void SongListWidget::onCustomContextMenuRequested(const QPoint &pos)
 {
 	emit sigCustomContextMenuRequested(ui->tvList->viewport()->mapToGlobal(pos));
+}
+
+void SongListWidget::onItemActivated(const QModelIndex &index)
+{
+	if(!index.isValid())
+		return;
+
+	emit sigItemActivated(model_.record(index.row()).value("id").toLongLong());
 }

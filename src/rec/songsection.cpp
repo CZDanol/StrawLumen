@@ -1,30 +1,5 @@
 #include "songsection.h"
 
-#include <QRegularExpression>
-#include <QSet>
-
-QVector<SongSection> SongSection::songSections(const QString &song)
-{
-	static const QRegularExpression regex("\\{([^}]+)\\}");
-
-	QVector<SongSection> result;
-	QSet<QString> uniqueSections;
-	QRegularExpressionMatchIterator it = regex.globalMatch(song);
-
-	while(it.hasNext()) {
-		QRegularExpressionMatch m = it.next();
-		SongSection ss(m.captured(1));
-
-		if(!ss.isValid() || uniqueSections.contains(ss.standardName()))
-			continue;
-
-		uniqueSections.insert(ss.standardName());
-		result.append(ss);
-	}
-
-	return result;
-}
-
 SongSection::SongSection()
 {
 	isValid_ = false;
@@ -36,7 +11,7 @@ SongSection::SongSection(const QString &str)
 																				"(?:"
 																				"([VCBIO])([1-9][0-9]*)?" // Standard section format
 																				"|"
-																				"\"([a-zA-Z0-9_-]+)\"" // Custom section name
+																				"\"([a-zA-Z0-9_\\-]+)\"" // Custom section name
 																				")"
 																				"$", QRegularExpression::UseUnicodePropertiesOption);
 
@@ -129,4 +104,65 @@ QPixmap SongSection::icon() const
 
 	// First, try standard name with index, then without index
 	return map.value(standardName(), map.value(name_, QPixmap()));
+}
+
+QVector<SongSection> songSections(const QString &song)
+{
+	QVector<SongSection> result;
+	QRegularExpressionMatchIterator it = songSectionAnnotationRegex().globalMatch(song);
+
+	while(it.hasNext()) {
+		QRegularExpressionMatch m = it.next();
+		SongSection ss(m.captured(2));
+
+		if(!ss.isValid())
+			continue;
+
+		result.append(ss);
+	}
+
+	return result;
+}
+
+QVector<SongSectionWithContent> songSectionsWithContent(const QString &song)
+{
+	// Default - intro
+	SongSection currentSection("I");
+	QVector<SongSectionWithContent> result;
+	int sectionStart = 0;
+
+	QRegularExpressionMatchIterator it = songSectionAnnotationRegex().globalMatch(song);
+	while(it.hasNext()) {
+		QRegularExpressionMatch m = it.next();
+		SongSection ss(m.captured(2));
+
+		if(!ss.isValid())
+			continue;
+
+		QString content = song.mid(sectionStart, m.capturedStart()-sectionStart).trimmed();
+		if(!content.isEmpty() || sectionStart != 0)
+			result.append(SongSectionWithContent{currentSection, content});
+
+		currentSection = ss;
+		sectionStart = m.capturedEnd();
+	}
+
+	{
+		QString content = song.mid(sectionStart, song.length()-sectionStart).trimmed();
+		result.append(SongSectionWithContent{currentSection, content});
+	}
+
+	return result;
+}
+
+const QRegularExpression &songSectionAnnotationRegex()
+{
+	static const QRegularExpression result("(\\{)([a-zA-Z0-9\"_\\-]+)(\\})");
+	return result;
+}
+
+const QRegularExpression &songSlideSeparatorRegex()
+{
+	static const QRegularExpression result("\\{---\\}");
+	return result;
 }

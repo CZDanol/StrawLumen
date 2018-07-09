@@ -81,7 +81,8 @@ SOURCES += main.cpp \
     rec/presentationbackground.cpp \
     wgt/presentationbackgroundpreviewwidget.cpp \
     job/backgroundmanager.cpp \
-    wgt/presentationbackgroundselectionwidget.cpp
+    wgt/presentationbackgroundselectionwidget.cpp \
+    presentation/native/presentation_song.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -157,7 +158,8 @@ HEADERS += \
     rec/presentationbackground.h \
     wgt/presentationbackgroundpreviewwidget.h \
     job/backgroundmanager.h \
-    wgt/presentationbackgroundselectionwidget.h
+    wgt/presentationbackgroundselectionwidget.h \
+    presentation/native/presentation_song.h
 
 RESOURCES += \
     ../res/resources.qrc

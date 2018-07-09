@@ -16,6 +16,7 @@
 #include "presentation/presentationmanager.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/native/presentation_blackscreen.h"
+#include "presentation/native/presentation_song.h"
 #include "job/settings.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
@@ -96,6 +97,11 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		connect(ui->btnNextSlide, SIGNAL(clicked(bool)), presentationManager, SLOT(nextSlide()));
 		connect(ui->btnNextPresentation, SIGNAL(clicked(bool)), presentationManager, SLOT(nextPresentation()));
 		connect(ui->btnBlackScreen, SIGNAL(clicked(bool)), presentationManager, SLOT(setBlackScreen(bool)));
+	}
+
+	// Song list
+	{
+		connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), this, SLOT(onSongListItemActivated(qlonglong)));
 	}
 
 	// Shortcuts
@@ -255,6 +261,11 @@ void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &p
 	playlistContextMenu_->popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
 }
 
+void MainWindow_PresentationMode::onSongListItemActivated(qlonglong songId)
+{
+	playlist_->addItem(Presentation_Song::createFromDb(songId));
+}
+
 void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)
 {
 	if(!checked) {
@@ -321,4 +332,9 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 		if(!playlist_->addItem(Presentation_PowerPoint::create(filename)))
 			break;
 	}
+}
+
+void MainWindow_PresentationMode::on_actionAddSong_triggered()
+{
+	ui->twLeftBottom->setCurrentWidget(ui->tabSongList);
 }

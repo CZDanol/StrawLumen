@@ -52,8 +52,8 @@ void initApplication() {
 	setupStylesheet();
 
 	initSettings();
-	initDb();
 
+	db = new DatabaseManager();
 	backgroundManager = new BackgroundManager();
 
 	activeXJobThread = new ActiveXJobThread();
@@ -81,8 +81,8 @@ void uninitApplication() {
 	delete projectorWindow;
 
 	delete backgroundManager;
+	delete db;
 
-	uninitDb();
 	uninitSettings();
 }
 

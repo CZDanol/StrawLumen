@@ -44,10 +44,10 @@ public:
 
 	QWidget *createPropertiesWidget(QWidget *parent) override;
 
-	int rawSlideCount() const override;
-	QString rawSlideIdentification(int i) const override;
-	QPixmap rawSlideIdentificationIcon(int i) const;
-	QString rawSlideDescription(int i) const override;
+	int slideCount() const override;
+	QString slideIdentification(int i) const override;
+	QPixmap slideIdentificationIcon(int i) const;
+	QString slideDescription(int i) const override;
 
 	PresentationEngine *engine() const override;
 
@@ -59,7 +59,7 @@ private:
 	Presentation_PowerPoint();
 
 private:
-	int rawSlideCount_ = 0;
+	int slideCount_ = 0;
 	QString filePath_;
 	QString identification_;
 	QList<QSharedPointer<Slide>> slides_;

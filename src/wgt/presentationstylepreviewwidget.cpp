@@ -3,22 +3,21 @@
 #include <QPainter>
 
 #include "gui/settingsdialog.h"
-#include "job/backgroundmanager.h"
 
 PresentationStylePreviewWidget::PresentationStylePreviewWidget(QWidget *parent) : QWidget(parent)
 {
-	connect(backgroundManager, &BackgroundManager::sigBackgroundLoaded, this, &PresentationStylePreviewWidget::onBackgroundManagerBackgroundLoaded);
+	connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(update()));
 }
 
 void PresentationStylePreviewWidget::setPresentationStyle(const PresentationStyle &style)
 {
+	// sigChanged is emitted, no need to call update
 	presentationStyle_ = style;
-	update();
 }
 
 void PresentationStylePreviewWidget::paintEvent(QPaintEvent *)
 {
-	QRect screenRect = settingsDialog->projectionDisplayGeometry();
+	QRect screenRect = settingsDialog->settings().projectionDisplayGeometry();
 	QRect previewRect;
 	previewRect.setSize(screenRect.size().scaled(size(), Qt::KeepAspectRatio));
 	previewRect.moveCenter(rect().center());
@@ -33,10 +32,4 @@ void PresentationStylePreviewWidget::paintEvent(QPaintEvent *)
 	p.scale(scaleRatio, scaleRatio);
 
 	presentationStyle_.drawSlide(p, QRect(QPoint(), screenRect.size()), tr("Příliš žluťoučký kůň\núpěl dábělské ódy.", "Slide preview main text"), tr("Název písně"));
-}
-
-void PresentationStylePreviewWidget::onBackgroundManagerBackgroundLoaded(const QString &filename)
-{
-	if(presentationStyle_.usesBackground(filename))
-		update();
 }

@@ -43,6 +43,7 @@ private slots:
 	void onAfterSlidesViewSlidesChanged();
 	void onPlaylistModelReset();
 	void onPlaylistContextMenuRequested(const QPoint &point);
+	void onSongListItemActivated(qlonglong songId);
 
 private slots:
 	void on_btnEnableProjection_clicked(bool checked);
@@ -51,6 +52,8 @@ private slots:
 	void on_actionAddBlackScreen_triggered();
 	void on_btnSettings_clicked();
 	void on_actionAddPowerpointPresentation_triggered();
+
+	void on_actionAddSong_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;

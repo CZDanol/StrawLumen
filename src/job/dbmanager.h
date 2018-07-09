@@ -41,7 +41,7 @@ public:
 	QVariant insertAssoc(const QString &query, const AssocArgs &args = AssocArgs());
 	QVariant insert(const QString &query, const Args &args = Args());
 
-	/// Blocking query, returns first row selected
+	/// Blocking query, returns first row selected (or throws error if no rows)
 	QSqlRecord selectRowAssoc(const QString &query, const AssocArgs &args = AssocArgs());
 	QSqlRecord selectRow(const QString &query, const Args &args = Args());
 
@@ -49,9 +49,13 @@ public:
 	QSqlRecord selectRowDefAssoc(const QString &query, const AssocArgs &args = AssocArgs(), QSqlRecord def = QSqlRecord());
 	QSqlRecord selectRowDef(const QString &query, const Args &args = Args(), QSqlRecord def = QSqlRecord());
 
-	/// Blocking query, returns first value of the first row
+	/// Blocking query, returns first value of the first row (or throws error if no rows)
 	QVariant selectValueAssoc(const QString &query, const AssocArgs &args = AssocArgs());
 	QVariant selectValue(const QString &query, const Args &args = Args());
+
+	/// Blocking query, returns first value of the first row
+	QVariant selectValueDefAssoc(const QString &query, const AssocArgs &args = AssocArgs(),  const QVariant &def = QVariant());
+	QVariant selectValueDef(const QString &query, const Args &args = Args(), const QVariant &def = QVariant());
 
 	/// Blocking query, returns the query
 	QSqlQuery selectQueryAssoc(const QString &query, const AssocArgs &args = AssocArgs());

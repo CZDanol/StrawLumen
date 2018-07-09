@@ -119,13 +119,12 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 
 			} while(false);*/
 
-			result->rawSlideCount_ ++;
+			result->slideCount_ ++;
 		}
 
 		if(splashscreen->isStornoPressed())
 			return;
 
-		result->initDefaultSlideOrder();
 		result->weakPtr_ = result;
 
 		result_ = result;
@@ -162,25 +161,25 @@ QWidget *Presentation_PowerPoint::createPropertiesWidget(QWidget *parent)
 	return new PresentationPropertiesWidget_PowerPoint(weakPtr_, parent);
 }
 
-int Presentation_PowerPoint::rawSlideCount() const
+int Presentation_PowerPoint::slideCount() const
 {
-	return rawSlideCount_;
+	return isAutoPresentation_ ? 1 : slideCount_;
 }
 
-QString Presentation_PowerPoint::rawSlideIdentification(int i) const
+QString Presentation_PowerPoint::slideIdentification(int i) const
 {
-	return i == -1 ? "" : tr("%1").arg(i+1);
+	return isAutoPresentation_ ? "" : tr("%1").arg(i+1);
 }
 
-QPixmap Presentation_PowerPoint::rawSlideIdentificationIcon(int i) const
+QPixmap Presentation_PowerPoint::slideIdentificationIcon(int ) const
 {
 	static QPixmap autoSlidePixmap(":/icons/16/Repeat_16px.png");
-	return i == -1 ? autoSlidePixmap : QPixmap();
+	return isAutoPresentation_ ? autoSlidePixmap : QPixmap();
 }
 
-QString Presentation_PowerPoint::rawSlideDescription(int i) const
+QString Presentation_PowerPoint::slideDescription(int i) const
 {
-	return i == -1 ? QString() : slides_[i]->text;
+	return isAutoPresentation_ ? QString() : slides_[i]->text;
 }
 
 PresentationEngine *Presentation_PowerPoint::engine() const
@@ -193,7 +192,7 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 
 	int startingSlide_ = slides_[startingSlide]->ppIndex;
-	QRect rect = settingsDialog->projectionDisplayGeometry();
+	QRect rect = settingsDialog->settings().projectionDisplayGeometry();
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
 	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide_, rect]{
@@ -222,9 +221,10 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
 
-		pe.axSSView_->dynamicCall("GotoSlide(int)", startingSlide_);
-		presentationEngine_PowerPoint->setDisplay(rect);
+		if(!isAutoPresentation_)
+			pe.axSSView_->dynamicCall("GotoSlide(int)", startingSlide_);
 
+		presentationEngine_PowerPoint->setDisplay(rect);
 	});
 }
 
@@ -247,7 +247,7 @@ void Presentation_PowerPoint::setSlide(int localSlideId)
 	activeXJobThread->executeNonblocking([this, selfPtr, localSlideId]{
 		auto &pe = *presentationEngine_PowerPoint;
 
-		if(!pe.axPresentation_)
+		if(!pe.axPresentation_ || isAutoPresentation_)
 			return;
 
 		pe.axSSView_->dynamicCall("GotoSlide(int)", slides_[localSlideId]->ppIndex);

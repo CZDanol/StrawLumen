@@ -2,7 +2,7 @@
 #define BACKGROUNDMANAGER_H
 
 #include <QObject>
-#include <QHash>
+#include <QCache>
 #include <QImage>
 #include <QDir>
 
@@ -21,10 +21,12 @@ public:
 	const QDir &userBackgroundDirectory() const;
 
 public:
-	const QImage &background(const QString &filename, const QSize &requiredSize);
+	const QImage &getBackground(const QString &filename, const QSize &requiredSize);
+	void preloadBackground(const QString &filename, const QSize &requiredSize);
 
 private:
-	QHash<QString,QImage> db_;
+	QCache<QString,QImage> cache_;
+	QImage nullImage_;
 	QDir internalBackgroundDirectory_, userBackgroundDirectory_;
 
 };

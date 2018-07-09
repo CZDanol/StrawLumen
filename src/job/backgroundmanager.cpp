@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrent>
+#include <QSharedPointer>
 
 #include "util/execonmainthread.h"
 #include "gui/backgrounddialog.h"
@@ -16,6 +17,8 @@ BackgroundManager::BackgroundManager()
 		criticalBootError(tr("Nepodařilo se vytvořit složku pro pozadí"));
 
 	internalBackgroundDirectory_ = QDir(QDir(qApp->applicationDirPath()).absoluteFilePath("../backgrounds"));
+
+	cache_.setMaxCost(20);
 }
 
 const QDir &BackgroundManager::internalBackgroundDirectory() const
@@ -28,16 +31,19 @@ const QDir &BackgroundManager::userBackgroundDirectory() const
 	return userBackgroundDirectory_;
 }
 
-const QImage &BackgroundManager::background(const QString &filename, const QSize &requiredSize)
+const QImage &BackgroundManager::getBackground(const QString &filename, const QSize &requiredSize)
 {
+	Q_UNUSED(requiredSize);
+
 	// Background already in db -> return it
 	const QString filePath = (filename.startsWith('_') ? internalBackgroundDirectory_ : userBackgroundDirectory_).absoluteFilePath(filename);
 
-	if(db_.contains(filePath))
-		return db_[filePath];
+	QImage *img = cache_[filePath];
+	if(img)
+		return *img;
 
 	// Insert dummy image to the db so we know it's loading
-	db_.insert(filePath, QImage());
+	cache_.insert(filePath, new QImage());
 
 	QPointer<BackgroundManager> thisPtr(this);
 	QtConcurrent::run([this, thisPtr, filePath, filename] {
@@ -47,10 +53,15 @@ const QImage &BackgroundManager::background(const QString &filename, const QSize
 			if(thisPtr.isNull())
 				return;
 
-			db_[filePath] = img;
+			cache_.insert(filePath, new QImage(img));
 			emit sigBackgroundLoaded(filename);
 		});
 	});
 
 	return QImage();
+}
+
+void BackgroundManager::preloadBackground(const QString &filename, const QSize &requiredSize)
+{
+	getBackground(filename, requiredSize);
 }

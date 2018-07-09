@@ -10,6 +10,15 @@ Presentation_BlackScreen::~Presentation_BlackScreen()
 
 }
 
+void Presentation_BlackScreen::drawSlide(QPainter &p, int slideId, const QRect &rect)
+{
+	Q_UNUSED(p);
+	Q_UNUSED(slideId);
+	Q_UNUSED(rect);
+
+	// Do. absolutely. nothing.
+}
+
 QString Presentation_BlackScreen::identification() const
 {
 	return tr("Černá obrazovka");
@@ -21,12 +30,12 @@ QPixmap Presentation_BlackScreen::icon() const
 	return icon;
 }
 
-int Presentation_BlackScreen::rawSlideCount() const
+int Presentation_BlackScreen::slideCount() const
 {
 	return 1;
 }
 
-QPixmap Presentation_BlackScreen::rawSlideIdentificationIcon(int) const
+QPixmap Presentation_BlackScreen::slideIdentificationIcon(int) const
 {
 	static QPixmap icon(":/icons/16/TV Off_16px.png");
 	return icon;
@@ -34,5 +43,5 @@ QPixmap Presentation_BlackScreen::rawSlideIdentificationIcon(int) const
 
 Presentation_BlackScreen::Presentation_BlackScreen()
 {
-	initDefaultSlideOrder();
+
 }

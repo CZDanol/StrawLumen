@@ -61,8 +61,8 @@ void BackgroundDialog::showInMgmtMode()
 const PresentationBackground &BackgroundDialog::showInSelectionMode(const PresentationBackground &background)
 {
 	presentationBackground_ = background;
-	ui->lwList->setCurrentItem(itemsByFilename_.value(presentationBackground_.filename, nullptr));
-	ui->wgtColor->setColor(presentationBackground_.color);
+	ui->lwList->setCurrentItem(itemsByFilename_.value(presentationBackground_.filename(), nullptr));
+	ui->wgtColor->setColor(presentationBackground_.color());
 	ui->twGallery->setCurrentIndex(0);
 
 	setMgmtMode(false);
@@ -288,7 +288,7 @@ void BackgroundDialog::on_btnAdd_clicked()
 void BackgroundDialog::on_lwList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *)
 {
 	ui->actionDelete->setEnabled(current && !current->data(idrIsIntegratedBackground).toBool());
-	presentationBackground_.filename = current ? current->data(idrFilename).toString() : QString();
+	presentationBackground_.setFilename(current ? current->data(idrFilename).toString() : QString());
 	updatePreview();
 }
 
@@ -308,6 +308,6 @@ void BackgroundDialog::on_actionDelete_triggered()
 
 void BackgroundDialog::on_wgtColor_sigColorChangedByUser(const QColor &newColor)
 {
-	presentationBackground_.color = newColor;
+	presentationBackground_.setColor(newColor);
 	updatePreview();
 }

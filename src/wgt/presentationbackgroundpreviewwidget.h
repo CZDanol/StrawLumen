@@ -18,9 +18,6 @@ public slots:
 protected:
 	void paintEvent(QPaintEvent *event) override;
 
-private slots:
-	void onBackgroundMangerBackgroundLoaded(const QString &filename);
-
 private:
 	PresentationBackground presentationBackground_;
 

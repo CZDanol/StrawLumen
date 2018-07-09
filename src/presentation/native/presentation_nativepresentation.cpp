@@ -12,6 +12,11 @@ Presentation_NativePresentation::~Presentation_NativePresentation()
 
 }
 
+bool Presentation_NativePresentation::isActive() const
+{
+	return isActive_;
+}
+
 PresentationEngine *Presentation_NativePresentation::engine() const
 {
 	return presentationEngine_Native;
@@ -19,15 +24,18 @@ PresentationEngine *Presentation_NativePresentation::engine() const
 
 void Presentation_NativePresentation::activatePresentation(int startingSlide)
 {
+	presentationEngine_Native->setPresentation(weakPtr_);
+	presentationEngine_Native->setSlide(startingSlide);
 
+	isActive_ = true;
 }
 
 void Presentation_NativePresentation::deactivatePresentation()
 {
-
+	isActive_ = false;
 }
 
 void Presentation_NativePresentation::setSlide(int localSlideId)
 {
-
+	presentationEngine_Native->setSlide(localSlideId);
 }

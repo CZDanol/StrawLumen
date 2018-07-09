@@ -22,11 +22,6 @@ PresentationPropertiesWidget_PowerPoint::~PresentationPropertiesWidget_PowerPoin
 void PresentationPropertiesWidget_PowerPoint::on_cbAutoPresentation_clicked(bool checked)
 {
 	presentation_->isAutoPresentation_ = checked;
-	if(checked) {
-		presentation_->slideOrder_.resize(1);
-		presentation_->slideOrder_[0] = -1;
-	} else
-		presentation_->initDefaultSlideOrder();
 
 	emit presentation_->sigItemChanged(presentation_.data());
 	emit presentation_->sigSlidesChanged();

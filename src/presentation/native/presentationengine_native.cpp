@@ -15,9 +15,37 @@ PresentationEngine_Native::~PresentationEngine_Native()
 
 }
 
+void PresentationEngine_Native::setPresentation(const QSharedPointer<Presentation_NativePresentation> &presentation)
+{
+	if(presentation == currentPresentation_)
+		return;
+
+	currentPresentation_ = presentation;
+	projectorWindow->update();
+}
+
+void PresentationEngine_Native::setSlide(int localSlideId)
+{
+	if(localSlideId == currentSlide_)
+		return;
+
+	currentSlide_ = localSlideId;
+	projectorWindow->update();
+}
+
+const QSharedPointer<Presentation_NativePresentation> &PresentationEngine_Native::currentPresentation() const
+{
+	return currentPresentation_;
+}
+
+int PresentationEngine_Native::currentSlide() const
+{
+	return currentPresentation_ ? currentSlide_ : -1;
+}
+
 void PresentationEngine_Native::activateEngine()
 {
-	projectorWindow->setGeometry(settingsDialog->projectionDisplayGeometry());
+	projectorWindow->setGeometry(settingsDialog->settings().projectionDisplayGeometry());
 	projectorWindow->show();
 }
 

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QRegularExpression>
 
 class Chord
 {
@@ -41,6 +42,9 @@ struct ChordInSong {
 	Chord chord;
 	int annotationPos, annotationLength;
 };
+
+/// Captures: 0 - whole, 1 - annotation prefix, 2 - chord, 3 - annotation suffix
+const QRegularExpression &songChordRegex();
 
 /// Returns all valid chords in the song
 QVector<ChordInSong> songChords(const QString &song);

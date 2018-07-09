@@ -21,7 +21,7 @@ public:
 signals:
 	/// Beware - first is songId (not row id), second is rowid in the view
 	void sigSelectionChanged(qlonglong songId, int previousRowId);
-	void sigItemActivated();
+	void sigItemActivated(qlonglong songId);
 	void sigCustomContextMenuRequested(const QPoint &globalPos);
 
 public:
@@ -30,7 +30,7 @@ public:
 public slots:
 	void unselect();
 	void requery();
-	void requeryIfNecessary();
+	void requeryIfFilterChanged();
 
 	void selectRow(int rowId);
 
@@ -40,6 +40,7 @@ protected:
 private slots:
 	void onCurrentChanged(const QModelIndex &index, const QModelIndex &prevIndex);
 	void onCustomContextMenuRequested(const QPoint &pos);
+	void onItemActivated(const QModelIndex &index);
 
 private:
 	Ui::SongListWidget *ui;

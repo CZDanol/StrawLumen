@@ -10,49 +10,50 @@
 #include "util/standarddialogs.h"
 #include "job/dbmigration.h"
 
-DBManager *db = nullptr;
+DatabaseManager *db = nullptr;
 
-void initDb()
+DatabaseManager::DatabaseManager()
 {
-	db = new DBManager();
+	connect(this, SIGNAL(sigSongChanged(qlonglong)), this, SIGNAL(sigSongListChanged()));
+	connect(this, SIGNAL(sigStyleChanged(qlonglong)), this, SIGNAL(sigStyleListChanged()));
 
 	const QString dbFilepath = appDataDirectory.absoluteFilePath("db.sqlite");
 	bool dbExists = QFileInfo(dbFilepath).exists();
 
 	// Open the database
 	{
-		QObject::connect(db, &DBManager::sigOpenError, [](QString error){
+		connect(this, &DBManager::sigOpenError, [](QString error){
 			criticalBootError(DBManager::tr("Nepodařilo se incializovat databázi: %1").arg(error));
 		});
 
-		db->openSQLITE(dbFilepath);
-
-		db->disconnect(SIGNAL(sigQueryError(QString,QString)));
+		openSQLITE(dbFilepath);
+		disconnect(SIGNAL(sigQueryError(QString,QString)));
 	}
 
-	QObject::connect(db, &DBManager::sigQueryError, [](QString query, QString error){
+	connect(this, &DBManager::sigQueryError, [](QString query, QString error){
 		criticalBootError(DBManager::tr("Chyba při inicializaci databáze: %1\n\n%2").arg(error, query));
 	});
 
 	if(!dbExists)
 		createDb();
 
-	int version = db->selectValue("SELECT value FROM keyValueAssoc WHERE key = 'database.version'").toInt();
+	int version = selectValue("SELECT value FROM keyValueAssoc WHERE key = 'database.version'").toInt();
 	if(version != CURRENT_DB_VERSION)
 		criticalBootError(DBManager::tr("Nepodporovaná verze databáze"));
 
-	db->disconnect(SIGNAL(sigQueryError(QString,QString)));
+	disconnect(SIGNAL(sigQueryError(QString,QString)));
 }
 
-void uninitDb()
+DatabaseManager::~DatabaseManager()
 {
-	delete db;
+
 }
 
-void createDb() {
+void DatabaseManager::createDb()
+{
 	// SONGS
 	{
-		db->exec("CREATE TABLE songs ("
+		exec("CREATE TABLE songs ("
 						 "id INTEGER PRIMARY KEY,"
 						 "uid TEXT,"
 						 "name TEXT,"
@@ -62,26 +63,26 @@ void createDb() {
 						 "lastEdit INTEGER"
 						 ")");
 
-		db->exec("CREATE INDEX i_songs_uid ON songs (uid)");
-		db->exec("CREATE INDEX i_songs_name ON songs (name)");
-		db->exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
+		exec("CREATE INDEX i_songs_uid ON songs (uid)");
+		exec("CREATE INDEX i_songs_name ON songs (name)");
+		exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
 	}
 
 	// STYLES
 	{
-		db->exec("CREATE TABLE styles ("
+		exec("CREATE TABLE styles ("
 						 "id INTEGER PRIMARY KEY,"
 						 "name STRING,"
 						 "isInternal bool,"
 						 "data BLOB"
 						 ")");
 
-		db->exec("CREATE INDEX i_styles_name ON styles (name)");
+		exec("CREATE INDEX i_styles_name ON styles (name)");
 	}
 
 	// BACKGROUNDS
 	{
-		db->exec("CREATE TABLE backgrounds ("
+		exec("CREATE TABLE backgrounds ("
 						 "id INTEGER PRIMARY KEY,"
 						 "thumbnail BLOB,"
 						 "data BLOB"
@@ -90,21 +91,21 @@ void createDb() {
 
 	// KEYVALUE ASSOC
 	{
-		db->exec("CREATE TABLE keyValueAssoc ("
+		exec("CREATE TABLE keyValueAssoc ("
 						 "key STRING,"
 						 "value"
 						 ")");
 
-		db->exec("CREATE INDEX i_keyValueAssoc_key ON keyValueAssoc(key)");
+		exec("CREATE INDEX i_keyValueAssoc_key ON keyValueAssoc(key)");
 
-		db->exec("INSERT INTO keyValueAssoc(key, value)"
+		exec("INSERT INTO keyValueAssoc(key, value)"
 						 "VALUES"
 						 "('database.version', 1)");
 	}
 
 	// SONGS_FULLTEXT
 	{
-		db->exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
+		exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
 						 "name TEXT,"
 						 "author TEXT,"
 						 "content TEXT"
@@ -112,10 +113,10 @@ void createDb() {
 	}
 
 	if(false) {
-		db->beginTransaction();
+		beginTransaction();
 
-		QSqlQuery q(db->database());
-		QSqlQuery q2(db->database());
+		QSqlQuery q(database());
+		QSqlQuery q2(database());
 
 		q.prepare("INSERT INTO songs(uid, name, author, content, slideOrder) VALUES(?, ?, ?, ?, 'V1 C V2')");
 		q2.prepare("INSERT INTO songs_fulltext(docid, name, author, content) VALUES (?, ?, ?, ?)");
@@ -147,7 +148,7 @@ void createDb() {
 			q2.exec();
 		}
 
-		db->commitTransaction();
+		commitTransaction();
 	}
 }
 

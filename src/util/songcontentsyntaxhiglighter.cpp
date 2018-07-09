@@ -27,6 +27,12 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 		//sectionAnnotationSymbolFormat_.setFontStretch(400);
 	}
 
+	{
+		slideSeparatorFormat_.setFontWeight(QFont::Bold);
+		slideSeparatorFormat_.setForeground(Qt::white);
+		slideSeparatorFormat_.setBackground(QColor("#333"));
+	}
+
 	invalidAnnotationFormat_.setForeground(Qt::red);
 }
 
@@ -40,8 +46,7 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 	QRegularExpressionMatchIterator it;
 
 	// Match chords
-	static const QRegularExpression chordAnnotationRegex("(\\[)([^]]+)(\\])");
-	it = chordAnnotationRegex.globalMatch(text);
+	it = songChordRegex().globalMatch(text);
 	while(it.hasNext()) {
 		const QRegularExpressionMatch m = it.next();
 		const Chord chord(m.captured(2));
@@ -57,8 +62,7 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 	}
 
 	// Match sections
-	static const QRegularExpression sectionAnnotationRegex("(\\{)([^}]+)(\\})");
-	it = sectionAnnotationRegex.globalMatch(text);
+	it = songSectionAnnotationRegex().globalMatch(text);
 	while(it.hasNext()) {
 		const QRegularExpressionMatch m = it.next();
 		const SongSection songSection(m.captured(2));
@@ -71,5 +75,12 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 		setFormat(m.capturedStart(1), m.capturedLength(1), sectionAnnotationSymbolFormat_);
 		setFormat(m.capturedStart(2), m.capturedLength(2), sectionFormat_);
 		setFormat(m.capturedStart(3), m.capturedLength(3), sectionAnnotationSymbolFormat_);
+	}
+
+	// Match slide separators
+	it = songSlideSeparatorRegex().globalMatch(text);
+	while(it.hasNext()) {
+		const QRegularExpressionMatch m = it.next();
+		setFormat(m.capturedStart(), m.capturedLength(), slideSeparatorFormat_);
 	}
 }
