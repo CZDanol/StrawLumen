@@ -39,6 +39,7 @@ private:
 
 private slots:
 	void onCurrentSongChanged(qlonglong songId, int prevRowId);
+	void onSelectionChanged();
 	void onSongListContextMenuRequested(const QPoint &globalPos);
 
 	void fillSongData();
@@ -48,23 +49,24 @@ private slots:
 	void on_btnDiscardChanges_clicked();
 	void on_btnSaveChanges_clicked();
 	void on_btnEdit_clicked();
-	void on_actionDeleteSong_triggered();
+	void on_actionDeleteSongs_triggered();
 	void on_lnSlideOrder_sigFocused();
 	void on_btnInsertChord_clicked();
 	void on_btnTransposeUp_clicked();
 	void on_btnTransposeDown_clicked();
 	void on_btnAddCustomSlideOrderItem_pressed();
 	void on_btnInsertSlideSeparator_clicked();
+	void on_actionImportOpenSongSong_triggered();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
-	QMenu *insertSectionMenu_;
+	QMenu insertSectionMenu_, importMenu_, songListContextMenu_;
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;
 	QCompleter slideOrderCompleter_;
 	QStringListModel slideOrderCompleterModel_;
-	QMenu *addCustomSlideOrderItemMenu_;
+	QMenu addCustomSlideOrderItemMenu_;
 
 private:
 	qlonglong currentSongId_ = -1;

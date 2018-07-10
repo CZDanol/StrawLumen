@@ -24,8 +24,8 @@ public:
 	int currentGlobalSlideId() const;
 
 public slots:
-	void setSlide(const Playlist *playlist, int globalSlideId);
-	void setSlide(const QSharedPointer<Presentation> &presentation, int localSlideId);
+	void setSlide(const Playlist *playlist, int globalSlideId, bool force = false);
+	void setSlide(const QSharedPointer<Presentation> &presentation, int localSlideId, bool force = false);
 
 	void nextSlide();
 	void previousSlide();

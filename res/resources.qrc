@@ -140,5 +140,7 @@
         <file>icons/16/0 Percent_16px.png</file>
         <file>icons/16/Import_16px.png</file>
         <file>icons/16/OpenSong_16px.png</file>
+        <file>icons/16/Flat Sign_16px.png</file>
+        <file>icons/16/Circled Thin_16px.png</file>
     </qresource>
 </RCC>

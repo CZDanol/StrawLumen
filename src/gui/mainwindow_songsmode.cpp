@@ -7,10 +7,17 @@
 #include <QMenu>
 #include <QStringList>
 #include <QDateTime>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QDomDocument>
+#include <QFile>
 
+#include "gui/splashscreen.h"
 #include "util/standarddialogs.h"
+#include "util/scopeexit.h"
 #include "rec/chord.h"
 #include "job/db.h"
+#include "job/settings.h"
 
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
@@ -23,18 +30,19 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	ui->setupUi(this);
 	ui->twSong->setCornerWidget(ui->twSongCorner);
 	ui->twSongs->setCornerWidget(ui->twSongsCorner);
+	ui->twTranspose->setCornerWidget(ui->twTransposeCorner);
 
-	connect(ui->wgtSongList, SIGNAL(sigSelectionChanged(qlonglong,int)), this, SLOT(onCurrentSongChanged(qlonglong, int)));
-	connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), ui->btnEdit, SLOT(click()));
-	connect(ui->wgtSongList, SIGNAL(sigCustomContextMenuRequested(QPoint)), this, SLOT(onSongListContextMenuRequested(QPoint)));
+	// Song list
+	{
+		connect(ui->wgtSongList, SIGNAL(sigCurrentChanged(qlonglong,int)), this, SLOT(onCurrentSongChanged(qlonglong, int)));
+		connect(ui->wgtSongList, SIGNAL(sigSelectionChanged()), this, SLOT(onSelectionChanged()));
+		connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), ui->btnEdit, SLOT(click()));
+		connect(ui->wgtSongList, SIGNAL(sigCustomContextMenuRequested(QPoint)), this, SLOT(onSongListContextMenuRequested(QPoint)));
 
-	new QShortcut(Qt::CTRL | Qt::Key_Return, ui->btnSaveChanges, SLOT(click()));
-	new QShortcut(Qt::CTRL | Qt::Key_S, ui->btnSaveChanges, SLOT(click()));
-	new QShortcut(Qt::CTRL | Qt::Key_N, ui->btnNew, SLOT(click()));
-	new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
-	new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
+		ui->wgtSongList->setDragEnabled(false);
 
-	connect(new QShortcut(Qt::Key_Delete, this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDeleteSong, SLOT(trigger()));
+		songListContextMenu_.addAction(ui->actionDeleteSongs);
+	}
 
 	// Slide order
 	{
@@ -46,8 +54,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		ui->lnSlideOrder->setCompleter(&slideOrderCompleter_);
 		ui->lnSlideOrder->setValidator(&slideOrderValidator_);
 
-		addCustomSlideOrderItemMenu_ = new QMenu(this);
-		ui->btnAddCustomSlideOrderItem->setMenu(addCustomSlideOrderItemMenu_);
+		ui->btnAddCustomSlideOrderItem->setMenu(&addCustomSlideOrderItemMenu_);
 	}
 
 	// Insert song section menu
@@ -56,20 +63,37 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 			"C", "V1", "V2", "V3", "B", "I", "O"
 		};
 
-		insertSectionMenu_ = new QMenu(this);
 		for(auto &sectionName : sectionNames) {
 			SongSection section(sectionName);
-			insertSectionMenu_->addAction(section.icon(), section.userFriendlyName(), [=]{
+			insertSectionMenu_.addAction(section.icon(), section.userFriendlyName(), [=]{
 				insertSongSection(section);
 			});
 		}
 
 		SongSection customSection = SongSection::customSection("");
-		insertSectionMenu_->addAction(customSection.icon(), tr("Vlastní název"), [=]{
+		insertSectionMenu_.addAction(customSection.icon(), tr("Vlastní název"), [=]{
 			insertSongSection(customSection);
 		});
 
-		ui->btnInsertSection->setMenu(insertSectionMenu_);
+		ui->btnInsertSection->setMenu(&insertSectionMenu_);
+	}
+
+	// Import menu
+	{
+		importMenu_.addAction(ui->actionImportOpenSongSong);
+
+		ui->btnImport->setMenu(&importMenu_);
+	}
+
+	// Shortcuts
+	{
+		new QShortcut(Qt::CTRL | Qt::Key_Return, ui->btnSaveChanges, SLOT(click()));
+		new QShortcut(Qt::CTRL | Qt::Key_S, ui->btnSaveChanges, SLOT(click()));
+		new QShortcut(Qt::CTRL | Qt::Key_N, ui->btnNew, SLOT(click()));
+		new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
+		new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
+
+		connect(new QShortcut(Qt::Key_Delete, this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDeleteSongs, SLOT(trigger()));
 	}
 
 	// To force update
@@ -141,10 +165,8 @@ bool MainWindow_SongsMode::askFinishEditMode()
 
 void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
 {
-	const bool enabled = !isSongEditMode_ && currentSongId_ != -1;
-
-	ui->btnEdit->setEnabled(enabled);
-	ui->actionDeleteSong->setEnabled(enabled);
+	ui->btnEdit->setEnabled(!isSongEditMode_ && currentSongId_ != -1);
+	ui->actionDeleteSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 }
 
 void MainWindow_SongsMode::insertSongSection(const SongSection &section)
@@ -177,11 +199,14 @@ void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
 	fillSongData();
 }
 
+void MainWindow_SongsMode::onSelectionChanged()
+{
+	updateSongManipulationButtonsEnabled();
+}
+
 void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPos)
 {
-	QMenu menu;
-	menu.addAction(ui->actionDeleteSong);
-	menu.popup(globalPos);
+	songListContextMenu_.popup(globalPos);
 }
 
 void MainWindow_SongsMode::fillSongData()
@@ -236,7 +261,7 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 
 	db->exec(
 				"UPDATE songs SET name = ?, author = ?, content = ?, slideOrder = ?, lastEdit = ? WHERE id = ?",
-				{name, author, content, ui->lnSlideOrder->text(), QDateTime::currentMSecsSinceEpoch(), currentSongId_}
+				{name, author, content, ui->lnSlideOrder->text(), QDateTime::currentSecsSinceEpoch(), currentSongId_}
 				);
 	db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {currentSongId_, collate(name), collate(author), collate(content)});
 	db->commitTransaction();
@@ -251,23 +276,34 @@ void MainWindow_SongsMode::on_btnEdit_clicked()
 	ui->lnName->setFocus();
 }
 
-void MainWindow_SongsMode::on_actionDeleteSong_triggered()
+void MainWindow_SongsMode::on_actionDeleteSongs_triggered()
 {
-	if(currentSongId_ == -1)
+	QVector<qlonglong> selectedIds = ui->wgtSongList->selectedRowIds();
+
+	if(selectedIds.isEmpty())
 		return;
 
 	if(isSongEditMode_)
 		return standardErrorDialog(tr("V režimu úprav nelze mazat písně. Ukončete úpravy a zkuste to znovu."));
 
-	if(!standardDeleteConfirmDialog(tr("Opravdu smazat píseň \"%1\"?").arg(ui->lnName->text())))
+	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané písně?")))
 		return;
 
 	db->beginTransaction();
-	db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {currentSongId_});
-	db->exec("DELETE FROM songs WHERE id = ?", {currentSongId_});
+	for(qlonglong id : selectedIds) {
+		db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {id});
+		db->exec("DELETE FROM songs WHERE id = ?", {id});
+	}
 	db->commitTransaction();
 
-	emit db->sigSongChanged(currentSongId_);
+	const bool prevBlocked = db->blockListChangedSignals(true);
+
+	for(qlonglong id : selectedIds)
+		emit db->sigSongChanged(id);
+
+	db->blockListChangedSignals(prevBlocked);
+	emit db->sigSongListChanged();
+
 	currentSongId_ = -1;
 	updateSongManipulationButtonsEnabled();
 }
@@ -300,23 +336,23 @@ void MainWindow_SongsMode::on_btnInsertChord_clicked()
 void MainWindow_SongsMode::on_btnTransposeUp_clicked()
 {
 	QString song = ui->teContent->toPlainText();
-	transposeSong(song, 1);
+	transposeSong(song, 1, ui->btnTransposeFlat->isChecked());
 	ui->teContent->setPlainText(song);
 }
 
 void MainWindow_SongsMode::on_btnTransposeDown_clicked()
 {
 	QString song = ui->teContent->toPlainText();
-	transposeSong(song, -1);
+	transposeSong(song, -1, ui->btnTransposeFlat->isChecked());
 	ui->teContent->setPlainText(song);
 }
 
 void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed()
 {
-	addCustomSlideOrderItemMenu_->clear();
+	addCustomSlideOrderItemMenu_.clear();
 
 	for(SongSection section : songSections(ui->teContent->toPlainText()))
-		addCustomSlideOrderItemMenu_->addAction(section.icon(), section.userFriendlyName(), [this, section]{
+		addCustomSlideOrderItemMenu_.addAction(section.icon(), section.userFriendlyName(), [this, section]{
 			const QString text = ui->lnSlideOrder->text();
 			ui->lnSlideOrder->setText((text.isEmpty() ? "" : text + " ") + section.standardName());
 		});
@@ -329,4 +365,94 @@ void MainWindow_SongsMode::on_btnInsertSlideSeparator_clicked()
 
 	ui->teContent->setFocus();
 	ui->teContent->insertPlainText("{---}");
+}
+
+void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
+{
+	static const QPixmap icon(":/icons/16/OpenSong_16px.png");
+
+	QFileDialog dlg(this);
+	dlg.setFileMode(QFileDialog::ExistingFiles);
+	dlg.setAcceptMode(QFileDialog::AcceptOpen);
+	dlg.setNameFilter(tr("Písně OpenSongu (*)"));
+	dlg.setWindowIcon(icon);
+	dlg.setWindowTitle(tr("Import OpenSong písní"));
+	dlg.setDirectory(settings->value("dialog.importOpenSong.directory", QStandardPaths::writableLocation(QStandardPaths::DataLocation)).toString());
+
+	if(!dlg.exec())
+		return;
+
+	settings->setValue("dialog.importOpenSong.directory", dlg.directory().absolutePath());
+
+	splashscreen->asyncAction(tr("Import písní"), true, [&]{
+		db->beginTransaction();
+		SCOPE_EXIT(db->commitTransaction());
+
+		const QStringList files = dlg.selectedFiles();
+		for(int i = 0; i < files.size(); i++) {
+			const QString filename = files[i];
+
+			if(splashscreen->isStornoPressed())
+				return;
+
+			splashscreen->setProgress(i, files.size());
+
+			QFile f(filename);
+			if(!f.open(QIODevice::ReadOnly))
+				return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\".").arg(filename));
+
+			QDomDocument dom;
+			if(!dom.setContent(&f))
+				return standardErrorDialog(tr("Nepodařilo se načíst soubor \"%1\".").arg(filename));
+
+			f.close();
+
+			QDomElement root = dom.documentElement();
+			if(root.tagName() != "song")
+				return standardErrorDialog(tr("Soubor \"%1\" není formátu OpenSong.").arg(filename));
+
+			const QString name = root.firstChildElement("title").text();
+			const QString author = root.firstChildElement("author").text();
+			const QString slideOrder = root.firstChildElement("presentation").text();
+
+			QString content = root.firstChildElement("lyrics").text().trimmed();
+
+			// Change sections formet
+			static const QRegularExpression sectionRegex("\\[([VCPBTIOSNR][0-9]*)\\]\\s*");
+			content.replace(sectionRegex, "{\\1}\n");
+
+			// Change chords format
+			static const QRegularExpression chordLineRegex("^(\\.[^\n]*\n)([^\n]*)$", QRegularExpression::MultilineOption);
+			int offsetCorrection = 0;
+			QRegularExpressionMatchIterator it = chordLineRegex.globalMatch(content);
+			while(it.hasNext()) {
+				const QRegularExpressionMatch m = it.next();
+
+				content.remove(m.capturedStart(1)+offsetCorrection, m.capturedLength(1));
+				offsetCorrection -= m.capturedLength(1);
+
+				static const QRegularExpression chordRegex("\\S+");
+				QRegularExpressionMatchIterator it2 = chordRegex.globalMatch(m.captured(1), 1);
+				while(it2.hasNext()) {
+					const QRegularExpressionMatch m2 = it2.next();
+					const QString insertText = QString("[%1]").arg(m2.captured());
+					content.insert(m.capturedStart(2)+m2.capturedStart()+offsetCorrection, insertText);
+					offsetCorrection += insertText.length();
+				}
+			}
+
+			// Trim spaces on line beginnings and ends
+			static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
+			content.remove(trimmingRegex);
+
+			const QVariant id = db->insert("INSERT INTO songs(uid, name, author, content, slideOrder, lastEdit) VALUES(?, ?, ?, ?, ?, ?)", {
+									 QUuid::createUuid().toString(),
+									 name, author, content, slideOrder,
+									 QDateTime::currentSecsSinceEpoch(),
+								 });
+			db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {id, collate(name), collate(author), collate(content)});
+		}
+	});
+
+	emit db->sigSongListChanged();
 }

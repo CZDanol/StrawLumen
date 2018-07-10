@@ -241,8 +241,10 @@ void Presentation_PowerPoint::deactivatePresentation()
 	});
 }
 
-void Presentation_PowerPoint::setSlide(int localSlideId)
+void Presentation_PowerPoint::setSlide(int localSlideId, bool force)
 {
+	Q_UNUSED(force);
+
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 	activeXJobThread->executeNonblocking([this, selfPtr, localSlideId]{
 		auto &pe = *presentationEngine_PowerPoint;

@@ -24,9 +24,9 @@ void PresentationEngine_Native::setPresentation(const QSharedPointer<Presentatio
 	projectorWindow->update();
 }
 
-void PresentationEngine_Native::setSlide(int localSlideId)
+void PresentationEngine_Native::setSlide(int localSlideId, bool force)
 {
-	if(localSlideId == currentSlide_)
+	if(!force && localSlideId == currentSlide_)
 		return;
 
 	currentSlide_ = localSlideId;

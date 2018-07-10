@@ -35,7 +35,7 @@ void Presentation_NativePresentation::deactivatePresentation()
 	isActive_ = false;
 }
 
-void Presentation_NativePresentation::setSlide(int localSlideId)
+void Presentation_NativePresentation::setSlide(int localSlideId, bool force)
 {
-	presentationEngine_Native->setSlide(localSlideId);
+	presentationEngine_Native->setSlide(localSlideId, force);
 }

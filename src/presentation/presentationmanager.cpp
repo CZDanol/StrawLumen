@@ -85,7 +85,7 @@ void PresentationManager::previousPresentation()
 		setSlide(currentPresentation_->playlist(), currentPresentation_->globalSlideIdOffset());
 }
 
-void PresentationManager::setSlide(const Playlist* playlist, int globalSlideId)
+void PresentationManager::setSlide(const Playlist* playlist, int globalSlideId, bool force)
 {
 	if(!playlist || playlist->slideCount() == 0)
 		return setActive(false);
@@ -99,10 +99,10 @@ void PresentationManager::setSlide(const Playlist* playlist, int globalSlideId)
 	auto presentation = playlist->presentationOfSlide(globalSlideId);
 	int localSlideId = globalSlideId - presentation->globalSlideIdOffset();
 
-	setSlide(presentation, localSlideId);
+	setSlide(presentation, localSlideId, force);
 }
 
-void PresentationManager::setSlide(const QSharedPointer<Presentation> &presentation, int localSlideId)
+void PresentationManager::setSlide(const QSharedPointer<Presentation> &presentation, int localSlideId, bool force)
 {
 	if(!presentation || !presentation->slideCount())
 			return setActive(false);
@@ -115,8 +115,8 @@ void PresentationManager::setSlide(const QSharedPointer<Presentation> &presentat
 	setBlackScreen(false);
 	setPresentation(presentation, localSlideId);
 
-	if(currentLocalSlideId_ != localSlideId) {
-		presentation->setSlide(localSlideId);
+	if(force || currentLocalSlideId_ != localSlideId) {
+		presentation->setSlide(localSlideId, force);
 		currentLocalSlideId_ = localSlideId;
 	}
 

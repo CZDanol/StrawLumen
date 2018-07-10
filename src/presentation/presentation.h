@@ -53,7 +53,7 @@ public:
 	/// DO NOT CALL, ONLY TO BE CALLED BY PRESENTATIONMANAGER
 	virtual void deactivatePresentation() = 0;
 	/// DO NOT CALL, ONLY TO BE CALLED BY PRESENTATIONMANAGER
-	virtual void setSlide(int localSlideId) = 0;
+	virtual void setSlide(int localSlideId, bool force = false) = 0;
 
 protected:
 	Presentation() {}

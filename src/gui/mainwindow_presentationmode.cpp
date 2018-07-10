@@ -40,8 +40,10 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			playlistItemModel_.setPlaylist(playlist_);
 			ui->tvPlaylist->setModel(&playlistItemModel_);
 
-			ui->tvPlaylist->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-			ui->tvPlaylist->header()->setSectionResizeMode(1, QHeaderView::Stretch);
+			auto header = ui->tvPlaylist->header();
+			header->setSectionResizeMode(0, QHeaderView::Fixed);
+			header->resizeSection(0, 24);
+			header->setSectionResizeMode(1, QHeaderView::Stretch);
 
 			connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
 			connect(&playlistItemModel_, SIGNAL(modelReset()), this, SLOT(onPlaylistModelReset()));
@@ -69,9 +71,13 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 		ui->tvSlides->setModel(&slidesItemModel_);
 		ui->tvSlides->setItemDelegate(&slidesItemDelegate_);
-		ui->tvSlides->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-		ui->tvSlides->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-		ui->tvSlides->header()->setSectionResizeMode(2, QHeaderView::Stretch);
+
+		auto header = ui->tvSlides->header();
+		header->setSectionResizeMode(0, QHeaderView::Fixed);
+		header->resizeSection(0, 164);
+		header->setSectionResizeMode(1, QHeaderView::Fixed);
+		header->resizeSection(1, 64);
+		header->setSectionResizeMode(2, QHeaderView::Stretch);
 
 		connect(ui->tvSlides->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onSlideSelected(QModelIndex)));
 		connect(presentationManager, SIGNAL(sigCurrentSlideChanged(int)), this, SLOT(onMgrCurrentSlideChanged(int)));
@@ -102,8 +108,6 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	// Song list
 	{
 		connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), this, SLOT(onSongListItemActivated(qlonglong)));
-
-		ui->wgtSongList->setMultiSelectionEnabled(true);
 	}
 
 	// Shortcuts
@@ -247,7 +251,7 @@ void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
 		return presentationManager->setActive(false);
 
 	// In case presentation slide count changed to ensure to stay in the current presentation
-	presentationManager->setSlide(playlist_.data(), presentation->globalSlideIdOffset() + qMin(presentationManager->currentLocalSlideId(), presentation->slideCount()-1));
+	presentationManager->setSlide(playlist_.data(), presentation->globalSlideIdOffset() + qMin(presentationManager->currentLocalSlideId(), presentation->slideCount()-1), true);
 }
 
 void MainWindow_PresentationMode::onPlaylistModelReset()

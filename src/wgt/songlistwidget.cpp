@@ -24,6 +24,7 @@ SongListWidget::SongListWidget(QWidget *parent) :
 	connect(&typingTimer_, SIGNAL(timeout()), this, SLOT(requeryIfFilterChanged()));
 
 	connect(ui->tvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentChanged(QModelIndex,QModelIndex)));
+	connect(ui->tvList->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SIGNAL(sigSelectionChanged()));
 	connect(ui->tvList, SIGNAL(activated(QModelIndex)), this, SLOT(onItemActivated(QModelIndex)));
 
 	new QShortcut(Qt::Key_Escape, ui->lnSearch, SLOT(clear()), SLOT(clear()), Qt::WidgetShortcut);
@@ -42,9 +43,24 @@ SongListWidget::~SongListWidget()
 	delete ui;
 }
 
-int SongListWidget::currentRowId()
+int SongListWidget::currentRowId() const
 {
 	return ui->tvList->currentIndex().row();
+}
+
+int SongListWidget::selectedRowCount() const
+{
+	return ui->tvList->selectionModel()->selectedRows().size();
+}
+
+QVector<qlonglong> SongListWidget::selectedRowIds() const
+{
+	QVector<qlonglong> result;
+
+	for(const QModelIndex &index : ui->tvList->selectionModel()->selectedRows())
+		result.append(model_.record(index.row()).value("id").toLongLong());
+
+	return result;
 }
 
 void SongListWidget::unselect()
@@ -93,13 +109,17 @@ void SongListWidget::requery()
 	while(model_.canFetchMore())
 		model_.fetchMore();
 
-	ui->tvList->setColumnHidden(0, true);
-	ui->tvList->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-	ui->tvList->header()->setSectionResizeMode(2, QHeaderView::Stretch);
+	auto header = ui->tvList->header();
+	header->hideSection(0);
+	header->setSectionResizeMode(1, QHeaderView::Fixed);
+	header->resizeSection(1, ui->tvList->width() / 2);
+	header->setSectionResizeMode(2, QHeaderView::Stretch);
 
 	const qlonglong newSelectId = prevRow < 0 ? -1 : model_.record(prevRow).value("id").toLongLong();
 	if(prevSelectId == newSelectId)
 		ui->tvList->selectionModel()->setCurrentIndex(model_.index(prevRow, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+
+	emit sigSelectionChanged();
 }
 
 void SongListWidget::requeryIfFilterChanged()
@@ -115,9 +135,9 @@ void SongListWidget::selectRow(int rowId)
 	ui->tvList->selectionModel()->select(model_.index(rowId,0), QItemSelectionModel::ClearAndSelect);
 }
 
-void SongListWidget::setMultiSelectionEnabled(bool set)
+void SongListWidget::setDragEnabled(bool set)
 {
-	ui->tvList->setSelectionMode(set ? QAbstractItemView::ExtendedSelection : QAbstractItemView::SingleSelection);
+	ui->tvList->setDragEnabled(set);
 }
 
 void SongListWidget::showEvent(QShowEvent *e)
@@ -131,14 +151,9 @@ void SongListWidget::showEvent(QShowEvent *e)
 void SongListWidget::onCurrentChanged(const QModelIndex &index, const QModelIndex &prevIndex)
 {
 	if(!index.isValid())
-		emit sigSelectionChanged(-1, prevIndex.row());
+		emit sigCurrentChanged(-1, prevIndex.row());
 	else
-		emit sigSelectionChanged(model_.record(index.row()).value("id").toLongLong(), prevIndex.row());
-}
-
-void SongListWidget::onCustomContextMenuRequested(const QPoint &pos)
-{
-	emit sigCustomContextMenuRequested(ui->tvList->viewport()->mapToGlobal(pos));
+		emit sigCurrentChanged(model_.record(index.row()).value("id").toLongLong(), prevIndex.row());
 }
 
 void SongListWidget::onItemActivated(const QModelIndex &index)
@@ -147,4 +162,9 @@ void SongListWidget::onItemActivated(const QModelIndex &index)
 		return;
 
 	emit sigItemActivated(model_.record(index.row()).value("id").toLongLong());
+}
+
+void SongListWidget::on_tvList_customContextMenuRequested(const QPoint &pos)
+{
+	emit sigCustomContextMenuRequested(ui->tvList->viewport()->mapToGlobal(pos));
 }

@@ -14,7 +14,7 @@ DatabaseManager *db = nullptr;
 
 DatabaseManager::DatabaseManager()
 {
-	connect(this, SIGNAL(sigSongChanged(qlonglong)), this, SIGNAL(sigSongListChanged()));
+	connect(this, SIGNAL(sigSongChanged(qlonglong)), this, SLOT(onSongChanged()));
 	connect(this, SIGNAL(sigStyleChanged(qlonglong)), this, SIGNAL(sigStyleListChanged()));
 
 	const QString dbFilepath = appDataDirectory.absoluteFilePath("db.sqlite");
@@ -47,6 +47,13 @@ DatabaseManager::DatabaseManager()
 DatabaseManager::~DatabaseManager()
 {
 
+}
+
+bool DatabaseManager::blockListChangedSignals(bool set)
+{
+	bool result = blockListChangedSignals_;
+	blockListChangedSignals_ = set;
+	return result;
 }
 
 void DatabaseManager::createDb()
@@ -152,6 +159,12 @@ void DatabaseManager::createDb()
 	}
 }
 
+void DatabaseManager::onSongChanged()
+{
+	if(!blockListChangedSignals_)
+		emit sigSongListChanged();
+}
+
 QString collate(const QString &str)
 {
 	static QRegularExpression clearRegex("[^a-zA-Z0-9 ]+");
@@ -159,7 +172,7 @@ QString collate(const QString &str)
 
 	QString result = str.normalized(QString::NormalizationForm_KD);
 
-	result.replace(clearRegex, QString());
+	result.remove(clearRegex);
 	result.replace(compactSpacesRegex, " ");
 
 	result = result.trimmed();

@@ -21,12 +21,15 @@ public:
 
 signals:
 	/// Beware - first is songId (not row id), second is rowid in the view
-	void sigSelectionChanged(qlonglong songId, int previousRowId);
+	void sigCurrentChanged(qlonglong songId, int previousRowId);
+	void sigSelectionChanged();
 	void sigItemActivated(qlonglong songId);
 	void sigCustomContextMenuRequested(const QPoint &globalPos);
 
 public:
-	int currentRowId();
+	int currentRowId() const;
+	int selectedRowCount() const;
+	QVector<qlonglong> selectedRowIds() const;
 
 public slots:
 	void unselect();
@@ -35,15 +38,17 @@ public slots:
 
 	void selectRow(int rowId);
 
-	void setMultiSelectionEnabled(bool set);
+	void setDragEnabled(bool set);
 
 protected:
 	void showEvent(QShowEvent *e) override;
 
 private slots:
 	void onCurrentChanged(const QModelIndex &index, const QModelIndex &prevIndex);
-	void onCustomContextMenuRequested(const QPoint &pos);
 	void onItemActivated(const QModelIndex &index);
+
+private slots:
+	void on_tvList_customContextMenuRequested(const QPoint &pos);
 
 private:
 	Ui::SongListWidget *ui;

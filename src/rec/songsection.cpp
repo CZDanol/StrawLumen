@@ -13,7 +13,8 @@ SongSection::SongSection(const QString &str)
 																				"|"
 																				"\"([a-zA-Z0-9_\\-]+)\"" // Custom section name
 																				")"
-																				"$", QRegularExpression::UseUnicodePropertiesOption);
+																				"$",
+																				QRegularExpression::UseUnicodePropertiesOption);
 
 	enum MatchPart : int {
 		mpWhole,

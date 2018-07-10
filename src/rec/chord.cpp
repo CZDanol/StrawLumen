@@ -9,11 +9,11 @@ Chord::Chord(const QString &str)
 {
 	static const QRegularExpression chordRegex(
 				"^"
-				"([a-hA-H])(s|S|is|IS|es|ES|#|b)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
+				"([a-hA-H])(s|S|is|IS|es|ES|#|b|♭)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
 				"([0-9/(#+\\-][0-9a-zA-Z/()#+\\-]*)?" // Extra
 				"(?:/([a-hA-H])(s|S|is|IS|es|ES|#|b)?)?" // Inversions
-				"$"
-				);
+				"$",
+				QRegularExpression::UseUnicodePropertiesOption);
 
 	enum MatchPart {
 		mpWhole,
@@ -27,7 +27,7 @@ Chord::Chord(const QString &str)
 	};
 
 	static const QHash<QString, int> noteModifierEffects {
-		{"s", -1}, {"S", -1}, {"es", -1}, {"ES", -1}, {"b", -1},
+		{"s", -1}, {"S", -1}, {"es", -1}, {"ES", -1}, {"b", -1}, {"♭", -1},
 		{"is", 1}, {"IS", 1}, {"#", 1}
 	};
 
@@ -115,8 +115,8 @@ QString Chord::toString(bool flatVariant) const
 {
 	static const QString variantStrings[_cvCount] = {"", "m", "maj", "aug", "dim"};
 
-	static const QString noteNames[12] = {"C", "Cis", "D", "Dis", "E", "F", "Fis", "G", "Gis", "A", "Ais", "H"};
-	static const QString flatNoteNames[12] = {"C", "Des", "D", "Es", "E", "F", "Ges", "G", "As", "A", "Hes", "H"};
+	static const QString noteNames[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"};
+	static const QString flatNoteNames[12] = {"C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "H♭", "H"};
 
 	const auto &names = flatVariant ? flatNoteNames : noteNames;
 
@@ -151,12 +151,12 @@ QVector<ChordInSong> songChords(const QString &song)
 	return result;
 }
 
-void transposeSong(QString &song, int by)
+void transposeSong(QString &song, int by, bool flatChords)
 {
 	int posCorrection = 0;
 
 	for(ChordInSong &chs : songChords(song)) {
-		QString newChord = QString("[%1]").arg(chs.chord.transposed(by).toString(by < 0));
+		QString newChord = QString("[%1]").arg(chs.chord.transposed(by).toString(flatChords));
 
 		song.replace(chs.annotationPos + posCorrection, chs.annotationLength, newChord);
 		posCorrection += newChord.length() - chs.annotationLength;
@@ -165,6 +165,6 @@ void transposeSong(QString &song, int by)
 
 const QRegularExpression &songChordRegex()
 {
-	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#]+)(\\])");
+	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭]+)(\\])");
 	return result;
 }

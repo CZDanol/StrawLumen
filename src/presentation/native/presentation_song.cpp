@@ -10,7 +10,7 @@
 QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong songId)
 {
 	QSharedPointer<Presentation_Song> result(new Presentation_Song());
-	result->blockSignals(true);
+	QSignalBlocker sb(result.data());
 
 	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
 	result->style_ = settings->defaultPresentationStyle();
@@ -19,7 +19,6 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 
 	result->loadFromDb(songId);
 
-	result->blockSignals(false);
 	return result;
 }
 
@@ -77,7 +76,7 @@ void Presentation_Song::loadFromDb(qlonglong songId)
 	if(r.isEmpty())
 		return;
 
-	const bool oldBlockSignals = blockSignals(true);
+	QSignalBlocker sb(this);
 
 	songId_ = songId;
 	name_ = r.value("name").toString();
@@ -120,14 +119,14 @@ void Presentation_Song::loadFromDb(qlonglong songId)
 
 	loadSlideOrder();
 
-	blockSignals(oldBlockSignals);
+	sb.unblock();
 	emit sigItemChanged(this);
 	emit sigSlidesChanged();
 }
 
 void Presentation_Song::loadSlideOrder()
 {
-	static const QPixmap emptySlidePixmap(":/icons/16/0 Percent_16px.png");
+	static const QPixmap emptySlidePixmap(":/icons/16/Circled Thin_16px.png");
 
 	const QString slideOrderStr = customSlideOrder_.isEmpty() ? defaultSlideOrder_ : customSlideOrder_;
 	const QStringList slideOrder = slideOrderStr.split(' ');

@@ -53,7 +53,7 @@ public:
 
 	void activatePresentation(int startingSlide) override;
 	void deactivatePresentation() override;
-	void setSlide(int localSlideId) override;
+	void setSlide(int localSlideId, bool force = false) override;
 
 private:
 	Presentation_PowerPoint();

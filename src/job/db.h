@@ -22,8 +22,17 @@ signals:
 	void sigSongChanged(qlonglong songId);
 	void sigStyleChanged(qlonglong styleId);
 
+public:
+	bool blockListChangedSignals(bool set);
+
 private:
 	void createDb();
+
+private slots:
+	void onSongChanged();
+
+private:
+	bool blockListChangedSignals_ = false;
 
 };
 

@@ -15,7 +15,7 @@ PresentationStyle::PresentationStyle(QObject *parent) : QObject(parent)
 
 void PresentationStyle::loadFromJSON(const QJsonValue &val)
 {
-	const bool oldBlockSignals = blockSignals(true);
+	QSignalBlocker sb(this);
 	const QJsonObject json = val.toObject();
 
 #define F(identifier, capitalizedIdentifier, Type)\
@@ -26,13 +26,13 @@ void PresentationStyle::loadFromJSON(const QJsonValue &val)
 
 	styleId_ = -1;
 
-	blockSignals(oldBlockSignals);
+	sb.unblock();
 	emit sigChanged();
 }
 
 void PresentationStyle::loadFromDb(qlonglong styleId)
 {
-	const bool oldBlockSignals = blockSignals(true);
+	QSignalBlocker sb(this);
 
 	QByteArray data = db->selectValueDef("SELECT data FROM styles WHERE id = ?", {styleId}).toByteArray();
 	if(data.isNull())
@@ -41,7 +41,7 @@ void PresentationStyle::loadFromDb(qlonglong styleId)
 	loadFromJSON(QJsonDocument::fromJson(data).object());
 	styleId_ = styleId;
 
-	blockSignals(oldBlockSignals);
+	sb.unblock();
 	emit sigChanged();
 }
 
@@ -93,7 +93,7 @@ void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString 
 
 void PresentationStyle::operator=(const PresentationStyle &other)
 {
-	const bool oldBlockSignals = blockSignals(true);
+	QSignalBlocker sb(this);
 
 	styleId_ = other.styleId_;
 
@@ -103,7 +103,7 @@ void PresentationStyle::operator=(const PresentationStyle &other)
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
 #undef F
 
-	blockSignals(oldBlockSignals);
+	sb.unblock();
 	emit sigChanged();
 }
 

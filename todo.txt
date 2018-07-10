@@ -1,12 +1,14 @@
 - potvrdit zahodit změny při skrytí songsmode
 - offthread slide rendering
+- export do opensongu
+- songs copyright
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
 
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
 - prezentace obrázků
-- štítky u písní
+- štítky (tagy) u písní
 
 Automatická powerpoint prezentace:
 - přejít na další prezentaci v takový a takový čas

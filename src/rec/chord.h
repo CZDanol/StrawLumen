@@ -50,6 +50,6 @@ const QRegularExpression &songChordRegex();
 QVector<ChordInSong> songChords(const QString &song);
 
 /// Transposes all valid chords in the song. All chords are changed to standard format (even when by=0)
-void transposeSong(QString &song, int by);
+void transposeSong(QString &song, int by, bool flatChords = false);
 
 #endif // CHORD_H

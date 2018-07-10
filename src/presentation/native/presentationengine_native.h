@@ -14,7 +14,7 @@ public:
 
 public slots:
 	void setPresentation(const QSharedPointer<Presentation_NativePresentation> &presentation);
-	void setSlide(int localSlideId);
+	void setSlide(int localSlideId, bool force = false);
 
 public:
 	const QSharedPointer<Presentation_NativePresentation> &currentPresentation() const;
