@@ -1,0 +1,46 @@
+<html>
+	<head>
+		
+	</head>
+	<body>		
+		<div id="templates">
+			<div id="songTemplate">
+				<h1 data-text="name"></h1>
+				<h2 data-text="author"></h2>
+			</div>
+		</div>
+		
+		<div id="content">
+		</div>
+		
+		<div id="dbg">
+		</div>
+		
+		<script>
+			function generateDocument(data) {
+				var songTemplate = $("#songTemplate");
+				var content = $("#content");
+				
+				for(songI in data.songs) {
+					var song = data.songs[songI];
+					var songElem = songTemplate.clone().appendTo(content);
+					
+					songElem.find("*:not([data-text=''])").each(function(){
+						var self = $(this);
+						self.text(song[self.attr("data-text")]);
+					});
+				}
+			}
+		</script>
+		
+		<style>
+			#templates {
+				display: none;
+			}
+			
+			h1 {
+				page-break-before: always;
+			}
+		</style>
+	</body>
+</html>

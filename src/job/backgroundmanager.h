@@ -21,7 +21,7 @@ public:
 	const QDir &userBackgroundDirectory() const;
 
 public:
-	const QImage &getBackground(const QString &filename, const QSize &requiredSize);
+	const QImage getBackground(const QString &filename, const QSize &requiredSize);
 	void preloadBackground(const QString &filename, const QSize &requiredSize);
 
 private:

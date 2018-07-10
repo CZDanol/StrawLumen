@@ -31,7 +31,7 @@ const QDir &BackgroundManager::userBackgroundDirectory() const
 	return userBackgroundDirectory_;
 }
 
-const QImage &BackgroundManager::getBackground(const QString &filename, const QSize &requiredSize)
+const QImage BackgroundManager::getBackground(const QString &filename, const QSize &requiredSize)
 {
 	Q_UNUSED(requiredSize);
 

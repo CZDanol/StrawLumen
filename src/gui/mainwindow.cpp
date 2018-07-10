@@ -7,6 +7,8 @@
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
 #include "gui/mainwindow_songsmode.h"
+#include "gui/documentgenerationdialog.h"
+#include "gui/aboutdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
 
@@ -77,4 +79,14 @@ void MainWindow::on_actionBackgrounds_triggered()
 void MainWindow::on_actionStyles_triggered()
 {
 	stylesDialog->showInMgmtMode();
+}
+
+void MainWindow::on_actionGenerateDocuments_triggered()
+{
+	documentGenerationDialog->show();
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+	aboutDialog->show();
 }

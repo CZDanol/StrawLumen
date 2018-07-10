@@ -36,7 +36,7 @@ protected:
 
 private:
 	void updateCache();
-	void pickColor(QPoint &pos);
+	void pickColor(const QPoint &pos);
 
 private:
 	QColor currentColor_;

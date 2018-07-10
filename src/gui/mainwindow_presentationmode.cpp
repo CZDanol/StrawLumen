@@ -346,6 +346,6 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 
 void MainWindow_PresentationMode::on_actionAddSong_triggered()
 {
-	standardInfoDialog(tr("Vyberte píseň v panelu vlevo dole a přetáhněte ji do programu."));
+	standardInfoDialog(tr("Vyberte píseň v panelu \"Písně\" vlevo dole a přetáhněte ji do panelu \"Program\"."));
 	ui->twLeftBottom->setCurrentWidget(ui->tabSongList);
 }

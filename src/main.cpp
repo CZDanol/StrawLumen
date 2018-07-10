@@ -14,6 +14,8 @@
 #include "gui/projectorwindow.h"
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
+#include "gui/documentgenerationdialog.h"
+#include "gui/aboutdialog.h"
 #include "job/activexjobthread.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -68,6 +70,8 @@ void initApplication() {
 	activeXDebugDialog = new ActiveXDebugDialog(mainWindow);
 	backgroundDialog = new BackgroundDialog(mainWindow);
 	stylesDialog = new StylesDialog(mainWindow);
+	documentGenerationDialog = new DocumentGenerationDialog(mainWindow);
+	aboutDialog = new AboutDialog(mainWindow);
 }
 
 void uninitApplication() {

@@ -51,7 +51,6 @@
         <file>icons/16/Video Projector_16px.png</file>
         <file>icons/16/Virtual Machine_16px.png</file>
         <file>icons/16/Musical Notes_16px.png</file>
-        <file>icon.ico</file>
         <file>icons/16/Load_16px.png</file>
         <file>icons/16/TV Off_16px.png</file>
         <file>icons/32/Prev_32px.png</file>
@@ -66,10 +65,6 @@
         <file>icons/16/New Property_16px.png</file>
         <file>icons/16/Clock_16px.png</file>
         <file>icons/32/Video Projector_32px.png</file>
-        <file>icon_16.png</file>
-        <file>icon_32.png</file>
-        <file>icon_48.png</file>
-        <file>icon_64.png</file>
         <file>icons/32/Error_32px.png</file>
         <file>icons/32/Help_32px.png</file>
         <file>icons/16/Mockup_16px.png</file>
@@ -143,5 +138,18 @@
         <file>icons/16/Flat Sign_16px.png</file>
         <file>icons/16/Circled Thin_16px.png</file>
         <file>icons/16/Info_16px.png</file>
+        <file>icons/16/Moleskine_16px.png</file>
+        <file>logos/logo_128w.png</file>
+        <file>logos/lumen_icon_16.png</file>
+        <file>logos/lumen_icon_64.png</file>
+        <file>logos/lumen_logo_256w.png</file>
+        <file>logos/lumen_icon.ico</file>
+        <file>logos/lumen_icon_32.png</file>
+        <file>logos/Icons8_32px.png</file>
+        <file>logos/qt_icon_32.png</file>
+        <file>icons/16/Certificate_16px.png</file>
+        <file>icons/16/Medal_16px.png</file>
+        <file>icons/16/Administrative Tools_16px.png</file>
+        <file>icons/16/Application Shield_16px.png</file>
     </qresource>
 </RCC>

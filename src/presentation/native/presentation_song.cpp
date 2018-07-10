@@ -141,8 +141,12 @@ void Presentation_Song::loadSlideOrder()
 			continue;
 
 		const SectionRec &sr = sections_[sectionName];
-		for(const SlideData &slideData : sr.slides)
-			slides_.append(SlideRec{sr.section.standardName(), slideData.content_, slideData.description_});
+		for(int i = 0; i < sr.slides.size(); i ++) {
+			const SlideData &slideData = sr.slides[i];
+			const QString slideName = sr.slides.size() > 1 ? tr("%1-%2", "%1 - section name, %2 - slide in section index (for multiple slides per section)").arg(sr.section.standardName()).arg(i+1) : sr.section.standardName();
+
+			slides_.append(SlideRec{slideName, slideData.content_, slideData.description_});
+		}
 	}
 
 	if(emptySlideAfter_)

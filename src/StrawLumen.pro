@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport widgets axcontainer sql xml
+QT       += core gui printsupport widgets axcontainer sql xml webenginewidgets
 
 # For debugging purposes
 # CONFIG += console
@@ -26,7 +26,12 @@ CONFIG += c++17
 # Without this, the program can use max 2GB ram
 QMAKE_LFLAGS = /LARGEADDRESSAWARE
 
-win32:RC_ICONS += ../res/icon.ico
+win32|win64 {
+  RC_ICONS += $$PWD/../res/logos/lumen_icon.ico
+}
+
+Debug:RELEASE_STR = _dbg
+Release:RELEASE_STR =
 
 SOURCES += main.cpp \
     gui/mainwindow.cpp \
@@ -85,7 +90,9 @@ SOURCES += main.cpp \
     presentation/native/presentation_song.cpp \
     wgt/styleselectionwidget.cpp \
     presentation/native/presentationpropertieswidget_song.cpp \
-    modelview/songsitemmodel.cpp
+    modelview/songsitemmodel.cpp \
+    gui/documentgenerationdialog.cpp \
+    gui/aboutdialog.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -106,7 +113,9 @@ FORMS += \
     wgt/textstylewidget.ui \
     wgt/presentationbackgroundselectionwidget.ui \
     wgt/styleselectionwidget.ui \
-    presentation/native/presentationpropertieswidget_song.ui
+    presentation/native/presentationpropertieswidget_song.ui \
+    gui/documentgenerationdialog.ui \
+    gui/aboutdialog.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -167,7 +176,9 @@ HEADERS += \
     presentation/native/presentation_song.h \
     wgt/styleselectionwidget.h \
     presentation/native/presentationpropertieswidget_song.h \
-    modelview/songsitemmodel.h
+    modelview/songsitemmodel.h \
+    gui/documentgenerationdialog.h \
+    gui/aboutdialog.h
 
 RESOURCES += \
     ../res/resources.qrc
@@ -175,20 +186,5 @@ RESOURCES += \
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
 
-Debug:LIBS += -L$$PWD/../lib/debug/
-Release:LIBS += -L$$PWD/../lib/release/
-
-Release:DESTDIR = ../bin/bin_x86
-Debug:DESTDIR = ../bin/bin_x86_debug
-
-Release:OBJECTS_DIR = release/.obj
-Release:MOC_DIR = release/.moc
-Release:RCC_DIR = release/.rcc
-Release:UI_DIR = release/.ui
-Release:PRECOMPILED_DIR = release
-
-Debug:OBJECTS_DIR = debug/.obj
-Debug:MOC_DIR = debug/.moc
-Debug:RCC_DIR = debug/.rcc
-Debug:UI_DIR = debug/.ui
-Debug:PRECOMPILED_DIR = debug
+LIBS += -L$$PWD/../lib/$${QMAKE_TARGET.arch}$${RELEASE_STR}/
+DESTDIR = $$PWD/../bin/bin_$${QMAKE_TARGET.arch}$${RELEASE_STR}

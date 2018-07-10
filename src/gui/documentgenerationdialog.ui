@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DocumentGenerationDialog</class>
+ <widget class="QDialog" name="DocumentGenerationDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Vytvoření dokumentu</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../res/resources.qrc">
+    <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../res/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

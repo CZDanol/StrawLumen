@@ -1,5 +1,6 @@
 *.exe
 *.ilk
 *.pdb
+*.dll
 build/
 papers/

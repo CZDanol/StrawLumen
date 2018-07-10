@@ -31,6 +31,10 @@ private slots:
 	void on_actionBackgrounds_triggered();
 	void on_actionStyles_triggered();
 
+	void on_actionGenerateDocuments_triggered();
+
+	void on_actionAbout_triggered();
+
 private:
 	Ui::MainWindow *ui;
 

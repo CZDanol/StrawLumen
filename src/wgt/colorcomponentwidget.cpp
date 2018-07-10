@@ -204,7 +204,7 @@ void ColorComponentWidget::updateCache()
 	backgroundCache_ = QPixmap::fromImage(backgroundCache);
 }
 
-void ColorComponentWidget::pickColor(QPoint &pos)
+void ColorComponentWidget::pickColor(const QPoint &pos)
 {
 	const ComponentRecord &componentRecord = componentRecords[component_];
 

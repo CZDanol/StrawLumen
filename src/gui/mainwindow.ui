@@ -10,6 +10,10 @@
     <height>582</height>
    </rect>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../res/resources.qrc">
+    <normaloff>:/logos/lumen_icon_16.png</normaloff>:/logos/lumen_icon_16.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -125,9 +129,12 @@
     <property name="title">
      <string>Program</string>
     </property>
+    <addaction name="actionGenerateDocuments"/>
+    <addaction name="separator"/>
     <addaction name="actionBackgrounds"/>
     <addaction name="actionStyles"/>
     <addaction name="actionSettings"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuProgram"/>
   </widget>
@@ -156,6 +163,24 @@
    </property>
    <property name="text">
     <string>Správa stylů</string>
+   </property>
+  </action>
+  <action name="actionGenerateDocuments">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Vytvořit zpěvník</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Info_16px.png</normaloff>:/icons/16/Info_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>O programu</string>
    </property>
   </action>
  </widget>
