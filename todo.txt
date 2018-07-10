@@ -1,14 +1,20 @@
+- tisk zpěvníku
+- export do opensongu
+- songs copyright (i do opensong importu)
+- opensong import dialog - vybrat štítky a možnost přidání do playlistu
+- import/export písní v rámci programu
+- štítky (tagy) u písní
+
+- typ slidu, kde není na projektoru zapnuto vůbec nic
+
 - potvrdit zahodit změny při skrytí songsmode
 - offthread slide rendering
-- export do opensongu
-- songs copyright
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
 
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
 - prezentace obrázků
-- štítky (tagy) u písní
 
 Automatická powerpoint prezentace:
 - přejít na další prezentaci v takový a takový čas

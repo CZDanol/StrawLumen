@@ -7,12 +7,12 @@
 
 bool standardDeleteConfirmDialog(const QString message, QWidget *parent)
 {
-	QMessageBox *mb = new QMessageBox( QMessageBox::Question, QObject::tr("Potvrdit smazání"), message );
-	mb->setParent( parent );
-	mb->setWindowModality( Qt::ApplicationModal );
+	QMessageBox *mb = new QMessageBox(QMessageBox::Question, QObject::tr("Potvrdit smazání"), message);
+	mb->setParent(parent);
+	mb->setWindowModality(Qt::ApplicationModal);
 
-	auto yesBtn = mb->addButton( QObject::tr("Ano"), QMessageBox::YesRole );
-	auto noBtn = mb->addButton( QObject::tr("Ne"), QMessageBox::NoRole );
+	auto yesBtn = mb->addButton(QObject::tr("Ano"), QMessageBox::YesRole);
+	auto noBtn = mb->addButton(QObject::tr("Ne"), QMessageBox::NoRole);
 
 	mb->setEscapeButton(noBtn);
 	mb->setDefaultButton(yesBtn);
@@ -24,29 +24,14 @@ bool standardDeleteConfirmDialog(const QString message, QWidget *parent)
 	return mb->clickedButton() == yesBtn;
 }
 
-void standardErrorDialog(const QString message, QWidget *parent)
-{
-	execOnMainThread([message, parent]{
-		QMessageBox *mb = new QMessageBox( QMessageBox::Critical, QObject::tr("Chyba"), message );
-		mb->setParent( parent );
-		mb->setWindowModality( Qt::ApplicationModal );
-		mb->addButton( QObject::tr("Ok"), QMessageBox::AcceptRole );
-
-		static QPixmap iconPixmap(":/icons/32/Cancel_32px.png");
-		mb->setIconPixmap(iconPixmap);
-
-		mb->show();
-	});
-}
-
 bool standardConfirmDialog(const QString message, QWidget *parent)
 {
-	QMessageBox *mb = new QMessageBox( QMessageBox::Question, QObject::tr("Potvrzení"), message );
-	mb->setParent( parent );
-	mb->setWindowModality( Qt::ApplicationModal );
+	QMessageBox *mb = new QMessageBox(QMessageBox::Question, QObject::tr("Potvrzení"), message);
+	mb->setParent(parent);
+	mb->setWindowModality(Qt::ApplicationModal);
 
-	auto yesBtn = mb->addButton( QObject::tr("Ano"), QMessageBox::YesRole );
-	auto noBtn = mb->addButton( QObject::tr("Ne"), QMessageBox::NoRole );
+	auto yesBtn = mb->addButton(QObject::tr("Ano"), QMessageBox::YesRole);
+	auto noBtn = mb->addButton(QObject::tr("Ne"), QMessageBox::NoRole);
 
 	mb->setEscapeButton(noBtn);
 	mb->setDefaultButton(yesBtn);
@@ -56,4 +41,34 @@ bool standardConfirmDialog(const QString message, QWidget *parent)
 
 	mb->exec();
 	return mb->clickedButton() == yesBtn;
+}
+
+void standardErrorDialog(const QString message, QWidget *parent)
+{
+	execOnMainThread([message, parent]{
+		QMessageBox *mb = new QMessageBox(QMessageBox::Critical, QObject::tr("Chyba"), message);
+		mb->setParent(parent);
+		mb->setWindowModality(Qt::ApplicationModal);
+		mb->addButton(QObject::tr("Ok"), QMessageBox::AcceptRole);
+
+		static QPixmap iconPixmap(":/icons/32/Cancel_32px.png");
+		mb->setIconPixmap(iconPixmap);
+
+		mb->show();
+	});
+}
+
+void standardInfoDialog(const QString message, QWidget *parent)
+{
+	execOnMainThread([message, parent]{
+		QMessageBox *mb = new QMessageBox(QMessageBox::Information, QObject::tr("Informace"), message);
+		mb->setParent(parent);
+		mb->setWindowModality(Qt::ApplicationModal);
+		mb->addButton(QObject::tr("Ok"), QMessageBox::AcceptRole);
+
+		static QPixmap iconPixmap(":/icons/32/Info_16px.png");
+		mb->setIconPixmap(iconPixmap);
+
+		mb->show();
+	});
 }

@@ -480,8 +480,7 @@
             <widget class="QScrollArea" name="saPresentationProperties">
              <property name="styleSheet">
               <string notr="true">#saPresentationProperties,
-#saPresentationProperties &gt; QWidget,
-#saPresentationProperties &gt; QWidget &gt; QWidget
+#PresentationPropertiesWidget
 {
 	background: palette(base);
 }</string>

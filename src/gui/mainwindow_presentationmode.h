@@ -58,8 +58,7 @@ private:
 	Ui::MainWindow_PresentationMode *ui;
 	PresentationPropertiesWidget *presentationPropertiesWidget_ = nullptr;
 	QTimer currentTimeTimer_;
-	QMenu *playlistContextMenu_ = nullptr;
-	QMenu *addPresentationMenu_ = nullptr;
+	QMenu playlistContextMenu_, addPresentationMenu_;
 
 private:
 	QSharedPointer<Playlist> playlist_;

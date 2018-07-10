@@ -126,14 +126,15 @@ void Presentation_Song::loadFromDb(qlonglong songId)
 
 void Presentation_Song::loadSlideOrder()
 {
-	static const QPixmap emptySlidePixmap(":/icons/16/Circled Thin_16px.png");
+	static const QPixmap emptySlideBeforePixmap(":/icons/16/Sign Out_16px.png");
+	static const QPixmap emptySlideAfterPixmap(":/icons/16/Logout Rounded Left_16px.png");
 
 	const QString slideOrderStr = customSlideOrder_.isEmpty() ? defaultSlideOrder_ : customSlideOrder_;
 	const QStringList slideOrder = slideOrderStr.split(' ');
 
 	slides_.clear();
 	if(emptySlideBefore_)
-		slides_.append(SlideRec{QString(), QString(), QString(), emptySlidePixmap});
+		slides_.append(SlideRec{QString(), QString(), QString(), emptySlideBeforePixmap});
 
 	for(const QString &sectionName : slideOrder) {
 		if(sectionName.isEmpty())
@@ -145,7 +146,7 @@ void Presentation_Song::loadSlideOrder()
 	}
 
 	if(emptySlideAfter_)
-		slides_.append(SlideRec{QString(), QString(), QString(), emptySlidePixmap});
+		slides_.append(SlideRec{QString(), QString(), QString(), emptySlideAfterPixmap});
 
 	emit sigSlidesChanged();
 }

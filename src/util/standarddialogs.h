@@ -4,8 +4,9 @@
 #include "gui/mainwindow.h"
 
 bool standardDeleteConfirmDialog( const QString message, QWidget *parent = mainWindow );
-void standardErrorDialog(const QString message, QWidget *parent = mainWindow );
-
 bool standardConfirmDialog(const QString message, QWidget *parent = mainWindow );
+
+void standardErrorDialog(const QString message, QWidget *parent = mainWindow );
+void standardInfoDialog(const QString message, QWidget *parent = mainWindow );
 
 #endif // STANDARDDIALOGS_H

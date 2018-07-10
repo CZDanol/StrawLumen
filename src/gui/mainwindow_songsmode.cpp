@@ -128,6 +128,7 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 
 	ui->btnEdit->setVisible(!set);
 	ui->btnNew->setEnabled(!set);
+	ui->btnImport->setEnabled(!set);
 	ui->btnSaveChanges->setVisible(set);
 	ui->btnDiscardChanges->setVisible(set);
 

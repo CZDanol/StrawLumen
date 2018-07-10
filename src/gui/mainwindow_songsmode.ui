@@ -220,7 +220,7 @@
       <item>
        <widget class="QPushButton" name="btnTransposeFlat">
         <property name="text">
-         <string> Béčka</string>
+         <string>akordy</string>
         </property>
         <property name="icon">
          <iconset resource="../../res/resources.qrc">

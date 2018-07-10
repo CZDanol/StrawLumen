@@ -52,14 +52,13 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 		// Menu & controls
 		{
-			playlistContextMenu_ = new QMenu(this);
-			playlistContextMenu_->addAction(ui->actionDeletePresentation);
+			playlistContextMenu_.addAction(ui->actionDeletePresentation);
 
-			addPresentationMenu_ = new QMenu(this);
-			addPresentationMenu_->addAction(ui->actionAddPowerpointPresentation);
-			addPresentationMenu_->addAction(ui->actionAddBlackScreen);
+			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
+			addPresentationMenu_.addAction(ui->actionAddSong);
+			addPresentationMenu_.addAction(ui->actionAddBlackScreen);
 
-			ui->btnAddPresentation->setMenu(addPresentationMenu_);
+			ui->btnAddPresentation->setMenu(&addPresentationMenu_);
 
 			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
 		}
@@ -264,7 +263,7 @@ void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &p
 	if(!ui->tvPlaylist->selectionModel()->selectedRows().count())
 		return;
 
-	playlistContextMenu_->popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
+	playlistContextMenu_.popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
 }
 
 void MainWindow_PresentationMode::onSongListItemActivated(qlonglong songId)
@@ -343,7 +342,10 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 	}
 }
 
+#include <QGraphicsDropShadowEffect>
+
 void MainWindow_PresentationMode::on_actionAddSong_triggered()
 {
+	standardInfoDialog(tr("Vyberte píseň v panelu vlevo dole a přetáhněte ji do programu."));
 	ui->twLeftBottom->setCurrentWidget(ui->tabSongList);
 }
