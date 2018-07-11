@@ -154,5 +154,8 @@
         <file>icons/16/Copyright_16px.png</file>
         <file>icons/16/Price Tag_16px.png</file>
         <file>icons/16/Tags_16px.png</file>
+        <file>icons/16/Available Updates_16px.png</file>
+        <file>icons/16/Data Transfer_16px.png</file>
+        <file>icons/16/Export_16px.png</file>
     </qresource>
 </RCC>

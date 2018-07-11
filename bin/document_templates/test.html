@@ -1,0 +1,248 @@
+<html>
+	<head>
+		
+	</head>
+	<body>		
+		<div id="templates">
+			<div class="toc">
+				<div class="tocTitle"></div>
+				<div class="tocContentsWrapper tocColumnCount">
+					<div class="tocContents"></div>
+				</div>
+			</div>
+			
+			<div class="tocItem"></div>
+		
+			<div class="song">
+				<div class="songName"></div>
+				<div class="songAuthor"></div>
+			</div>
+			
+			<div class="section">
+				<div class="sectionName"></div>
+				<div class="sectionContent"></div>
+			</div>
+			
+			<span class="chord">
+				<table>
+					<tr>
+						<td class="chordName"></td>
+					</tr>
+					<tr>
+						<td><span class="textFollowingChord"></span></td>
+					</tr>
+				</table>
+			</span>
+			
+			<span class="text"></span>
+		</div>
+		
+		<div id="content">
+			<div class="tocContent"></div>
+			<div class="songsContent contentColumnCount"></div>
+		</div>
+		
+		
+		<style>
+			#templates {
+				display: none;
+			}
+			
+			#content {
+				font-family: "Source Sans", "Tahoma", sans-serif;
+				font-size: 12pt;
+				
+				counter-reset: tocSongId songId;
+				orphans: 8;
+				widows: 8;
+			}
+			
+			.doNotBreakInsideSongs .song {
+				page-break-inside: avoid;
+			}
+			
+			.eachSongOnNewPage .song {
+				page-break-before: always;
+			}
+			
+			.toc {
+				page-break-after: always;
+				margin-bottom: 10mm;
+			}
+			
+			.tocContentsWrapper {
+				column-gap: 5mm;
+			}
+			
+			.tocContents {
+				page-break-inside: avoid;
+			}
+			
+			.generateNumbering .tocItem {
+				display: list-item;
+				margin-left: 12mm;
+				padding-left: 1mm;
+				list-style-type: decimal;
+				list-style-position: outside;
+			}
+			
+			.song {
+				margin-bottom: 10mm;
+				
+			}
+			
+			.songName, .tocTitle {
+				font-weight: bold;
+				font-size: 24pt;
+				
+				border-bottom: 1px solid black;
+				margin-bottom: 5mm;
+			
+				page-break-after: avoid;
+			}
+			
+			.section:first-of-type {
+				page-break-before: avoid;
+			}
+			
+			.section {
+				margin-bottom: 5mm;
+				
+				page-break-inside: avoid;
+			}
+			
+			.sectionName {
+				font-weight: bold;
+				font-style: italics;
+				font-size: 14pt;
+				
+				page-break-after: avoid;
+			}
+			
+			.sectionContent {
+				padding-left: 3mm;
+				vertical-align: bottom;
+				
+				page-break-before: avoid;
+			}
+			
+			.chord {
+				display: inline-block;
+				vertical-align: bottom;
+			}
+			
+			.chord table {
+				display: inline-table;
+				border-spacing: 0;
+			}
+			
+			.chord td {
+				padding: 0;
+				height: 1em;
+			}
+			
+			.chord .chordName {
+				padding-right: .2em;
+				padding-top: .1em;
+				
+				color: black;
+				font-weight: bold;
+			}
+			
+			.textFollowingChord {
+				/* It weirdly collapses if I don't do this */
+				border-left: .01mm solid transparent;
+			}
+			
+			.textFollowingChord, .text {
+				white-space: pre-wrap;
+			}
+		</style>
+		
+		<script>
+			function generateDocument(data) {				
+				var contentElem = $("#content");
+
+				// Various settings
+				{
+					if(data.generateNumbering)
+						contentElem.addClass("generateNumbering");
+						
+					if(data.pageBreakMode >= 1)
+						contentElem.addClass("doNotBreakInsideSongs");
+						
+					if(data.pageBreakMode >= 2)
+						contentElem.addClass("eachSongOnNewPage");
+						
+					$("body").find(".tocColumnCount").css("column-count", data.tocColumnCount);
+					$("body").find(".contentColumnCount").css("column-count", data.contentColumnCount);
+				}
+				
+				// Table of contents
+				if(data.generateTableOfContents) {
+					var tocItemTemplate = $("#templates .tocItem");
+				
+					var tocElem = $("#templates .toc").clone().appendTo(contentElem.find(".tocContent"));
+					var tocContentsElem = tocElem.find(".tocContents");
+					
+					tocElem.find(".tocTitle").text(data.tocTitle);
+					
+					for(songI in data.songs) {
+						var song = data.songs[songI];
+						tocItemTemplate.clone().appendTo(tocContentsElem).text(song.name);
+					}
+				}
+				
+				// Content
+				if(data.generateSongs) {
+					var songsContentElem = contentElem.find(".songsContent");
+				
+					var songTemplate = $("#templates .song");
+					var sectionTemplate = $("#templates .section");
+					var chordTemplate = $("#templates .chord");
+					var textTemplate = $("#templates .text");
+					
+					var chordTextRegex = /(\s*\S*)(.*)/s;
+					
+					for(songI in data.songs) {
+						var song = data.songs[songI];
+						var songElem = songTemplate.clone().appendTo(songsContentElem);
+						
+						songElem.find(".songName").text(song.name);
+						
+						if(song.author)
+							songElem.find(".songAuthor").text(song.author);
+						else
+							songElem.find(".songAuthor").remove();
+						
+						for(sectionI in song.sections) {
+							var section = song.sections[sectionI];
+							var sectionElem = sectionTemplate.clone().appendTo(songElem);
+							var sectionContentElem = sectionElem.find(".sectionContent");
+							
+							sectionElem.find(".sectionName").text(section.userFriendlyName);
+							
+							for(var chordSectionI in section.content) {
+								var chordSection = section.content[chordSectionI];
+								
+								if(!chordSection.chordName || !data.generateChords) {
+									textTemplate.clone().appendTo(sectionContentElem).text(chordSection.textFollowing);
+									continue;
+								}
+								
+								var splitText = chordTextRegex.exec(chordSection.textFollowing);
+								
+								var chordElem = chordTemplate.clone().appendTo(sectionContentElem);							
+								chordElem.find(".chordName").text(chordSection.chordName);
+								chordElem.find(".textFollowingChord").text(splitText[1]);
+								
+								if(splitText[1])
+									textTemplate.clone().appendTo(sectionContentElem).text(splitText[2]);
+							}
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

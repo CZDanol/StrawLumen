@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Vytvoření dokumentu</string>
+   <string>Vytvoření zpěvníku</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../res/resources.qrc">
@@ -33,6 +33,48 @@
      <property name="text">
       <string>PushButton</string>
      </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="sbTocColumnCount">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>10</number>
+     </property>
+     <property name="value">
+      <number>2</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="sbContentColumnCount">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="cmbPageBreakMode">
+     <item>
+      <property name="text">
+       <string>Zalamovat i uprostřed písně</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Nezalamovat uprostřed písně</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Každou píseň na vlastní stranu</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>

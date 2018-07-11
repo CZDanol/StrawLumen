@@ -2,6 +2,8 @@
 #include "ui_documentgenerationdialog.h"
 
 #include "job/db.h"
+#include "rec/chord.h"
+#include "rec/songsection.h"
 
 #include <QLayout>
 #include <QCoreApplication>
@@ -39,9 +41,9 @@ void DocumentGenerationDialog::onLoaded()
 
 void DocumentGenerationDialog::on_pushButton_clicked()
 {
-	view_.load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../documenttemplates/test.html")));
+	view_.load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../document_templates/test.html")));
 
-	QFile jqueryFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../documenttemplates/jquery.js"));
+	QFile jqueryFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../document_templates/jquery.js"));
 	jqueryFile.open(QIODevice::ReadOnly);
 
 	jqueryJs = QString::fromUtf8(jqueryFile.readAll());
@@ -51,6 +53,16 @@ void DocumentGenerationDialog::on_pushButton_clicked()
 	//view_.page()->scripts().insert(jqueryScript);
 
 	QJsonObject json;
+	json["generateTableOfContents"] = true;
+	json["generateSongs"] = true;
+	json["generateChords"] = true;
+	json["generateNumbering"] = true;
+	json["tocColumnCount"] = ui->sbTocColumnCount->value();
+	json["contentColumnCount"] = ui->sbContentColumnCount->value();
+	json["pageBreakMode"] = ui->cmbPageBreakMode->currentIndex();
+
+	json["tocTitle"] = tr("Obsah");
+
 	{
 		QJsonArray jsonSongs;
 
@@ -60,7 +72,65 @@ void DocumentGenerationDialog::on_pushButton_clicked()
 
 			jsonSong["name"] = q.value("name").toString();
 			jsonSong["author"] = q.value("author").toString();
-			jsonSong["content"] = q.value("content").toString();
+
+			static const QRegularExpression compactSpacesRegex("[ \t]+");
+			QString songContent = q.value("content").toString().trimmed();
+			songContent.replace(compactSpacesRegex, " ");
+
+			jsonSong["rawContent"] = songContent;
+
+			{
+				QJsonArray jsonSections;
+
+				for(const SongSectionWithContent &ss : songSectionsWithContent(songContent)) {
+					QJsonObject jsonSection;
+
+					QString sectionContent = ss.content.trimmed();
+					sectionContent.replace(compactSpacesRegex, " ");
+
+					jsonSection["standardName"] = ss.section.standardName();
+					jsonSection["userFriendlyName"] = ss.section.userFriendlyName();
+
+					// Split by chords
+					{
+						QString contentWithoutChords = sectionContent;
+						QJsonArray jsonChords;
+						int offsetCorrection = 0;
+						int chordSectionStart = 0;
+
+						QJsonObject jsonChord;
+						jsonChord["chordName"] = QJsonValue();
+
+						const auto endFunc = [&](int pos) {
+							if(pos == chordSectionStart && jsonChord["chordName"].toString().isEmpty())
+								return;
+
+							jsonChord["textFollowing"] = sectionContent.mid(chordSectionStart, pos-chordSectionStart);
+
+							jsonChords.append(jsonChord);
+						};
+
+						for(const ChordInSong &chs : songChords(sectionContent)) {
+							endFunc(chs.annotationPos);
+							chordSectionStart = chs.annotationPos + chs.annotationLength;
+
+							jsonChord["chordName"] = chs.chord.toString();
+
+							contentWithoutChords.remove(chs.annotationPos+offsetCorrection, chs.annotationLength);
+							offsetCorrection -= chs.annotationLength;
+						}
+
+						endFunc(sectionContent.length());
+
+						jsonSection["content"] = jsonChords;
+					}
+
+					jsonSections.append(jsonSection);
+				}
+
+				jsonSong["sections"] = jsonSections;
+			}
+
 
 			jsonSongs.append(jsonSong);
 		}

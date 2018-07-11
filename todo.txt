@@ -1,9 +1,8 @@
 - tisk zpěvníku
 - export do opensongu
-- songs copyright (i do opensong importu)
 - opensong import dialog - vybrat štítky a možnost přidání do playlistu
 - import/export písní v rámci programu
-- štítky (tagy) u písní
+- zkratka - upravit písničku v presentation modu
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 

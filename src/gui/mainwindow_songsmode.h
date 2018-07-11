@@ -60,6 +60,8 @@ private slots:
 	void on_actionImportOpenSongSong_triggered();
 	void on_lnTags_sigFocused();
 
+	void on_btnCreateSongbook_clicked();
+
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu insertSectionMenu_, importMenu_, songListContextMenu_;

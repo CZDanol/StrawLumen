@@ -13,6 +13,7 @@
 #include <QFile>
 
 #include "gui/splashscreen.h"
+#include "gui/documentgenerationdialog.h"
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
 #include "rec/chord.h"
@@ -146,6 +147,7 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 
 	ui->twEdit->setVisible(set);
 	ui->twTranspose->setVisible(set);
+	ui->twImportExport->setVisible(!set);
 
 	ui->btnAddCustomSlideOrderItem->setEnabled(set);
 
@@ -499,4 +501,9 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 void MainWindow_SongsMode::on_lnTags_sigFocused()
 {
 	tagsCompleterModel_.setQuery(db->selectQuery("SELECT DISTINCT tag FROM song_tags ORDER BY tag ASC"));
+}
+
+void MainWindow_SongsMode::on_btnCreateSongbook_clicked()
+{
+	documentGenerationDialog->show();
 }

@@ -92,7 +92,8 @@ void SongListWidget::requery()
 		}
 
 		if(ui->lvTags->currentIndex().row() > 0) {
-			filters += "(songs.id IN (SELECT song FROM song_tags WHERE tag = ?))";
+			joins += "INNER JOIN song_tags ON songs.id == song_tags.song ";
+			filters += "(song_tags.tag = ?)";
 			args += tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag");
 		}
 
@@ -114,7 +115,7 @@ void SongListWidget::requery()
 		auto header = ui->tvSongs->header();
 		header->hideSection(0);
 		header->setSectionResizeMode(1, QHeaderView::Fixed);
-		header->resizeSection(1, ui->tvSongs->width() / 2);
+		header->resizeSection(1, 150);
 		header->setSectionResizeMode(2, QHeaderView::Stretch);
 	}
 

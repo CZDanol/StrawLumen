@@ -4,7 +4,7 @@ QTabWidget::right-corner {
 }
 
 QAbstractItemView::item:selected {
-  background-color: #AAD4ff;
+  background-color: #90dff9;
 	color: black;
 }
 
@@ -34,8 +34,3 @@ QWidget[quickEditStyle="true"] QDateEdit[readOnly="true"] {
 	border-bottom: 1px dotted gray;
 	background: transparent;
 }
-
-/*QAbstractItemView[frameShape="0"] QHeaderView {
-  border: 1px solid #aaa;
-	border-bottom: none;
-}*/

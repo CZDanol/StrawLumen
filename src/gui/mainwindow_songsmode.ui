@@ -187,6 +187,70 @@
        </widget>
       </item>
       <item>
+       <widget class="QTabWidget" name="twImportExport">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_11">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Data Transfer_16px.png</normaloff>:/icons/16/Data Transfer_16px.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Import/export</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnImport">
+            <property name="text">
+             <string> Importovat</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Import_16px.png</normaloff>:/icons/16/Import_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnCreateSongbook">
+            <property name="text">
+             <string> Vytvořit zpěvník</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -256,20 +320,6 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QPushButton" name="btnImport">
-            <property name="text">
-             <string> Importovat</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Import_16px.png</normaloff>:/icons/16/Import_16px.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QPushButton" name="btnNew">
             <property name="text">
