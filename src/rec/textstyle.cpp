@@ -76,19 +76,38 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		p.fillRect(QRectF(QPointF(-size.width()*hAlignConst, 0), size).marginsAdded(QMarginsF(m, m, m, m)), backgroundColor);
 	}
 
-	auto polygons = path.toFillPolygons();
-
 	if(outlineEnabled) {
-		p.setBrush(Qt::NoBrush);
-		p.setPen(QPen(outlineColor, outlineWidth/scaleFactor, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-		for(const auto &polygon : polygons)
-			p.drawPolygon(polygon, Qt::OddEvenFill);
+		// Todo: better? Renderer should provide correct size buffer
+		const qreal outlineSize = outlineWidth/scaleFactor;
+		const QRectF outlineRect = pathBoundingRect.marginsAdded(QMarginsF(outlineSize, outlineSize, outlineSize, outlineSize));
+
+		QImage tmp(outlineRect.size().toSize(), QImage::Format_ARGB32);
+		tmp.fill(Qt::transparent);
+
+		QPainter p2(&tmp);
+		p2.save();
+		p2.translate(-outlineRect.topLeft());
+
+		p2.setRenderHint(QPainter::Antialiasing);
+
+		//p2.setBrush(Qt::NoBrush);
+		//p2.setPen(QPen(outlineColor, outlineWidth/scaleFactor, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+
+		p2.setPen(QPen(Qt::white, outlineSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+		for(const auto &polygon : path.toSubpathPolygons())
+			p2.drawPolygon(polygon, Qt::WindingFill);
+
+		p2.restore();
+		p2.setCompositionMode(QPainter::CompositionMode_SourceIn);
+		p2.fillRect(tmp.rect(), outlineColor);
+
+		p.drawImage(outlineRect.topLeft(), tmp);
 	}
 
 	p.setBrush(color);
 	p.setPen(Qt::NoPen);
-	for(const auto &polygon : polygons)
-		p.drawPolygon(polygon, Qt::OddEvenFill);
+	for(const auto &polygon : path.toFillPolygons())
+		p.drawPolygon(polygon);
 
 	p.restore();
 }

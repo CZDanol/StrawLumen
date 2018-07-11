@@ -1,8 +1,11 @@
 - tisk zpěvníku
+- bug: když se změní styl, uloží se a dá se storno (v ne-mgmt modu), tak se to neupdatne
 - export do opensongu
 - opensong import dialog - vybrat štítky a možnost přidání do playlistu
 - import/export písní v rámci programu
 - zkratka - upravit písničku v presentation modu
+- položka: vlastní text
+- položka: pozadí
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 
