@@ -23,9 +23,11 @@ DocumentGenerationDialog::DocumentGenerationDialog(QWidget *parent) :
 	ui(new Ui::DocumentGenerationDialog)
 {
 	ui->setupUi(this);
+	ui->twSongs->setCornerWidget(ui->twSongsCorner);
+	ui->twSongbook->setCornerWidget(ui->twSongbookCorner);
 
-	connect(&view_, &QWebEngineView::loadFinished, this, &DocumentGenerationDialog::onLoaded);
-	layout()->addWidget(&view_);
+	/*connect(&view_, &QWebEngineView::loadFinished, this, &DocumentGenerationDialog::onLoaded);
+	layout()->addWidget(&view_);*/
 }
 
 DocumentGenerationDialog::~DocumentGenerationDialog()
@@ -35,13 +37,13 @@ DocumentGenerationDialog::~DocumentGenerationDialog()
 
 void DocumentGenerationDialog::onLoaded()
 {
-	view_.page()->runJavaScript(jqueryJs);
-	view_.page()->runJavaScript(genJs);
+	/*view_.page()->runJavaScript(jqueryJs);
+	view_.page()->runJavaScript(genJs);*/
 }
 
 void DocumentGenerationDialog::on_pushButton_clicked()
 {
-	view_.load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../document_templates/test.html")));
+	/*view_.load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../document_templates/test.html")));
 
 	QFile jqueryFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../document_templates/jquery.js"));
 	jqueryFile.open(QIODevice::ReadOnly);
@@ -140,13 +142,10 @@ void DocumentGenerationDialog::on_pushButton_clicked()
 
 	//QWebEngineScript genScript;
 	//genScript.setSourceCode(QString("$(document).ready(function(){generateDocument(%1);});").arg(QString::fromUtf8(QJsonDocument(json).toJson(QJsonDocument::Compact))));
-	/*genScript.setWorldId(QWebEngineScript::UserWorld);
-	view_.page()->scripts().insert(genScript);*/
-	//view_.page()->runJavaScript(QString("generateDocument(%1);").arg(QString::fromUtf8(QJsonDocument(json).toJson(QJsonDocument::Compact))));
-	genJs = QString("generateDocument(%1);").arg(QString::fromUtf8(QJsonDocument(json).toJson(QJsonDocument::Compact)));
+	genJs = QString("generateDocument(%1);").arg(QString::fromUtf8(QJsonDocument(json).toJson(QJsonDocument::Compact)));*/
 }
 
 void DocumentGenerationDialog::on_pushButton_2_clicked()
 {
-	view_.page()->printToPdf(QString("test.pdf"));
+	//view_.page()->printToPdf(QString("test.pdf"));
 }

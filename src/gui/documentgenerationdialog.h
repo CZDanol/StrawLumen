@@ -24,8 +24,8 @@ private slots:
 
 private:
 	Ui::DocumentGenerationDialog *ui;
-	QWebEngineView view_;
-	QString genJs, jqueryJs;
+	/*QWebEngineView view_;
+	QString genJs, jqueryJs;*/
 
 };
 

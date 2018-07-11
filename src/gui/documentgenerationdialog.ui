@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>996</width>
+    <height>490</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,65 +20,491 @@
    <iconset resource="../../res/resources.qrc">
     <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>PushButton</string>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="4">
+    <widget class="QWidget" name="verticalWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="text">
-      <string>PushButton</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="sbTocColumnCount">
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>10</number>
-     </property>
-     <property name="value">
-      <number>2</number>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="sbContentColumnCount">
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="cmbPageBreakMode">
-     <item>
-      <property name="text">
-       <string>Zalamovat i uprostřed písně</string>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="leftMargin">
+       <number>0</number>
       </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Nezalamovat uprostřed písně</string>
+      <property name="topMargin">
+       <number>0</number>
       </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Každou píseň na vlastní stranu</string>
+      <property name="rightMargin">
+       <number>0</number>
       </property>
-     </item>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QTabWidget" name="twLeftBottom_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tabSongList_2">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Settings_16px.png</normaloff>:/icons/16/Settings_16px.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Nastavení</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="3" column="2">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>16</width>
+              <height>8</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Numbers_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Term_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="3">
+           <widget class="QComboBox" name="cmbPageBreakMode">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToContents</enum>
+            </property>
+            <item>
+             <property name="text">
+              <string>Zalamovat i uprostřed písně</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Nezalamovat uprostřed písně</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Každou píseň na vlastní stranu</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="3">
+           <widget class="QSpinBox" name="sbContentColumnCount">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Zalamování stránek:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Down Right_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Sloupců v obsahu:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QSpinBox" name="sbTocColumnCount">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>2</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Columns_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Columns_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Sloupců:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>24</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="8" column="1">
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>24</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="11" column="1" colspan="3">
+           <widget class="QCheckBox" name="cbGenerateChords_2">
+            <property name="text">
+             <string>Na šířku</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" colspan="3">
+           <widget class="QCheckBox" name="cbGenerateLyrics">
+            <property name="text">
+             <string>Vysázet slova</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="3">
+           <widget class="QCheckBox" name="cbGenerateToc">
+            <property name="text">
+             <string>Vysázet obsah</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Guitar_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1" colspan="3">
+           <widget class="QCheckBox" name="cbGenerateChords">
+            <property name="text">
+             <string>Vysázet akordy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1" colspan="3">
+           <widget class="QCheckBox" name="cbNumberSongs">
+            <property name="text">
+             <string>Číslovat písně</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Velikost papíru:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/File Landscape_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Overview_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="pixmap">
+             <pixmap resource="../../res/resources.qrc">:/icons/16/Split Files_16px.png</pixmap>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStorno">
+          <property name="text">
+           <string> Storno</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../res/resources.qrc">
+            <normaloff>:/icons/16/Delete_16px.png</normaloff>:/icons/16/Delete_16px.png</iconset>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnSelect">
+          <property name="text">
+           <string> Vytvořit</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../res/resources.qrc">
+            <normaloff>:/icons/16/Save_16px.png</normaloff>:/icons/16/Save_16px.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QTabWidget" name="twSongs">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabSongList">
+      <attribute name="icon">
+       <iconset resource="../../res/resources.qrc">
+        <normaloff>:/icons/16/Musical Notes_16px.png</normaloff>:/icons/16/Musical Notes_16px.png</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Písně</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="_2">
+       <item>
+        <widget class="SongListWidget" name="wgtSongList" native="true"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QTabWidget" name="twSongbook">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabSongList_3">
+      <attribute name="icon">
+       <iconset resource="../../res/resources.qrc">
+        <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Zpěvník</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="_4">
+       <item>
+        <widget class="QTreeWidget" name="twSelectedSongs">
+         <column>
+          <property name="text">
+           <string>Název</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Autor</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QWidget" name="twSongsCorner" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btnNew">
+        <property name="text">
+         <string>Přidat vše</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../res/resources.qrc">
+          <normaloff>:/icons/16/Forward Button_16px.png</normaloff>:/icons/16/Forward Button_16px.png</iconset>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QWidget" name="twSongbookCorner" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btnNew_2">
+        <property name="text">
+         <string> Vyčistit</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../res/resources.qrc">
+          <normaloff>:/icons/16/Broom_16px.png</normaloff>:/icons/16/Broom_16px.png</iconset>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SongListWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/songlistwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

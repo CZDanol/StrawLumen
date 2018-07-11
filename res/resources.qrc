@@ -157,5 +157,18 @@
         <file>icons/16/Available Updates_16px.png</file>
         <file>icons/16/Data Transfer_16px.png</file>
         <file>icons/16/Export_16px.png</file>
+        <file>icons/16/Columns_16px.png</file>
+        <file>icons/16/Down Right_16px.png</file>
+        <file>icons/16/Numbers_16px.png</file>
+        <file>icons/16/Overview_16px.png</file>
+        <file>icons/16/File Landscape_16px.png</file>
+        <file>icons/16/File_16px.png</file>
+        <file>icons/16/PDF_16px.png</file>
+        <file>icons/16/Split Files_16px.png</file>
+        <file>icons/16/Surface_16px.png</file>
+        <file>icons/16/Save_16px.png</file>
+        <file>icons/16/Broom_16px.png</file>
+        <file>icons/16/Double Right_16px.png</file>
+        <file>icons/16/Forward Button_16px.png</file>
     </qresource>
 </RCC>
