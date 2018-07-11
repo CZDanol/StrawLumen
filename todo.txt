@@ -12,6 +12,8 @@
 - 1,5 px to point nestačí (pro jiné DPI displeje)
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
 
+- vzorník barev
+
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
 - prezentace obrázků
 

@@ -57,6 +57,9 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		size.setHeight(size.height() + metrics.descent());
 	}
 
+	// Todo: faster?
+	//path = path.simplified();
+
 	const QRectF pathBoundingRect = path.boundingRect();
 
 	qreal scaleFactor = 1;
@@ -73,10 +76,20 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		p.fillRect(QRectF(QPointF(-size.width()*hAlignConst, 0), size).marginsAdded(QMarginsF(m, m, m, m)), backgroundColor);
 	}
 
-	if(outlineEnabled)
-		p.strokePath(path, QPen(outlineColor, outlineWidth/scaleFactor, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	auto polygons = path.toFillPolygons();
 
-	p.fillPath(path, color);
+	if(outlineEnabled) {
+		p.setBrush(Qt::NoBrush);
+		p.setPen(QPen(outlineColor, outlineWidth/scaleFactor, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+		for(const auto &polygon : polygons)
+			p.drawPolygon(polygon, Qt::OddEvenFill);
+	}
+
+	p.setBrush(color);
+	p.setPen(Qt::NoPen);
+	for(const auto &polygon : polygons)
+		p.drawPolygon(polygon, Qt::OddEvenFill);
+
 	p.restore();
 }
 

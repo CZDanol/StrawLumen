@@ -23,9 +23,6 @@ DocumentGenerationDialog::DocumentGenerationDialog(QWidget *parent) :
 	ui(new Ui::DocumentGenerationDialog)
 {
 	ui->setupUi(this);
-	ui->twSongs->setCornerWidget(ui->twSongsCorner);
-	ui->twSongbook->setCornerWidget(ui->twSongbookCorner);
-
 	/*connect(&view_, &QWebEngineView::loadFinished, this, &DocumentGenerationDialog::onLoaded);
 	layout()->addWidget(&view_);*/
 }

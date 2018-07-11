@@ -92,7 +92,8 @@ SOURCES += main.cpp \
     presentation/native/presentationpropertieswidget_song.cpp \
     modelview/songsitemmodel.cpp \
     gui/documentgenerationdialog.cpp \
-    gui/aboutdialog.cpp
+    gui/aboutdialog.cpp \
+    wgt/multisongselectionwidget.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -115,7 +116,8 @@ FORMS += \
     wgt/styleselectionwidget.ui \
     presentation/native/presentationpropertieswidget_song.ui \
     gui/documentgenerationdialog.ui \
-    gui/aboutdialog.ui
+    gui/aboutdialog.ui \
+    wgt/multisongselectionwidget.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -178,7 +180,8 @@ HEADERS += \
     presentation/native/presentationpropertieswidget_song.h \
     modelview/songsitemmodel.h \
     gui/documentgenerationdialog.h \
-    gui/aboutdialog.h
+    gui/aboutdialog.h \
+    wgt/multisongselectionwidget.h
 
 RESOURCES += \
     ../res/resources.qrc
