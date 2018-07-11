@@ -12,20 +12,24 @@ SongListWidget::SongListWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	ui->tvList->setModel(&model_);
+	ui->tvSongs->setModel(&songsModel_);
+	ui->lvTags->setModel(&tagsModel_);
 
 	typingTimer_.setSingleShot(true);
 	typingTimer_.setInterval(500);
 
+	connect(db, SIGNAL(sigSongListChanged()), this, SLOT(requeryTags()));
 	connect(db, SIGNAL(sigSongListChanged()), this, SLOT(requery()));
 
 	connect(ui->lnSearch, SIGNAL(editingFinished()), this, SLOT(requeryIfFilterChanged()));
 	connect(ui->lnSearch, SIGNAL(textChanged(QString)), &typingTimer_, SLOT(start()));
 	connect(&typingTimer_, SIGNAL(timeout()), this, SLOT(requeryIfFilterChanged()));
 
-	connect(ui->tvList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentChanged(QModelIndex,QModelIndex)));
-	connect(ui->tvList->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SIGNAL(sigSelectionChanged()));
-	connect(ui->tvList, SIGNAL(activated(QModelIndex)), this, SLOT(onItemActivated(QModelIndex)));
+	connect(ui->tvSongs->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentSongChanged(QModelIndex,QModelIndex)));
+	connect(ui->tvSongs->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SIGNAL(sigSelectionChanged()));
+	connect(ui->tvSongs, SIGNAL(activated(QModelIndex)), this, SLOT(onSongItemActivated(QModelIndex)));
+
+	connect(ui->lvTags->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentTagChanged(QModelIndex,QModelIndex)));
 
 	new QShortcut(Qt::Key_Escape, ui->lnSearch, SLOT(clear()), SLOT(clear()), Qt::WidgetShortcut);
 
@@ -34,8 +38,6 @@ SongListWidget::SongListWidget(QWidget *parent) :
 		connect(sc, SIGNAL(activated()), ui->lnSearch, SLOT(setFocus()));
 		connect(sc, SIGNAL(activated()), ui->lnSearch, SLOT(selectAll()));
 	}
-
-	requery();
 }
 
 SongListWidget::~SongListWidget()
@@ -45,81 +47,103 @@ SongListWidget::~SongListWidget()
 
 int SongListWidget::currentRowId() const
 {
-	return ui->tvList->currentIndex().row();
+	return ui->tvSongs->currentIndex().row();
 }
 
 int SongListWidget::selectedRowCount() const
 {
-	return ui->tvList->selectionModel()->selectedRows().size();
+	return ui->tvSongs->selectionModel()->selectedRows().size();
 }
 
 QVector<qlonglong> SongListWidget::selectedRowIds() const
 {
 	QVector<qlonglong> result;
 
-	for(const QModelIndex &index : ui->tvList->selectionModel()->selectedRows())
-		result.append(model_.record(index.row()).value("id").toLongLong());
+	for(const QModelIndex &index : ui->tvSongs->selectionModel()->selectedRows())
+		result.append(songsModel_.record(index.row()).value("id").toLongLong());
 
 	return result;
 }
 
 void SongListWidget::unselect()
 {
-	ui->tvList->selectionModel()->clear();
-	ui->tvList->setCurrentIndex(QModelIndex());
+	ui->tvSongs->selectionModel()->clear();
+	ui->tvSongs->setCurrentIndex(QModelIndex());
 }
 
 void SongListWidget::requery()
 {
-	const int prevRow = ui->tvList->currentIndex().row();
-	const qlonglong prevSelectId = prevRow < 0 ? -1 : model_.record(prevRow).value("id").toLongLong();
+	const int prevRow = ui->tvSongs->currentIndex().row();
+	const qlonglong prevSelectId = prevRow < 0 ? -1 : songsModel_.record(prevRow).value("id").toLongLong();
 
-	QString query;
-	DBManager::Args args;
+	// Query data
+	{
+		QString joins;
+		QStringList filters;
+		DBManager::Args args;
 
-	const QString filter = collateFulltextQuery(ui->lnSearch->text());
-	currentFilterText_ = ui->lnSearch->text();
+		const QString filter = collateFulltextQuery(ui->lnSearch->text());
+		currentFilterText_ = ui->lnSearch->text();
 
-	if(!filter.isEmpty()) {
-		query = "SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
-						"FROM songs "
-						"INNER JOIN songs_fulltext ON songs.id = songs_fulltext.docid "
-						"WHERE songs_fulltext MATCH ? "
-						"ORDER BY songs.name ASC ";
+		if(!filter.isEmpty()) {
+			joins += "INNER JOIN songs_fulltext ON songs.id = songs_fulltext.docid ";
+			filters += "(songs_fulltext MATCH ?)";
+			args += filter;
+		}
 
-	} else {
-		query = "SELECT id, name AS '%1', author AS '%2' "
-						"FROM songs "
-						"ORDER BY name ASC ";
+		if(ui->lvTags->currentIndex().row() > 0) {
+			filters += "(songs.id IN (SELECT song FROM song_tags WHERE tag = ?))";
+			args += tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag");
+		}
+
+		const QString query =
+				"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
+				"FROM songs "
+				"%3 "
+				"%4 "
+				"ORDER BY songs.name ASC ";
+
+		songsModel_.setQuery(db->selectQuery(query.arg(tr("Název"), tr("Autor"), joins, filters.size() ? "WHERE " + filters.join(" AND ") : QString()), args));
+
+		while(songsModel_.canFetchMore())
+			songsModel_.fetchMore();
 	}
 
-	QSqlQuery q(db->database());
-	q.prepare(query.arg(tr("Název"), tr("Autor")));
+	// Setup headers
+	{
+		auto header = ui->tvSongs->header();
+		header->hideSection(0);
+		header->setSectionResizeMode(1, QHeaderView::Fixed);
+		header->resizeSection(1, ui->tvSongs->width() / 2);
+		header->setSectionResizeMode(2, QHeaderView::Stretch);
+	}
 
-	if(!filter.isEmpty())
-		q.bindValue(0, filter);
-
-	if(!q.exec())
-		return;
-
-	q.last();
-
-	model_.setQuery(q);
-
-	while(model_.canFetchMore())
-		model_.fetchMore();
-
-	auto header = ui->tvList->header();
-	header->hideSection(0);
-	header->setSectionResizeMode(1, QHeaderView::Fixed);
-	header->resizeSection(1, ui->tvList->width() / 2);
-	header->setSectionResizeMode(2, QHeaderView::Stretch);
-
-	const qlonglong newSelectId = prevRow < 0 ? -1 : model_.record(prevRow).value("id").toLongLong();
-	if(prevSelectId == newSelectId)
-		ui->tvList->selectionModel()->setCurrentIndex(model_.index(prevRow, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+	// Try reselecting previously selected song
+	{
+		const qlonglong newSelectId = prevRow < 0 ? -1 : songsModel_.record(prevRow).value("id").toLongLong();
+		if(prevSelectId == newSelectId)
+			ui->tvSongs->selectionModel()->setCurrentIndex(songsModel_.index(prevRow, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+	}
 
 	emit sigSelectionChanged();
+}
+
+void SongListWidget::requeryTags()
+{
+	const int prevIndex = ui->lvTags->currentIndex().row();
+	const QVariant prevTag = tagsModel_.record(prevIndex).value("tag");
+
+	QString sql = QString("SELECT '%1', '' AS tag "
+												"UNION ALL "
+												"SELECT tag || ' (' || COUNT(song) || ')', tag "
+												"FROM song_tags "
+												"GROUP BY tag "
+												"ORDER BY tag ASC").arg(tr("-- vše --"));
+	QSqlQuery q = db->selectQuery(sql);
+	tagsModel_.setQuery(q);
+
+	if(tagsModel_.record(prevIndex).value("tag") == prevTag)
+		ui->lvTags->setCurrentIndex(tagsModel_.index(prevIndex,0));
 }
 
 void SongListWidget::requeryIfFilterChanged()
@@ -132,39 +156,51 @@ void SongListWidget::requeryIfFilterChanged()
 
 void SongListWidget::selectRow(int rowId)
 {
-	ui->tvList->selectionModel()->select(model_.index(rowId,0), QItemSelectionModel::ClearAndSelect);
+	ui->tvSongs->selectionModel()->select(songsModel_.index(rowId,0), QItemSelectionModel::ClearAndSelect);
 }
 
 void SongListWidget::setDragEnabled(bool set)
 {
-	ui->tvList->setDragEnabled(set);
+	ui->tvSongs->setDragEnabled(set);
 }
 
 void SongListWidget::showEvent(QShowEvent *e)
 {
 	QWidget::showEvent(e);
 
-	if(e->type() == QEvent::Show && !e->spontaneous())
+	if(e->type() == QEvent::Show && !e->spontaneous()) {
 		requery();
+		requeryTags();
+	}
 }
 
-void SongListWidget::onCurrentChanged(const QModelIndex &index, const QModelIndex &prevIndex)
+void SongListWidget::onCurrentSongChanged(const QModelIndex &index, const QModelIndex &prevIndex)
 {
 	if(!index.isValid())
 		emit sigCurrentChanged(-1, prevIndex.row());
 	else
-		emit sigCurrentChanged(model_.record(index.row()).value("id").toLongLong(), prevIndex.row());
+		emit sigCurrentChanged(songsModel_.record(index.row()).value("id").toLongLong(), prevIndex.row());
 }
 
-void SongListWidget::onItemActivated(const QModelIndex &index)
+void SongListWidget::onCurrentTagChanged(const QModelIndex &index, const QModelIndex &prevIndex)
+{
+	Q_UNUSED(prevIndex);
+
+	if(!index.isValid())
+		return;
+
+	requery();
+}
+
+void SongListWidget::onSongItemActivated(const QModelIndex &index)
 {
 	if(!index.isValid())
 		return;
 
-	emit sigItemActivated(model_.record(index.row()).value("id").toLongLong());
+	emit sigItemActivated(songsModel_.record(index.row()).value("id").toLongLong());
 }
 
-void SongListWidget::on_tvList_customContextMenuRequested(const QPoint &pos)
+void SongListWidget::on_tvSongs_customContextMenuRequested(const QPoint &pos)
 {
-	emit sigCustomContextMenuRequested(ui->tvList->viewport()->mapToGlobal(pos));
+	emit sigCustomContextMenuRequested(ui->tvSongs->viewport()->mapToGlobal(pos));
 }

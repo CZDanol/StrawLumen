@@ -34,6 +34,7 @@ public:
 public slots:
 	void unselect();
 	void requery();
+	void requeryTags();
 	void requeryIfFilterChanged();
 
 	void selectRow(int rowId);
@@ -44,15 +45,16 @@ protected:
 	void showEvent(QShowEvent *e) override;
 
 private slots:
-	void onCurrentChanged(const QModelIndex &index, const QModelIndex &prevIndex);
-	void onItemActivated(const QModelIndex &index);
+	void onCurrentSongChanged(const QModelIndex &index, const QModelIndex &prevIndex);
+	void onCurrentTagChanged(const QModelIndex &index, const QModelIndex &prevIndex);
+	void onSongItemActivated(const QModelIndex &index);
 
 private slots:
-	void on_tvList_customContextMenuRequested(const QPoint &pos);
+	void on_tvSongs_customContextMenuRequested(const QPoint &pos);
 
 private:
 	Ui::SongListWidget *ui;
-	SongsItemModel model_;
+	SongsItemModel songsModel_, tagsModel_;
 	QString currentFilterText_;
 	QTimer typingTimer_;
 

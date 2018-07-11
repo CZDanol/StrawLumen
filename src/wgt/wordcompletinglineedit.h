@@ -16,17 +16,21 @@ public:
 	void setCompleter(QCompleter *c_);
 	QCompleter *completer() const;
 
+	void setCompleterSuffix(const QString &suffix);
+
 protected:
 	void keyPressEvent(QKeyEvent *e);
 
 private slots:
-	void insertCompletion(const QString &replacement);
+	void onCompleterActivated(const QString &replacement);
+	void onCompleterHighlighted(const QString &replacement);
 
 private:
 	QString wordPrefixAtCursor() const;
 
 private:
 	QCompleter *c_ = nullptr;
+	QString completerSuffix_;
 
 };
 

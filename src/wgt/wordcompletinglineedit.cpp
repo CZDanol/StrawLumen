@@ -22,7 +22,13 @@ void WordCompletingLineEdit::setCompleter(QCompleter *completer)
 	c_->setCompletionMode(QCompleter::PopupCompletion);
 	c_->setCaseSensitivity(Qt::CaseInsensitive);
 
-	QObject::connect(c_, SIGNAL(activated(QString)), this, SLOT(insertCompletion(QString)));
+	QObject::connect(c_, SIGNAL(activated(QString)), this, SLOT(onCompleterActivated(QString)));
+	QObject::connect(c_, SIGNAL(highlighted(QString)), this, SLOT(onCompleterHighlighted(QString)));
+}
+
+void WordCompletingLineEdit::setCompleterSuffix(const QString &suffix)
+{
+	completerSuffix_ = suffix;
 }
 
 void WordCompletingLineEdit::keyPressEvent(QKeyEvent *e)
@@ -32,34 +38,70 @@ void WordCompletingLineEdit::keyPressEvent(QKeyEvent *e)
 	if (!c_)
 		return;
 
+	//if (c_->completionPrefix().length() < 1)
+	//	return c_->popup()->hide();
+
 	c_->setCompletionPrefix(wordPrefixAtCursor());
-	if (c_->completionPrefix().length() < 1)
-		return c_->popup()->hide();
 
-	QRect rect = cursorRect();
-	rect.setWidth(c_->popup()->sizeHintForColumn(0) + c_->popup()->verticalScrollBar()->sizeHint().width());
-	c_->complete(rect);
+	static const QRegularExpression wordRegexp("^\\w+$", QRegularExpression::UseUnicodePropertiesOption);
 
-	if(c_->popup()->currentIndex().row() == -1)
-		c_->popup()->setCurrentIndex(c_->completionModel()->index(0,0));
+	if(wordRegexp.match(e->text()).hasMatch() || (e->key() == Qt::Key_Space && e->modifiers() & Qt::ControlModifier)) {
+		QRect rect = cursorRect();
+		rect.setWidth(c_->popup()->sizeHintForColumn(0) + c_->popup()->verticalScrollBar()->sizeHint().width());
+		c_->complete(rect);
+	}
+
+	//if(c_->popup()->currentIndex().row() == -1)
+	//	c_->popup()->setCurrentIndex(c_->completionModel()->index(0,0));
 }
 
-void WordCompletingLineEdit::insertCompletion(const QString &replacement)
+void WordCompletingLineEdit::onCompleterActivated(const QString &replacement)
 {
+	static const QRegularExpression nonwordRegexp("\\W", QRegularExpression::UseUnicodePropertiesOption);
+
 	QString text_ = text();
 	const int cursorPos = cursorPosition();
-	const int start = text_.left(cursorPos).lastIndexOf(' ') + 1;
+	const int start = text_.left(cursorPos).lastIndexOf(nonwordRegexp) + 1;
 
-	text_.replace(start, cursorPos-start, replacement);
+	QString realReplacement = replacement;
+	int end = cursorPos + text_.mid(cursorPos).indexOf(nonwordRegexp);
+	if(end < cursorPos) {
+		end = text_.length();
+		realReplacement += completerSuffix_;
+	}
+
+	text_.replace(start, end-start, realReplacement);
 
 	setText(text_);
+	setCursorPosition(start + realReplacement.length());
+}
+
+void WordCompletingLineEdit::onCompleterHighlighted(const QString &replacement)
+{
+	static const QRegularExpression nonwordRegexp("\\W", QRegularExpression::UseUnicodePropertiesOption);
+
+	QString text_ = text();
+	const int cursorPos = cursorPosition();
+	const int start = text_.left(cursorPos).lastIndexOf(nonwordRegexp) + 1;
+
+	int end = cursorPos + text_.mid(cursorPos).indexOf(nonwordRegexp);
+	if(end < cursorPos)
+		end = text_.length();
+
+	text_.replace(start, end-start, replacement);
+
+	setText(text_);
+	setCursorPosition(start+replacement.size());
+	cursorBackward(true, replacement.size() - (cursorPos-start));
 }
 
 QString WordCompletingLineEdit::wordPrefixAtCursor() const
 {
+	static const QRegularExpression nonwordRegexp("\\W", QRegularExpression::UseUnicodePropertiesOption);
+
 	const QString text_ = text();
 	const int cursorPos = cursorPosition();
-	const int start = text_.left(cursorPos).lastIndexOf(' ') + 1;
+	const int start = text_.left(cursorPos).lastIndexOf(nonwordRegexp) + 1;
 
 	return text_.mid(start, cursorPos - start);
 }

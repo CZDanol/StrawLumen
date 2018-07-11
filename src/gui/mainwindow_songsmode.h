@@ -7,6 +7,7 @@
 #include <QStringList>
 #include <QStringListModel>
 #include <QRegularExpressionValidator>
+#include <QSqlQueryModel>
 
 #include "rec/songsection.h"
 
@@ -57,6 +58,7 @@ private slots:
 	void on_btnAddCustomSlideOrderItem_pressed();
 	void on_btnInsertSlideSeparator_clicked();
 	void on_actionImportOpenSongSong_triggered();
+	void on_lnTags_sigFocused();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
@@ -64,9 +66,13 @@ private:
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;
-	QCompleter slideOrderCompleter_;
+	QCompleter *slideOrderCompleter_;
 	QStringListModel slideOrderCompleterModel_;
 	QMenu addCustomSlideOrderItemMenu_;
+
+private:
+	QCompleter *tagsCompleter_;
+	QSqlQueryModel tagsCompleterModel_;
 
 private:
 	qlonglong currentSongId_ = -1;

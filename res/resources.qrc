@@ -151,5 +151,8 @@
         <file>icons/16/Medal_16px.png</file>
         <file>icons/16/Administrative Tools_16px.png</file>
         <file>icons/16/Application Shield_16px.png</file>
+        <file>icons/16/Copyright_16px.png</file>
+        <file>icons/16/Price Tag_16px.png</file>
+        <file>icons/16/Tags_16px.png</file>
     </qresource>
 </RCC>

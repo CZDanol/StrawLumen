@@ -21,7 +21,7 @@
 
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
-	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent)
+	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags)
 
 MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	QWidget(parent),
@@ -46,15 +46,27 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 	// Slide order
 	{
-		slideOrderCompleter_.setModel(&slideOrderCompleterModel_);
-		slideOrderCompleter_.setCaseSensitivity(Qt::CaseInsensitive);
+		slideOrderCompleter_ = new QCompleter(this);
+		slideOrderCompleter_->setModel(&slideOrderCompleterModel_);
+		slideOrderCompleter_->setCaseSensitivity(Qt::CaseInsensitive);
 
 		slideOrderValidator_.setRegularExpression(songCustomSlideOrderRegex());
 
-		ui->lnSlideOrder->setCompleter(&slideOrderCompleter_);
+		ui->lnSlideOrder->setCompleter(slideOrderCompleter_);
 		ui->lnSlideOrder->setValidator(&slideOrderValidator_);
+		ui->lnSlideOrder->setCompleterSuffix(" ");
 
 		ui->btnAddCustomSlideOrderItem->setMenu(&addCustomSlideOrderItemMenu_);
+	}
+
+	// Tags
+	{
+		tagsCompleter_ = new QCompleter(this);
+		tagsCompleter_->setModel(&tagsCompleterModel_);
+		tagsCompleter_->setCaseSensitivity(Qt::CaseInsensitive);
+
+		ui->lnTags->setCompleter(tagsCompleter_);
+		ui->lnTags->setCompleterSuffix(", ");
 	}
 
 	// Insert song section menu
@@ -220,6 +232,17 @@ void MainWindow_SongsMode::fillSongData()
 	ui->lnAuthor->setText(r.value("author").toString());
 	ui->lnSlideOrder->setText(r.value("slideOrder").toString());
 	ui->teContent->setText(r.value("content").toString());
+	ui->lnCopyright->setText(r.value("copyright").toString());
+
+	QString tags;
+	QSqlQuery q = db->selectQuery("SELECT tag FROM song_tags WHERE song = ? ORDER BY tag ASC", {currentSongId_});
+	while(q.next()) {
+		if(!tags.isEmpty())
+			tags.append(", ");
+
+		tags.append(q.value("tag").toString());
+	}
+	ui->lnTags->setText(tags);
 }
 
 void MainWindow_SongsMode::on_btnNew_clicked()
@@ -261,10 +284,24 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 	const QString content = ui->teContent->toPlainText();
 
 	db->exec(
-				"UPDATE songs SET name = ?, author = ?, content = ?, slideOrder = ?, lastEdit = ? WHERE id = ?",
-				{name, author, content, ui->lnSlideOrder->text(), QDateTime::currentSecsSinceEpoch(), currentSongId_}
+				"UPDATE songs SET name = ?, author = ?, copyright = ?, content = ?, slideOrder = ?, lastEdit = ? WHERE id = ?",
+				{name, author, ui->lnCopyright->text(), content, ui->lnSlideOrder->text(), QDateTime::currentSecsSinceEpoch(), currentSongId_}
 				);
 	db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {currentSongId_, collate(name), collate(author), collate(content)});
+
+	// Tags
+	db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
+	QSet<QString> tags;
+	for(QString tag : ui->lnTags->text().toLower().split(',')) {
+		tag = tag.trimmed();
+
+		if(tag.isEmpty() || tags.contains(tag))
+			continue;
+
+		tags.insert(tag);
+		db->exec("INSERT INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
+	}
+
 	db->commitTransaction();
 
 	updateSongManipulationButtonsEnabled();
@@ -414,6 +451,7 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 
 			const QString name = root.firstChildElement("title").text();
 			const QString author = root.firstChildElement("author").text();
+			const QString copyright = root.firstChildElement("copyright").text();
 			const QString slideOrder = root.firstChildElement("presentation").text();
 
 			QString content = root.firstChildElement("lyrics").text().trimmed();
@@ -446,9 +484,9 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 			static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
 			content.remove(trimmingRegex);
 
-			const QVariant id = db->insert("INSERT INTO songs(uid, name, author, content, slideOrder, lastEdit) VALUES(?, ?, ?, ?, ?, ?)", {
+			const QVariant id = db->insert("INSERT INTO songs(uid, name, author, copyright, content, slideOrder, lastEdit) VALUES(?, ?, ?, ?, ?, ?, ?)", {
 									 QUuid::createUuid().toString(),
-									 name, author, content, slideOrder,
+									 name, author, copyright, content, slideOrder,
 									 QDateTime::currentSecsSinceEpoch(),
 								 });
 			db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {id, collate(name), collate(author), collate(content)});
@@ -456,4 +494,9 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 	});
 
 	emit db->sigSongListChanged();
+}
+
+void MainWindow_SongsMode::on_lnTags_sigFocused()
+{
+	tagsCompleterModel_.setQuery(db->selectQuery("SELECT DISTINCT tag FROM song_tags ORDER BY tag ASC"));
 }

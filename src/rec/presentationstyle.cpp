@@ -18,7 +18,7 @@ void PresentationStyle::loadFromJSON(const QJsonValue &val)
 	QSignalBlocker sb(this);
 	const QJsonObject json = val.toObject();
 
-#define F(identifier, capitalizedIdentifier, Type)\
+#define F(identifier, capitalizedIdentifier, Type, defaultValue)\
 	::loadFromJSON<Type>(identifier ## _, json[#identifier]);
 
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
@@ -49,7 +49,7 @@ QJsonObject PresentationStyle::toJSON() const
 {
 	QJsonObject json;
 
-#define F(identifier, capitalizedIdentifier, Type)\
+#define F(identifier, capitalizedIdentifier, Type, defaultValue)\
 	json[#identifier] = ::toJSON<Type>(identifier ## _);
 
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
@@ -68,7 +68,7 @@ bool PresentationStyle::operator==(const PresentationStyle &other) const
 	if(styleId_ != other.styleId_)
 		return false;
 
-#define F(identifier, capitalizedIdentifier, Type)\
+#define F(identifier, capitalizedIdentifier, Type, defaultValue)\
 	if(!(identifier ## _ == other.identifier ## _))
 		return false;
 
@@ -97,7 +97,7 @@ void PresentationStyle::operator=(const PresentationStyle &other)
 
 	styleId_ = other.styleId_;
 
-#define F(identifier, capitalizedIdentifier, Type)\
+#define F(identifier, capitalizedIdentifier, Type, defaultValue)\
 	identifier ## _ = other.identifier ## _;
 
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
@@ -116,7 +116,7 @@ void PresentationStyle::onDbStyleChanged(qlonglong styleId)
 }
 
 // Field getters/setters implementation
-#define F(identifier, capitalizedIdentifier, Type)\
+#define F(identifier, capitalizedIdentifier, Type, defaultValue)\
 	const Type &PresentationStyle::identifier() const { return identifier ## _; } \
 	void PresentationStyle::set ## capitalizedIdentifier(const Type &set)\
 	{\

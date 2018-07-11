@@ -408,6 +408,20 @@
            <property name="bottomMargin">
             <number>4</number>
            </property>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="pixmap">
+              <pixmap resource="../../res/resources.qrc">:/icons/16/Administrator Male_16px.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="pixmap">
+              <pixmap resource="../../res/resources.qrc">:/icons/16/Document_16px.png</pixmap>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label">
              <property name="pixmap">
@@ -422,7 +436,14 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0" colspan="8">
+           <item row="5" column="1" colspan="7">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Text:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="8">
             <widget class="SongContentTextEdit" name="teContent">
              <property name="font">
               <font>
@@ -441,22 +462,6 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Preferred</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>16</width>
-               <height>0</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="1" column="2">
             <spacer name="horizontalSpacer_2">
              <property name="orientation">
@@ -473,28 +478,8 @@
              </property>
             </spacer>
            </item>
-           <item row="3" column="1" colspan="7">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Text:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="6">
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Preferred</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>16</width>
-               <height>0</height>
-              </size>
-             </property>
-            </spacer>
+           <item row="1" column="3" colspan="5">
+            <widget class="QLineEdit" name="lnName"/>
            </item>
            <item row="2" column="1">
             <widget class="QLabel" name="label_4">
@@ -503,38 +488,21 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="3" colspan="5">
-            <widget class="QLineEdit" name="lnName"/>
-           </item>
-           <item row="2" column="5">
+           <item row="3" column="5">
             <widget class="QLabel" name="label_6">
              <property name="text">
               <string>Pořadí snímků:</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="pixmap">
-              <pixmap resource="../../res/resources.qrc">:/icons/16/Document_16px.png</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
+           <item row="3" column="4">
             <widget class="QLabel" name="label_5">
              <property name="pixmap">
               <pixmap resource="../../res/resources.qrc">:/icons/16/Mockup_16px.png</pixmap>
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="pixmap">
-              <pixmap resource="../../res/resources.qrc">:/icons/16/Administrator Male_16px.png</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="7">
+           <item row="3" column="7">
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
               <widget class="WordCompletingLineEdit" name="lnSlideOrder">
@@ -555,6 +523,60 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="2" column="4">
+            <widget class="QLabel" name="label_9">
+             <property name="pixmap">
+              <pixmap resource="../../res/resources.qrc">:/icons/16/Copyright_16px.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="5">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Copyright:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Preferred</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>16</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_11">
+             <property name="pixmap">
+              <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="7">
+            <widget class="QLineEdit" name="lnCopyright"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Štítky:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="WordCompletingLineEdit" name="lnTags">
+             <property name="placeholderText">
+              <string>Oddělené čárkou</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

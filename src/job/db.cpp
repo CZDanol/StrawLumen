@@ -65,6 +65,7 @@ void DatabaseManager::createDb()
 						 "uid TEXT,"
 						 "name TEXT,"
 						 "author TEXT,"
+						 "copyright TEXT,"
 						 "content TEXT,"
 						 "slideOrder TEXT,"
 						 "lastEdit INTEGER"
@@ -73,6 +74,26 @@ void DatabaseManager::createDb()
 		exec("CREATE INDEX i_songs_uid ON songs (uid)");
 		exec("CREATE INDEX i_songs_name ON songs (name)");
 		exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
+	}
+
+	// SONGS_FULLTEXT
+	{
+		exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
+						 "name TEXT,"
+						 "author TEXT,"
+						 "content TEXT"
+						 ")");
+	}
+
+	// SONG_TAGS
+	{
+		exec("CREATE TABLE song_tags ("
+				 "song INTEGER,"
+				 "tag TEXT"
+				 ")");
+
+		exec("CREATE INDEX i_song_tags_song ON song_tags (song, tag)");
+		exec("CREATE INDEX i_song_tags_tag ON song_tags (tag)");
 	}
 
 	// STYLES
@@ -108,15 +129,6 @@ void DatabaseManager::createDb()
 		exec("INSERT INTO keyValueAssoc(key, value)"
 						 "VALUES"
 						 "('database.version', 1)");
-	}
-
-	// SONGS_FULLTEXT
-	{
-		exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
-						 "name TEXT,"
-						 "author TEXT,"
-						 "content TEXT"
-						 ")");
 	}
 
 	if(false) {
