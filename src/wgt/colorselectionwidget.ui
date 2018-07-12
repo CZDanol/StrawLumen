@@ -40,6 +40,9 @@
        <height>14</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -55,6 +58,9 @@
        <width>16777215</width>
        <height>14</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
     </widget>
    </item>
@@ -72,6 +78,9 @@
        <height>14</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
     </widget>
    </item>
    <item row="1" column="2">
@@ -87,6 +96,9 @@
        <width>16777215</width>
        <height>14</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
     </widget>
    </item>
@@ -110,6 +122,13 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>wgtC1</tabstop>
+  <tabstop>wgtC2</tabstop>
+  <tabstop>wgtC3</tabstop>
+  <tabstop>wgtCAlpha</tabstop>
+  <tabstop>lnHex</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

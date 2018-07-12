@@ -78,6 +78,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
        </widget>
       </item>
       <item row="0" column="1">
@@ -95,7 +98,11 @@
        </widget>
       </item>
       <item row="1" column="0" colspan="4">
-       <widget class="ColorSelectionWidget" name="wgtColor" native="true"/>
+       <widget class="ColorSelectionWidget" name="wgtColor" native="true">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -175,7 +182,11 @@
        </widget>
       </item>
       <item row="1" column="0" colspan="4">
-       <widget class="ColorSelectionWidget" name="wgtOutlineColor" native="true"/>
+       <widget class="ColorSelectionWidget" name="wgtOutlineColor" native="true">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -239,7 +250,11 @@
        </widget>
       </item>
       <item row="1" column="0" colspan="4">
-       <widget class="ColorSelectionWidget" name="wgtBackgroundColor" native="true"/>
+       <widget class="ColorSelectionWidget" name="wgtBackgroundColor" native="true">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -272,6 +287,16 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>wgtFont</tabstop>
+  <tabstop>wgtColor</tabstop>
+  <tabstop>gbOutline</tabstop>
+  <tabstop>sbOutlineWidth</tabstop>
+  <tabstop>wgtOutlineColor</tabstop>
+  <tabstop>gbBackground</tabstop>
+  <tabstop>sbBackgroundPadding</tabstop>
+  <tabstop>wgtBackgroundColor</tabstop>
+ </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

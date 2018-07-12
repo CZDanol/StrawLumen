@@ -129,7 +129,6 @@
 			.sectionName {
 				font-weight: bold;
 				font-style: italics;
-				font-size: 14pt;
 				
 				page-break-after: avoid;
 			}
@@ -235,7 +234,7 @@
 							var sectionElem = sectionTemplate.clone().appendTo(songElem);
 							var sectionContentElem = sectionElem.find(".sectionContent");
 							
-							sectionElem.find(".sectionName").text(section.userFriendlyName);
+							sectionElem.find(".sectionName").text(section.shorthandName);
 							
 							for(var chordSectionI in section.content) {
 								var chordSection = section.content[chordSectionI];

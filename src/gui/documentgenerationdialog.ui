@@ -137,6 +137,9 @@
                <property name="text">
                 <string>Vysázet akordy</string>
                </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
              <item row="2" column="0">
@@ -240,13 +243,6 @@
              <string>Papír</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_5">
-             <item row="3" column="1" colspan="3">
-              <widget class="QCheckBox" name="cbLandscapeOrientation">
-               <property name="text">
-                <string>Na šířku</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
               <widget class="QLabel" name="label_12">
                <property name="text">
@@ -261,17 +257,10 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QLabel" name="label_2">
+             <item row="3" column="1" colspan="3">
+              <widget class="QCheckBox" name="cbLandscapeOrientation">
                <property name="text">
-                <string>Zalamování stránek:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="pixmap">
-                <pixmap resource="../../res/resources.qrc">:/icons/16/Split Files_16px.png</pixmap>
+                <string>Na šířku</string>
                </property>
               </widget>
              </item>
@@ -279,6 +268,13 @@
               <widget class="QLabel" name="label">
                <property name="pixmap">
                 <pixmap resource="../../res/resources.qrc">:/icons/16/Down Right_16px.png</pixmap>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_11">
+               <property name="pixmap">
+                <pixmap resource="../../res/resources.qrc">:/icons/16/Split Files_16px.png</pixmap>
                </property>
               </widget>
              </item>
@@ -297,6 +293,13 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Zalamování stránek:</string>
+               </property>
+              </widget>
              </item>
              <item row="0" column="3">
               <widget class="QComboBox" name="cmbPageBreakMode">
@@ -329,15 +332,15 @@
                </item>
               </widget>
              </item>
-             <item row="1" column="3">
-              <widget class="QComboBox" name="cmbPageSize"/>
-             </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_15">
                <property name="pixmap">
                 <pixmap resource="../../res/resources.qrc">:/icons/16/Add White Space_16px.png</pixmap>
                </property>
               </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QComboBox" name="cmbPageSize"/>
              </item>
              <item row="2" column="1">
               <widget class="QLabel" name="label_16">
@@ -356,6 +359,29 @@
                </property>
                <property name="value">
                 <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QCheckBox" name="cbNumberPages">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Číslovat stránky</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_18">
+               <property name="pixmap">
+                <pixmap resource="../../res/resources.qrc">:/icons/16/Counter_16px.png</pixmap>
                </property>
               </widget>
              </item>
@@ -384,6 +410,29 @@
               </property>
              </widget>
             </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="pixmap">
+               <pixmap resource="../../res/resources.qrc">:/icons/16/Open_16px.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="cbOpenWhenDone">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Po vytvoření otevřít PDF soubor</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
@@ -402,6 +451,33 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label_19">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="../../res/resources.qrc">:/icons/16/Info_16px.png</pixmap>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pokud ovládáte HTML, CSS a JavaScript, můžete si šablonu přizpůsobit – nachází se v &lt;span style=&quot;font-family: Consolas;&quot;&gt;{složka programu}/etc/songbookTemplate.html&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -424,7 +500,7 @@
         <item>
          <widget class="QPushButton" name="btnStorno">
           <property name="text">
-           <string> Storno</string>
+           <string> Zavřít</string>
           </property>
           <property name="icon">
            <iconset resource="../../res/resources.qrc">
@@ -444,6 +520,9 @@
            <iconset resource="../../res/resources.qrc">
             <normaloff>:/icons/16/Save_16px.png</normaloff>:/icons/16/Save_16px.png</iconset>
           </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -459,6 +538,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
     </widget>
    </item>
   </layout>
@@ -471,6 +553,25 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>wgtSongSelection</tabstop>
+  <tabstop>twLeftBottom_2</tabstop>
+  <tabstop>gbToc</tabstop>
+  <tabstop>sbTocColumns</tabstop>
+  <tabstop>gbLyrics</tabstop>
+  <tabstop>sbLyricsColumns</tabstop>
+  <tabstop>cmbLyricsMode</tabstop>
+  <tabstop>cbGenerateChords</tabstop>
+  <tabstop>cmbPageBreakMode</tabstop>
+  <tabstop>cmbPageSize</tabstop>
+  <tabstop>sbPageMargins</tabstop>
+  <tabstop>cbLandscapeOrientation</tabstop>
+  <tabstop>cbNumberPages</tabstop>
+  <tabstop>cbNumberSongs</tabstop>
+  <tabstop>cbOpenWhenDone</tabstop>
+  <tabstop>btnGenerate</tabstop>
+  <tabstop>btnStorno</tabstop>
+ </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

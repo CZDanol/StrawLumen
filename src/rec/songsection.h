@@ -21,6 +21,7 @@ public:
 
 	QString standardName() const;
 	QString userFriendlyName() const;
+	QString shorthandName() const;
 	QString annotation() const;
 
 	QPixmap icon() const;

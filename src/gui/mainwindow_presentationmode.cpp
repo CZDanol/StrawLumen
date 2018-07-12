@@ -329,7 +329,7 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 	dlg.setNameFilter(tr("PowerPoint prezentace (%1)").arg((Presentation_PowerPoint::validExtensions.isEmpty() ? "" : "*.") + Presentation_PowerPoint::validExtensions.join(" *.")));
 	dlg.setWindowIcon(icon);
 	dlg.setWindowTitle(tr("Import prezentace PowerPoint"));
-	dlg.setDirectory(settings->value("dialog.addPowerpointPresentation.directory", QStandardPaths::writableLocation(QStandardPaths::DataLocation)).toString());
+	dlg.setDirectory(settings->value("dialog.addPowerpointPresentation.directory", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)).toString());
 
 	if(!dlg.exec())
 		return;

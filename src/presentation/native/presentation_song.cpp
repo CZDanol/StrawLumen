@@ -86,7 +86,7 @@ void Presentation_Song::loadFromDb(qlonglong songId)
 	const bool defaultSlideOrderEmpty = defaultSlideOrder_.isEmpty();
 
 	QString content = r.value("content").toString();
-	content.replace(songChordRegex(),QString()); // Remove chords
+	content.replace(songChordAnnotationRegex(),QString()); // Remove chords
 
 	sections_.clear();
 	for(const SongSectionWithContent &swc : songSectionsWithContent(content)) {

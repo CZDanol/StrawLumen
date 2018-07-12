@@ -38,6 +38,7 @@ private:
 private:
 	QWebEnginePage page_;
 	QString jsCode_;
+	QString outputFilePath_;
 
 };
 

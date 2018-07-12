@@ -173,5 +173,12 @@
         <file>icons/16/Brochure_16px.png</file>
         <file>icons/16/New Document_16px.png</file>
         <file>icons/16/Cells_16px.png</file>
+        <file>icons/16/Open_16px.png</file>
+        <file>icons/32/High Priority_32px.png</file>
+        <file>icons/16/Error_16px.png</file>
+        <file>icons/16/Help_16px.png</file>
+        <file>icons/16/High Priority_16px.png</file>
+        <file>icons/16/Counter_16px.png</file>
+        <file>icons/16/Star Filled_16px.png</file>
     </qresource>
 </RCC>

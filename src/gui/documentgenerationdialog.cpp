@@ -21,12 +21,20 @@
 #include <QPageLayout>
 #include <QPageSize>
 #include <QPointer>
+#include <QDesktopServices>
 
 #define SETTINGS_FACTORY(F) \
 	F("generateToc", gbToc) F("tocColumns", sbTocColumns)\
 	F("generateLyrics", gbLyrics) F("generateChords", cbGenerateChords) F("lyricsMode", cmbLyricsMode) F("lyricsColumns", sbLyricsColumns)\
 	F("landscapeOrientation", cbLandscapeOrientation) F("pageBreakMode", cmbPageBreakMode) F("pageSize", cmbPageSize) F("pageMargins", sbPageMargins)\
-	F("numberSongs", cbNumberSongs)
+	F("numberSongs", cbNumberSongs) F("numberPages", cbNumberPages)\
+	F("openWhenDone", cbOpenWhenDone)
+
+enum LyricsMode {
+	lmContentDirected,
+	lmSlideOrderDirected,
+	lmSlideOrderDirected_SkipDuplicates
+};
 
 DocumentGenerationDialog *documentGenerationDialog = nullptr;
 
@@ -56,8 +64,6 @@ DocumentGenerationDialog::DocumentGenerationDialog(QWidget *parent) :
 
 	SETTINGS_FACTORY(F)
 #undef F
-	/*connect(&view_, &QWebEngineView::loadFinished, this, &DocumentGenerationDialog::onLoaded);
-	layout()->addWidget(&view_);*/
 }
 
 DocumentGenerationDialog::~DocumentGenerationDialog()
@@ -107,7 +113,7 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 
 void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output)
 {
-	QSqlRecord r = db->selectRow("SELECT name, author, content FROM songs WHERE id = ?", {songId});
+	QSqlRecord r = db->selectRow("SELECT name, author, content, slideOrder FROM songs WHERE id = ?", {songId});
 
 	QJsonObject jsonSong;
 
@@ -117,12 +123,34 @@ void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output
 	static const QRegularExpression compactSpacesRegex("[ \t]+");
 	QString songContent = r.value("content").toString().trimmed();
 	songContent.replace(compactSpacesRegex, " ");
+	songContent.remove(songSlideSeparatorRegex());
 
 	jsonSong["rawContent"] = songContent;
 
 	QJsonArray jsonSections;
 
-	for(const SongSectionWithContent &ss : songSectionsWithContent(songContent)) {
+	QVector<SongSectionWithContent> originalSections = songSectionsWithContent(songContent);
+	QVector<SongSectionWithContent> sections;
+	const QString slideOrderStr = r.value("slideOrder").toString().trimmed();
+	const int lyricsMode = ui->cmbLyricsMode->currentIndex();
+
+	if(lyricsMode == lmContentDirected || slideOrderStr.isEmpty())
+		sections = originalSections;
+
+	else {
+		const QStringList slideOrder = slideOrderStr.split(' ');
+
+		QHash<QString,SongSectionWithContent> sectionMap;
+		for(const SongSectionWithContent &ss : originalSections)
+			sectionMap.insert(ss.section.standardName(), ss);
+
+		for(const QString &slide : slideOrder)
+			sections.append(sectionMap.value(slide, SongSectionWithContent()));
+	}
+
+	QSet<QString> usedSections;
+
+	for(const SongSectionWithContent &ss : sections) {
 		QJsonObject jsonSection;
 
 		QString sectionContent = ss.content.trimmed();
@@ -130,9 +158,13 @@ void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output
 
 		jsonSection["standardName"] = ss.section.standardName();
 		jsonSection["userFriendlyName"] = ss.section.userFriendlyName();
+		jsonSection["shorthandName"] = ss.section.shorthandName();
+
+		if(lyricsMode == lmSlideOrderDirected_SkipDuplicates && usedSections.contains(ss.section.standardName())) {
+			jsonSection["content"] = QJsonArray();
 
 		// Split by chords
-		{
+		} else {
 			QString contentWithoutChords = sectionContent;
 			QJsonArray jsonChords;
 			int offsetCorrection = 0;
@@ -164,6 +196,8 @@ void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output
 
 			jsonSection["content"] = jsonChords;
 		}
+
+		usedSections.insert(ss.section.standardName());
 
 		jsonSections.append(jsonSection);
 	}
@@ -203,16 +237,22 @@ void DocumentGenerationDialog::onPageLoaded(bool result)
 
 void DocumentGenerationDialog::onPdfGenerated(const QByteArray &data)
 {
-	SCOPE_EXIT(splashscreen->close());
+	splashscreen->close();
 
 	if(data.isNull())
 		return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nepodařilo se připravit PDF data)."));
 
-	QFile f("test.pdf");
+	QFile f(outputFilePath_);
 	if(!f.open(QIODevice::WriteOnly))
 		return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\" pro zápis.").arg(f.fileName()));
 
-	f.write(data);
+	if(f.write(data) != data.length())
+		return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).").arg(f.fileName()));
+
+	f.close();
+
+	if(ui->cbOpenWhenDone)
+		QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));
 }
 
 
@@ -229,6 +269,24 @@ void DocumentGenerationDialog::on_btnGenerate_clicked()
 	QVector<qlonglong> songIds = ui->wgtSongSelection->selectedSongs();
 	if(songIds.isEmpty())
 		return standardErrorDialog(tr("Není zvolena ani jedna píseň."));
+
+	{
+		static const QIcon icon(":/icons/16/Moleskine_16px.png");
+
+		QFileDialog dlg(this);
+		dlg.setFileMode(QFileDialog::AnyFile);
+		dlg.setAcceptMode(QFileDialog::AcceptSave);
+		dlg.setNameFilter(tr("Soubory PDF (*.pdf)"));
+		dlg.setWindowIcon(icon);
+		dlg.setWindowTitle(tr("Vytvoření zpěvníku"));
+		dlg.setDirectory(settings->value("dialog.documentGeneration.directory", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)).toString());
+
+		if(!dlg.exec())
+			return;
+
+		settings->setValue("dialog.documentGeneration.directory", dlg.directory().absolutePath());
+		outputFilePath_ = dlg.selectedFiles().first();
+	}
 
 	generate(songIds);
 }

@@ -69,6 +69,25 @@ QString SongSection::userFriendlyName() const
 	return index_.isEmpty() ? userFriendlyNames[name_] : tr("%1 %2").arg(userFriendlyNames[name_], index_);
 }
 
+QString SongSection::shorthandName() const
+{
+	static QHash<QString,QString> shorthandNames {
+		{"C", tr("Ref. %1")},
+		{"V", tr("%1.")},
+		{"I", tr("Intro %1")},
+		{"O", tr("Outro %1")},
+		{"B", tr("Bridge %1")},
+	};
+
+	if(!isValid_)
+		return tr("## NEVALIDNÍ ##");
+
+	if(!isStandard_)
+		return name_;
+
+	return shorthandNames[name_].arg(index_);
+}
+
 QString SongSection::annotation() const
 {
 	if(!isValid_)

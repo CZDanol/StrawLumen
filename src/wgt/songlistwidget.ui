@@ -130,6 +130,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lnSearch</tabstop>
+  <tabstop>tvSongs</tabstop>
+  <tabstop>lvTags</tabstop>
+ </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

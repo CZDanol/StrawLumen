@@ -32,9 +32,7 @@ private slots:
 	void on_lnSlideOrder_editingFinished();
 	void on_lnSlideOrder_sigFocused();
 	void on_btnAddSlideOrderItem_pressed();
-
 	void on_cbEmptySlideBefore_clicked(bool checked);
-
 	void on_cbEmptySlideAfter_clicked(bool checked);
 
 private:

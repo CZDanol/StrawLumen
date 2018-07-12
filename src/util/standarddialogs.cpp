@@ -20,6 +20,9 @@ bool standardDeleteConfirmDialog(const QString message, QWidget *parent)
 	static QPixmap iconPixmap(":/icons/32/Trash Can_32px.png");
 	mb->setIconPixmap(iconPixmap);
 
+	static QPixmap windowIcon(":/icons/16/Trash Can_32px.png");
+	mb->setWindowIcon(windowIcon);
+
 	mb->exec();
 	return mb->clickedButton() == yesBtn;
 }
@@ -39,6 +42,9 @@ bool standardConfirmDialog(const QString message, QWidget *parent)
 	static QPixmap iconPixmap(":/icons/32/Help_32px.png");
 	mb->setIconPixmap(iconPixmap);
 
+	static QPixmap windowIcon(":/icons/16/Help_16px.png");
+	mb->setWindowIcon(windowIcon);
+
 	mb->exec();
 	return mb->clickedButton() == yesBtn;
 }
@@ -51,8 +57,11 @@ void standardErrorDialog(const QString message, QWidget *parent)
 		mb->setWindowModality(Qt::ApplicationModal);
 		mb->addButton(QObject::tr("Ok"), QMessageBox::AcceptRole);
 
-		static QPixmap iconPixmap(":/icons/32/Cancel_32px.png");
+		static QPixmap iconPixmap(":/icons/32/High Priority_32px.png");
 		mb->setIconPixmap(iconPixmap);
+
+		static QPixmap windowIcon(":/icons/16/High Priority_16px.png");
+		mb->setWindowIcon(windowIcon);
 
 		mb->show();
 	});
@@ -68,6 +77,10 @@ void standardInfoDialog(const QString message, QWidget *parent)
 
 		static QPixmap iconPixmap(":/icons/32/Info_16px.png");
 		mb->setIconPixmap(iconPixmap);
+
+		static QPixmap windowIcon(":/icons/16/High Info_16px.png");
+		mb->setWindowIcon(windowIcon);
+
 
 		mb->show();
 	});

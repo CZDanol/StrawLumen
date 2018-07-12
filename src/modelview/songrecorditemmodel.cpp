@@ -66,6 +66,9 @@ void SongRecordItemModel::addItems(const QVector<qlonglong> &songIds)
 		itemMap_.insert(rec->songId, rec);
 	}
 
+	if(!records.size())
+		return;
+
 	beginInsertRows(QModelIndex(), items_.size(), items_.size() + records.size() - 1);
 	items_.append(records);
 	endInsertRows();

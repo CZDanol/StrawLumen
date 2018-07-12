@@ -206,7 +206,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="quickEditStyle" stdset="0">
       <bool>true</bool>
@@ -481,7 +481,11 @@
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true"/>
+        <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -495,7 +499,11 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="3">
-        <widget class="TextStyleWidget" name="wgtMainTextStyle" native="true"/>
+        <widget class="TextStyleWidget" name="wgtMainTextStyle" native="true">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -509,7 +517,11 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="TextStyleWidget" name="wgtTitleTextStyle" native="true"/>
+        <widget class="TextStyleWidget" name="wgtTitleTextStyle" native="true">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -608,6 +620,28 @@
    </slots>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>twGallery</tabstop>
+  <tabstop>btnAdd</tabstop>
+  <tabstop>lvList</tabstop>
+  <tabstop>twGallery_2</tabstop>
+  <tabstop>twProperties</tabstop>
+  <tabstop>btnEdit</tabstop>
+  <tabstop>btnSaveChanges</tabstop>
+  <tabstop>btnDiscardChanges</tabstop>
+  <tabstop>lnName</tabstop>
+  <tabstop>wgtBackground</tabstop>
+  <tabstop>sbTopPadding</tabstop>
+  <tabstop>sbBottomPadding</tabstop>
+  <tabstop>sbLeftPadding</tabstop>
+  <tabstop>sbRightPadding</tabstop>
+  <tabstop>sbTitleTextPadding</tabstop>
+  <tabstop>wgtMainTextStyle</tabstop>
+  <tabstop>wgtTitleTextStyle</tabstop>
+  <tabstop>btnClose</tabstop>
+  <tabstop>btnSelect</tabstop>
+  <tabstop>btnStorno</tabstop>
+ </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

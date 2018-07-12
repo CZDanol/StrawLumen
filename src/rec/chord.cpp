@@ -136,7 +136,7 @@ QString Chord::toString(bool flatVariant) const
 QVector<ChordInSong> songChords(const QString &song)
 {
 	QVector<ChordInSong> result;
-	QRegularExpressionMatchIterator it = songChordRegex().globalMatch(song);
+	QRegularExpressionMatchIterator it = songChordAnnotationRegex().globalMatch(song);
 
 	while(it.hasNext()) {
 		QRegularExpressionMatch m = it.next();
@@ -163,7 +163,7 @@ void transposeSong(QString &song, int by, bool flatChords)
 	}
 }
 
-const QRegularExpression &songChordRegex()
+const QRegularExpression &songChordAnnotationRegex()
 {
 	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭]+)(\\])");
 	return result;

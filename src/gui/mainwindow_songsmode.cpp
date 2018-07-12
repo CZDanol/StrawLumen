@@ -285,11 +285,18 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 	const QString author = ui->lnAuthor->text();
 	const QString content = ui->teContent->toPlainText();
 
+	QString collatedContent = content;
+	collatedContent.remove(songChordAnnotationRegex());
+	collatedContent.remove(songSectionAnnotationRegex());
+	collatedContent = collate(collatedContent);
+
 	db->exec(
 				"UPDATE songs SET name = ?, author = ?, copyright = ?, content = ?, slideOrder = ?, lastEdit = ? WHERE id = ?",
 				{name, author, ui->lnCopyright->text(), content, ui->lnSlideOrder->text(), QDateTime::currentSecsSinceEpoch(), currentSongId_}
 				);
-	db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {currentSongId_, collate(name), collate(author), collate(content)});
+	db->exec(
+				"INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
+				{currentSongId_, collate(name), collate(author), collatedContent});
 
 	// Tags
 	db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
@@ -417,7 +424,7 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 	dlg.setNameFilter(tr("Písně OpenSongu (*)"));
 	dlg.setWindowIcon(icon);
 	dlg.setWindowTitle(tr("Import OpenSong písní"));
-	dlg.setDirectory(settings->value("dialog.importOpenSong.directory", QStandardPaths::writableLocation(QStandardPaths::DataLocation)).toString());
+	dlg.setDirectory(settings->value("dialog.importOpenSong.directory", QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation)).toString());
 
 	if(!dlg.exec())
 		return;
@@ -486,12 +493,19 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 			static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
 			content.remove(trimmingRegex);
 
+			QString collatedContent = content;
+			collatedContent.remove(songSectionAnnotationRegex());
+			collatedContent.remove(songChordAnnotationRegex());
+			collatedContent = collate(collatedContent);
+
 			const QVariant id = db->insert("INSERT INTO songs(uid, name, author, copyright, content, slideOrder, lastEdit) VALUES(?, ?, ?, ?, ?, ?, ?)", {
 									 QUuid::createUuid().toString(),
 									 name, author, copyright, content, slideOrder,
 									 QDateTime::currentSecsSinceEpoch(),
 								 });
-			db->exec("INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)", {id, collate(name), collate(author), collate(content)});
+			db->exec(
+						"INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
+						{id, collate(name), collate(author), collatedContent});
 		}
 	});
 

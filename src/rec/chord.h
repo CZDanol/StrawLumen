@@ -44,7 +44,7 @@ struct ChordInSong {
 };
 
 /// Captures: 0 - whole, 1 - annotation prefix, 2 - chord, 3 - annotation suffix
-const QRegularExpression &songChordRegex();
+const QRegularExpression &songChordAnnotationRegex();
 
 /// Returns all valid chords in the song
 QVector<ChordInSong> songChords(const QString &song);

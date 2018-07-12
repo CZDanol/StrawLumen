@@ -193,6 +193,7 @@ QString collate(const QString &str)
 	return result;
 }
 
+#include <QDebug>
 QString collateFulltextQuery(const QString &str)
 {
 	QString result = collate(str);
@@ -200,9 +201,10 @@ QString collateFulltextQuery(const QString &str)
 	if(result.isEmpty())
 		return result;
 
-	result.replace(' ', "* *");
-	result.prepend('*');
+	result.replace(' ', " *");
 	result.append('*');
+
+	qDebug() << result;
 
 	return result;
 }

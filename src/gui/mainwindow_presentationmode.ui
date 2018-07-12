@@ -439,7 +439,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tabSongList">
           <attribute name="icon">
@@ -451,7 +451,11 @@
           </attribute>
           <layout class="QVBoxLayout" name="_2">
            <item>
-            <widget class="SongListWidget" name="wgtSongList" native="true"/>
+            <widget class="SongListWidget" name="wgtSongList" native="true">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -605,6 +609,26 @@
    </slots>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>btnSettings</tabstop>
+  <tabstop>twControls</tabstop>
+  <tabstop>btnEnableProjection</tabstop>
+  <tabstop>btnPreviousPresentation</tabstop>
+  <tabstop>btnPreviousSlide</tabstop>
+  <tabstop>btnNextSlide</tabstop>
+  <tabstop>btnNextPresentation</tabstop>
+  <tabstop>btnBlackScreen</tabstop>
+  <tabstop>twPlaylist</tabstop>
+  <tabstop>btnAddPresentation</tabstop>
+  <tabstop>btnAddPresentation_2</tabstop>
+  <tabstop>tvPlaylist</tabstop>
+  <tabstop>twLeftBottom</tabstop>
+  <tabstop>wgtSongList</tabstop>
+  <tabstop>saPresentationProperties</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>tvSlides</tabstop>
+  <tabstop>twControls_2</tabstop>
+ </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

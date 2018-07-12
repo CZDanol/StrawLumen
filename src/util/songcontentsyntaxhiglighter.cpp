@@ -46,7 +46,7 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 	QRegularExpressionMatchIterator it;
 
 	// Match chords
-	it = songChordRegex().globalMatch(text);
+	it = songChordAnnotationRegex().globalMatch(text);
 	while(it.hasNext()) {
 		const QRegularExpressionMatch m = it.next();
 		const Chord chord(m.captured(2));

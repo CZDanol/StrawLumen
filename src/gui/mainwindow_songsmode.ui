@@ -28,7 +28,7 @@
    </property>
    <item>
     <widget class="QWidget" name="wgtMenu" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -41,7 +41,7 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item>
+      <item row="1" column="0">
        <widget class="QTabWidget" name="twEdit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -122,7 +122,20 @@
         </widget>
        </widget>
       </item>
-      <item>
+      <item row="1" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="1">
        <widget class="QTabWidget" name="twTranspose">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -186,7 +199,7 @@
         </widget>
        </widget>
       </item>
-      <item>
+      <item row="1" column="2">
        <widget class="QTabWidget" name="twImportExport">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -250,52 +263,39 @@
         </widget>
        </widget>
       </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="twTransposeCorner" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="btnTransposeFlat">
-        <property name="text">
-         <string>akordy</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../res/resources.qrc">
-          <normaloff>:/icons/16/Flat Sign_16px.png</normaloff>:/icons/16/Flat Sign_16px.png</iconset>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
+      <item row="0" column="1">
+       <widget class="QWidget" name="twTransposeCorner" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnTransposeFlat">
+           <property name="text">
+            <string>akordy</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/16/Flat Sign_16px.png</normaloff>:/icons/16/Flat Sign_16px.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -361,6 +361,9 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
              </property>
             </widget>
            </item>
@@ -681,23 +684,31 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>twEdit</tabstop>
+  <tabstop>btnInsertSection</tabstop>
+  <tabstop>btnInsertChord</tabstop>
+  <tabstop>btnInsertSlideSeparator</tabstop>
+  <tabstop>twTranspose</tabstop>
+  <tabstop>btnTransposeFlat</tabstop>
+  <tabstop>btnTransposeUp</tabstop>
+  <tabstop>btnTransposeDown</tabstop>
+  <tabstop>twImportExport</tabstop>
+  <tabstop>btnImport</tabstop>
+  <tabstop>btnCreateSongbook</tabstop>
   <tabstop>twSongs</tabstop>
   <tabstop>btnNew</tabstop>
+  <tabstop>wgtSongList</tabstop>
   <tabstop>twSong</tabstop>
   <tabstop>btnEdit</tabstop>
   <tabstop>btnSaveChanges</tabstop>
   <tabstop>btnDiscardChanges</tabstop>
   <tabstop>lnName</tabstop>
   <tabstop>lnAuthor</tabstop>
+  <tabstop>lnCopyright</tabstop>
+  <tabstop>lnTags</tabstop>
   <tabstop>teContent</tabstop>
   <tabstop>lnSlideOrder</tabstop>
   <tabstop>btnAddCustomSlideOrderItem</tabstop>
-  <tabstop>twEdit</tabstop>
-  <tabstop>btnInsertSection</tabstop>
-  <tabstop>btnInsertChord</tabstop>
-  <tabstop>twTranspose</tabstop>
-  <tabstop>btnTransposeUp</tabstop>
-  <tabstop>btnTransposeDown</tabstop>
  </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
