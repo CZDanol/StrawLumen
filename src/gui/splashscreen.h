@@ -21,6 +21,9 @@ public:
 	~Splashscreen();
 
 public:
+	void show(const QString &splashMessage, bool enableStorno);
+	void close();
+
 	/// Blockingly shows the splashscreen until the job is done
 	void asyncAction(const QString &splashMessage, bool enableStorno, JobThread &jobThread, const JobThread::Job &job);
 

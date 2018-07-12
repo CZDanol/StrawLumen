@@ -31,6 +31,9 @@ public:
 	int selectedRowCount() const;
 	QVector<qlonglong> selectedRowIds() const;
 
+	/// Returns vector of row ids that are currently in the song list (considering user filter)
+	QVector<qlonglong> rowIds() const;
+
 public slots:
 	void unselect();
 	void requery();

@@ -42,7 +42,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="btnNew">
+       <widget class="QPushButton" name="btnAddAll">
         <property name="text">
          <string>Přidat vše</string>
         </property>
@@ -59,7 +59,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QWidget" name="twSongbookCorner" native="true">
+    <widget class="QWidget" name="twSelectionCorner" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <property name="leftMargin">
        <number>0</number>
@@ -74,7 +74,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="btnNew_2">
+       <widget class="QPushButton" name="btnClear">
         <property name="text">
          <string> Vyčistit</string>
         </property>
@@ -118,7 +118,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QTabWidget" name="twSongbook">
+    <widget class="QTabWidget" name="twSelection">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -131,24 +131,47 @@
      <widget class="QWidget" name="tabSongList_3">
       <attribute name="icon">
        <iconset resource="../../res/resources.qrc">
-        <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
+        <normaloff>:/icons/16/Cells_16px.png</normaloff>:/icons/16/Cells_16px.png</iconset>
       </attribute>
       <attribute name="title">
-       <string>Zpěvník</string>
+       <string>Výběr</string>
       </attribute>
       <layout class="QVBoxLayout" name="_4">
        <item>
-        <widget class="QTreeWidget" name="twSelectedSongs">
-         <column>
-          <property name="text">
-           <string>Název</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Autor</string>
-          </property>
-         </column>
+        <widget class="QTreeView" name="tvSelection">
+         <property name="acceptDrops">
+          <bool>true</bool>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragDrop</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::ExtendedSelection</enum>
+         </property>
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
+         <property name="uniformRowHeights">
+          <bool>true</bool>
+         </property>
+         <property name="itemsExpandable">
+          <bool>false</bool>
+         </property>
+         <property name="allColumnsShowFocus">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerMinimumSectionSize">
+          <number>10</number>
+         </attribute>
+         <attribute name="headerStretchLastSection">
+          <bool>true</bool>
+         </attribute>
         </widget>
        </item>
       </layout>
@@ -163,6 +186,9 @@
    <extends>QWidget</extends>
    <header>wgt/songlistwidget.h</header>
    <container>1</container>
+   <slots>
+    <signal>sigItemActivated(qlonglong)</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>

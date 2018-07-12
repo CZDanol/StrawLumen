@@ -121,7 +121,7 @@ QMimeData *PlaylistItemModel::mimeData(const QModelIndexList &indexes) const
 	return mimeData;
 }
 
-bool PlaylistItemModel::canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const
+bool PlaylistItemModel::canDropMimeData(const QMimeData *mime, Qt::DropAction action, int row, int column, const QModelIndex &parent) const
 {
 	Q_UNUSED(action);
 	Q_UNUSED(row);
@@ -129,14 +129,14 @@ bool PlaylistItemModel::canDropMimeData(const QMimeData *data, Qt::DropAction ac
 	Q_UNUSED(parent);
 
 	return !playlist_.isNull() && (
-				data->hasFormat("application/straw.lumen.playlist.items")
-				|| data->hasFormat("application/straw.lumen.song.ids")
+				mime->hasFormat("application/straw.lumen.playlist.items")
+				|| mime->hasFormat("application/straw.lumen.song.ids")
 				);
 }
 
-bool PlaylistItemModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+bool PlaylistItemModel::dropMimeData(const QMimeData *mime, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-	if(!canDropMimeData(data, action, row, column, parent))
+	if(!canDropMimeData(mime, action, row, column, parent))
 		return false;
 
 	if(action == Qt::IgnoreAction)
@@ -145,9 +145,9 @@ bool PlaylistItemModel::dropMimeData(const QMimeData *data, Qt::DropAction actio
 	if(row == -1)
 		row = playlist_->items().size();
 
-	if(data->hasFormat("application/straw.lumen.playlist.items")) {
+	if(mime->hasFormat("application/straw.lumen.playlist.items")) {
 		QVector<int> items;
-		QDataStream stream(data->data("application/straw.lumen.playlist.items"));
+		QDataStream stream(mime->data("application/straw.lumen.playlist.items"));
 		while(!stream.atEnd()) {
 			int row;
 			stream >> row;
@@ -163,8 +163,8 @@ bool PlaylistItemModel::dropMimeData(const QMimeData *data, Qt::DropAction actio
 		return true;
 	}
 
-	if(data->hasFormat("application/straw.lumen.song.ids")) {
-		QDataStream stream(data->data("application/straw.lumen.song.ids"));
+	if(mime->hasFormat("application/straw.lumen.song.ids")) {
+		QDataStream stream(mime->data("application/straw.lumen.song.ids"));
 		QVector<QSharedPointer<Presentation>> items;
 
 		while(!stream.atEnd()) {

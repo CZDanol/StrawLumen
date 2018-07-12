@@ -172,5 +172,6 @@
         <file>icons/16/Forward Button_16px.png</file>
         <file>icons/16/Brochure_16px.png</file>
         <file>icons/16/New Document_16px.png</file>
+        <file>icons/16/Cells_16px.png</file>
     </qresource>
 </RCC>

@@ -46,6 +46,41 @@ const PresentationStyle &SettingsManager::defaultPresentationStyle() const
 	return settingsDialog->ui->wgtDefaultPresentationStyle->presentationStyle();
 }
 
+SETTING_SAVE(QComboBox)
+{
+	settings->setValue(name, widget->currentIndex());
+}
+SETTING_LOAD(QComboBox)
+{
+	widget->setCurrentIndex(settings->value(name, widget->currentIndex()).toInt());
+}
+
+SETTING_SAVE(QSpinBox)
+{
+	settings->setValue(name, widget->value());
+}
+SETTING_LOAD(QSpinBox)
+{
+	widget->setValue(settings->value(name, widget->value()).toInt());
+}
+
+SETTING_SAVE(QCheckBox)
+{
+	settings->setValue(name, widget->isChecked());
+}
+SETTING_LOAD(QCheckBox)
+{
+	widget->setChecked(settings->value(name, widget->isChecked()).toBool());
+}
+
+SETTING_SAVE(QGroupBox)
+{
+	settings->setValue(name, widget->isChecked());
+}
+SETTING_LOAD(QGroupBox)
+{
+	widget->setChecked(settings->value(name, widget->isChecked()).toBool());
+}
 
 SETTING_SAVE(DisplaySelectionWidget)
 {

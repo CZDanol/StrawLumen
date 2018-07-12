@@ -65,6 +65,16 @@ QVector<qlonglong> SongListWidget::selectedRowIds() const
 	return result;
 }
 
+QVector<qlonglong> SongListWidget::rowIds() const
+{
+	QVector<qlonglong> result;
+
+	for(int i = 0; i < songsModel_.rowCount(); i ++)
+		result.append(songsModel_.record(i).value("id").toLongLong());
+
+	return result;
+}
+
 void SongListWidget::unselect()
 {
 	ui->tvSongs->selectionModel()->clear();

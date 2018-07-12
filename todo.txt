@@ -6,6 +6,7 @@
 - zkratka - upravit písničku v presentation modu
 - položka: vlastní text
 - položka: pozadí
+- možnost uložit výběr u vytváření zpěvníku (aby se dalo přidávat)
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 
@@ -23,6 +24,8 @@
 Automatická powerpoint prezentace:
 - přejít na další prezentaci v takový a takový čas
 - přejít na další prezentaci po (čas)
+
+- playlistitemmodel, slidesitemmodel -> playlist udělat signál sigItems/slides abouttochange
 
 - Možnost opakovat celý program
 

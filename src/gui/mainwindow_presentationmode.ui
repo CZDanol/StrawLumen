@@ -600,6 +600,9 @@
    <extends>QWidget</extends>
    <header>wgt/songlistwidget.h</header>
    <container>1</container>
+   <slots>
+    <signal>sigItemActivated(qlonglong)</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>

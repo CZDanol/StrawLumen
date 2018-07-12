@@ -93,7 +93,8 @@ SOURCES += main.cpp \
     modelview/songsitemmodel.cpp \
     gui/documentgenerationdialog.cpp \
     gui/aboutdialog.cpp \
-    wgt/multisongselectionwidget.cpp
+    wgt/multisongselectionwidget.cpp \
+    modelview/songrecorditemmodel.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -181,7 +182,8 @@ HEADERS += \
     modelview/songsitemmodel.h \
     gui/documentgenerationdialog.h \
     gui/aboutdialog.h \
-    wgt/multisongselectionwidget.h
+    wgt/multisongselectionwidget.h \
+    modelview/songrecorditemmodel.h
 
 RESOURCES += \
     ../res/resources.qrc

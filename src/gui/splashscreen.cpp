@@ -30,6 +30,24 @@ Splashscreen::~Splashscreen()
 	delete ui;
 }
 
+void Splashscreen::show(const QString &splashMessage, bool enableStorno)
+{
+	ui->lblMessage->setText(tr("%1...").arg(splashMessage));
+	animTimer_.start();
+
+	ui->wgtStack->setCurrentWidget(ui->wgtPageAnim);
+	isStornoPressed_ = false;
+
+	setWindowFlag(Qt::WindowCloseButtonHint, enableStorno);
+	QDialog::show();
+}
+
+void Splashscreen::close()
+{
+	canClose_ = true;
+	reject();
+}
+
 void Splashscreen::asyncAction(const QString &splashMessage, bool enableStorno, JobThread &jobThread, const JobThread::Job &job)
 {
 	_asyncAction(splashMessage, enableStorno, job, [&jobThread](const JobThread::Job &job){
@@ -79,14 +97,7 @@ void Splashscreen::_asyncAction(const QString &splashMessage, bool enableStorno,
 		QMetaObject::invokeMethod(&eventLoop, "quit");
 	});
 
-	ui->lblMessage->setText(tr("%1...").arg(splashMessage));
-	animTimer_.start();
-
-	ui->wgtStack->setCurrentWidget(ui->wgtPageAnim);
-	isStornoPressed_ = false;
-
-	setWindowFlag(Qt::WindowCloseButtonHint, enableStorno);
-	show();
+	show(splashMessage, enableStorno);
 
 	eventLoop.exec();
 

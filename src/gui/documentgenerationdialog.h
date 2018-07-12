@@ -2,7 +2,8 @@
 #define DOCUMENTGENERATIONDIALOG_H
 
 #include <QDialog>
-#include <QWebEngineView>
+#include <QWebEnginePage>
+#include <QEventLoop>
 
 namespace Ui {
 	class DocumentGenerationDialog;
@@ -16,16 +17,27 @@ public:
 	explicit DocumentGenerationDialog(QWidget *parent = 0);
 	~DocumentGenerationDialog();
 
-private slots:
-	void onLoaded();
-	void on_pushButton_clicked();
+protected:
+	void showEvent(QShowEvent *e) override;
 
-	void on_pushButton_2_clicked();
+private:
+	void generate(const QVector<qlonglong> &songIds);
+	void generateSong(qlonglong songId, QJsonArray &output);
+
+private slots:
+	void onPageLoaded(bool result);
+	void onPdfGenerated(const QByteArray &data);
+
+private slots:
+	void on_btnStorno_clicked();
+	void on_btnGenerate_clicked();
 
 private:
 	Ui::DocumentGenerationDialog *ui;
-	/*QWebEngineView view_;
-	QString genJs, jqueryJs;*/
+
+private:
+	QWebEnginePage page_;
+	QString jsCode_;
 
 };
 
