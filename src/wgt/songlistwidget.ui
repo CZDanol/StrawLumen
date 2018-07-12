@@ -52,7 +52,7 @@
     </widget>
    </item>
    <item row="4" column="0" colspan="2">
-    <widget class="QTreeView" name="tvSongs">
+    <widget class="ExtendedTreeView" name="tvSongs">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -105,7 +105,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="lnSearch">
+    <widget class="ExtendedLineEdit" name="lnSearch">
      <property name="placeholderText">
       <string>Vyhledat (Ctrl+F)</string>
      </property>
@@ -130,6 +130,22 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ExtendedLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>wgt/extendedlineedit.h</header>
+   <slots>
+    <signal>sigUpPressed()</signal>
+    <signal>sigDownPressed()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>ExtendedTreeView</class>
+   <extends>QTreeView</extends>
+   <header>wgt/extendedtreeview.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>lnSearch</tabstop>
   <tabstop>tvSongs</tabstop>

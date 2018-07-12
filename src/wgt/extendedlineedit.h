@@ -12,9 +12,12 @@ public:
 
 signals:
 	void sigFocused();
+	void sigDownPressed();
+	void sigUpPressed();
 
 protected:
 	virtual void focusInEvent(QFocusEvent *e) override;
+	virtual void keyPressEvent(QKeyEvent *e) override;
 
 };
 

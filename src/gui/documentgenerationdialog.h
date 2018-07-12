@@ -36,7 +36,7 @@ private:
 	Ui::DocumentGenerationDialog *ui;
 
 private:
-	QWebEnginePage page_;
+	QWebEnginePage *page_ = nullptr;
 	QString jsCode_;
 	QString outputFilePath_;
 

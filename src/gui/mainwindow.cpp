@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->swMenu->addWidget(ui->wgtPresentationMode->menuWidget());
 	ui->swMenu->addWidget(ui->wgtSongsMode->menuWidget());
 
-	setWindowTitle(tr("Straw Lumen v%1").arg(PROGRAM_VERSION));
+	setWindowTitle(QString("Straw Lumen v%1").arg(PROGRAM_VERSION));
 	restoreGeometry(settings->value("window.mainWindow.geometry").toByteArray());
 
 	connect(db, SIGNAL(sigQueryError(QString,QString)), this, SLOT(onDbQueryError(QString,QString)));

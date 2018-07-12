@@ -42,6 +42,8 @@ public slots:
 
 	void selectRow(int rowId);
 
+	void clearFilters();
+
 	void setDragEnabled(bool set);
 
 protected:
@@ -54,6 +56,8 @@ private slots:
 
 private slots:
 	void on_tvSongs_customContextMenuRequested(const QPoint &pos);
+	void on_lnSearch_sigDownPressed();
+	void on_tvSongs_sigUpPressed();
 
 private:
 	Ui::SongListWidget *ui;

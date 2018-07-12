@@ -165,6 +165,6 @@ void transposeSong(QString &song, int by, bool flatChords)
 
 const QRegularExpression &songChordAnnotationRegex()
 {
-	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭]+)(\\])");
+	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭/]+)(\\])");
 	return result;
 }

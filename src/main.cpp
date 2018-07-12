@@ -16,6 +16,7 @@
 #include "gui/stylesdialog.h"
 #include "gui/documentgenerationdialog.h"
 #include "gui/aboutdialog.h"
+#include "gui/startupsplashscreen.h"
 #include "job/activexjobthread.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -25,16 +26,27 @@
 #include "presentation/native/presentationengine_native.h"
 #include "presentation/presentationmanager.h"
 #include "util/standarddialogs.h"
+#include "util/execonmainthread.h"
 
 QDir appDataDirectory;
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
+	app.setAttribute(Qt::AA_DisableWindowContextHelpButton);
 
-	initApplication();
+	setupStylesheet();
 
-	// Queued so the window shows after the application is fully loaded
-	QMetaObject::invokeMethod(mainWindow, "show", Qt::QueuedConnection);
+	StartupSplashscreen startupSplashscreen;
+	startupSplashscreen.show();
+
+	execOnMainThread([&]{
+		// Force startupSplashscreen to repaint
+		app.processEvents();
+
+		initApplication();
+		mainWindow->show();
+		startupSplashscreen.close();
+	});
 
 	int result = app.exec();
 
@@ -43,7 +55,13 @@ int main(int argc, char *argv[]) {
 	return result;
 }
 
+#include <QDebug>
+#include <QElapsedTimer>
+
 void initApplication() {
+	QElapsedTimer tmr;
+	tmr.start();
+
 	qRegisterMetaType<QSharedPointer<Presentation>>();
 
 	appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
@@ -51,19 +69,19 @@ void initApplication() {
 	if( !appDataDirectory.mkpath(".") )
 		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));
 
-	setupStylesheet();
+	qDebug() << "Start" << tmr.restart();
 
-	settings = new SettingsManager();
-	db = new DatabaseManager();
-	backgroundManager = new BackgroundManager();
+	settings = new SettingsManager(); qDebug() << "settings" << tmr.restart();
+	db = new DatabaseManager(); qDebug() << "db" << tmr.restart();
+	backgroundManager = new BackgroundManager(); qDebug() << "bgmanager" << tmr.restart();
 
-	activeXJobThread = new ActiveXJobThread();
+	activeXJobThread = new ActiveXJobThread(); qDebug() << "axthread" << tmr.restart();
 	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
 	presentationEngine_Native = new PresentationEngine_Native();
-	presentationManager = new PresentationManager();
+	presentationManager = new PresentationManager(); qDebug() << "presentaitonmanager" << tmr.restart();
 
-	mainWindow = new MainWindow();
-	projectorWindow = new ProjectorWindow();
+	mainWindow = new MainWindow(); qDebug() << "mainWindow" << tmr.restart();
+	projectorWindow = new ProjectorWindow(); qDebug() << "projectorWindow" << tmr.restart();
 
 	settingsDialog = new SettingsDialog(mainWindow);
 	splashscreen = new Splashscreen(mainWindow);
@@ -71,7 +89,7 @@ void initApplication() {
 	backgroundDialog = new BackgroundDialog(mainWindow);
 	stylesDialog = new StylesDialog(mainWindow);
 	documentGenerationDialog = new DocumentGenerationDialog(mainWindow);
-	aboutDialog = new AboutDialog(mainWindow);
+	aboutDialog = new AboutDialog(mainWindow); qDebug() << "otherWindows" << tmr.restart();
 }
 
 void uninitApplication() {

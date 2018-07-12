@@ -49,6 +49,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -143,6 +146,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -206,6 +212,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -345,6 +354,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <widget class="QWidget" name="tabSongList">
           <attribute name="icon">
            <iconset resource="../../res/resources.qrc">
@@ -437,6 +449,9 @@
        </item>
        <item>
         <widget class="QTabWidget" name="twSong">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <widget class="QWidget" name="tabSong">
           <property name="quickEditStyle" stdset="0">
            <bool>true</bool>

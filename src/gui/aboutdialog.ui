@@ -39,6 +39,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="icon">
        <iconset resource="../../res/resources.qrc">
@@ -106,6 +109,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="icon">
        <iconset resource="../../res/resources.qrc">
@@ -171,6 +177,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="icon">

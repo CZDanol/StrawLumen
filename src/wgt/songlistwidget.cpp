@@ -31,7 +31,7 @@ SongListWidget::SongListWidget(QWidget *parent) :
 
 	connect(ui->lvTags->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentTagChanged(QModelIndex,QModelIndex)));
 
-	new QShortcut(Qt::Key_Escape, ui->lnSearch, SLOT(clear()), SLOT(clear()), Qt::WidgetShortcut);
+	connect(new QShortcut(Qt::Key_Escape, ui->lnSearch, nullptr, nullptr, Qt::WidgetShortcut), SIGNAL(activated()), this, SLOT(clearFilters()));
 
 	{
 		auto sc = new QShortcut(Qt::CTRL | Qt::Key_F, ui->lnSearch);
@@ -170,6 +170,12 @@ void SongListWidget::selectRow(int rowId)
 	ui->tvSongs->selectionModel()->select(songsModel_.index(rowId,0), QItemSelectionModel::ClearAndSelect);
 }
 
+void SongListWidget::clearFilters()
+{
+	ui->lnSearch->clear();
+	ui->lvTags->setCurrentIndex(tagsModel_.index(0,0));
+}
+
 void SongListWidget::setDragEnabled(bool set)
 {
 	ui->tvSongs->setDragEnabled(set);
@@ -214,4 +220,21 @@ void SongListWidget::onSongItemActivated(const QModelIndex &index)
 void SongListWidget::on_tvSongs_customContextMenuRequested(const QPoint &pos)
 {
 	emit sigCustomContextMenuRequested(ui->tvSongs->viewport()->mapToGlobal(pos));
+}
+
+void SongListWidget::on_lnSearch_sigDownPressed()
+{
+	if(!songsModel_.rowCount())
+		return;
+
+	ui->tvSongs->setFocus();
+	ui->tvSongs->selectionModel()->select(songsModel_.index(0,0), QItemSelectionModel::ClearAndSelect);
+}
+
+void SongListWidget::on_tvSongs_sigUpPressed()
+{
+	if(ui->tvSongs->currentIndex().row() == 0) {
+		ui->lnSearch->setFocus();
+		ui->lnSearch->selectAll();
+	}
 }

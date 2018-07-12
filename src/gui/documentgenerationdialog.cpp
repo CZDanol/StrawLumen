@@ -44,8 +44,6 @@ DocumentGenerationDialog::DocumentGenerationDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	connect(&page_, SIGNAL(loadFinished(bool)), this, SLOT(onPageLoaded(bool)));
-
 	restoreGeometry(settings->value("dialog.documentGeneration.geometry").toByteArray());
 
 	ui->cmbPageSize->addItem("A2", QPageSize::A2);
@@ -81,6 +79,11 @@ void DocumentGenerationDialog::showEvent(QShowEvent *e)
 
 void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 {
+	if(!page_) {
+		page_ = new QWebEnginePage(this);
+		connect(page_, SIGNAL(loadFinished(bool)), this, SLOT(onPageLoaded(bool)));
+	}
+
 	splashscreen->asyncAction(tr("Příprava dat"), false, [&](){
 		QJsonObject json;
 
@@ -108,7 +111,7 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 	});
 
 	splashscreen->show(tr("Generování zpěvníku"), false);
-	page_.load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../etc/songbookTemplate.html")));
+	page_->load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../etc/songbookTemplate.html")));
 }
 
 void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output)
@@ -216,7 +219,7 @@ void DocumentGenerationDialog::onPageLoaded(bool result)
 
 	splashscreen->show(tr("Export do PDF"), false);
 
-	page_.runJavaScript(jsCode_);
+	page_->runJavaScript(jsCode_);
 
 	const int m = ui->sbPageMargins->value();
 
@@ -227,7 +230,7 @@ void DocumentGenerationDialog::onPageLoaded(bool result)
 	pageLayout.setMargins(QMarginsF(m,m,m,m));
 
 	QPointer<DocumentGenerationDialog> thisPtr(this);
-	page_.printToPdf([this, thisPtr](const QByteArray &data){
+	page_->printToPdf([this, thisPtr](const QByteArray &data){
 		if(thisPtr.isNull())
 			return;
 
