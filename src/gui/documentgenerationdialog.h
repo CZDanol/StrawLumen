@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QWebEnginePage>
-#include <QEventLoop>
+#include <QWebEngineProfile>
 
 namespace Ui {
 	class DocumentGenerationDialog;
@@ -36,7 +36,10 @@ private:
 	Ui::DocumentGenerationDialog *ui;
 
 private:
-	QWebEnginePage *page_ = nullptr;
+	QWebEnginePage *webPage_ = nullptr;
+	QWebEngineProfile *webProfile_ = nullptr;
+
+private:
 	QString jsCode_;
 	QString outputFilePath_;
 

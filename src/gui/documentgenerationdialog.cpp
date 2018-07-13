@@ -22,12 +22,13 @@
 #include <QPageSize>
 #include <QPointer>
 #include <QDesktopServices>
+#include <QWebEngineSettings>
 
 #define SETTINGS_FACTORY(F) \
 	F("generateToc", gbToc) F("tocColumns", sbTocColumns)\
 	F("generateLyrics", gbLyrics) F("generateChords", cbGenerateChords) F("lyricsMode", cmbLyricsMode) F("lyricsColumns", sbLyricsColumns)\
 	F("landscapeOrientation", cbLandscapeOrientation) F("pageBreakMode", cmbPageBreakMode) F("pageSize", cmbPageSize) F("pageMargins", sbPageMargins)\
-	F("numberSongs", cbNumberSongs) F("numberPages", cbNumberPages)\
+	F("numberSongs", cbNumberSongs)\
 	F("openWhenDone", cbOpenWhenDone)
 
 enum LyricsMode {
@@ -79,9 +80,24 @@ void DocumentGenerationDialog::showEvent(QShowEvent *e)
 
 void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 {
-	if(!page_) {
-		page_ = new QWebEnginePage(this);
-		connect(page_, SIGNAL(loadFinished(bool)), this, SLOT(onPageLoaded(bool)));
+	if(!webPage_) {
+		splashscreen->show(tr("Inicializace sazby"), false);
+		qApp->processEvents(); // Ensure the splashScreen is drawn - creating QWebEnginePage freezes the application for a while :(
+
+		webProfile_ = new QWebEngineProfile(this);
+
+		QWebEngineSettings *webSettings = webProfile_->settings();
+		webSettings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
+		webSettings->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, false);
+		webSettings->setAttribute(QWebEngineSettings::PluginsEnabled, false);
+		webSettings->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, false);
+		webSettings->setAttribute(QWebEngineSettings::ScreenCaptureEnabled, false);
+		webSettings->setAttribute(QWebEngineSettings::WebGLEnabled, false);
+
+		webPage_ = new QWebEnginePage(webProfile_, this);
+		connect(webPage_, SIGNAL(loadFinished(bool)), this, SLOT(onPageLoaded(bool)));
+
+		splashscreen->close();
 	}
 
 	splashscreen->asyncAction(tr("Příprava dat"), false, [&](){
@@ -111,7 +127,7 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 	});
 
 	splashscreen->show(tr("Generování zpěvníku"), false);
-	page_->load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../etc/songbookTemplate.html")));
+	webPage_->load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../etc/songbookTemplate.html")));
 }
 
 void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output)
@@ -219,7 +235,7 @@ void DocumentGenerationDialog::onPageLoaded(bool result)
 
 	splashscreen->show(tr("Export do PDF"), false);
 
-	page_->runJavaScript(jsCode_);
+	webPage_->runJavaScript(jsCode_);
 
 	const int m = ui->sbPageMargins->value();
 
@@ -230,7 +246,7 @@ void DocumentGenerationDialog::onPageLoaded(bool result)
 	pageLayout.setMargins(QMarginsF(m,m,m,m));
 
 	QPointer<DocumentGenerationDialog> thisPtr(this);
-	page_->printToPdf([this, thisPtr](const QByteArray &data){
+	webPage_->printToPdf([this, thisPtr](const QByteArray &data){
 		if(thisPtr.isNull())
 			return;
 

@@ -272,13 +272,6 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="1" colspan="3">
-              <widget class="QCheckBox" name="cbLandscapeOrientation">
-               <property name="text">
-                <string>Na šířku</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label">
                <property name="pixmap">
@@ -290,6 +283,13 @@
               <widget class="QLabel" name="label_11">
                <property name="pixmap">
                 <pixmap resource="../../res/resources.qrc">:/icons/16/Split Files_16px.png</pixmap>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="3">
+              <widget class="QCheckBox" name="cbLandscapeOrientation">
+               <property name="text">
+                <string>Na šířku</string>
                </property>
               </widget>
              </item>
@@ -308,6 +308,9 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="1" column="3">
+              <widget class="QComboBox" name="cmbPageSize"/>
              </item>
              <item row="0" column="1">
               <widget class="QLabel" name="label_2">
@@ -357,9 +360,6 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="3">
-              <widget class="QComboBox" name="cmbPageSize"/>
-             </item>
              <item row="2" column="1">
               <widget class="QLabel" name="label_16">
                <property name="text">
@@ -380,29 +380,6 @@
                </property>
                <property name="value">
                 <number>5</number>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QCheckBox" name="cbNumberPages">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Číslovat stránky</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_18">
-               <property name="pixmap">
-                <pixmap resource="../../res/resources.qrc">:/icons/16/Counter_16px.png</pixmap>
                </property>
               </widget>
              </item>
@@ -587,7 +564,6 @@
   <tabstop>cmbPageSize</tabstop>
   <tabstop>sbPageMargins</tabstop>
   <tabstop>cbLandscapeOrientation</tabstop>
-  <tabstop>cbNumberPages</tabstop>
   <tabstop>cbNumberSongs</tabstop>
   <tabstop>cbOpenWhenDone</tabstop>
   <tabstop>btnGenerate</tabstop>

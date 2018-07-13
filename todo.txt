@@ -1,4 +1,3 @@
-- tisk zpěvníku
 - bug: když se změní styl, uloží se a dá se storno (v ne-mgmt modu), tak se to neupdatne
 - export do opensongu
 - opensong import dialog - vybrat štítky a možnost přidání do playlistu
@@ -16,7 +15,7 @@
 - 1,5 px to point nestačí (pro jiné DPI displeje)
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
 
-- vzorník barev
+- vzorník barev u color selectu
 
 - Zšedlá tlačítka mají jinej odstup ikony jak normální, vypadá to divně
 - prezentace obrázků
@@ -30,3 +29,5 @@ Automatická powerpoint prezentace:
 - Možnost opakovat celý program
 
 - Uložit/načíst playlist
+
+- PDF generator: WEasyPrint

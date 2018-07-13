@@ -55,13 +55,7 @@ int main(int argc, char *argv[]) {
 	return result;
 }
 
-#include <QDebug>
-#include <QElapsedTimer>
-
 void initApplication() {
-	QElapsedTimer tmr;
-	tmr.start();
-
 	qRegisterMetaType<QSharedPointer<Presentation>>();
 
 	appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
@@ -69,19 +63,21 @@ void initApplication() {
 	if( !appDataDirectory.mkpath(".") )
 		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));
 
-	qDebug() << "Start" << tmr.restart();
+	settings = new SettingsManager();
+	db = new DatabaseManager();
+	backgroundManager = new BackgroundManager();
 
-	settings = new SettingsManager(); qDebug() << "settings" << tmr.restart();
-	db = new DatabaseManager(); qDebug() << "db" << tmr.restart();
-	backgroundManager = new BackgroundManager(); qDebug() << "bgmanager" << tmr.restart();
-
-	activeXJobThread = new ActiveXJobThread(); qDebug() << "axthread" << tmr.restart();
+	activeXJobThread = new ActiveXJobThread();
 	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
 	presentationEngine_Native = new PresentationEngine_Native();
-	presentationManager = new PresentationManager(); qDebug() << "presentaitonmanager" << tmr.restart();
+	presentationManager = new PresentationManager();
 
-	mainWindow = new MainWindow(); qDebug() << "mainWindow" << tmr.restart();
-	projectorWindow = new ProjectorWindow(); qDebug() << "projectorWindow" << tmr.restart();
+	qApp->processEvents();
+
+	mainWindow = new MainWindow();
+	projectorWindow = new ProjectorWindow();
+
+	qApp->processEvents();
 
 	settingsDialog = new SettingsDialog(mainWindow);
 	splashscreen = new Splashscreen(mainWindow);
@@ -89,7 +85,7 @@ void initApplication() {
 	backgroundDialog = new BackgroundDialog(mainWindow);
 	stylesDialog = new StylesDialog(mainWindow);
 	documentGenerationDialog = new DocumentGenerationDialog(mainWindow);
-	aboutDialog = new AboutDialog(mainWindow); qDebug() << "otherWindows" << tmr.restart();
+	aboutDialog = new AboutDialog(mainWindow);
 }
 
 void uninitApplication() {
