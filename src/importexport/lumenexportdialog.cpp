@@ -10,6 +10,15 @@
 #include "job/db.h"
 #include "job/settings.h"
 
+LumenExportDialog *lumenExportDialog()
+{
+	static LumenExportDialog *dlg = nullptr;
+	if(!dlg)
+		dlg = new LumenExportDialog(mainWindow);
+
+	return dlg;
+}
+
 LumenExportDialog::LumenExportDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::LumenExportDialog)
@@ -59,7 +68,7 @@ void LumenExportDialog::on_btnExport_clicked()
 
 	bool isError = false;
 
-	splashscreen->asyncAction(tr("Exportování písní"), false, [&]{
+	splashscreen->asyncAction(tr("Exportování písní"), true, [&]{
 		ExportDatabaseManager exportDb(outputFilePath_, true);
 		if(!exportDb.database().isOpen())
 			return;
@@ -71,7 +80,7 @@ void LumenExportDialog::on_btnExport_clicked()
 		// #: SONGS_TABLE_FIELDS
 		for(int i = 0; i < songIds.size(); i ++) {
 			splashscreen->setProgress(i, songIds.size());
-			if(isError)
+			if(isError || splashscreen->isStornoPressed())
 				break;
 
 			const qlonglong songId = songIds[i];
@@ -90,15 +99,6 @@ void LumenExportDialog::on_btnExport_clicked()
 		exportDb.commitTransaction();
 	});
 
-	if(!isError)
+	if(!isError && !splashscreen->isStornoPressed())
 		standardInfoDialog(tr("Vybrané písně byly exportovány do \"%1\".").arg(outputFilePath_));
-}
-
-LumenExportDialog *lumenExportDialog()
-{
-	static LumenExportDialog *dlg = nullptr;
-	if(!dlg)
-		dlg = new LumenExportDialog(mainWindow);
-
-	return dlg;
 }

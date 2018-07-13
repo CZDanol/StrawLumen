@@ -88,7 +88,6 @@ SETTING_SAVE(DisplaySelectionWidget)
 	settings->setValue(name + ".geometry", id.first);
 	settings->setValue(name + ".name", id.second);
 }
-
 SETTING_LOAD(DisplaySelectionWidget)
 {
 	QPair<QRect, QString> id(
@@ -96,4 +95,19 @@ SETTING_LOAD(DisplaySelectionWidget)
 				settings->value(name + ".name").toString()
 				);
 	widget->setSelectedScreen(id);
+}
+
+SETTING_SAVE(StyleSelectionWidget)
+{
+	settings->setValue(name, widget->presentationStyle().styleId());
+}
+SETTING_LOAD(StyleSelectionWidget)
+{
+	PresentationStyle style;
+	qlonglong id = settings->value(name, 1).toLongLong();
+	if(id == -1)
+		id = 1;
+
+	style.loadFromDb(id);
+	widget->setPresentationStyle(style);
 }

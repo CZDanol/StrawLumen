@@ -50,6 +50,7 @@ private slots:
 	void on_lwList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 	void on_actionDelete_triggered();
 	void on_wgtColor_sigColorChangedByUser(const QColor &);
+	void on_lwList_itemActivated(QListWidgetItem *item);
 
 private:
 	Ui::BackgroundDialog *ui;

@@ -22,6 +22,15 @@ enum ConflictBehavior {
 	cbAlwaysOverwrite
 };
 
+LumenImportDialog *lumenImportDialog()
+{
+	static LumenImportDialog *dlg = nullptr;
+	if(!dlg)
+		dlg = new LumenImportDialog(mainWindow);
+
+	return dlg;
+}
+
 LumenImportDialog::LumenImportDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::LumenImportDialog)
@@ -43,20 +52,8 @@ void LumenImportDialog::show()
 
 void LumenImportDialog::updateUi()
 {
-	const QFileInfo fi(importFilename_);
-	const bool fiExists = fi.exists();
-
-	ui->btnSelectFile->setText(" " + (fiExists ? fi.fileName() : tr("Vybrat soubor...")));
-	ui->btnImport->setEnabled(fiExists);
-}
-
-LumenImportDialog *lumenImportDialog()
-{
-	static LumenImportDialog *dlg = nullptr;
-	if(!dlg)
-		dlg = new LumenImportDialog(mainWindow);
-
-	return dlg;
+	ui->btnSelectFile->setText(" " + (importFilename_.isEmpty() ? tr("Vybrat soubor...") : QFileInfo(importFilename_).fileName()));
+	ui->btnImport->setEnabled(!importFilename_.isEmpty());
 }
 
 void LumenImportDialog::on_btnClose_clicked()
@@ -73,7 +70,7 @@ void LumenImportDialog::on_btnImport_clicked()
 	bool isError = false;
 	QList<QSharedPointer<Presentation>> presentations;
 
-	splashscreen->asyncAction(tr("Impportování písní"), false, [&]{
+	splashscreen->asyncAction(tr("Impportování písní"), true, [&]{
 		ExportDatabaseManager importDb(importFilename_, false);
 		if(!importDb.database().isOpen())
 			return;
@@ -85,7 +82,7 @@ void LumenImportDialog::on_btnImport_clicked()
 		// #: SONGS_TABLE_FIELDS
 		QSqlQuery q = importDb.selectQuery("SELECT * FROM songs");
 		while(q.next()) {
-			if(isError)
+			if(isError || splashscreen->isStornoPressed())
 				break;
 
 			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE uid = ?", {q.value("uid")});
@@ -148,7 +145,9 @@ void LumenImportDialog::on_btnImport_clicked()
 	}
 
 	if(!isError) {
-		standardInfoDialog(tr("Písně byly importovány."));
+		if(!splashscreen->isStornoPressed())
+			standardInfoDialog(tr("Písně byly importovány."));
+
 		close();
 	}
 }

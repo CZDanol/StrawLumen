@@ -44,6 +44,8 @@ BackgroundDialog::BackgroundDialog(QWidget *parent) :
 
 	galleryContextMenu_ = new QMenu(this);
 	galleryContextMenu_->addAction(ui->actionDelete);
+
+	backgroundsDirectory_ = QDir(appDataDirectory.absoluteFilePath("backgrounds"));
 }
 
 BackgroundDialog::~BackgroundDialog()
@@ -292,7 +294,14 @@ void BackgroundDialog::on_btnAdd_clicked()
 void BackgroundDialog::on_lwList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *)
 {
 	ui->actionDelete->setEnabled(current && !current->data(idrIsIntegratedBackground).toBool());
-	presentationBackground_.setFilename(current ? current->data(idrFilename).toString() : QString());
+
+	const QString filename = current ? current->data(idrFilename).toString() : QString();
+
+	if(filename != presentationBackground_.filename()) {
+		presentationBackground_.setFilename(filename);
+		presentationBackground_.setColor(Qt::transparent);
+		ui->wgtColor->setColor(Qt::transparent);
+	}
 	updatePreview();
 }
 
@@ -314,4 +323,11 @@ void BackgroundDialog::on_wgtColor_sigColorChangedByUser(const QColor &newColor)
 {
 	presentationBackground_.setColor(newColor);
 	updatePreview();
+}
+
+void BackgroundDialog::on_lwList_itemActivated(QListWidgetItem *item)
+{
+	Q_UNUSED(item);
+	if(!isMgmtMode_)
+		ui->btnSelect->click();
 }

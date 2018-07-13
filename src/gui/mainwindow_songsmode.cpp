@@ -9,18 +9,22 @@
 #include <QDateTime>
 #include <QFileDialog>
 #include <QStandardPaths>
-#include <QDomDocument>
-#include <QFile>
 
 #include "gui/splashscreen.h"
+#include "gui/mainwindow_presentationmode.h"
+#include "presentation/native/presentation_song.h"
 #include "importexport/documentgenerationdialog.h"
 #include "importexport/lumenexportdialog.h"
 #include "importexport/lumenimportdialog.h"
+#include "importexport/opensongimportdialog.h"
+#include "importexport/opensongexportdialog.h"
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
 #include "rec/chord.h"
+#include "rec/playlist.h"
 #include "job/db.h"
 #include "job/settings.h"
+#include "presentation/presentationmanager.h"
 
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
@@ -45,7 +49,12 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		ui->wgtSongList->setDragEnabled(false);
 
 		songListContextMenu_.addAction(ui->actionDeleteSongs);
+		songListContextMenu_.addSeparator();
+		songListContextMenu_.addAction(ui->actionPresentSongs);
+		songListContextMenu_.addAction(ui->actionAddSongsToPlaylist);
+		songListContextMenu_.addSeparator();
 		songListContextMenu_.addAction(ui->actionCreateSongbookFromSelection);
+		songListContextMenu_.addMenu(&exportMenu_);
 	}
 
 	// Slide order
@@ -86,10 +95,15 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 	// Import & export menus
 	{
+		importMenu_.setTitle(tr("Import"));
+		importMenu_.setIcon(QPixmap(":/icons/16/Import_16px.png"));
 		importMenu_.addAction(ui->actionImportFromLumen);
 		importMenu_.addAction(ui->actionImportOpenSongSong);
 
+		exportMenu_.setTitle(tr("Export"));
+		exportMenu_.setIcon(QPixmap(":/icons/16/Export_16px.png"));
 		exportMenu_.addAction(ui->actionExportToLumen);
+		exportMenu_.addAction(ui->actionExportToOpenSong);
 
 		ui->btnImport->setMenu(&importMenu_);
 		ui->btnExport->setMenu(&exportMenu_);
@@ -119,6 +133,16 @@ MainWindow_SongsMode::~MainWindow_SongsMode()
 QWidget *MainWindow_SongsMode::menuWidget()
 {
 	return ui->wgtMenu;
+}
+
+QMenu *MainWindow_SongsMode::importMenu()
+{
+	return &importMenu_;
+}
+
+QMenu *MainWindow_SongsMode::exportMenu()
+{
+	return &exportMenu_;
 }
 
 void MainWindow_SongsMode::editSong(qlonglong songId)
@@ -179,6 +203,7 @@ void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
 {
 	ui->btnEdit->setEnabled(!isSongEditMode_ && currentSongId_ != -1);
 	ui->actionDeleteSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
+	ui->actionPresentSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 }
 
 void MainWindow_SongsMode::insertSongSection(const SongSection &section)
@@ -329,6 +354,7 @@ void MainWindow_SongsMode::on_actionDeleteSongs_triggered()
 	for(qlonglong id : selectedIds) {
 		db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {id});
 		db->exec("DELETE FROM songs WHERE id = ?", {id});
+		db->exec("DELETE FROM song_tags WHERE song = ?", {id});
 	}
 	db->commitTransaction();
 
@@ -405,95 +431,7 @@ void MainWindow_SongsMode::on_btnInsertSlideSeparator_clicked()
 
 void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 {
-	static const QPixmap icon(":/icons/16/OpenSong_16px.png");
-
-	QFileDialog dlg(this);
-	dlg.setFileMode(QFileDialog::ExistingFiles);
-	dlg.setAcceptMode(QFileDialog::AcceptOpen);
-	dlg.setNameFilter(tr("Písně OpenSongu (*)"));
-	dlg.setWindowIcon(icon);
-	dlg.setWindowTitle(tr("Import OpenSong písní"));
-	dlg.setDirectory(settings->value("dialog.importOpenSong.directory", QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation)).toString());
-
-	if(!dlg.exec())
-		return;
-
-	settings->setValue("dialog.importOpenSong.directory", dlg.directory().absolutePath());
-
-	splashscreen->asyncAction(tr("Import písní"), true, [&]{
-		db->beginTransaction();
-		SCOPE_EXIT(db->commitTransaction());
-
-		const QStringList files = dlg.selectedFiles();
-		for(int i = 0; i < files.size(); i++) {
-			const QString filename = files[i];
-
-			if(splashscreen->isStornoPressed())
-				return;
-
-			splashscreen->setProgress(i, files.size());
-
-			QFile f(filename);
-			if(!f.open(QIODevice::ReadOnly))
-				return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\".").arg(filename));
-
-			QDomDocument dom;
-			if(!dom.setContent(&f))
-				return standardErrorDialog(tr("Nepodařilo se načíst soubor \"%1\".").arg(filename));
-
-			f.close();
-
-			QDomElement root = dom.documentElement();
-			if(root.tagName() != "song")
-				return standardErrorDialog(tr("Soubor \"%1\" není formátu OpenSong.").arg(filename));
-
-			// #: SONGS_TABLE_FIELDS
-			const QString name = root.firstChildElement("title").text();
-			const QString author = root.firstChildElement("author").text();
-			const QString copyright = root.firstChildElement("copyright").text();
-			const QString slideOrder = root.firstChildElement("presentation").text();
-
-			QString content = root.firstChildElement("lyrics").text().trimmed();
-
-			// Change sections formet
-			static const QRegularExpression sectionRegex("\\[([VCPBTIOSNR][0-9]*)\\]\\s*");
-			content.replace(sectionRegex, "{\\1}\n");
-
-			// Change chords format
-			static const QRegularExpression chordLineRegex("^(\\.[^\n]*\n)([^\n]*)$", QRegularExpression::MultilineOption);
-			int offsetCorrection = 0;
-			QRegularExpressionMatchIterator it = chordLineRegex.globalMatch(content);
-			while(it.hasNext()) {
-				const QRegularExpressionMatch m = it.next();
-
-				content.remove(m.capturedStart(1)+offsetCorrection, m.capturedLength(1));
-				offsetCorrection -= m.capturedLength(1);
-
-				static const QRegularExpression chordRegex("\\S+");
-				QRegularExpressionMatchIterator it2 = chordRegex.globalMatch(m.captured(1), 1);
-				while(it2.hasNext()) {
-					const QRegularExpressionMatch m2 = it2.next();
-					const QString insertText = QString("[%1]").arg(m2.captured());
-					content.insert(m.capturedStart(2)+m2.capturedStart()+offsetCorrection, insertText);
-					offsetCorrection += insertText.length();
-				}
-			}
-
-			// Trim spaces on line beginnings and ends
-			static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
-			content.remove(trimmingRegex);
-
-			const QVariant id = db->insert("INSERT INTO songs(uid, name, author, copyright, content, slideOrder, lastEdit) VALUES(?, ?, ?, ?, ?, ?, ?)", {
-									 QUuid::createUuid().toString(),
-									 name, author, copyright, content, slideOrder,
-									 QDateTime::currentSecsSinceEpoch(),
-								 });
-
-			db->updateSongFulltextIndex(id.toLongLong());
-		}
-	});
-
-	emit db->sigSongListChanged();
+	openSongImportDialog()->show();
 }
 
 void MainWindow_SongsMode::on_btnCreateSongbook_clicked()
@@ -517,4 +455,46 @@ void MainWindow_SongsMode::on_actionExportToLumen_triggered()
 void MainWindow_SongsMode::on_actionImportFromLumen_triggered()
 {
 	lumenImportDialog()->show();
+}
+
+void MainWindow_SongsMode::on_actionPresentSongs_triggered()
+{
+	if(isSongEditMode_)
+		return standardErrorDialog(tr("Tuto akci nelze provést během úprav písně. Ukončete úpravy a zkuste to znovu."));
+
+	QList<QSharedPointer<Presentation>> presentations;
+	for(qlonglong songId : ui->wgtSongList->selectedRowIds()) {
+		auto pres = Presentation_Song::createFromDb(songId);
+		if(pres)
+			presentations.append(pres);
+	}
+
+	if(!presentations.size())
+		return;
+
+	mainWindow->presentationMode()->playlist()->addItems(presentations);
+	mainWindow->showPresentationMode();
+	presentationManager->setSlide(presentations.first(), 0);
+}
+
+void MainWindow_SongsMode::on_actionAddSongsToPlaylist_triggered()
+{
+	QList<QSharedPointer<Presentation>> presentations;
+	for(qlonglong songId : ui->wgtSongList->selectedRowIds()) {
+		auto pres = Presentation_Song::createFromDb(songId);
+		if(pres)
+			presentations.append(pres);
+	}
+
+	if(!presentations.size())
+		return;
+
+	mainWindow->presentationMode()->playlist()->addItems(presentations);
+	mainWindow->blinkPresentationModeButton();
+}
+
+void MainWindow_SongsMode::on_actionExportToOpenSong_triggered()
+{
+	openSongExportDialog()->show();
+	openSongExportDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
 }

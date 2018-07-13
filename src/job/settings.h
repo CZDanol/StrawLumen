@@ -9,6 +9,7 @@
 #include <QGroupBox>
 
 #include "wgt/displayselectionwidget.h"
+#include "wgt/styleselectionwidget.h"
 #include "rec/presentationstyle.h"
 
 class SettingsManager {
@@ -53,6 +54,7 @@ SETTING_HEADERS(QCheckBox, &QCheckBox::clicked)
 SETTING_HEADERS(QGroupBox, &QGroupBox::clicked)
 
 SETTING_HEADERS(DisplaySelectionWidget, &DisplaySelectionWidget::sigCurrentChangedByUser)
+SETTING_HEADERS(StyleSelectionWidget, &StyleSelectionWidget::sigPresentationStyleChangedByUser)
 
 #undef SETTING_HEADERS
 

@@ -43,5 +43,6 @@ extern DatabaseManager *db;
 
 QString collate(const QString &str);
 QString collateFulltextQuery(const QString &str);
+QString denullifyString(const QString &str);
 
 #endif // DB_H

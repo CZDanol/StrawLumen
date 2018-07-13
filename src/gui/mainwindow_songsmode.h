@@ -25,6 +25,8 @@ public:
 
 public:
 	QWidget *menuWidget();
+	QMenu *importMenu();
+	QMenu *exportMenu();
 
 public slots:
 	void editSong(qlonglong songId);
@@ -62,6 +64,10 @@ private slots:
 	void on_actionCreateSongbookFromSelection_triggered();
 	void on_actionExportToLumen_triggered();
 	void on_actionImportFromLumen_triggered();
+	void on_actionPresentSongs_triggered();
+	void on_actionAddSongsToPlaylist_triggered();
+
+	void on_actionExportToOpenSong_triggered();
 
 private:
 	Ui::MainWindow_SongsMode *ui;

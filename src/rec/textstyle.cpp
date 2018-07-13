@@ -19,26 +19,24 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	if(str.isEmpty())
 		return;
 
-	p.save();
-	p.translate(rect.topLeft());
-
 	const QFontMetrics metrics(font);
 
-	qreal hAlignConst;
-	if(option.alignment() & Qt::AlignHCenter)
-		hAlignConst = 0.5;
-	else if(option.alignment() & Qt::AlignRight)
-		hAlignConst = 1;
-	else
-		hAlignConst = 0;
+	qreal hAlignConst, vAlignConst;
+	{
+		if(option.alignment() & Qt::AlignHCenter)
+			hAlignConst = 0.5;
+		else if(option.alignment() & Qt::AlignRight)
+			hAlignConst = 1;
+		else
+			hAlignConst = 0;
 
-	qreal vAlignConst;
-	if(option.alignment() & Qt::AlignVCenter)
-		vAlignConst = 0.5;
-	else if(option.alignment() & Qt::AlignBottom)
-		vAlignConst = 1;
-	else
-		vAlignConst = 0;
+		if(option.alignment() & Qt::AlignVCenter)
+			vAlignConst = 0.5;
+		else if(option.alignment() & Qt::AlignBottom)
+			vAlignConst = 1;
+		else
+			vAlignConst = 0;
+	}
 
 	QPainterPath path;
 	QSize size;
@@ -56,52 +54,35 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		path.addText(-lineWidth*hAlignConst, size.height(), font, line);
 		size.setHeight(size.height() + metrics.descent());
 	}
+	QRectF pathBoundingRect = path.boundingRect();
 
-	// Todo: faster?
-	//path = path.simplified();
-
-	const QRectF pathBoundingRect = path.boundingRect();
+	QSizeF availableSize = rect.size();
+	if(outlineEnabled)
+		availableSize -= QSizeF(outlineWidth*2,outlineWidth*2);
 
 	qreal scaleFactor = 1;
-	if((flags & fScaleDownToFitRect) && (pathBoundingRect.width() > rect.width() || pathBoundingRect.height() > rect.height()))
-		scaleFactor = qMin(rect.width()/pathBoundingRect.width(), rect.height()/pathBoundingRect.height());
+	if((flags & fScaleDownToFitRect) && (pathBoundingRect.width() > availableSize.width() || pathBoundingRect.height() > availableSize.height())) {
+		scaleFactor = qMin(availableSize.width()/pathBoundingRect.width(), availableSize.height()/pathBoundingRect.height());
+	}
 
+	p.save();
+	p.translate(rect.left(), rect.top());
 	p.translate(rect.width()*hAlignConst, rect.height()*vAlignConst);
 	p.scale(scaleFactor, scaleFactor);
 	p.translate(0, -size.height()*vAlignConst);
 
 	if(backgroundEnabled) {
-		const qreal m = backgroundPadding;
-		//p.fillRect(pathBoundingRect.marginsAdded(QMarginsF(m, m, m, m)), backgroundColor);
-		p.fillRect(QRectF(QPointF(-size.width()*hAlignConst, 0), size).marginsAdded(QMarginsF(m, m, m, m)), backgroundColor);
+		p.fillRect(
+					QRectF(QPointF(-size.width()*hAlignConst, 0), size)
+					.marginsAdded(QMarginsF(backgroundPadding,backgroundPadding,backgroundPadding,backgroundPadding))
+					,backgroundColor);
 	}
 
 	if(outlineEnabled) {
-		// Todo: better? Renderer should provide correct size buffer
-		const qreal outlineSize = outlineWidth/scaleFactor;
-		const QRectF outlineRect = pathBoundingRect.marginsAdded(QMarginsF(outlineSize, outlineSize, outlineSize, outlineSize));
-
-		QImage tmp(outlineRect.size().toSize(), QImage::Format_ARGB32);
-		tmp.fill(Qt::transparent);
-
-		QPainter p2(&tmp);
-		p2.save();
-		p2.translate(-outlineRect.topLeft());
-
-		p2.setRenderHint(QPainter::Antialiasing);
-
-		//p2.setBrush(Qt::NoBrush);
-		//p2.setPen(QPen(outlineColor, outlineWidth/scaleFactor, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-
-		p2.setPen(QPen(Qt::white, outlineSize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+		p.setBrush(Qt::NoBrush);
+		p.setPen(QPen(outlineColor, outlineWidth/scaleFactor, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 		for(const auto &polygon : path.toSubpathPolygons())
-			p2.drawPolygon(polygon, Qt::WindingFill);
-
-		p2.restore();
-		p2.setCompositionMode(QPainter::CompositionMode_SourceIn);
-		p2.fillRect(tmp.rect(), outlineColor);
-
-		p.drawImage(outlineRect.topLeft(), tmp);
+			p.drawPolygon(polygon, Qt::WindingFill);
 	}
 
 	p.setBrush(color);

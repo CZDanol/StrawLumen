@@ -18,16 +18,10 @@ public:
 	~SettingsDialog();
 
 private slots:
-	void fillData();
-
-private slots:
 	void onDisplayChanged(QScreen *current);
 
 private slots:
 	void on_btnClose_clicked();
-	void on_wgtDefaultPresentationStyle_sigPresentationStyleChangedByUser();
-	void on_cbEmptySlideBeforeSong_clicked(bool checked);
-	void on_cbEmptySlideAfterSong_clicked(bool checked);
 
 private:
 	Ui::SettingsDialog *ui;

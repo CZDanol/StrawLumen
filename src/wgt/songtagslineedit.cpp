@@ -9,6 +9,7 @@ SongTagsLineEdit::SongTagsLineEdit(QWidget *parent) : WordCompletingLineEdit(par
 
 	setCompleter(&completer_);
 	setCompleterSuffix(", ");
+	setPlaceholderText(tr("Oddělené čárkou"));
 }
 
 QSet<QString> SongTagsLineEdit::toTags() const

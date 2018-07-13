@@ -77,6 +77,7 @@ void DatabaseManager::updateSongFulltextIndex(qlonglong songId)
 void DatabaseManager::createDb()
 {
 	// #: SONGS_TABLE_FIELDS
+	// Columns are set to NOT NULL so it throws errors when someone forgets to set a column value
 
 	// SONGS
 	{
@@ -225,4 +226,9 @@ QString collateFulltextQuery(const QString &str)
 	result.append('*');
 
 	return result;
+}
+
+QString denullifyString(const QString &str)
+{
+	return str.isNull() ? "" : str;
 }

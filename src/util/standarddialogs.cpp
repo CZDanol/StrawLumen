@@ -83,7 +83,7 @@ void standardInfoDialog(const QString message, QWidget *parent)
 		static QPixmap iconPixmap(":/icons/32/Info_16px.png");
 		mb->setIconPixmap(iconPixmap);
 
-		static QPixmap windowIcon(":/icons/16/High Info_16px.png");
+		static QPixmap windowIcon(":/icons/16/Info_16px.png");
 		mb->setWindowIcon(windowIcon);
 
 

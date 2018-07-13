@@ -8,9 +8,11 @@
 #include "gui/stylesdialog.h"
 #include "gui/mainwindow_songsmode.h"
 #include "importexport/documentgenerationdialog.h"
+#include "importexport/lumenimportdialog.h"
 #include "gui/aboutdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
+#include "util/guianimations.h"
 
 MainWindow *mainWindow = nullptr;
 
@@ -21,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	ui->swMenu->addWidget(ui->wgtPresentationMode->menuWidget());
 	ui->swMenu->addWidget(ui->wgtSongsMode->menuWidget());
+	ui->menuProgram->insertMenu(ui->actionGenerateDocuments, ui->wgtSongsMode->importMenu());
+	ui->menuProgram->insertMenu(ui->actionGenerateDocuments, ui->wgtSongsMode->exportMenu());
 
 	setWindowTitle(QString("Straw Lumen v%1").arg(PROGRAM_VERSION));
 	restoreGeometry(settings->value("window.mainWindow.geometry").toByteArray());
@@ -43,9 +47,24 @@ void MainWindow::editSong(qlonglong songId)
 	ui->wgtSongsMode->editSong(songId);
 }
 
+void MainWindow::showPresentationMode()
+{
+	ui->btnPresentationMode->click();
+}
+
+void MainWindow::blinkPresentationModeButton()
+{
+	blinkButton(ui->btnPresentationMode);
+}
+
 MainWindow_PresentationMode *MainWindow::presentationMode()
 {
 	return ui->wgtPresentationMode;
+}
+
+void MainWindow::showSongsMode()
+{
+	ui->btnSongsMode->click();
 }
 
 void MainWindow::onDbQueryError(const QString &query, const QString &error)

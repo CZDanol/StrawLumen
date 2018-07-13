@@ -100,7 +100,10 @@ SOURCES += main.cpp \
     importexport/lumenexportdialog.cpp \
     importexport/exportdb.cpp \
     importexport/lumenimportdialog.cpp \
-    wgt/songtagslineedit.cpp
+    wgt/songtagslineedit.cpp \
+    importexport/opensongimportdialog.cpp \
+    util/guianimations.cpp \
+    importexport/opensongexportdialog.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -127,7 +130,9 @@ FORMS += \
     wgt/multisongselectionwidget.ui \
     gui/startupsplashscreen.ui \
     importexport/lumenexportdialog.ui \
-    importexport/lumenimportdialog.ui
+    importexport/lumenimportdialog.ui \
+    importexport/opensongimportdialog.ui \
+    importexport/opensongexportdialog.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -198,7 +203,10 @@ HEADERS += \
     importexport/lumenexportdialog.h \
     importexport/exportdb.h \
     importexport/lumenimportdialog.h \
-    wgt/songtagslineedit.h
+    wgt/songtagslineedit.h \
+    importexport/opensongimportdialog.h \
+    util/guianimations.h \
+    importexport/opensongexportdialog.h
 
 RESOURCES += \
     ../res/resources.qrc

@@ -1,7 +1,5 @@
 - bug: když se změní styl, uloží se a dá se storno (v ne-mgmt modu), tak se to neupdatne
 - export do opensongu
-- opensong import dialog - vybrat štítky a možnost přidání do playlistu
-- import/export písní v rámci programu
 - zkratka - upravit písničku v presentation modu
 - položka: vlastní text
 - položka: pozadí
@@ -10,7 +8,6 @@
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 
 - potvrdit zahodit změny při skrytí songsmode
-- offthread slide rendering
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
@@ -29,5 +26,7 @@ Automatická powerpoint prezentace:
 - Možnost opakovat celý program
 
 - Uložit/načíst playlist
+
+- export/import chordpro
 
 - PDF generator: WEasyPrint

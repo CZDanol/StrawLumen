@@ -30,6 +30,7 @@ ExportDatabaseManager::ExportDatabaseManager(const QString &filename, bool overw
 void ExportDatabaseManager::createDb()
 {
 	// #: SONGS_TABLE_FIELDS
+	// Columns are set to NOT NULL so it throws errors when someone forgets to set a column value
 
 	// SONGS
 	{

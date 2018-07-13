@@ -10,8 +10,9 @@
 #include "presentation/presentationmanager.h"
 
 // F(settingsName, uiControl)
-#define SETTINGS_FACTORY(F) \
-	F("display", dsDisplay)
+#define SETTINGS_FACTORY(F)\
+	F("display", dsDisplay)\
+	F("song.defaultStyle", wgtDefaultPresentationStyle) F("song.emptySlideBefore", cbEmptySlideBeforeSong) F("song.emptySlideAfter", cbEmptySlideAfterSong)
 
 SettingsDialog *settingsDialog = nullptr;
 
@@ -31,8 +32,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 	SETTINGS_FACTORY(F)
 #undef F
-
-	fillData();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -40,15 +39,6 @@ SettingsDialog::~SettingsDialog()
 	delete ui;
 }
 
-void SettingsDialog::fillData()
-{
-	PresentationStyle style;
-	style.loadFromDb(settings->value("song.defaultStyleId", 1).toLongLong());
-	ui->wgtDefaultPresentationStyle->setPresentationStyle(style);
-
-	ui->cbEmptySlideBeforeSong->setChecked(settings->value("song.emptySlideBefore", false).toBool());
-	ui->cbEmptySlideAfterSong->setChecked(settings->value("song.emptySlideAfter", true).toBool());
-}
 
 void SettingsDialog::onDisplayChanged(QScreen *current)
 {
@@ -59,19 +49,4 @@ void SettingsDialog::onDisplayChanged(QScreen *current)
 void SettingsDialog::on_btnClose_clicked()
 {
 	accept();
-}
-
-void SettingsDialog::on_wgtDefaultPresentationStyle_sigPresentationStyleChangedByUser()
-{
-	settings->setValue("song.defaultStyleId", ui->wgtDefaultPresentationStyle->presentationStyle().styleId());
-}
-
-void SettingsDialog::on_cbEmptySlideBeforeSong_clicked(bool checked)
-{
-	settings->setValue("song.emptySlideBefore", checked);
-}
-
-void SettingsDialog::on_cbEmptySlideAfterSong_clicked(bool checked)
-{
-	settings->setValue("song.emptySlideAfter", checked);
 }

@@ -21,6 +21,7 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
 
 	emitItemsChanged();
+	emit sigItemsAdded();
 	return true;
 }
 
@@ -42,6 +43,7 @@ void Playlist::addItems(const QList<QSharedPointer<Presentation> > &items)
 	}
 
 	emitItemsChanged();
+	emit sigItemsAdded();
 }
 
 int Playlist::moveItems(const QVector<int> &itemIndexes, int targetPosition)
@@ -108,6 +110,7 @@ void Playlist::insertItems(int pos, const QVector<QSharedPointer<Presentation> >
 	}
 
 	emitItemsChanged();
+	emit sigItemsAdded();
 }
 
 void Playlist::deleteItems(const QVector<QSharedPointer<Presentation> > &items)

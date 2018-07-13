@@ -42,12 +42,13 @@ struct ChordInSong {
 	Chord chord;
 	int annotationPos, annotationLength;
 };
+using ChordsInSong = QVector<ChordInSong>;
 
 /// Captures: 0 - whole, 1 - annotation prefix, 2 - chord, 3 - annotation suffix
 const QRegularExpression &songChordAnnotationRegex();
 
 /// Returns all valid chords in the song
-QVector<ChordInSong> songChords(const QString &song);
+ChordsInSong songChords(const QString &song);
 
 /// Transposes all valid chords in the song. All chords are changed to standard format (even when by=0)
 void transposeSong(QString &song, int by, bool flatChords = false);

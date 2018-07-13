@@ -59,19 +59,19 @@ QVariant DBManager::insert(const QString &query, const DBManager::Args &args)
 	return selectQuery(query, args).lastInsertId();
 }
 
-QVariant DBManager::insert(const QString &table, const QHash<QString, QVariant> &data)
+QVariant DBManager::insert(const QString &table, const QHash<QString, QVariant> &fields)
 {
-	return insert(QString("INSERT INTO %1(%2) VALUES(%3)").arg(table, QStringList(data.keys()).join(","), QStringList(QVector<QString>(data.size(), "?").toList()).join(",")), data.values());
+	return insert(QString("INSERT INTO %1(%2) VALUES(%3)").arg(table, QStringList(fields.keys()).join(","), QStringList(QVector<QString>(fields.size(), "?").toList()).join(",")), fields.values());
 }
 
-void DBManager::update(const QString &table, const QHash<QString, QVariant> &set, const QString &where, const QVariantList &whereArgs)
+void DBManager::update(const QString &table, const QHash<QString, QVariant> &fields, const QString &where, const QVariantList &whereArgs)
 {
 	QStringList setList;
-	setList.reserve(set.size());
-	for(const QString &field : set.keys())
+	setList.reserve(fields.size());
+	for(const QString &field : fields.keys())
 		setList.append(QString("%1 = ?").arg(field));
 
-	exec(QString("UPDATE %1 SET %2 WHERE %3").arg(table, setList.join(","), where), QVariantList() << set.values() << whereArgs);
+	exec(QString("UPDATE %1 SET %2 WHERE %3").arg(table, setList.join(","), where), QVariantList() << fields.values() << whereArgs);
 }
 
 QSqlRecord DBManager::selectRowAssoc(const QString &query, const DBManager::AssocArgs &args)

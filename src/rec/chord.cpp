@@ -10,7 +10,7 @@ Chord::Chord(const QString &str)
 	static const QRegularExpression chordRegex(
 				"^"
 				"([a-hA-H])(s|S|is|IS|es|ES|#|b|♭)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
-				"([0-9/(#+\\-][0-9a-zA-Z/()#+\\-]*)?" // Extra
+				"((?:[0-9(#+\\-]|sus)[0-9a-zA-Z()#+\\-]*)?" // Extra
 				"(?:/([a-hA-H])(s|S|is|IS|es|ES|#|b)?)?" // Inversions
 				"$",
 				QRegularExpression::UseUnicodePropertiesOption);
@@ -33,7 +33,7 @@ Chord::Chord(const QString &str)
 
 	static const QHash<QString, Quality> qualities {
 		{"dur", cvDur}, {"Dur", cvDur},
-		{"m", cvMoll}, {"mi", cvMoll}, {"min", cvMoll},
+		{"m", cvMoll}, {"mi", cvMoll}, {"min", cvMoll}, {"moll", cvMoll},
 		{"M", cvMaj}, {"maj", cvMaj},
 		{"aug", cvAug},
 		{"dim", cvDim}
@@ -133,7 +133,7 @@ QString Chord::toString(bool flatVariant) const
 	return result;
 }
 
-QVector<ChordInSong> songChords(const QString &song)
+ChordsInSong songChords(const QString &song)
 {
 	QVector<ChordInSong> result;
 	QRegularExpressionMatchIterator it = songChordAnnotationRegex().globalMatch(song);

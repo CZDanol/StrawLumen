@@ -243,7 +243,7 @@
           <item>
            <widget class="QPushButton" name="btnImport">
             <property name="text">
-             <string> Importovat</string>
+             <string> Import</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -257,7 +257,7 @@
           <item>
            <widget class="QPushButton" name="btnExport">
             <property name="text">
-             <string> Exportovat</string>
+             <string> Export</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -654,11 +654,7 @@
             </widget>
            </item>
            <item row="3" column="3">
-            <widget class="SongTagsLineEdit" name="lnTags">
-             <property name="placeholderText">
-              <string>Oddělené čárkou</string>
-             </property>
-            </widget>
+            <widget class="SongTagsLineEdit" name="lnTags"/>
            </item>
           </layout>
          </widget>
@@ -684,7 +680,7 @@
      <normaloff>:/icons/16/OpenSong_16px.png</normaloff>:/icons/16/OpenSong_16px.png</iconset>
    </property>
    <property name="text">
-    <string>OpenSongu</string>
+    <string>OpenSong</string>
    </property>
   </action>
   <action name="actionCreateSongbookFromSelection">
@@ -712,6 +708,33 @@
    </property>
    <property name="text">
     <string>Straw Lumen</string>
+   </property>
+  </action>
+  <action name="actionPresentSongs">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Video Projector_16px.png</normaloff>:/icons/16/Video Projector_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Promítat</string>
+   </property>
+  </action>
+  <action name="actionAddSongsToPlaylist">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Přidat do programu</string>
+   </property>
+  </action>
+  <action name="actionExportToOpenSong">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/OpenSong_16px.png</normaloff>:/icons/16/OpenSong_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>OpenSong</string>
    </property>
   </action>
  </widget>

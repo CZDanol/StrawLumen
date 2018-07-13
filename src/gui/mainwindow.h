@@ -21,7 +21,11 @@ public:
 	void editSong(qlonglong songId);
 
 public:
+	void showPresentationMode();
+	void blinkPresentationModeButton();
 	MainWindow_PresentationMode *presentationMode();
+
+	void showSongsMode();
 
 public slots:
 	void onDbQueryError(const QString &query, const QString &error);
