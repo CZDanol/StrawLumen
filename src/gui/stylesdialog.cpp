@@ -240,7 +240,11 @@ void StylesDialog::on_btnAdd_clicked()
 	currentStyleId_ = -1;
 	currentStyleIsInternal_ = false;
 	ui->lnName->setText(tr("Nový styl"));
+
 	setEditMode(true);
+	ui->twProperties->setCurrentWidget(ui->tabGeneral);
+	ui->lnName->setFocus();
+	ui->lnName->selectAll();
 }
 
 void StylesDialog::on_btnDiscardChanges_clicked()

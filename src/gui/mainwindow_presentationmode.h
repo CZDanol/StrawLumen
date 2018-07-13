@@ -26,6 +26,9 @@ public:
 public:
 	QWidget *menuWidget();
 
+public:
+	QSharedPointer<Playlist> playlist();
+
 protected:
 	void dragEnterEvent(QDragEnterEvent *e) override;
 	void dropEvent(QDropEvent *e) override;

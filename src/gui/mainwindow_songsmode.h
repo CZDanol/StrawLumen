@@ -59,12 +59,14 @@ private slots:
 	void on_btnInsertSlideSeparator_clicked();
 	void on_actionImportOpenSongSong_triggered();
 	void on_lnTags_sigFocused();
-
 	void on_btnCreateSongbook_clicked();
+	void on_actionCreateSongbookFromSelection_triggered();
+	void on_actionExportToLumen_triggered();
+	void on_actionImportFromLumen_triggered();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
-	QMenu insertSectionMenu_, importMenu_, songListContextMenu_;
+	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_;
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;

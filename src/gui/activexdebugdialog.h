@@ -23,6 +23,6 @@ private:
 
 };
 
-extern ActiveXDebugDialog *activeXDebugDialog;
+ActiveXDebugDialog *activeXDebugDialog();
 
 #endif // ACTIVEXDEBUGDIALOG_H

@@ -29,7 +29,7 @@ void DBManager::openSQLITE(const QString &filename)
 	db_.setDatabaseName(filename);
 
 	if(!db_.open())
-		emit sigOpenError(db_.lastError().text());
+		emit sigDatabaseError(db_.lastError().text());
 }
 
 QSqlDatabase &DBManager::database()

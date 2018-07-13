@@ -15,17 +15,17 @@ public:
 	friend class DBQuery;
 
 	using Arg = QVariant;
-	using Args = QVector<QVariant>;
+	using Args = QVariantList;
 
 	using AssocArg = QPair<QString,QVariant>;
-	using AssocArgs = QVector<AssocArg>;
+	using AssocArgs = QList<AssocArg>;
 
 	using ManipFunc = std::function<void(QSqlQuery&)>;
 	using QueryOpFunc = std::function<void(QSqlDatabase&)>;
 
 public:
 	DBManager();
-	~DBManager();
+	virtual ~DBManager();
 
 public:
 	void openSQLITE(const QString &filename);
@@ -71,7 +71,7 @@ public:
 
 signals:
 	void sigQueryError(QString query, QString error);
-	void sigOpenError(QString error);
+	void sigDatabaseError(QString error);
 
 private:
 	QSqlDatabase db_;

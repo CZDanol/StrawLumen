@@ -18,6 +18,7 @@ public:
 
 public:
 	bool addItem(const QSharedPointer<Presentation> &item);
+	void addItems(const QList<QSharedPointer<Presentation>> &items);
 	void deleteItem(const QSharedPointer<Presentation> &item);
 
 	void insertItems(int pos, const QVector<QSharedPointer<Presentation>> &items);

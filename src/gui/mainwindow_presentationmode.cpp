@@ -137,6 +137,11 @@ QWidget *MainWindow_PresentationMode::menuWidget()
 	return ui->wgtMenu;
 }
 
+QSharedPointer<Playlist> MainWindow_PresentationMode::playlist()
+{
+	return playlist_;
+}
+
 void MainWindow_PresentationMode::dragEnterEvent(QDragEnterEvent *e)
 {
 	if(e->mimeData()->hasUrls()) {

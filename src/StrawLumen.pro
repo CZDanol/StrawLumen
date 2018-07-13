@@ -91,12 +91,15 @@ SOURCES += main.cpp \
     wgt/styleselectionwidget.cpp \
     presentation/native/presentationpropertieswidget_song.cpp \
     modelview/songsitemmodel.cpp \
-    gui/documentgenerationdialog.cpp \
+    importexport/documentgenerationdialog.cpp \
     gui/aboutdialog.cpp \
     wgt/multisongselectionwidget.cpp \
     modelview/songrecorditemmodel.cpp \
     wgt/extendedtreeview.cpp \
-    gui/startupsplashscreen.cpp
+    gui/startupsplashscreen.cpp \
+    importexport/lumenexportdialog.cpp \
+    importexport/exportdb.cpp \
+    importexport/lumenimportdialog.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -118,10 +121,12 @@ FORMS += \
     wgt/presentationbackgroundselectionwidget.ui \
     wgt/styleselectionwidget.ui \
     presentation/native/presentationpropertieswidget_song.ui \
-    gui/documentgenerationdialog.ui \
+    importexport/documentgenerationdialog.ui \
     gui/aboutdialog.ui \
     wgt/multisongselectionwidget.ui \
-    gui/startupsplashscreen.ui
+    gui/startupsplashscreen.ui \
+    importexport/lumenexportdialog.ui \
+    importexport/lumenimportdialog.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -183,12 +188,15 @@ HEADERS += \
     wgt/styleselectionwidget.h \
     presentation/native/presentationpropertieswidget_song.h \
     modelview/songsitemmodel.h \
-    gui/documentgenerationdialog.h \
+    importexport/documentgenerationdialog.h \
     gui/aboutdialog.h \
     wgt/multisongselectionwidget.h \
     modelview/songrecorditemmodel.h \
     wgt/extendedtreeview.h \
-    gui/startupsplashscreen.h
+    gui/startupsplashscreen.h \
+    importexport/lumenexportdialog.h \
+    importexport/exportdb.h \
+    importexport/lumenimportdialog.h
 
 RESOURCES += \
     ../res/resources.qrc

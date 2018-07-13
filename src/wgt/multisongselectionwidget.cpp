@@ -71,6 +71,12 @@ MultiSongSelectionWidget::~MultiSongSelectionWidget()
 	delete ui;
 }
 
+void MultiSongSelectionWidget::setSelectedSongs(const QVector<qlonglong> &songIds)
+{
+	selectionModel_.clear();
+	selectionModel_.addItems(songIds);
+}
+
 QVector<qlonglong> MultiSongSelectionWidget::selectedSongs() const
 {
 	return selectionModel_.items();

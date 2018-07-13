@@ -1,9 +1,8 @@
 #include "activexdebugdialog.h"
 #include "ui_activexdebugdialog.h"
 
+#include "gui/mainwindow.h"
 #include "util/execonmainthread.h"
-
-ActiveXDebugDialog *activeXDebugDialog = nullptr;
 
 ActiveXDebugDialog::ActiveXDebugDialog(QWidget *parent) :
 	QDialog(parent),
@@ -23,4 +22,13 @@ void ActiveXDebugDialog::show(QString html)
 		ui->tb->setHtml(html);
 		QDialog::show();
 	});
+}
+
+ActiveXDebugDialog *activeXDebugDialog()
+{
+	static ActiveXDebugDialog *dlg = nullptr;
+	if(!dlg)
+		dlg = new ActiveXDebugDialog(mainWindow);
+
+	return dlg;
 }

@@ -13,7 +13,9 @@
 #include <QFile>
 
 #include "gui/splashscreen.h"
-#include "gui/documentgenerationdialog.h"
+#include "importexport/documentgenerationdialog.h"
+#include "importexport/lumenexportdialog.h"
+#include "importexport/lumenimportdialog.h"
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
 #include "rec/chord.h"
@@ -43,6 +45,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		ui->wgtSongList->setDragEnabled(false);
 
 		songListContextMenu_.addAction(ui->actionDeleteSongs);
+		songListContextMenu_.addAction(ui->actionCreateSongbookFromSelection);
 	}
 
 	// Slide order
@@ -91,11 +94,15 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		ui->btnInsertSection->setMenu(&insertSectionMenu_);
 	}
 
-	// Import menu
+	// Import & export menus
 	{
+		importMenu_.addAction(ui->actionImportFromLumen);
 		importMenu_.addAction(ui->actionImportOpenSongSong);
 
+		exportMenu_.addAction(ui->actionExportToLumen);
+
 		ui->btnImport->setMenu(&importMenu_);
+		ui->btnExport->setMenu(&exportMenu_);
 	}
 
 	// Shortcuts
@@ -259,6 +266,8 @@ void MainWindow_SongsMode::on_btnNew_clicked()
 	currentSongId_ = -1;
 
 	setSongEditMode(true);
+	ui->lnName->setFocus();
+	ui->lnName->selectAll();
 }
 
 void MainWindow_SongsMode::on_btnDiscardChanges_clicked()
@@ -272,31 +281,37 @@ void MainWindow_SongsMode::on_btnDiscardChanges_clicked()
 
 void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 {
+	// #: SONGS_TABLE_FIELDS
+
 	setSongEditMode(false);
 
 	db->beginTransaction();
 
-	if(currentSongId_ == -1)
-		currentSongId_ = db->insert("INSERT INTO songs(uid) VALUES(?)", {QUuid::createUuid().toString()}).toLongLong();
-	else
-		db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {currentSongId_});
+	QHash<QString,QVariant> data{
+		{"name", ui->lnName->text()},
+		{"author", ui->lnAuthor->text()},
+		{"copyright", ui->lnCopyright->text()},
+		{"content", ui->teContent->toPlainText()},
+		{"slideOrder", ui->lnSlideOrder->text()},
+		{"lastEdit", QDateTime::currentSecsSinceEpoch()}
+	};
 
-	const QString name = ui->lnName->text();
-	const QString author = ui->lnAuthor->text();
-	const QString content = ui->teContent->toPlainText();
+	if(currentSongId_ == -1) {
+		QVariantList args{
+			QUuid::createUuid().toString()
+		};
+		args.append(data.values());
+		currentSongId_ = db->insert("INSERT INTO songs(uid, " + QStringList(data.keys()).join(", ") + ") VALUES(?" + QString(", ?").repeated(data.size()) + ")", args).toLongLong();
 
-	QString collatedContent = content;
-	collatedContent.remove(songChordAnnotationRegex());
-	collatedContent.remove(songSectionAnnotationRegex());
-	collatedContent = collate(collatedContent);
+	} else {
+		QList<QVariant> args;
+		args.append(data.values());
+		args.append(currentSongId_);
 
-	db->exec(
-				"UPDATE songs SET name = ?, author = ?, copyright = ?, content = ?, slideOrder = ?, lastEdit = ? WHERE id = ?",
-				{name, author, ui->lnCopyright->text(), content, ui->lnSlideOrder->text(), QDateTime::currentSecsSinceEpoch(), currentSongId_}
-				);
-	db->exec(
-				"INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
-				{currentSongId_, collate(name), collate(author), collatedContent});
+		db->exec("UPDATE songs SET " + QStringList(data.keys()).join("= ?, ") + " = ? WHERE id = ?", args);
+	}
+
+	db->updateSongFulltextIndex(currentSongId_);
 
 	// Tags
 	db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
@@ -458,6 +473,7 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 			if(root.tagName() != "song")
 				return standardErrorDialog(tr("Soubor \"%1\" není formátu OpenSong.").arg(filename));
 
+			// #: SONGS_TABLE_FIELDS
 			const QString name = root.firstChildElement("title").text();
 			const QString author = root.firstChildElement("author").text();
 			const QString copyright = root.firstChildElement("copyright").text();
@@ -493,19 +509,13 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 			static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
 			content.remove(trimmingRegex);
 
-			QString collatedContent = content;
-			collatedContent.remove(songSectionAnnotationRegex());
-			collatedContent.remove(songChordAnnotationRegex());
-			collatedContent = collate(collatedContent);
-
 			const QVariant id = db->insert("INSERT INTO songs(uid, name, author, copyright, content, slideOrder, lastEdit) VALUES(?, ?, ?, ?, ?, ?, ?)", {
 									 QUuid::createUuid().toString(),
 									 name, author, copyright, content, slideOrder,
 									 QDateTime::currentSecsSinceEpoch(),
 								 });
-			db->exec(
-						"INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
-						{id, collate(name), collate(author), collatedContent});
+
+			db->updateSongFulltextIndex(id.toLongLong());
 		}
 	});
 
@@ -519,5 +529,23 @@ void MainWindow_SongsMode::on_lnTags_sigFocused()
 
 void MainWindow_SongsMode::on_btnCreateSongbook_clicked()
 {
-	documentGenerationDialog->show();
+	documentGenerationDialog()->show();
+	documentGenerationDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
+}
+
+void MainWindow_SongsMode::on_actionCreateSongbookFromSelection_triggered()
+{
+	documentGenerationDialog()->show();
+	documentGenerationDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
+}
+
+void MainWindow_SongsMode::on_actionExportToLumen_triggered()
+{
+	lumenExportDialog()->show();
+	lumenExportDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
+}
+
+void MainWindow_SongsMode::on_actionImportFromLumen_triggered()
+{
+	lumenImportDialog()->show();
 }

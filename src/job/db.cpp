@@ -9,6 +9,8 @@
 #include "main.h"
 #include "util/standarddialogs.h"
 #include "job/dbmigration.h"
+#include "rec/songsection.h"
+#include "rec/chord.h"
 
 DatabaseManager *db = nullptr;
 
@@ -22,7 +24,7 @@ DatabaseManager::DatabaseManager()
 
 	// Open the database
 	{
-		connect(this, &DBManager::sigOpenError, [](QString error){
+		connect(this, &DBManager::sigDatabaseError, [](QString error){
 			criticalBootError(DBManager::tr("Nepodařilo se incializovat databázi: %1").arg(error));
 		});
 
@@ -56,19 +58,37 @@ bool DatabaseManager::blockListChangedSignals(bool set)
 	return result;
 }
 
+void DatabaseManager::updateSongFulltextIndex(qlonglong songId)
+{
+	db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {songId});
+
+	QSqlRecord r = db->selectRow("SELECT name, author, content FROM songs WHERE id = ?", {songId});
+
+	QString content = r.value("content").toString();
+	content.remove(songChordAnnotationRegex());
+	content.remove(songSectionAnnotationRegex());
+	content = collate(content);
+
+	db->exec(
+				"INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
+				{songId, collate(r.value("name").toString()), collate(r.value("author").toString()), content});
+}
+
 void DatabaseManager::createDb()
 {
+	// #: SONGS_TABLE_FIELDS
+
 	// SONGS
 	{
 		exec("CREATE TABLE songs ("
 						 "id INTEGER PRIMARY KEY,"
-						 "uid TEXT,"
-						 "name TEXT,"
-						 "author TEXT,"
-						 "copyright TEXT,"
-						 "content TEXT,"
-						 "slideOrder TEXT,"
-						 "lastEdit INTEGER"
+						 "uid TEXT NOT NULL,"
+						 "name TEXT NOT NULL,"
+						 "author TEXT NOT NULL,"
+						 "copyright TEXT NOT NULL,"
+						 "content TEXT NOT NULL,"
+						 "slideOrder TEXT NOT NULL,"
+						 "lastEdit INTEGER NOT NULL"
 						 ")");
 
 		exec("CREATE INDEX i_songs_uid ON songs (uid)");
@@ -79,17 +99,17 @@ void DatabaseManager::createDb()
 	// SONGS_FULLTEXT
 	{
 		exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
-						 "name TEXT,"
-						 "author TEXT,"
-						 "content TEXT"
+						 "name TEXT NOT NULL,"
+						 "author TEXT NOT NULL,"
+						 "content TEXT NOT NULL"
 						 ")");
 	}
 
 	// SONG_TAGS
 	{
 		exec("CREATE TABLE song_tags ("
-				 "song INTEGER,"
-				 "tag TEXT"
+				 "song INTEGER NOT NULL,"
+				 "tag TEXT NOT NULL"
 				 ")");
 
 		exec("CREATE INDEX i_song_tags_song ON song_tags (song, tag)");
@@ -100,8 +120,8 @@ void DatabaseManager::createDb()
 	{
 		exec("CREATE TABLE styles ("
 						 "id INTEGER PRIMARY KEY,"
-						 "name STRING,"
-						 "isInternal bool,"
+						 "name STRING NOT NULL,"
+						 "isInternal bool NOT NULL,"
 						 "data BLOB"
 						 ")");
 
@@ -112,15 +132,15 @@ void DatabaseManager::createDb()
 	{
 		exec("CREATE TABLE backgrounds ("
 						 "id INTEGER PRIMARY KEY,"
-						 "thumbnail BLOB,"
-						 "data BLOB"
+						 "thumbnail BLOB NOT NULL,"
+						 "data BLOB NOT NULL"
 						 ")");
 	}
 
 	// KEYVALUE ASSOC
 	{
 		exec("CREATE TABLE keyValueAssoc ("
-						 "key STRING,"
+						 "key STRING NOT NULL,"
 						 "value"
 						 ")");
 

@@ -5,7 +5,7 @@
 #include <QTime>
 #include <QLocale>
 
-AboutDialog *aboutDialog = nullptr;
+#include "gui/mainwindow.h"
 
 AboutDialog::AboutDialog(QWidget *parent) :
 	QDialog(parent),
@@ -21,4 +21,13 @@ AboutDialog::AboutDialog(QWidget *parent) :
 AboutDialog::~AboutDialog()
 {
 	delete ui;
+}
+
+AboutDialog *aboutDialog()
+{
+	static AboutDialog *dlg = nullptr;
+	if(!dlg)
+		dlg = new AboutDialog(mainWindow);
+
+	return dlg;
 }

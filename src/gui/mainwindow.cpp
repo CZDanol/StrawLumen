@@ -7,7 +7,7 @@
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
 #include "gui/mainwindow_songsmode.h"
-#include "gui/documentgenerationdialog.h"
+#include "importexport/documentgenerationdialog.h"
 #include "gui/aboutdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -43,15 +43,25 @@ void MainWindow::editSong(qlonglong songId)
 	ui->wgtSongsMode->editSong(songId);
 }
 
-void MainWindow::closeEvent(QCloseEvent *e)
+MainWindow_PresentationMode *MainWindow::presentationMode()
 {
-	projectorWindow->close();
-	QMainWindow::closeEvent(e);
+	return ui->wgtPresentationMode;
 }
 
 void MainWindow::onDbQueryError(const QString &query, const QString &error)
 {
 	standardErrorDialog(tr("Chyba databáze: %1\n\n%2").arg(error, query));
+}
+
+void MainWindow::onDbDatabaseError(const QString &error)
+{
+	standardErrorDialog(tr("Chyba databáze: %1").arg(error));
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+	projectorWindow->close();
+	QMainWindow::closeEvent(e);
 }
 
 void MainWindow::on_actionSettings_triggered()
@@ -83,10 +93,10 @@ void MainWindow::on_actionStyles_triggered()
 
 void MainWindow::on_actionGenerateDocuments_triggered()
 {
-	documentGenerationDialog->show();
+	documentGenerationDialog()->show();
 }
 
 void MainWindow::on_actionAbout_triggered()
 {
-	aboutDialog->show();
+	aboutDialog()->show();
 }

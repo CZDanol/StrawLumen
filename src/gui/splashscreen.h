@@ -34,6 +34,9 @@ public:
 
 	bool isStornoPressed();
 
+public slots:
+	void storno();
+
 protected:
 	void reject() override;
 

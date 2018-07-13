@@ -24,6 +24,26 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	return true;
 }
 
+void Playlist::addItems(const QList<QSharedPointer<Presentation> > &items)
+{
+	items_.reserve(items.size());
+
+	for(const QSharedPointer<Presentation> &item : items) {
+		if(item.isNull())
+			continue;
+
+		Q_ASSERT(!item->playlist_);
+
+		item->playlist_ = this;
+
+		items_.append(item);
+		connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
+		connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
+	}
+
+	emitItemsChanged();
+}
+
 int Playlist::moveItems(const QVector<int> &itemIndexes, int targetPosition)
 {
 	if(itemIndexes.isEmpty())

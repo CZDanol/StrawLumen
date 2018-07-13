@@ -180,5 +180,6 @@
         <file>icons/16/High Priority_16px.png</file>
         <file>icons/16/Counter_16px.png</file>
         <file>icons/16/Star Filled_16px.png</file>
+        <file>icons/16/Sort By Modified Date_16px.png</file>
     </qresource>
 </RCC>

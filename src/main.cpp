@@ -9,14 +9,12 @@
 
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
-#include "gui/activexdebugdialog.h"
 #include "gui/settingsdialog.h"
 #include "gui/projectorwindow.h"
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
-#include "gui/documentgenerationdialog.h"
-#include "gui/aboutdialog.h"
 #include "gui/startupsplashscreen.h"
+#include "importexport/lumenexportdialog.h"
 #include "job/activexjobthread.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -81,11 +79,8 @@ void initApplication() {
 
 	settingsDialog = new SettingsDialog(mainWindow);
 	splashscreen = new Splashscreen(mainWindow);
-	activeXDebugDialog = new ActiveXDebugDialog(mainWindow);
 	backgroundDialog = new BackgroundDialog(mainWindow);
 	stylesDialog = new StylesDialog(mainWindow);
-	documentGenerationDialog = new DocumentGenerationDialog(mainWindow);
-	aboutDialog = new AboutDialog(mainWindow);
 }
 
 void uninitApplication() {

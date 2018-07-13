@@ -20,6 +20,6 @@ private:
 
 };
 
-extern AboutDialog *aboutDialog;
+AboutDialog *aboutDialog();
 
 #endif // ABOUTDIALOG_H

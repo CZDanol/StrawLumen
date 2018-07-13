@@ -25,6 +25,9 @@ signals:
 public:
 	bool blockListChangedSignals(bool set);
 
+public:
+	void updateSongFulltextIndex(qlonglong songId);
+
 private:
 	void createDb();
 

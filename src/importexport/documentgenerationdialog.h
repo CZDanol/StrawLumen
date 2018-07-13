@@ -17,8 +17,8 @@ public:
 	explicit DocumentGenerationDialog(QWidget *parent = 0);
 	~DocumentGenerationDialog();
 
-protected:
-	void showEvent(QShowEvent *e) override;
+public:
+	void setSelectedSongs(const QVector<qlonglong> &songIds);
 
 private:
 	void generate(const QVector<qlonglong> &songIds);
@@ -45,6 +45,6 @@ private:
 
 };
 
-extern DocumentGenerationDialog *documentGenerationDialog;
+DocumentGenerationDialog *documentGenerationDialog();
 
 #endif // DOCUMENTGENERATIONDIALOG_H

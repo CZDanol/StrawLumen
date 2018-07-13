@@ -37,8 +37,6 @@ enum LyricsMode {
 	lmSlideOrderDirected_SkipDuplicates
 };
 
-DocumentGenerationDialog *documentGenerationDialog = nullptr;
-
 DocumentGenerationDialog::DocumentGenerationDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::DocumentGenerationDialog)
@@ -72,17 +70,18 @@ DocumentGenerationDialog::~DocumentGenerationDialog()
 	delete ui;
 }
 
-void DocumentGenerationDialog::showEvent(QShowEvent *e)
+void DocumentGenerationDialog::setSelectedSongs(const QVector<qlonglong> &songIds)
 {
-	ui->wgtSongSelection->clearSelection();
-	QDialog::showEvent(e);
+	ui->wgtSongSelection->setSelectedSongs(songIds);
 }
 
 void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 {
+	splashscreen->show(tr("Generování zpěvníku"), false);
+
 	if(!webPage_) {
-		splashscreen->show(tr("Inicializace sazby"), false);
-		qApp->processEvents(); // Ensure the splashScreen is drawn - creating QWebEnginePage freezes the application for a while :(
+		qApp->processEvents();
+		qApp->processEvents();// Ensure the splashScreen is drawn - creating QWebEnginePage freezes the application for a while :(
 
 		webProfile_ = new QWebEngineProfile(this);
 
@@ -100,7 +99,7 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 		splashscreen->close();
 	}
 
-	splashscreen->asyncAction(tr("Příprava dat"), false, [&](){
+	{
 		QJsonObject json;
 
 		json["generateTableOfContents"] = ui->gbToc->isChecked();
@@ -124,9 +123,8 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 		}
 
 		jsCode_ = QString("generateDocument(%1);").arg(QString::fromUtf8(QJsonDocument(json).toJson(QJsonDocument::Compact)));
-	});
+	}
 
-	splashscreen->show(tr("Generování zpěvníku"), false);
 	webPage_->load(QUrl::fromLocalFile(QDir(qApp->applicationDirPath()).absoluteFilePath("../etc/songbookTemplate.html")));
 }
 
@@ -228,12 +226,10 @@ void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output
 
 void DocumentGenerationDialog::onPageLoaded(bool result)
 {
-	splashscreen->close();
-
-	if(!result)
+	if(!result) {
+		splashscreen->close();
 		return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nepodařilo se načíst šablonu)."));
-
-	splashscreen->show(tr("Export do PDF"), false);
+	}
 
 	webPage_->runJavaScript(jsCode_);
 
@@ -263,15 +259,17 @@ void DocumentGenerationDialog::onPdfGenerated(const QByteArray &data)
 
 	QFile f(outputFilePath_);
 	if(!f.open(QIODevice::WriteOnly))
-		return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\" pro zápis.").arg(f.fileName()));
+		return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\" pro zápis.").arg(outputFilePath_));
 
 	if(f.write(data) != data.length())
-		return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).").arg(f.fileName()));
+		return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).").arg(outputFilePath_));
 
 	f.close();
 
 	if(ui->cbOpenWhenDone)
 		QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));
+	else
+		standardInfoDialog(tr("Zpěvník byl uložen do \"%1\"").arg(outputFilePath_));
 }
 
 
@@ -308,4 +306,13 @@ void DocumentGenerationDialog::on_btnGenerate_clicked()
 	}
 
 	generate(songIds);
+}
+
+DocumentGenerationDialog *documentGenerationDialog()
+{
+	static DocumentGenerationDialog *dlg = nullptr;
+	if(!dlg)
+		dlg = new DocumentGenerationDialog(mainWindow);
+
+	return dlg;
 }

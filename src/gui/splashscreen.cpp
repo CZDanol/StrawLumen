@@ -77,6 +77,11 @@ bool Splashscreen::isStornoPressed()
 	return isStornoPressed_;
 }
 
+void Splashscreen::storno()
+{
+	isStornoPressed_ = true;
+}
+
 void Splashscreen::reject()
 {
 	if(!canClose_) {

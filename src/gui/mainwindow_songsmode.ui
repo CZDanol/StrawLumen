@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>758</width>
+    <width>873</width>
     <height>699</height>
    </rect>
   </property>
@@ -248,6 +248,20 @@
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
               <normaloff>:/icons/16/Import_16px.png</normaloff>:/icons/16/Import_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnExport">
+            <property name="text">
+             <string> Exportovat</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Export_16px.png</normaloff>:/icons/16/Export_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -671,6 +685,33 @@
    </property>
    <property name="text">
     <string>Z OpenSongu</string>
+   </property>
+  </action>
+  <action name="actionCreateSongbookFromSelection">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Vytvořit zpěvník</string>
+   </property>
+  </action>
+  <action name="actionExportToLumen">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/logos/lumen_icon.ico</normaloff>:/logos/lumen_icon.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Straw Lumen</string>
+   </property>
+  </action>
+  <action name="actionImportFromLumen">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/logos/lumen_icon.ico</normaloff>:/logos/lumen_icon.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Straw Lumen</string>
    </property>
   </action>
  </widget>
