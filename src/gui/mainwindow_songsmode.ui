@@ -654,7 +654,7 @@
             </widget>
            </item>
            <item row="3" column="3">
-            <widget class="WordCompletingLineEdit" name="lnTags">
+            <widget class="SongTagsLineEdit" name="lnTags">
              <property name="placeholderText">
               <string>Oddělené čárkou</string>
              </property>
@@ -684,7 +684,7 @@
      <normaloff>:/icons/16/OpenSong_16px.png</normaloff>:/icons/16/OpenSong_16px.png</iconset>
    </property>
    <property name="text">
-    <string>Z OpenSongu</string>
+    <string>OpenSongu</string>
    </property>
   </action>
   <action name="actionCreateSongbookFromSelection">
@@ -737,6 +737,11 @@
    <slots>
     <signal>sigFocused()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>SongTagsLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>wgt/songtagslineedit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

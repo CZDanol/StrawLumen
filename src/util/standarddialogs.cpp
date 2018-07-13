@@ -49,9 +49,9 @@ bool standardConfirmDialog(const QString message, QWidget *parent)
 	return mb->clickedButton() == yesBtn;
 }
 
-void standardErrorDialog(const QString message, QWidget *parent)
+void standardErrorDialog(const QString message, QWidget *parent, bool blocking)
 {
-	execOnMainThread([message, parent]{
+	auto f = [message, parent]{
 		QMessageBox *mb = new QMessageBox(QMessageBox::Critical, QObject::tr("Chyba"), message);
 		mb->setParent(parent);
 		mb->setWindowModality(Qt::ApplicationModal);
@@ -63,8 +63,13 @@ void standardErrorDialog(const QString message, QWidget *parent)
 		static QPixmap windowIcon(":/icons/16/High Priority_16px.png");
 		mb->setWindowIcon(windowIcon);
 
-		mb->show();
-	});
+		mb->exec();
+	};
+
+	if(blocking)
+		f();
+	else
+		execOnMainThread(f);
 }
 
 void standardInfoDialog(const QString message, QWidget *parent)

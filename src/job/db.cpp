@@ -109,7 +109,8 @@ void DatabaseManager::createDb()
 	{
 		exec("CREATE TABLE song_tags ("
 				 "song INTEGER NOT NULL,"
-				 "tag TEXT NOT NULL"
+				 "tag TEXT NOT NULL,"
+				 "PRIMARY KEY(song, tag)"
 				 ")");
 
 		exec("CREATE INDEX i_song_tags_song ON song_tags (song, tag)");

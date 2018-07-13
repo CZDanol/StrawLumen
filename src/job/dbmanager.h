@@ -40,6 +40,9 @@ public:
 	/// Blocking query, returns insert id
 	QVariant insertAssoc(const QString &query, const AssocArgs &args = AssocArgs());
 	QVariant insert(const QString &query, const Args &args = Args());
+	QVariant insert(const QString &table, const QHash<QString,QVariant> &data);
+
+	void update(const QString &table, const QHash<QString,QVariant> &set, const QString &where = "TRUE", const QVariantList &whereArgs = QVariantList());
 
 	/// Blocking query, returns first row selected (or throws error if no rows)
 	QSqlRecord selectRowAssoc(const QString &query, const AssocArgs &args = AssocArgs());

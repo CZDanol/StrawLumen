@@ -4,6 +4,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QPointer>
+#include <QHash>
+#include <QVector>
 
 DBManager::DBManager()
 {
@@ -55,6 +57,21 @@ QVariant DBManager::insertAssoc(const QString &query, const DBManager::AssocArgs
 QVariant DBManager::insert(const QString &query, const DBManager::Args &args)
 {
 	return selectQuery(query, args).lastInsertId();
+}
+
+QVariant DBManager::insert(const QString &table, const QHash<QString, QVariant> &data)
+{
+	return insert(QString("INSERT INTO %1(%2) VALUES(%3)").arg(table, QStringList(data.keys()).join(","), QStringList(QVector<QString>(data.size(), "?").toList()).join(",")), data.values());
+}
+
+void DBManager::update(const QString &table, const QHash<QString, QVariant> &set, const QString &where, const QVariantList &whereArgs)
+{
+	QStringList setList;
+	setList.reserve(set.size());
+	for(const QString &field : set.keys())
+		setList.append(QString("%1 = ?").arg(field));
+
+	exec(QString("UPDATE %1 SET %2 WHERE %3").arg(table, setList.join(","), where), QVariantList() << set.values() << whereArgs);
 }
 
 QSqlRecord DBManager::selectRowAssoc(const QString &query, const DBManager::AssocArgs &args)

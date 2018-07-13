@@ -261,14 +261,17 @@ void StylesDialog::on_btnSaveChanges_clicked()
 	if(currentStyleIsInternal_)
 		return;
 
-	if(currentStyleId_ == -1)
-		currentStyleId_ = db->insert("INSERT INTO styles(isInternal) VALUES(FALSE)").toLongLong();
+	QHash<QString,QVariant> data{
+		{"name", presentationStyle_.name()},
+		{"data", QJsonDocument(presentationStyle_.toJSON()).toJson(QJsonDocument::Compact)}
+	};
 
-	db->exec("UPDATE styles SET name = ?, data = ? WHERE id = ?", {
-						 presentationStyle_.name(),
-						 QJsonDocument(presentationStyle_.toJSON()).toJson(QJsonDocument::Compact),
-						 currentStyleId_
-					 });
+	if(currentStyleId_ == -1) {
+		data.insert("isInternal", false);
+		currentStyleId_ = db->insert("styles", data).toLongLong();
+
+	} else
+		db->update("styles", data, "id = ?", {currentStyleId_});
 
 	setEditMode(false);
 	emit db->sigStyleChanged(currentStyleId_);

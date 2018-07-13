@@ -58,7 +58,6 @@ private slots:
 	void on_btnAddCustomSlideOrderItem_pressed();
 	void on_btnInsertSlideSeparator_clicked();
 	void on_actionImportOpenSongSong_triggered();
-	void on_lnTags_sigFocused();
 	void on_btnCreateSongbook_clicked();
 	void on_actionCreateSongbookFromSelection_triggered();
 	void on_actionExportToLumen_triggered();
@@ -73,10 +72,6 @@ private:
 	QCompleter *slideOrderCompleter_;
 	QStringListModel slideOrderCompleterModel_;
 	QMenu addCustomSlideOrderItemMenu_;
-
-private:
-	QCompleter *tagsCompleter_;
-	QSqlQueryModel tagsCompleterModel_;
 
 private:
 	qlonglong currentSongId_ = -1;

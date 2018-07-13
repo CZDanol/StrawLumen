@@ -1,0 +1,29 @@
+#ifndef SONGTAGSLINEEDIT_H
+#define SONGTAGSLINEEDIT_H
+
+#include <QSqlQueryModel>
+#include <QCompleter>
+#include <QSet>
+
+#include "wgt/wordcompletinglineedit.h"
+
+class SongTagsLineEdit : public WordCompletingLineEdit
+{
+	Q_OBJECT
+
+public:
+	explicit SongTagsLineEdit(QWidget *parent = nullptr);
+
+public:
+	QSet<QString> toTags() const;
+
+protected:
+	virtual void focusInEvent(QFocusEvent *e) override;
+
+private:
+	QCompleter completer_;
+	QSqlQueryModel completerModel_;
+
+};
+
+#endif // SONGTAGSLINEEDIT_H

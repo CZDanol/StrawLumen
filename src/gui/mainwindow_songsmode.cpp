@@ -63,16 +63,6 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		ui->btnAddCustomSlideOrderItem->setMenu(&addCustomSlideOrderItemMenu_);
 	}
 
-	// Tags
-	{
-		tagsCompleter_ = new QCompleter(this);
-		tagsCompleter_->setModel(&tagsCompleterModel_);
-		tagsCompleter_->setCaseSensitivity(Qt::CaseInsensitive);
-
-		ui->lnTags->setCompleter(tagsCompleter_);
-		ui->lnTags->setCompleterSuffix(", ");
-	}
-
 	// Insert song section menu
 	{
 		const QStringList sectionNames {
@@ -297,34 +287,18 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 	};
 
 	if(currentSongId_ == -1) {
-		QVariantList args{
-			QUuid::createUuid().toString()
-		};
-		args.append(data.values());
-		currentSongId_ = db->insert("INSERT INTO songs(uid, " + QStringList(data.keys()).join(", ") + ") VALUES(?" + QString(", ?").repeated(data.size()) + ")", args).toLongLong();
+		data.insert("uid", QUuid::createUuid().toString());
+		currentSongId_ = db->insert("songs", data).toLongLong();
 
-	} else {
-		QList<QVariant> args;
-		args.append(data.values());
-		args.append(currentSongId_);
-
-		db->exec("UPDATE songs SET " + QStringList(data.keys()).join("= ?, ") + " = ? WHERE id = ?", args);
-	}
+	} else
+		db->update("songs", data, "id = ?", {currentSongId_});
 
 	db->updateSongFulltextIndex(currentSongId_);
 
 	// Tags
 	db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
-	QSet<QString> tags;
-	for(QString tag : ui->lnTags->text().toLower().split(',')) {
-		tag = tag.trimmed();
-
-		if(tag.isEmpty() || tags.contains(tag))
-			continue;
-
-		tags.insert(tag);
+	for(QString tag : ui->lnTags->toTags())
 		db->exec("INSERT INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
-	}
 
 	db->commitTransaction();
 
@@ -520,11 +494,6 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 	});
 
 	emit db->sigSongListChanged();
-}
-
-void MainWindow_SongsMode::on_lnTags_sigFocused()
-{
-	tagsCompleterModel_.setQuery(db->selectQuery("SELECT DISTINCT tag FROM song_tags ORDER BY tag ASC"));
 }
 
 void MainWindow_SongsMode::on_btnCreateSongbook_clicked()

@@ -99,7 +99,8 @@ SOURCES += main.cpp \
     gui/startupsplashscreen.cpp \
     importexport/lumenexportdialog.cpp \
     importexport/exportdb.cpp \
-    importexport/lumenimportdialog.cpp
+    importexport/lumenimportdialog.cpp \
+    wgt/songtagslineedit.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -196,7 +197,8 @@ HEADERS += \
     gui/startupsplashscreen.h \
     importexport/lumenexportdialog.h \
     importexport/exportdb.h \
-    importexport/lumenimportdialog.h
+    importexport/lumenimportdialog.h \
+    wgt/songtagslineedit.h
 
 RESOURCES += \
     ../res/resources.qrc

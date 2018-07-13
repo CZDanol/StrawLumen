@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QSqlQuery>
+#include <QFileInfo>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -33,6 +34,22 @@ LumenImportDialog::~LumenImportDialog()
 	delete ui;
 }
 
+void LumenImportDialog::show()
+{
+	importFilename_.clear();
+	updateUi();
+	QDialog::show();
+}
+
+void LumenImportDialog::updateUi()
+{
+	const QFileInfo fi(importFilename_);
+	const bool fiExists = fi.exists();
+
+	ui->btnSelectFile->setText(" " + (fiExists ? fi.fileName() : tr("Vybrat soubor...")));
+	ui->btnImport->setEnabled(fiExists);
+}
+
 LumenImportDialog *lumenImportDialog()
 {
 	static LumenImportDialog *dlg = nullptr;
@@ -49,33 +66,15 @@ void LumenImportDialog::on_btnClose_clicked()
 
 void LumenImportDialog::on_btnImport_clicked()
 {
-	QString dbFilePath_;
-	{
-		static const QIcon icon(":/icons/16/Import_16px.png");
-
-		QFileDialog dlg(this);
-		dlg.setFileMode(QFileDialog::ExistingFile);
-		dlg.setAcceptMode(QFileDialog::AcceptOpen);
-		dlg.setNameFilter(tr("Soubory Straw Lumen (*.strawLumen)"));
-		dlg.setWindowIcon(icon);
-		dlg.setWindowTitle(tr("Import"));
-		dlg.setDirectory(settings->value("lumenExportDirectory", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)).toString());
-
-		if(!dlg.exec())
-			return;
-
-		settings->setValue("lumenExportDirectory", dlg.directory().absolutePath());
-		dbFilePath_ = dlg.selectedFiles().first();
-	}
-
 	const int conflictBehavior = ui->cmbConflictBehavior->currentIndex();
 	const bool addToPlaylist = ui->cbAddToPlaylist->isChecked();
+	const QSet<QString> tags = ui->lnTags->toTags();
 
 	bool isError = false;
 	QList<QSharedPointer<Presentation>> presentations;
 
 	splashscreen->asyncAction(tr("Impportování písní"), false, [&]{
-		ExportDatabaseManager importDb(dbFilePath_, false);
+		ExportDatabaseManager importDb(importFilename_, false);
 		if(!importDb.database().isOpen())
 			return;
 
@@ -102,22 +101,20 @@ void LumenImportDialog::on_btnImport_clicked()
 			} else if(!existingSong.isEmpty()) {
 				songId = existingSong.value("id").toLongLong();
 
-				QVariantList args;
+				QHash<QString,QVariant> data;
 				for(const QString &field : dataFields)
-					args.append(q.value(field));
+					data.insert(field, q.value(field));
 
-				args.append(songId);
-
-				db->exec("UPDATE songs SET " + dataFields.join(" = ?, ") + " = ? WHERE id = ?", args);
+				db->update("songs", data, "id = ?", {songId});
 
 			} else {
-				QVariantList args;
-				args.append(q.value("uid"));
-
+				QHash<QString,QVariant> data;
 				for(const QString &field : dataFields)
-					args.append(q.value(field));
+					data.insert(field, q.value(field));
 
-				songId = db->insert("INSERT INTO songs(uid, " + dataFields.join(", ") +") VALUES(?" + QString(", ?").repeated(dataFields.size()) + ")", args).toLongLong();
+				data.insert("uid", q.value("uid"));
+
+				songId = db->insert("songs", data).toLongLong();
 			}
 
 			if(updateData) {
@@ -130,6 +127,9 @@ void LumenImportDialog::on_btnImport_clicked()
 				while(q.next())
 					db->exec("INSERT INTO song_tags(song, tag) VALUES(?, ?)", {songId, q.value("tag")});
 			}
+
+			for(const QString &tag : tags)
+				db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
 
 			if(addToPlaylist)
 				presentations.append(Presentation_Song::createFromDb(songId));
@@ -147,6 +147,29 @@ void LumenImportDialog::on_btnImport_clicked()
 			mainWindow->presentationMode()->playlist()->addItems(presentations);
 	}
 
-	if(!isError)
+	if(!isError) {
 		standardInfoDialog(tr("Písně byly importovány."));
+		close();
+	}
+}
+
+void LumenImportDialog::on_btnSelectFile_clicked()
+{
+	static const QIcon icon(":/icons/16/Import_16px.png");
+
+	QFileDialog dlg(this);
+	dlg.setFileMode(QFileDialog::ExistingFile);
+	dlg.setAcceptMode(QFileDialog::AcceptOpen);
+	dlg.setNameFilter(tr("Soubory Straw Lumen (*.strawLumen)"));
+	dlg.setWindowIcon(icon);
+	dlg.setWindowTitle(tr("Import"));
+	dlg.setDirectory(settings->value("lumenExportDirectory", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)).toString());
+
+	if(!dlg.exec())
+		return;
+
+	settings->setValue("lumenExportDirectory", dlg.directory().absolutePath());
+	importFilename_ = dlg.selectedFiles().first();
+
+	updateUi();
 }

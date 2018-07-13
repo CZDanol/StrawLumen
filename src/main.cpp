@@ -110,7 +110,6 @@ void setupStylesheet() {
 }
 
 void criticalBootError(const QString &message) {
-	standardErrorDialog(message, nullptr);
-	qApp->exec();
+	standardErrorDialog(message, nullptr, true);
 	exit(-1);
 }
