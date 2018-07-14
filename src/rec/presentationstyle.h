@@ -33,6 +33,9 @@ public:
 	void loadFromJSON(const QJsonValue &val);
 	void loadFromDb(qlonglong styleId);
 
+	/// Return true either if the presentation is not based on a style in the DB or it is and the background was changed (is not original)
+	bool hasCustomBackground() const;
+
 	QJsonObject toJSON() const;
 
 	/// Returns -1 if style was not loaded from db or the style has been altered
@@ -47,6 +50,7 @@ private slots:
 
 private:
 	qlonglong styleId_ = -1;
+	bool customBackground_ = false;
 
 public slots:
 	// Field setters

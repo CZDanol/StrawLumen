@@ -25,6 +25,7 @@ void PresentationStyle::loadFromJSON(const QJsonValue &val)
 #undef F
 
 	styleId_ = -1;
+	customBackground_ = false;
 
 	sb.unblock();
 	emit sigChanged();
@@ -40,9 +41,15 @@ void PresentationStyle::loadFromDb(qlonglong styleId)
 
 	loadFromJSON(QJsonDocument::fromJson(data).object());
 	styleId_ = styleId;
+	customBackground_ = false;
 
 	sb.unblock();
 	emit sigChanged();
+}
+
+bool PresentationStyle::hasCustomBackground() const
+{
+	return customBackground_;
 }
 
 QJsonObject PresentationStyle::toJSON() const
@@ -96,6 +103,7 @@ void PresentationStyle::operator=(const PresentationStyle &other)
 	QSignalBlocker sb(this);
 
 	styleId_ = other.styleId_;
+	customBackground_ = other.customBackground_;
 
 #define F(identifier, capitalizedIdentifier, Type, defaultValue)\
 	identifier ## _ = other.identifier ## _;
@@ -120,7 +128,10 @@ void PresentationStyle::onDbStyleChanged(qlonglong styleId)
 	const Type &PresentationStyle::identifier() const { return identifier ## _; } \
 	void PresentationStyle::set ## capitalizedIdentifier(const Type &set)\
 	{\
-		styleId_ = -1;\
+		if(QString(#identifier) == "background")\
+			customBackground_ = true;\
+		else\
+			styleId_ = -1;\
 		\
 		if(identifier ## _ == set)\
 			return;\

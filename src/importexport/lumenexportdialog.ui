@@ -29,6 +29,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -89,6 +92,11 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>wgtSongSelection</tabstop>
+  <tabstop>btnExport</tabstop>
+  <tabstop>btnClose</tabstop>
+ </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

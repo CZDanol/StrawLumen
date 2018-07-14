@@ -163,5 +163,5 @@ void OpenSongExportDialog::on_btnExport_clicked()
 	});
 
 	if(!splashscreen->isStornoPressed())
-		standardInfoDialog(tr("Vybrané písně byly exportovány do \"%1\".").arg(outputDirectory.absolutePath()));
+		standardSuccessDialog(tr("Vybrané písně byly exportovány do \"%1\".").arg(outputDirectory.absolutePath()));
 }

@@ -56,6 +56,7 @@ private slots:
 	void on_btnSettings_clicked();
 	void on_actionAddPowerpointPresentation_triggered();
 	void on_actionAddSong_triggered();
+	void on_btnPlaylists_clicked();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;

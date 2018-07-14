@@ -227,8 +227,9 @@ void SongListWidget::on_lnSearch_sigDownPressed()
 	if(!songsModel_.rowCount())
 		return;
 
+	ui->tvSongs->selectionModel()->clear();
+	ui->tvSongs->selectionModel()->select(songsModel_.index(0,0), QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Current | QItemSelectionModel::Rows);
 	ui->tvSongs->setFocus();
-	ui->tvSongs->selectionModel()->select(songsModel_.index(0,0), QItemSelectionModel::ClearAndSelect);
 }
 
 void SongListWidget::on_tvSongs_sigUpPressed()

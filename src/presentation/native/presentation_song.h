@@ -4,6 +4,7 @@
 #include <QVector>
 #include <QMap>
 #include <QSharedPointer>
+#include <QSqlRecord>
 
 #include "presentation/native/presentation_nativepresentation.h"
 #include "rec/songsection.h"
@@ -32,6 +33,9 @@ class Presentation_Song : public Presentation_NativePresentation
 
 public:
 	static QSharedPointer<Presentation_Song> createFromDb(qlonglong songId);
+	static QSharedPointer<Presentation_Song> createFromJSON(const QJsonObject &json);
+
+	QJsonObject toJSON() const override;
 
 public:
 	void drawSlide(QPainter &p, int slideId, const QRect &rect) override;
@@ -47,11 +51,16 @@ public:
 	QString slideDescription(int i) const override;
 	QPixmap slideIdentificationIcon(int) const override;
 
+public:
+	QString classIdentifier() const override;
+
 private:
 	Presentation_Song();
 
 private:
-	void loadFromDb(qlonglong songId);
+	bool loadFromDb(qlonglong songId);
+	bool loadFromDb_Uid(const QString &uid);
+	void loadFromDb(const QSqlRecord &rec);
 
 	void loadSlideOrder();
 
@@ -62,6 +71,7 @@ private slots:
 
 private:
 	qlonglong songId_ = -1;
+	QString songUid_;
 	QString name_, author_, defaultSlideOrder_, customSlideOrder_;
 	bool emptySlideBefore_, emptySlideAfter_;
 

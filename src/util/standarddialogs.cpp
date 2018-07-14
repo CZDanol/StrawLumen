@@ -80,10 +80,29 @@ void standardInfoDialog(const QString message, QWidget *parent)
 		mb->setWindowModality(Qt::ApplicationModal);
 		mb->addButton(QObject::tr("Ok"), QMessageBox::AcceptRole);
 
-		static QPixmap iconPixmap(":/icons/32/Info_16px.png");
+		static QPixmap iconPixmap(":/icons/32/Info_32px.png");
 		mb->setIconPixmap(iconPixmap);
 
 		static QPixmap windowIcon(":/icons/16/Info_16px.png");
+		mb->setWindowIcon(windowIcon);
+
+
+		mb->show();
+	});
+}
+
+void standardSuccessDialog(const QString message, QWidget *parent)
+{
+	execOnMainThread([message, parent]{
+		QMessageBox *mb = new QMessageBox(QMessageBox::Information, QObject::tr("Úspěch"), message);
+		mb->setParent(parent);
+		mb->setWindowModality(Qt::ApplicationModal);
+		mb->addButton(QObject::tr("Ok"), QMessageBox::AcceptRole);
+
+		static QPixmap iconPixmap(":/icons/32/Ok_32px.png");
+		mb->setIconPixmap(iconPixmap);
+
+		static QPixmap windowIcon(":/icons/16/Ok_16px.png");
 		mb->setWindowIcon(windowIcon);
 
 

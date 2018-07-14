@@ -36,9 +36,12 @@ void FontSelectionWidget::setSelectedFont(const QFont &font)
 
 	selectedFont_ = font;
 
-	ui->cmbFont->setCurrentText(font.family());
+	ui->cmbFont->setCurrentIndex(fontListModel_.stringList().indexOf(font.family()));
 	ui->sbSize->setValue(font.pointSize());
 	updateFontStyleList(font.styleName());
+
+	ui->btnBold->setChecked(font.bold());
+	ui->btnItalic->setChecked(font.italic());
 }
 
 void FontSelectionWidget::setReadOnly(bool set)
@@ -50,6 +53,8 @@ void FontSelectionWidget::setReadOnly(bool set)
 	ui->cmbFont->setEnabled(!set);
 	ui->cmbFontStyle->setEnabled(!set);
 	ui->sbSize->setReadOnly(set);
+	ui->btnBold->setEnabled(!set);
+	ui->btnItalic->setEnabled(!set);
 }
 
 void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
@@ -64,7 +69,7 @@ void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
 	ui->cmbFontStyle->setCurrentIndex(pos);
 
 	if(stringList.size())
-		selectedFont_ = fontDatabase().font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());
+		on_cmbFontStyle_activated(stringList[pos]);
 }
 
 void FontSelectionWidget::on_cmbFont_activated(const QString &arg1)
@@ -85,6 +90,8 @@ void FontSelectionWidget::on_cmbFontStyle_activated(const QString &arg1)
 		return;
 
 	selectedFont_ = fontDatabase().font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());
+	ui->btnBold->setChecked(selectedFont_.bold());
+	ui->btnItalic->setChecked(selectedFont_.italic());
 
 	emit sigFontChangedByUser(selectedFont_);
 }
@@ -96,5 +103,23 @@ void FontSelectionWidget::on_sbSize_valueChanged(int arg1)
 
 	selectedFont_.setPointSize(arg1);
 
+	emit sigFontChangedByUser(selectedFont_);
+}
+
+void FontSelectionWidget::on_btnBold_toggled(bool checked)
+{
+	if(selectedFont_.bold() == checked)
+		return;
+
+	selectedFont_.setBold(checked);
+	emit sigFontChangedByUser(selectedFont_);
+}
+
+void FontSelectionWidget::on_btnItalic_toggled(bool checked)
+{
+	if(selectedFont_.italic() == checked)
+		return;
+
+	selectedFont_.setItalic(checked);
 	emit sigFontChangedByUser(selectedFont_);
 }

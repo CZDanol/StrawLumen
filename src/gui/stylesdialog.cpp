@@ -80,6 +80,8 @@ void StylesDialog::showInMgmtMode()
 
 	if(!ui->lvList->currentIndex().isValid())
 		ui->lvList->setCurrentIndex(styleListModel_.index(0,0));
+
+	onCurrentStyleChanged(ui->lvList->currentIndex(), QModelIndex());
 }
 
 bool StylesDialog::showInSelectionMode(PresentationStyle &style)

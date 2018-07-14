@@ -10,6 +10,11 @@ Presentation_BlackScreen::~Presentation_BlackScreen()
 
 }
 
+QJsonObject Presentation_BlackScreen::toJSON() const
+{
+	return QJsonObject();
+}
+
 void Presentation_BlackScreen::drawSlide(QPainter &p, int slideId, const QRect &rect)
 {
 	Q_UNUSED(p);
@@ -39,6 +44,11 @@ QPixmap Presentation_BlackScreen::slideIdentificationIcon(int) const
 {
 	static QPixmap icon(":/icons/16/TV Off_16px.png");
 	return icon;
+}
+
+QString Presentation_BlackScreen::classIdentifier() const
+{
+	return "native.blackScreen";
 }
 
 Presentation_BlackScreen::Presentation_BlackScreen()

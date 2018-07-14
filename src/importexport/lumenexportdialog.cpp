@@ -100,5 +100,5 @@ void LumenExportDialog::on_btnExport_clicked()
 	});
 
 	if(!isError && !splashscreen->isStornoPressed())
-		standardInfoDialog(tr("Vybrané písně byly exportovány do \"%1\".").arg(outputFilePath_));
+		standardSuccessDialog(tr("Vybrané písně byly exportovány do \"%1\".").arg(outputFilePath_));
 }

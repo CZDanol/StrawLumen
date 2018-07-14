@@ -25,7 +25,7 @@ bool Presentation_PowerPoint::isPowerpointFile(const QFileInfo &file)
 	return validExtensions.contains(file.suffix());
 }
 
-QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QString &filename)
+QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilename(const QString &filename)
 {
 	QSharedPointer<Presentation_PowerPoint> result_;
 
@@ -133,6 +133,25 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::create(const QS
 	return result_;
 }
 
+QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromJSON(const QJsonObject &json)
+{
+	QSharedPointer<Presentation_PowerPoint> result = createFromFilename(json["filePath"].toString());
+	if(!result)
+		return nullptr;
+
+	result->isAutoPresentation_ = json["isAutoPresentation"].toBool();
+
+	return result;
+}
+
+QJsonObject Presentation_PowerPoint::toJSON() const
+{
+	return QJsonObject {
+		{"filePath", filePath_},
+		{"isAutoPresentation", isAutoPresentation_}
+	};
+}
+
 Presentation_PowerPoint::~Presentation_PowerPoint()
 {
 	// Prevent destroying the engine before deactivatePresentation is possibly called on the activeX thread
@@ -185,6 +204,11 @@ QString Presentation_PowerPoint::slideDescription(int i) const
 PresentationEngine *Presentation_PowerPoint::engine() const
 {
 	return presentationEngine_PowerPoint;
+}
+
+QString Presentation_PowerPoint::classIdentifier() const
+{
+	return "powerPoint.powerPoint";
 }
 
 void Presentation_PowerPoint::activatePresentation(int startingSlide)

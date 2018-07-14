@@ -269,7 +269,7 @@ void DocumentGenerationDialog::onPdfGenerated(const QByteArray &data)
 	if(ui->cbOpenWhenDone)
 		QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));
 	else
-		standardInfoDialog(tr("Zpěvník byl uložen do \"%1\"").arg(outputFilePath_));
+		standardSuccessDialog(tr("Zpěvník byl uložen do \"%1\"").arg(outputFilePath_));
 }
 
 

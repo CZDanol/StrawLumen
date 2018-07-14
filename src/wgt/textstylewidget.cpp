@@ -6,6 +6,8 @@ TextStyleWidget::TextStyleWidget(QWidget *parent) :
 	ui(new Ui::TextStyleWidget)
 {
 	ui->setupUi(this);
+	ui->wgtColor->setAlphaChannelEnabled(false);
+	ui->wgtOutlineColor->setAlphaChannelEnabled(false);
 
 	connect(this, SIGNAL(sigTextStyleChangedByUser(TextStyle)), ui->wgtPreview, SLOT(setTextStyle(TextStyle)));
 

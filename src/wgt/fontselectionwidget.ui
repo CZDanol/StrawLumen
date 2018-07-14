@@ -42,6 +42,47 @@
       </widget>
      </item>
      <item>
+      <widget class="QComboBox" name="cmbFontStyle">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>2</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnBold">
+       <property name="icon">
+        <iconset resource="../../res/resources.qrc">
+         <normaloff>:/icons/16/Bold_16px.png</normaloff>:/icons/16/Bold_16px.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnItalic">
+       <property name="icon">
+        <iconset resource="../../res/resources.qrc">
+         <normaloff>:/icons/16/Italic_16px.png</normaloff>:/icons/16/Italic_16px.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QSpinBox" name="sbSize">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -60,23 +101,12 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QComboBox" name="cmbFontStyle">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>2</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="sizeAdjustPolicy">
-        <enum>QComboBox::AdjustToContents</enum>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../res/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

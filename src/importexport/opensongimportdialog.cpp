@@ -64,7 +64,7 @@ void OpenSongImportDialog::on_btnImport_clicked()
 	const bool addToPlaylist = ui->cbAddToPlaylist->isChecked();
 	const QSet<QString> tags = ui->lnTags->toTags();
 
-	QList<QSharedPointer<Presentation>> presentations;
+	QVector<QSharedPointer<Presentation> > presentations;
 
 	splashscreen->asyncAction(tr("Import písní"), true, [&]{
 		db->beginTransaction();
@@ -161,7 +161,7 @@ void OpenSongImportDialog::on_btnImport_clicked()
 	}
 
 	if(!splashscreen->isStornoPressed())
-		standardInfoDialog(tr("Písně byly importovány."));
+		standardSuccessDialog(tr("Písně byly importovány."));
 
 	close();
 }

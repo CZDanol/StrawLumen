@@ -4,6 +4,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QCloseEvent>
 #include <QEventLoop>
+#include <QIcon>
 
 #include "util/execonmainthread.h"
 
@@ -14,6 +15,7 @@ Splashscreen::Splashscreen(QWidget *parent) :
 	ui(new Ui::Splashscreen)
 {
 	ui->setupUi(this);
+	setWindowIcon(QIcon());
 	setFixedSize(size());
 	setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 	setWindowTitle(" ");

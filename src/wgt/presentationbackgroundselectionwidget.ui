@@ -32,6 +32,12 @@
       <iconset resource="../../res/resources.qrc">
        <normaloff>:/icons/16/Open_16px.png</normaloff>:/icons/16/Open_16px.png</iconset>
      </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
   </layout>

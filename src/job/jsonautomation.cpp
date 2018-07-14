@@ -37,6 +37,8 @@ JSON_TO(QColor) {
 
 JSON_FROM(QFont) {
 	subj = fontDatabase().font(json["family"].toString(), json["style"].toString(), json["size"].toInt());
+	subj.setBold(json["bold"].toBool());
+	subj.setItalic(json["italic"].toBool());
 }
 JSON_TO(QFont) {
 	QJsonObject json;
@@ -44,6 +46,8 @@ JSON_TO(QFont) {
 	json["family"] = subj.family();
 	json["style"] = subj.styleName();
 	json["size"] = subj.pointSize();
+	json["bold"] = subj.bold();
+	json["italic"] = subj.italic();
 
 	return json;
 }

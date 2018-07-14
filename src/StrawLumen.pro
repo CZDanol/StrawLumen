@@ -15,6 +15,7 @@ VERSION = 0.0.1.0
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"
+QMAKE_TARGET_DESCRIPTION = "Straw Lumen"
 
 DEFINES += PROGRAM_VERSION=\\\"$$VERSION\\\"
 win32:DEFINES += PLATFORM_SUFFIX=\\\"win32\\\"
@@ -103,7 +104,8 @@ SOURCES += main.cpp \
     wgt/songtagslineedit.cpp \
     importexport/opensongimportdialog.cpp \
     util/guianimations.cpp \
-    importexport/opensongexportdialog.cpp
+    importexport/opensongexportdialog.cpp \
+    gui/playlistsdialog.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -132,7 +134,8 @@ FORMS += \
     importexport/lumenexportdialog.ui \
     importexport/lumenimportdialog.ui \
     importexport/opensongimportdialog.ui \
-    importexport/opensongexportdialog.ui
+    importexport/opensongexportdialog.ui \
+    gui/playlistsdialog.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -206,7 +209,8 @@ HEADERS += \
     wgt/songtagslineedit.h \
     importexport/opensongimportdialog.h \
     util/guianimations.h \
-    importexport/opensongexportdialog.h
+    importexport/opensongexportdialog.h \
+    gui/playlistsdialog.h
 
 RESOURCES += \
     ../res/resources.qrc

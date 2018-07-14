@@ -68,7 +68,7 @@ void LumenImportDialog::on_btnImport_clicked()
 	const QSet<QString> tags = ui->lnTags->toTags();
 
 	bool isError = false;
-	QList<QSharedPointer<Presentation>> presentations;
+	QVector<QSharedPointer<Presentation> > presentations;
 
 	splashscreen->asyncAction(tr("Impportování písní"), true, [&]{
 		ExportDatabaseManager importDb(importFilename_, false);
@@ -146,7 +146,7 @@ void LumenImportDialog::on_btnImport_clicked()
 
 	if(!isError) {
 		if(!splashscreen->isStornoPressed())
-			standardInfoDialog(tr("Písně byly importovány."));
+			standardSuccessDialog(tr("Písně byly importovány."));
 
 		close();
 	}

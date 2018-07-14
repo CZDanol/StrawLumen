@@ -33,7 +33,10 @@ public:
 	static bool isPowerpointFile(const QFileInfo &file);
 
 	/// Attempts to create a powerpoint presentation. Shows splashscreen during the loading. Can fail and return null.
-	static QSharedPointer<Presentation_PowerPoint> create(const QString &filename);
+	static QSharedPointer<Presentation_PowerPoint> createFromFilename(const QString &filename);
+	static QSharedPointer<Presentation_PowerPoint> createFromJSON(const QJsonObject &json);
+
+	QJsonObject toJSON() const override;
 
 	~Presentation_PowerPoint();
 
@@ -50,6 +53,7 @@ public:
 	QString slideDescription(int i) const override;
 
 	PresentationEngine *engine() const override;
+	QString classIdentifier() const override;
 
 	void activatePresentation(int startingSlide) override;
 	void deactivatePresentation() override;

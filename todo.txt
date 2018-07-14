@@ -1,9 +1,9 @@
-- bug: když se změní styl, uloží se a dá se storno (v ne-mgmt modu), tak se to neupdatne
-- export do opensongu
+- reentrant splashscreen
 - zkratka - upravit písničku v presentation modu
 - položka: vlastní text
 - položka: pozadí
 - možnost uložit výběr u vytváření zpěvníku (aby se dalo přidávat)
+- podpora pro jeden monitor?
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 

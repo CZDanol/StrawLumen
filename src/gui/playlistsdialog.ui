@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlaylistsDialog</class>
+ <widget class="QDialog" name="PlaylistsDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>484</width>
+    <height>363</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Programy</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../res/resources.qrc">
+    <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QTabWidget" name="twItems_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="usesScrollButtons">
+        <bool>false</bool>
+       </property>
+       <widget class="QWidget" name="tab_5">
+        <attribute name="icon">
+         <iconset resource="../../res/resources.qrc">
+          <normaloff>:/icons/16/Settings_16px.png</normaloff>:/icons/16/Settings_16px.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>Akce</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnNew">
+           <property name="text">
+            <string> Nový</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnRename">
+           <property name="text">
+            <string> Přejmenovat</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/16/Edit_16px.png</normaloff>:/icons/16/Edit_16px.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnDelete">
+           <property name="text">
+            <string> Smazat</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/16/Trash Can_16px.png</normaloff>:/icons/16/Trash Can_16px.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>16</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnLoad">
+           <property name="text">
+            <string> Načíst</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/16/Open_16px.png</normaloff>:/icons/16/Open_16px.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnSave">
+           <property name="text">
+            <string> Uložit</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/16/Save_16px.png</normaloff>:/icons/16/Save_16px.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="2">
+    <widget class="QTabWidget" name="twItems">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="usesScrollButtons">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="icon">
+       <iconset resource="../../res/resources.qrc">
+        <normaloff>:/icons/16/Database_16px.png</normaloff>:/icons/16/Database_16px.png</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Položky</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QListView" name="lstItems">
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::NoSelection</enum>
+         </property>
+         <property name="uniformItemSizes">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QTabWidget" name="twPlaylists">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="usesScrollButtons">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="icon">
+       <iconset resource="../../res/resources.qrc">
+        <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Programy</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QListWidget" name="lstPlaylists">
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="uniformItemSizes">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnClose">
+       <property name="text">
+        <string> Zavřít</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/resources.qrc">
+         <normaloff>:/icons/16/Checkmark_16px.png</normaloff>:/icons/16/Checkmark_16px.png</iconset>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../res/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

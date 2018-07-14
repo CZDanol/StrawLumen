@@ -182,5 +182,8 @@
         <file>icons/16/Star Filled_16px.png</file>
         <file>icons/16/Sort By Modified Date_16px.png</file>
         <file>icons/32/Info_32px.png</file>
+        <file>icons/16/Database_16px.png</file>
+        <file>icons/16/Ok_16px.png</file>
+        <file>icons/32/Ok_32px.png</file>
     </qresource>
 </RCC>

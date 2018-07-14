@@ -165,7 +165,7 @@ bool PlaylistItemModel::dropMimeData(const QMimeData *mime, Qt::DropAction actio
 
 	if(mime->hasFormat("application/straw.lumen.song.ids")) {
 		QDataStream stream(mime->data("application/straw.lumen.song.ids"));
-		QVector<QSharedPointer<Presentation>> items;
+		QVector<QSharedPointer<Presentation> > items;
 
 		while(!stream.atEnd()) {
 			qlonglong songId;

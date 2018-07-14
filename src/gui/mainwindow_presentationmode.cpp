@@ -12,6 +12,7 @@
 
 #include "presentation/presentationpropertieswidget.h"
 #include "gui/settingsdialog.h"
+#include "gui/playlistsdialog.h"
 #include "rec/playlist.h"
 #include "presentation/presentationmanager.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
@@ -54,8 +55,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		{
 			playlistContextMenu_.addAction(ui->actionDeletePresentation);
 
-			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
 			addPresentationMenu_.addAction(ui->actionAddSong);
+			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
 			addPresentationMenu_.addAction(ui->actionAddBlackScreen);
 
 			ui->btnAddPresentation->setMenu(&addPresentationMenu_);
@@ -168,7 +169,7 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 			if(!Presentation_PowerPoint::isPowerpointFile(fileInfo))
 				return standardErrorDialog(tr("Soubor \"%1\" není podporován.").arg(filename));
 
-			if(!playlist_->addItem(Presentation_PowerPoint::create(filename)))
+			if(!playlist_->addItem(Presentation_PowerPoint::createFromFilename(filename)))
 				return;
 		}
 	});
@@ -307,7 +308,7 @@ void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
 	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané prezentace?")))
 		return;
 
-	QVector<QSharedPointer<Presentation>> items;
+	QVector<QSharedPointer<Presentation> > items;
 	for(const QModelIndex &index : selection)
 		items.append(playlist_->items()[index.row()]);
 
@@ -342,7 +343,7 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 	settings->setValue("dialog.addPowerpointPresentation.directory", dlg.directory().absolutePath());
 
 	for(auto &filename : dlg.selectedFiles()) {
-		if(!playlist_->addItem(Presentation_PowerPoint::create(filename)))
+		if(!playlist_->addItem(Presentation_PowerPoint::createFromFilename(filename)))
 			break;
 	}
 }
@@ -353,4 +354,9 @@ void MainWindow_PresentationMode::on_actionAddSong_triggered()
 {
 	standardInfoDialog(tr("Vyberte píseň v panelu \"Písně\" vlevo dole a přetáhněte ji do panelu \"Program\"."));
 	ui->twLeftBottom->setCurrentWidget(ui->tabSongList);
+}
+
+void MainWindow_PresentationMode::on_btnPlaylists_clicked()
+{
+	playlistsDialog()->show();
 }

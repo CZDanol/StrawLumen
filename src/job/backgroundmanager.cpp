@@ -18,7 +18,7 @@ BackgroundManager::BackgroundManager()
 
 	internalBackgroundDirectory_ = QDir(QDir(qApp->applicationDirPath()).absoluteFilePath("../backgrounds"));
 
-	cache_.setMaxCost(20);
+	cache_.setMaxCost(10);
 }
 
 const QDir &BackgroundManager::internalBackgroundDirectory() const

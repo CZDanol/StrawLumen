@@ -30,6 +30,11 @@ QDir appDataDirectory;
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
+	app.setApplicationName("Straw Lumen");
+	app.setOrganizationName("Straw Solutions");
+	app.setOrganizationDomain("straw-solutions.cz");
+	app.setApplicationVersion(PROGRAM_VERSION);
+
 	app.setAttribute(Qt::AA_DisableWindowContextHelpButton);
 
 	setupStylesheet();
@@ -84,13 +89,15 @@ void initApplication() {
 }
 
 void uninitApplication() {
+	presentationManager->setActive(false);
+
+	delete mainWindow;
+	delete projectorWindow;
+
 	delete presentationManager;
 	delete presentationEngine_Native;
 	delete presentationEngine_PowerPoint;
 	delete activeXJobThread;
-
-	delete mainWindow;
-	delete projectorWindow;
 
 	delete backgroundManager;
 	delete db;

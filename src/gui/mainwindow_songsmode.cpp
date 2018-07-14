@@ -462,7 +462,7 @@ void MainWindow_SongsMode::on_actionPresentSongs_triggered()
 	if(isSongEditMode_)
 		return standardErrorDialog(tr("Tuto akci nelze provést během úprav písně. Ukončete úpravy a zkuste to znovu."));
 
-	QList<QSharedPointer<Presentation>> presentations;
+	QVector<QSharedPointer<Presentation> > presentations;
 	for(qlonglong songId : ui->wgtSongList->selectedRowIds()) {
 		auto pres = Presentation_Song::createFromDb(songId);
 		if(pres)
@@ -479,7 +479,7 @@ void MainWindow_SongsMode::on_actionPresentSongs_triggered()
 
 void MainWindow_SongsMode::on_actionAddSongsToPlaylist_triggered()
 {
-	QList<QSharedPointer<Presentation>> presentations;
+	QVector<QSharedPointer<Presentation> > presentations;
 	for(qlonglong songId : ui->wgtSongList->selectedRowIds()) {
 		auto pres = Presentation_Song::createFromDb(songId);
 		if(pres)

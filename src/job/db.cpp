@@ -82,15 +82,15 @@ void DatabaseManager::createDb()
 	// SONGS
 	{
 		exec("CREATE TABLE songs ("
-						 "id INTEGER PRIMARY KEY,"
-						 "uid TEXT NOT NULL,"
-						 "name TEXT NOT NULL,"
-						 "author TEXT NOT NULL,"
-						 "copyright TEXT NOT NULL,"
-						 "content TEXT NOT NULL,"
-						 "slideOrder TEXT NOT NULL,"
-						 "lastEdit INTEGER NOT NULL"
-						 ")");
+				 "id INTEGER PRIMARY KEY,"
+				 "uid TEXT NOT NULL,"
+				 "name TEXT NOT NULL,"
+				 "author TEXT NOT NULL,"
+				 "copyright TEXT NOT NULL,"
+				 "content TEXT NOT NULL,"
+				 "slideOrder TEXT NOT NULL,"
+				 "lastEdit INTEGER NOT NULL"
+				 ")");
 
 		exec("CREATE INDEX i_songs_uid ON songs (uid)");
 		exec("CREATE INDEX i_songs_name ON songs (name)");
@@ -100,10 +100,10 @@ void DatabaseManager::createDb()
 	// SONGS_FULLTEXT
 	{
 		exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
-						 "name TEXT NOT NULL,"
-						 "author TEXT NOT NULL,"
-						 "content TEXT NOT NULL"
-						 ")");
+				 "name TEXT NOT NULL,"
+				 "author TEXT NOT NULL,"
+				 "content TEXT NOT NULL"
+				 ")");
 	}
 
 	// SONG_TAGS
@@ -121,11 +121,11 @@ void DatabaseManager::createDb()
 	// STYLES
 	{
 		exec("CREATE TABLE styles ("
-						 "id INTEGER PRIMARY KEY,"
-						 "name STRING NOT NULL,"
-						 "isInternal bool NOT NULL,"
-						 "data BLOB"
-						 ")");
+				 "id INTEGER PRIMARY KEY,"
+				 "name STRING NOT NULL,"
+				 "isInternal bool NOT NULL,"
+				 "data BLOB"
+				 ")");
 
 		exec("CREATE INDEX i_styles_name ON styles (name)");
 	}
@@ -133,24 +133,35 @@ void DatabaseManager::createDb()
 	// BACKGROUNDS
 	{
 		exec("CREATE TABLE backgrounds ("
-						 "id INTEGER PRIMARY KEY,"
-						 "thumbnail BLOB NOT NULL,"
-						 "data BLOB NOT NULL"
-						 ")");
+				 "id INTEGER PRIMARY KEY,"
+				 "thumbnail BLOB NOT NULL,"
+				 "data BLOB NOT NULL"
+				 ")");
 	}
 
 	// KEYVALUE ASSOC
 	{
 		exec("CREATE TABLE keyValueAssoc ("
-						 "key STRING NOT NULL,"
-						 "value"
-						 ")");
+				 "key STRING NOT NULL,"
+				 "value"
+				 ")");
 
-		exec("CREATE INDEX i_keyValueAssoc_key ON keyValueAssoc(key)");
+		exec("CREATE UNIQUE INDEX i_keyValueAssoc_key ON keyValueAssoc(key)");
 
 		exec("INSERT INTO keyValueAssoc(key, value)"
 						 "VALUES"
 						 "('database.version', 1)");
+	}
+
+	// PLAYLISTS
+	{
+		exec("CREATE TABLE playlists ("
+				 "id INTEGER PRIMARY KEY,"
+				 "name STRING NOT NULL,"
+				 "data BLOB"
+					")");
+
+		exec("CREATE INDEX i_playlists_name ON playlists(name)");
 	}
 
 	if(false) {

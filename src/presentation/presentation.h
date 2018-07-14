@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <QPixmap>
+#include <QJsonObject>
 
 class Playlist;
 class PresentationEngine;
@@ -46,6 +47,10 @@ public:
 
 public:
 	virtual PresentationEngine *engine() const = 0;
+	virtual QString classIdentifier() const = 0;
+
+public:
+	virtual QJsonObject toJSON() const = 0;
 
 public:
 	/// DO NOT CALL, ONLY TO BE CALLED BY PRESENTATIONMANAGER

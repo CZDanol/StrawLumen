@@ -17,9 +17,46 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 	result->emptySlideBefore_ = settings->value("song.emptySlideBefore").toBool();
 	result->emptySlideAfter_ = settings->value("song.emptySlideAfter", true).toBool();
 
-	result->loadFromDb(songId);
+	if(!result->loadFromDb(songId))
+		return nullptr;
 
 	return result;
+}
+
+QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonObject &json)
+{
+	QSharedPointer<Presentation_Song> result(new Presentation_Song());
+	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
+
+	if(!result->loadFromDb_Uid(json["songUid"].toString()))
+		return nullptr;
+
+	result->customSlideOrder_ = json["customSlideOrder"].toString();
+	result->emptySlideBefore_ = json["emptySlideBefore"].toBool();
+	result->emptySlideAfter_ = json["emptySlideAfter"].toBool();
+
+	PresentationStyle style;
+	style.loadFromDb((qlonglong) json["styleId"].toDouble());
+	if(!json["background"].isNull()) {
+		PresentationBackground background;
+		background.loadFromJSON(json["background"]);
+		style.setBackground(background);
+	}
+
+	result->style_ = style;
+	return result;
+}
+
+QJsonObject Presentation_Song::toJSON() const
+{
+	return QJsonObject{
+		{"songUid", songUid_},
+		{"customSlideOrder", customSlideOrder_},
+		{"emptySlideBefore", emptySlideBefore_},
+		{"emptySlideAfter", emptySlideAfter_},
+		{"styleId", style_.styleId()},
+		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()}
+	};
 }
 
 void Presentation_Song::drawSlide(QPainter &p, int slideId, const QRect &rect)
@@ -63,6 +100,11 @@ QPixmap Presentation_Song::slideIdentificationIcon(int i) const
 	return slides_[i].icon_;
 }
 
+QString Presentation_Song::classIdentifier() const
+{
+	return "native.song";
+}
+
 Presentation_Song::Presentation_Song()
 {
 	connect(db, &DatabaseManager::sigSongChanged, this, &Presentation_Song::onDbManagerSongChanged);
@@ -70,22 +112,39 @@ Presentation_Song::Presentation_Song()
 	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
 }
 
-void Presentation_Song::loadFromDb(qlonglong songId)
+bool Presentation_Song::loadFromDb(qlonglong songId)
 {
-	const QSqlRecord r = db->selectRowDef("SELECT * FROM songs WHERE id = ?", {songId});
-	if(r.isEmpty())
-		return;
+	const QSqlRecord rec = db->selectRowDef("SELECT * FROM songs WHERE id = ?", {songId});
+	if(rec.isEmpty())
+		return false;
 
+	loadFromDb(rec);
+	return true;
+}
+
+bool Presentation_Song::loadFromDb_Uid(const QString &uid)
+{
+	const QSqlRecord rec = db->selectRowDef("SELECT * FROM songs WHERE uid = ?", {uid});
+	if(rec.isEmpty())
+		return false;
+
+	loadFromDb(rec);
+	return true;
+}
+
+void Presentation_Song::loadFromDb(const QSqlRecord &rec)
+{
 	QSignalBlocker sb(this);
 
-	songId_ = songId;
-	name_ = r.value("name").toString();
-	author_ = r.value("author").toString();
-	defaultSlideOrder_ = r.value("slideOrder").toString();
+	songUid_ = rec.value("uid").toString();
+	songId_ = rec.value("id").toLongLong();
+	name_ = rec.value("name").toString();
+	author_ = rec.value("author").toString();
+	defaultSlideOrder_ = rec.value("slideOrder").toString();
 
 	const bool defaultSlideOrderEmpty = defaultSlideOrder_.isEmpty();
 
-	QString content = r.value("content").toString();
+	QString content = rec.value("content").toString();
 	content.replace(songChordAnnotationRegex(),QString()); // Remove chords
 
 	sections_.clear();

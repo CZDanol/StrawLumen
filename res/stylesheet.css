@@ -34,3 +34,14 @@ QWidget[quickEditStyle="true"] QDateEdit[readOnly="true"] {
 	border-bottom: 1px dotted gray;
 	background: transparent;
 }
+
+QListView QLineEdit {
+  border: none;
+	margin: 0;
+	padding: 0;
+	background: white;
+}
+
+QAbstractItemView::item:selected QLineEdit {
+  background-color: #90dff9;
+}

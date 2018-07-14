@@ -196,6 +196,13 @@
    <header>wgt/songtagslineedit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>btnSelectFiles</tabstop>
+  <tabstop>cbAddToPlaylist</tabstop>
+  <tabstop>lnTags</tabstop>
+  <tabstop>btnClose</tabstop>
+  <tabstop>btnImport</tabstop>
+ </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

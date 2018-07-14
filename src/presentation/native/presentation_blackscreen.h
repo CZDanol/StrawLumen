@@ -15,6 +15,8 @@ public:
 
 	~Presentation_BlackScreen();
 
+	QJsonObject toJSON() const override;
+
 public:
 	void drawSlide(QPainter &p, int slideId, const QRect &rect) override;
 
@@ -24,6 +26,9 @@ public:
 
 	int slideCount() const override;
 	QPixmap slideIdentificationIcon(int i) const;
+
+public:
+	QString classIdentifier() const override;
 
 private:
 	Presentation_BlackScreen();
