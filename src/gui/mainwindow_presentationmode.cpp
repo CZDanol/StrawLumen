@@ -13,6 +13,7 @@
 #include "presentation/presentationpropertieswidget.h"
 #include "gui/settingsdialog.h"
 #include "gui/playlistsdialog.h"
+#include "gui/mainwindow_songsmode.h"
 #include "rec/playlist.h"
 #include "presentation/presentationmanager.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
@@ -21,6 +22,7 @@
 #include "job/settings.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
+#include "util/guianimations.h"
 
 MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	QWidget(parent),
@@ -108,6 +110,11 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	// Song list
 	{
 		connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), this, SLOT(onSongListItemActivated(qlonglong)));
+		connect(ui->wgtSongList, SIGNAL(sigCustomContextMenuRequested(QPoint)), this, SLOT(onSongListContextMenuRequested(QPoint)));
+
+		songListContextMenu_.addAction(ui->actionAddSongsToPlaylist);
+		songListContextMenu_.addAction(ui->actionEditSong);
+		songListContextMenu_.addAction(ui->actionDeleteSongs);
 	}
 
 	// Shortcuts
@@ -272,6 +279,14 @@ void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &p
 	playlistContextMenu_.popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
 }
 
+void MainWindow_PresentationMode::onSongListContextMenuRequested(const QPoint &point)
+{
+	if(!ui->wgtSongList->selectedRowCount())
+		return;
+
+	songListContextMenu_.popup(point);
+}
+
 void MainWindow_PresentationMode::onSongListItemActivated(qlonglong songId)
 {
 	playlist_->addItem(Presentation_Song::createFromDb(songId));
@@ -352,8 +367,9 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 
 void MainWindow_PresentationMode::on_actionAddSong_triggered()
 {
-	standardInfoDialog(tr("Vyberte píseň v panelu \"Písně\" vlevo dole a přetáhněte ji do panelu \"Program\"."));
+	//standardInfoDialog(tr("Vyberte píseň v panelu \"Písně\" vlevo dole a přetáhněte ji do panelu \"Program\"."));
 	ui->twLeftBottom->setCurrentWidget(ui->tabSongList);
+	flashWidget(ui->twLeftBottom);
 }
 
 void MainWindow_PresentationMode::on_btnPlaylists_clicked()
@@ -367,4 +383,24 @@ void MainWindow_PresentationMode::on_btnClearPlaylist_clicked()
 		return;
 
 	playlist_->clear();
+}
+
+void MainWindow_PresentationMode::on_actionEditSong_triggered()
+{
+	mainWindow->showSongsMode();
+	mainWindow->songsMode()->editSong(ui->wgtSongList->currentRowId());
+}
+
+void MainWindow_PresentationMode::on_actionDeleteSongs_triggered()
+{
+	mainWindow->songsMode()->requestDeleteSongs(ui->wgtSongList->selectedRowIds());
+}
+
+void MainWindow_PresentationMode::on_actionAddSongsToPlaylist_triggered()
+{
+	QVector<QSharedPointer<Presentation>> items;
+	for(const qlonglong songId : ui->wgtSongList->selectedRowIds())
+		items << Presentation_Song::createFromDb(songId);
+
+	playlist_->addItems(items);
 }

@@ -623,6 +623,33 @@
     <string>Píseň</string>
    </property>
   </action>
+  <action name="actionEditSong">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Edit_16px.png</normaloff>:/icons/16/Edit_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upravit</string>
+   </property>
+  </action>
+  <action name="actionDeleteSongs">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Trash Can_16px.png</normaloff>:/icons/16/Trash Can_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Smazat</string>
+   </property>
+  </action>
+  <action name="actionAddSongsToPlaylist">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Přidat do programu</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

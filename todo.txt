@@ -1,14 +1,11 @@
 - reentrant splashscreen
 
-- zkratka - upravit písničku v presentation modu
 - položka: vlastní text
 - položka: pozadí
 - možnost uložit výběr u vytváření zpěvníku (aby se dalo přidávat)
 - podpora pro jeden monitor?
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic
-
-- potvrdit zahodit změny při skrytí songsmode
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
 - všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)

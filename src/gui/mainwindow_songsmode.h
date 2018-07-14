@@ -30,12 +30,13 @@ public:
 
 public slots:
 	void editSong(qlonglong songId);
-
-private:
-	void setSongEditMode(bool set);
+	void requestDeleteSongs(const QVector<qlonglong> &songIds);
 
 	/// Returns false if the user does not wish do close the edit mode
 	bool askFinishEditMode();
+
+private:
+	void setSongEditMode(bool set);
 
 	void updateSongManipulationButtonsEnabled();
 	void insertSongSection(const SongSection &section);
@@ -66,7 +67,6 @@ private slots:
 	void on_actionImportFromLumen_triggered();
 	void on_actionPresentSongs_triggered();
 	void on_actionAddSongsToPlaylist_triggered();
-
 	void on_actionExportToOpenSong_triggered();
 
 private:

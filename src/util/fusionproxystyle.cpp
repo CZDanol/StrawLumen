@@ -10,10 +10,11 @@ FusionProxyStyle::FusionProxyStyle()
 	setBaseStyle(QStyleFactory::create("Fusion"));
 }
 
+// Copied from Qt Github, fixing icon spacing (only small change)
+
 void FusionProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
 	if(element == CE_PushButtonLabel) {
-		// Copied from Qt Github, fixing icon spacing
 		if (const QStyleOptionButton *button = qstyleoption_cast<const QStyleOptionButton *>(option)) {
 			QRect textRect = button->rect;
 			uint textFlags = Qt::AlignVCenter;
@@ -85,7 +86,7 @@ QSize FusionProxyStyle::sizeFromContents(QStyle::ContentsType type, const QStyle
 			QSize result = QProxyStyle::sizeFromContents(type, btn, size, widget);
 
 			if (!btn->icon.isNull())
-				result += QSize(iconOffset, 0);
+				result += QSize(iconOffset*2, 0);
 
 			return result;
 		}

@@ -54,7 +54,7 @@ void MainWindow::showPresentationMode()
 
 void MainWindow::blinkPresentationModeButton()
 {
-	blinkButton(ui->btnPresentationMode);
+	flashButton(ui->btnPresentationMode);
 }
 
 MainWindow_PresentationMode *MainWindow::presentationMode()
@@ -65,6 +65,11 @@ MainWindow_PresentationMode *MainWindow::presentationMode()
 void MainWindow::showSongsMode()
 {
 	ui->btnSongsMode->click();
+}
+
+MainWindow_SongsMode *MainWindow::songsMode()
+{
+	return ui->wgtSongsMode;
 }
 
 void MainWindow::onDbQueryError(const QString &query, const QString &error)
@@ -79,6 +84,8 @@ void MainWindow::onDbDatabaseError(const QString &error)
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
+	ui->wgtSongsMode->askFinishEditMode();
+
 	projectorWindow->close();
 	QMainWindow::closeEvent(e);
 }
@@ -90,6 +97,8 @@ void MainWindow::on_actionSettings_triggered()
 
 void MainWindow::on_btnPresentationMode_clicked()
 {
+	ui->wgtSongsMode->askFinishEditMode();
+
 	ui->swModes->setCurrentWidget(ui->wgtPresentationMode);
 	ui->swMenu->setCurrentWidget(ui->wgtPresentationMode->menuWidget());
 }

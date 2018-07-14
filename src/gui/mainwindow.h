@@ -8,6 +8,7 @@ namespace Ui {
 }
 
 class MainWindow_PresentationMode;
+class MainWindow_SongsMode;
 
 class MainWindow : public QMainWindow
 {
@@ -26,6 +27,7 @@ public:
 	MainWindow_PresentationMode *presentationMode();
 
 	void showSongsMode();
+	MainWindow_SongsMode *songsMode();
 
 public slots:
 	void onDbQueryError(const QString &query, const QString &error);

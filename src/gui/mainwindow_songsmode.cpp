@@ -20,6 +20,7 @@
 #include "importexport/opensongexportdialog.h"
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
+#include "util/execonmainthread.h"
 #include "rec/chord.h"
 #include "rec/playlist.h"
 #include "job/db.h"
@@ -151,6 +152,53 @@ void MainWindow_SongsMode::editSong(qlonglong songId)
 	ui->btnEdit->click();
 }
 
+void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds)
+{
+	if(songIds.isEmpty())
+		return;
+
+	if(isSongEditMode_)
+		return standardErrorDialog(tr("V režimu úprav nelze mazat písně. Ukončete úpravy a zkuste to znovu."));
+
+	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané písně?")))
+		return;
+
+	db->beginTransaction();
+	for(qlonglong id : songIds) {
+		db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {id});
+		db->exec("DELETE FROM songs WHERE id = ?", {id});
+		db->exec("DELETE FROM song_tags WHERE song = ?", {id});
+	}
+	db->commitTransaction();
+
+	const bool prevBlocked = db->blockListChangedSignals(true);
+
+	for(qlonglong id : songIds)
+		emit db->sigSongChanged(id);
+
+	db->blockListChangedSignals(prevBlocked);
+	emit db->sigSongListChanged();
+
+	currentSongId_ = -1;
+	updateSongManipulationButtonsEnabled();
+}
+
+bool MainWindow_SongsMode::askFinishEditMode()
+{
+	if(!isSongEditMode_)
+		return true;
+
+	if(standardConfirmDialog(tr("Píseň je otevřena pro editaci. Chcete uložit provedené úpravy?")))
+		ui->btnSaveChanges->click();
+	else {
+		setSongEditMode(false);
+		fillSongData();
+	}
+
+	// TODO: maybe add cancel button?
+	return true;
+}
+
 void MainWindow_SongsMode::setSongEditMode(bool set)
 {
 	if(isSongEditMode_ == set) {
@@ -181,22 +229,6 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 #undef F
 
 			updateSongManipulationButtonsEnabled();
-}
-
-bool MainWindow_SongsMode::askFinishEditMode()
-{
-	if(!isSongEditMode_)
-		return true;
-
-	if(standardConfirmDialog(tr("Píseň je otevřena pro editaci. Chcete uložit provedené úpravy?")))
-		ui->btnSaveChanges->click();
-	else {
-		setSongEditMode(false);
-		fillSongData();
-	}
-
-	// TODO: maybe add close button?
-	return true;
 }
 
 void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
@@ -339,35 +371,7 @@ void MainWindow_SongsMode::on_btnEdit_clicked()
 
 void MainWindow_SongsMode::on_actionDeleteSongs_triggered()
 {
-	QVector<qlonglong> selectedIds = ui->wgtSongList->selectedRowIds();
-
-	if(selectedIds.isEmpty())
-		return;
-
-	if(isSongEditMode_)
-		return standardErrorDialog(tr("V režimu úprav nelze mazat písně. Ukončete úpravy a zkuste to znovu."));
-
-	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané písně?")))
-		return;
-
-	db->beginTransaction();
-	for(qlonglong id : selectedIds) {
-		db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {id});
-		db->exec("DELETE FROM songs WHERE id = ?", {id});
-		db->exec("DELETE FROM song_tags WHERE song = ?", {id});
-	}
-	db->commitTransaction();
-
-	const bool prevBlocked = db->blockListChangedSignals(true);
-
-	for(qlonglong id : selectedIds)
-		emit db->sigSongChanged(id);
-
-	db->blockListChangedSignals(prevBlocked);
-	emit db->sigSongListChanged();
-
-	currentSongId_ = -1;
-	updateSongManipulationButtonsEnabled();
+	requestDeleteSongs(ui->wgtSongList->selectedRowIds());
 }
 
 void MainWindow_SongsMode::on_lnSlideOrder_sigFocused()

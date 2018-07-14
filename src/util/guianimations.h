@@ -3,6 +3,7 @@
 
 #include <QPushButton>
 
-void blinkButton(QPushButton *btn);
+void flashButton(QPushButton *btn);
+void flashWidget(QWidget *wgt);
 
 #endif // GUIANIMATIONS_H

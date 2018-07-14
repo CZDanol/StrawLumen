@@ -34,6 +34,7 @@ private slots:
 	void on_btnAddSlideOrderItem_pressed();
 	void on_cbEmptySlideBefore_clicked(bool checked);
 	void on_cbEmptySlideAfter_clicked(bool checked);
+	void on_btnEditSong_clicked();
 
 private:
 	Ui::PresentationPropertiesWidget_Song *ui;

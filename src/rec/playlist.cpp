@@ -18,8 +18,6 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	if(item.isNull())
 		return false;
 
-	auto i = item->playlist_;
-
 	Q_ASSERT(!item->playlist_);
 
 	item->playlist_ = this;

@@ -46,6 +46,7 @@ private slots:
 	void onAfterSlidesViewSlidesChanged();
 	void onPlaylistModelReset();
 	void onPlaylistContextMenuRequested(const QPoint &point);
+	void onSongListContextMenuRequested(const QPoint &point);
 	void onSongListItemActivated(qlonglong songId);
 
 private slots:
@@ -57,14 +58,16 @@ private slots:
 	void on_actionAddPowerpointPresentation_triggered();
 	void on_actionAddSong_triggered();
 	void on_btnPlaylists_clicked();
-
 	void on_btnClearPlaylist_clicked();
+	void on_actionEditSong_triggered();
+	void on_actionDeleteSongs_triggered();
+	void on_actionAddSongsToPlaylist_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;
 	PresentationPropertiesWidget *presentationPropertiesWidget_ = nullptr;
 	QTimer currentTimeTimer_;
-	QMenu playlistContextMenu_, addPresentationMenu_;
+	QMenu playlistContextMenu_, addPresentationMenu_, songListContextMenu_;
 
 private:
 	QSharedPointer<Playlist> playlist_;

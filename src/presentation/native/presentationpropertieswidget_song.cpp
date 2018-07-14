@@ -2,6 +2,8 @@
 #include "ui_presentationpropertieswidget_song.h"
 
 #include "presentation/native/presentation_song.h"
+#include "gui/mainwindow.h"
+#include "gui/mainwindow_songsmode.h"
 
 PresentationPropertiesWidget_Song::PresentationPropertiesWidget_Song(const QSharedPointer<Presentation_Song> &presentation, QWidget *parent) :
 	QWidget(parent),
@@ -94,4 +96,10 @@ void PresentationPropertiesWidget_Song::on_cbEmptySlideAfter_clicked(bool checke
 {
 	presentation_->emptySlideAfter_ = checked;
 	presentation_->loadSlideOrder();
+}
+
+void PresentationPropertiesWidget_Song::on_btnEditSong_clicked()
+{
+	mainWindow->showSongsMode();
+	mainWindow->songsMode()->editSong(presentation_->songId_);
 }

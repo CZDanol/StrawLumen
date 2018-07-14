@@ -1,18 +1,10 @@
 #include "execonmainthread.h"
 
-static _ExecOnMainThreadUtility _execOnMainThreadUtility;
+#include <QTimer>
 
-void execOnMainThread(const _ExecOnMainThreadJob &job)
-{
-	QMetaObject::invokeMethod(&_execOnMainThreadUtility, "onJob", Qt::QueuedConnection, Q_ARG(_ExecOnMainThreadJob, job));
-}
+#include "gui/mainwindow.h"
 
-_ExecOnMainThreadUtility::_ExecOnMainThreadUtility()
+void execOnMainThread(const std::function<void()> &job)
 {
-	qRegisterMetaType<_ExecOnMainThreadJob>();
-}
-
-void _ExecOnMainThreadUtility::onJob(const _ExecOnMainThreadJob &job)
-{
-	job();
+	QTimer::singleShot(0, mainWindow, job);
 }
