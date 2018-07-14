@@ -498,7 +498,7 @@
         <item>
          <widget class="QPushButton" name="btnStorno">
           <property name="text">
-           <string> Zavřít</string>
+           <string>Zavřít</string>
           </property>
           <property name="icon">
            <iconset resource="../../res/resources.qrc">
@@ -512,7 +512,7 @@
         <item>
          <widget class="QPushButton" name="btnGenerate">
           <property name="text">
-           <string> Vytvořit</string>
+           <string>Vytvořit</string>
           </property>
           <property name="icon">
            <iconset resource="../../res/resources.qrc">

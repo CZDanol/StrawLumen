@@ -55,7 +55,7 @@
      <item>
       <widget class="QPushButton" name="btnClose">
        <property name="text">
-        <string> Zavřít</string>
+        <string>Zavřít</string>
        </property>
        <property name="icon">
         <iconset resource="../../res/resources.qrc">
@@ -69,7 +69,7 @@
      <item>
       <widget class="QPushButton" name="btnExport">
        <property name="text">
-        <string> Exportovat</string>
+        <string>Exportovat</string>
        </property>
        <property name="icon">
         <iconset resource="../../res/resources.qrc">

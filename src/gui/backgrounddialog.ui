@@ -42,7 +42,7 @@
       <item>
        <widget class="QPushButton" name="btnAdd">
         <property name="text">
-         <string> Přidat</string>
+         <string>Přidat</string>
         </property>
         <property name="icon">
          <iconset resource="../../res/resources.qrc">
@@ -216,7 +216,7 @@
      <item>
       <widget class="QPushButton" name="btnStorno">
        <property name="text">
-        <string> Storno</string>
+        <string>Storno</string>
        </property>
        <property name="icon">
         <iconset resource="../../res/resources.qrc">

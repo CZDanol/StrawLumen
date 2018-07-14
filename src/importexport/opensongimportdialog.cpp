@@ -50,7 +50,7 @@ void OpenSongImportDialog::show()
 
 void OpenSongImportDialog::updateUi()
 {
-	ui->btnSelectFiles->setText(" " + (importFiles_.isEmpty() ? tr("Vybrat soubory...") : tr("%n souborů", nullptr, importFiles_.size())));
+	ui->btnSelectFiles->setText(importFiles_.isEmpty() ? tr("Vybrat soubory...") : tr("%n souborů", nullptr, importFiles_.size()));
 	ui->btnImport->setEnabled(!importFiles_.isEmpty());
 }
 

@@ -15,7 +15,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 	ui->lblVersion->setText(PROGRAM_VERSION);
 
 	QLocale locale( QLocale::English );
-	ui->lblBuildDate->setText( QDateTime( locale.toDate( __DATE__, "MMM dd yyyy" ), QTime::fromString( __TIME__ ) ).toString( "dd.MM.yyyy HH:mm" ) );
+	ui->lblBuildDate->setText(QDateTime(locale.toDate(__DATE__, "MMM dd yyyy"), QTime::fromString(__TIME__)).toString("dd.MM.yyyy HH:mm"));
 }
 
 AboutDialog::~AboutDialog()

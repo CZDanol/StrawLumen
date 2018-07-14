@@ -172,3 +172,8 @@ void PlaylistsDialog::on_btnDelete_clicked()
 	db->exec("DELETE FROM playlists WHERE id = ?", {i->data(Qt::UserRole).toLongLong()});
 	delete i;
 }
+
+void PlaylistsDialog::on_lstPlaylists_itemActivated(QListWidgetItem *)
+{
+	ui->btnLoad->click();
+}

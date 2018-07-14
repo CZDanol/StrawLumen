@@ -160,7 +160,7 @@
      <item>
       <widget class="QPushButton" name="btnClose">
        <property name="text">
-        <string> Storno</string>
+        <string>Storno</string>
        </property>
        <property name="icon">
         <iconset resource="../../res/resources.qrc">
@@ -174,7 +174,7 @@
      <item>
       <widget class="QPushButton" name="btnImport">
        <property name="text">
-        <string> Importovat</string>
+        <string>Importovat</string>
        </property>
        <property name="icon">
         <iconset resource="../../res/resources.qrc">

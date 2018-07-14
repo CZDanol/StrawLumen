@@ -105,7 +105,8 @@ SOURCES += main.cpp \
     importexport/opensongimportdialog.cpp \
     util/guianimations.cpp \
     importexport/opensongexportdialog.cpp \
-    gui/playlistsdialog.cpp
+    gui/playlistsdialog.cpp \
+    util/fusionproxystyle.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -210,7 +211,8 @@ HEADERS += \
     importexport/opensongimportdialog.h \
     util/guianimations.h \
     importexport/opensongexportdialog.h \
-    gui/playlistsdialog.h
+    gui/playlistsdialog.h \
+    util/fusionproxystyle.h
 
 RESOURCES += \
     ../res/resources.qrc

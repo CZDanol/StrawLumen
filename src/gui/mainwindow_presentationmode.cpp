@@ -360,3 +360,11 @@ void MainWindow_PresentationMode::on_btnPlaylists_clicked()
 {
 	playlistsDialog()->show();
 }
+
+void MainWindow_PresentationMode::on_btnClearPlaylist_clicked()
+{
+	if(!standardConfirmDialog(tr("Opravdu vymazat všechny položky programu?")))
+		return;
+
+	playlist_->clear();
+}

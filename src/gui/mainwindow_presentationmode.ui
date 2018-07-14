@@ -347,6 +347,20 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btnClearPlaylist">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Broom_16px.png</normaloff>:/icons/16/Broom_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btnAddPresentation">
             <property name="text">
              <string/>

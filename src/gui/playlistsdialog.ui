@@ -64,7 +64,7 @@
          <item>
           <widget class="QPushButton" name="btnNew">
            <property name="text">
-            <string> Nový</string>
+            <string>Nový</string>
            </property>
            <property name="icon">
             <iconset resource="../../res/resources.qrc">
@@ -78,7 +78,7 @@
          <item>
           <widget class="QPushButton" name="btnRename">
            <property name="text">
-            <string> Přejmenovat</string>
+            <string>Přejmenovat</string>
            </property>
            <property name="icon">
             <iconset resource="../../res/resources.qrc">
@@ -92,7 +92,7 @@
          <item>
           <widget class="QPushButton" name="btnDelete">
            <property name="text">
-            <string> Smazat</string>
+            <string>Smazat</string>
            </property>
            <property name="icon">
             <iconset resource="../../res/resources.qrc">
@@ -122,7 +122,7 @@
          <item>
           <widget class="QPushButton" name="btnLoad">
            <property name="text">
-            <string> Načíst</string>
+            <string>Načíst</string>
            </property>
            <property name="icon">
             <iconset resource="../../res/resources.qrc">
@@ -136,7 +136,7 @@
          <item>
           <widget class="QPushButton" name="btnSave">
            <property name="text">
-            <string> Uložit</string>
+            <string>Uložit</string>
            </property>
            <property name="icon">
             <iconset resource="../../res/resources.qrc">
@@ -242,6 +242,9 @@
         <widget class="QListWidget" name="lstPlaylists">
          <property name="horizontalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
          </property>
          <property name="alternatingRowColors">
           <bool>true</bool>

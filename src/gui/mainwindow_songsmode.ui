@@ -79,7 +79,7 @@
           <item>
            <widget class="QPushButton" name="btnInsertSection">
             <property name="text">
-             <string> Sekci</string>
+             <string>Sekci</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -93,7 +93,7 @@
           <item>
            <widget class="QPushButton" name="btnInsertChord">
             <property name="text">
-             <string> Akord</string>
+             <string>Akord</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -110,7 +110,7 @@
              <string>Jedna sekce může být v prezentaci rozdělena do více snímků. Toto se řídí právě oddělovači.</string>
             </property>
             <property name="text">
-             <string> Oddělovač snímků</string>
+             <string>Oddělovač snímků</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -176,7 +176,7 @@
           <item>
            <widget class="QPushButton" name="btnTransposeUp">
             <property name="text">
-             <string> Nahoru</string>
+             <string>Nahoru</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -190,7 +190,7 @@
           <item>
            <widget class="QPushButton" name="btnTransposeDown">
             <property name="text">
-             <string> Dolů</string>
+             <string>Dolů</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -243,7 +243,7 @@
           <item>
            <widget class="QPushButton" name="btnImport">
             <property name="text">
-             <string> Import</string>
+             <string>Import</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -257,7 +257,7 @@
           <item>
            <widget class="QPushButton" name="btnExport">
             <property name="text">
-             <string> Export</string>
+             <string>Export</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -271,7 +271,7 @@
           <item>
            <widget class="QPushButton" name="btnCreateSongbook">
             <property name="text">
-             <string> Vytvořit zpěvník</string>
+             <string>Vytvořit zpěvník</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -346,7 +346,7 @@
           <item>
            <widget class="QPushButton" name="btnNew">
             <property name="text">
-             <string> Nová píseň</string>
+             <string>Nová píseň</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -377,7 +377,7 @@
             <normaloff>:/icons/16/Musical Notes_16px.png</normaloff>:/icons/16/Musical Notes_16px.png</iconset>
           </attribute>
           <attribute name="title">
-           <string> Písně</string>
+           <string>Písně</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
@@ -419,7 +419,7 @@
           <item>
            <widget class="QPushButton" name="btnDiscardChanges">
             <property name="text">
-             <string> Zahodit změny</string>
+             <string>Zahodit změny</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -433,7 +433,7 @@
           <item>
            <widget class="QPushButton" name="btnSaveChanges">
             <property name="text">
-             <string> Uložit změny</string>
+             <string>Uložit změny</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -447,7 +447,7 @@
           <item>
            <widget class="QPushButton" name="btnEdit">
             <property name="text">
-             <string> Upravit</string>
+             <string>Upravit</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -596,7 +596,7 @@
              <item>
               <widget class="QPushButton" name="btnAddCustomSlideOrderItem">
                <property name="text">
-                <string> Vložit</string>
+                <string>Vložit</string>
                </property>
                <property name="icon">
                 <iconset resource="../../res/resources.qrc">

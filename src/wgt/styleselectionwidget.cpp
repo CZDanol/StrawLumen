@@ -33,7 +33,7 @@ void StyleSelectionWidget::setPresentationStyle(const PresentationStyle &style)
 
 void StyleSelectionWidget::updateLabel()
 {
-	ui->btnSelect->setText(" " + presentationStyle_.name());
+	ui->btnSelect->setText(presentationStyle_.name());
 }
 
 void StyleSelectionWidget::on_btnSelect_clicked()

@@ -52,7 +52,7 @@ void LumenImportDialog::show()
 
 void LumenImportDialog::updateUi()
 {
-	ui->btnSelectFile->setText(" " + (importFilename_.isEmpty() ? tr("Vybrat soubor...") : QFileInfo(importFilename_).fileName()));
+	ui->btnSelectFile->setText(importFilename_.isEmpty() ? tr("Vybrat soubor...") : QFileInfo(importFilename_).fileName());
 	ui->btnImport->setEnabled(!importFilename_.isEmpty());
 }
 

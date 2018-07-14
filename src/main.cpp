@@ -25,6 +25,7 @@
 #include "presentation/presentationmanager.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
+#include "util/fusionproxystyle.h"
 
 QDir appDataDirectory;
 
@@ -105,7 +106,7 @@ void uninitApplication() {
 }
 
 void setupStylesheet() {
-	qApp->setStyle(QStyleFactory::create("Fusion"));
+	qApp->setStyle(new FusionProxyStyle());
 
 	QPalette p = qApp->palette();
 	p.setColor(QPalette::Light, QColor("#ddd") );

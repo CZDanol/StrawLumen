@@ -76,7 +76,7 @@
       <item>
        <widget class="QPushButton" name="btnClear">
         <property name="text">
-         <string> Vyčistit</string>
+         <string>Vyčistit</string>
         </property>
         <property name="icon">
          <iconset resource="../../res/resources.qrc">

@@ -58,6 +58,8 @@ private slots:
 	void on_actionAddSong_triggered();
 	void on_btnPlaylists_clicked();
 
+	void on_btnClearPlaylist_clicked();
+
 private:
 	Ui::MainWindow_PresentationMode *ui;
 	PresentationPropertiesWidget *presentationPropertiesWidget_ = nullptr;

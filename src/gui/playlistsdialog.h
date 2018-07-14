@@ -37,6 +37,8 @@ private slots:
 
 	void on_btnDelete_clicked();
 
+	void on_lstPlaylists_itemActivated(QListWidgetItem *item);
+
 private:
 	Ui::PlaylistsDialog *ui;
 	QStringListModel itemsModel_;

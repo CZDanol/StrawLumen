@@ -13,9 +13,9 @@ QTextEdit[readOnly="true"] {
 	background: transparent;
 }
 
-QPushButton::disabled {
+/*QPushButton::disabled {
   color: gray;
-}
+}*/
 
 QTextEdit, QDateEdit, QLineEdit {
   padding: 3px;

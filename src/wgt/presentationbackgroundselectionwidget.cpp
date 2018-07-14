@@ -33,7 +33,7 @@ void PresentationBackgroundSelectionWidget::setReadOnly(bool set)
 
 void PresentationBackgroundSelectionWidget::updateLabel()
 {
-	ui->btnSelect->setText(" " + presentationBackground_.caption());
+	ui->btnSelect->setText(presentationBackground_.caption());
 }
 
 void PresentationBackgroundSelectionWidget::on_btnSelect_clicked()

@@ -56,7 +56,7 @@
           <item>
            <widget class="QPushButton" name="btnPresentationMode">
             <property name="text">
-             <string> Promítání</string>
+             <string>Promítání</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -79,7 +79,7 @@
           <item>
            <widget class="QPushButton" name="btnSongsMode">
             <property name="text">
-             <string> Písně</string>
+             <string>Písně</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
