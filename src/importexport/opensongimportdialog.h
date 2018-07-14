@@ -17,6 +17,7 @@ public:
 
 public:
 	void show();
+	void show(const QStringList &files);
 
 private:
 	void updateUi();

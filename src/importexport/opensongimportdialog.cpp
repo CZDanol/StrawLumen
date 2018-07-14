@@ -48,6 +48,13 @@ void OpenSongImportDialog::show()
 	QDialog::show();
 }
 
+void OpenSongImportDialog::show(const QStringList &files)
+{
+	importFiles_ = files;
+	updateUi();
+	QDialog::show();
+}
+
 void OpenSongImportDialog::updateUi()
 {
 	ui->btnSelectFiles->setText(importFiles_.isEmpty() ? tr("Vybrat soubory...") : tr("%n souborů", nullptr, importFiles_.size()));
@@ -79,18 +86,27 @@ void OpenSongImportDialog::on_btnImport_clicked()
 			splashscreen->setProgress(i, importFiles_.size());
 
 			QFile f(filename);
-			if(!f.open(QIODevice::ReadOnly))
-				return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\".").arg(filename));
+			if(!f.open(QIODevice::ReadOnly)) {
+				splashscreen->storno();
+				standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\".").arg(filename));
+				break;
+			}
 
 			QDomDocument dom;
-			if(!dom.setContent(&f))
-				return standardErrorDialog(tr("Nepodařilo se načíst soubor \"%1\".").arg(filename));
+			if(!dom.setContent(&f)) {
+				splashscreen->storno();
+				standardErrorDialog(tr("Nepodařilo se načíst soubor \"%1\".").arg(filename));
+				break;
+			}
 
 			f.close();
 
 			QDomElement root = dom.documentElement();
-			if(root.tagName() != "song")
-				return standardErrorDialog(tr("Soubor \"%1\" není formátu OpenSong.").arg(filename));
+			if(root.tagName() != "song") {
+				splashscreen->storno();
+				standardErrorDialog(tr("Soubor \"%1\" není formátu OpenSong.").arg(filename));
+				break;
+			}
 
 			// #: SONGS_TABLE_FIELDS
 			// Denullify - the database has NOT NULL columns for error checking

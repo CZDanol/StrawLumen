@@ -19,6 +19,7 @@
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/native/presentation_blackscreen.h"
 #include "presentation/native/presentation_song.h"
+#include "importexport/opensongimportdialog.h"
 #include "job/settings.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
@@ -169,16 +170,26 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 
 	// The exec is there so the explorer the file is dragged from is not frozen while loading
 	execOnMainThread([=]{
+		QStringList openSongFiles;
+
 		for(QUrl url : urls) {
-			QString filename = url.toLocalFile();
-			QFileInfo fileInfo(filename);
+			QString filePath = url.toLocalFile();
+			QFileInfo fileInfo(filePath);
+
+			if(filePath.contains("opensong", Qt::CaseInsensitive)) {
+				openSongFiles << filePath;
+				continue;
+			}
 
 			if(!Presentation_PowerPoint::isPowerpointFile(fileInfo))
-				return standardErrorDialog(tr("Soubor \"%1\" není podporován.").arg(filename));
+				return standardErrorDialog(tr("Soubor \"%1\" není podporován.").arg(filePath));
 
-			if(!playlist_->addItem(Presentation_PowerPoint::createFromFilename(filename)))
+			if(!playlist_->addItem(Presentation_PowerPoint::createFromFilename(filePath)))
 				return;
 		}
+
+		if(!openSongFiles.isEmpty())
+			openSongImportDialog()->show(openSongFiles);
 	});
 }
 
