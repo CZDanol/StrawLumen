@@ -275,9 +275,10 @@ void StylesDialog::on_btnSaveChanges_clicked()
 	} else
 		db->update("styles", data, "id = ?", {currentStyleId_});
 
-	presentationStyle_.assumeStyleId(currentStyleId_);
 	setEditMode(false);
 	emit db->sigStyleChanged(currentStyleId_);
+
+	presentationStyle_.assumeStyleId(currentStyleId_);
 }
 
 void StylesDialog::on_btnEdit_clicked()

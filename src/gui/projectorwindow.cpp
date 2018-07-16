@@ -31,7 +31,7 @@ void ProjectorWindow::paintEvent(QPaintEvent *)
 
 	p.fillRect(rect(), Qt::black);
 
-	if(presentationEngine_Native->currentPresentation())
+	if(!presentationEngine_Native->isBlackScreen() && presentationEngine_Native->currentPresentation())
 		presentationEngine_Native->currentPresentation()->drawSlide(p, presentationEngine_Native->currentSlide(), rect());
 }
 

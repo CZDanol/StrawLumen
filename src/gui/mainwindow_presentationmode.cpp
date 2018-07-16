@@ -279,9 +279,15 @@ void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &curr
 	if(!current.isValid())
 		return;
 
+	auto presentation = playlist_->items()[current.row()];
+
+	if(currentPresentation_ == presentation)
+		return;
+
+	currentPresentation_ = presentation;
+
 	if(!isTwLeftBottomHidden_)
 		ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
-	auto presentation = playlist_->items()[current.row()];
 
 	if(presentationPropertiesWidget_) {
 		if(presentationPropertiesWidget_->presentation() == presentation)

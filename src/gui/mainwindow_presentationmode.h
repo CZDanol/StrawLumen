@@ -72,10 +72,13 @@ private slots:
 
 private:
 	Ui::MainWindow_PresentationMode *ui;
-	PresentationPropertiesWidget *presentationPropertiesWidget_ = nullptr;
 	QTimer currentTimeTimer_;
 	QMenu playlistContextMenu_, songListContextMenu_;
 	bool isTwLeftBottomHidden_ = false;
+
+private:
+	QSharedPointer<Presentation> currentPresentation_;
+	PresentationPropertiesWidget *presentationPropertiesWidget_ = nullptr;
 
 private:
 	QMenu addPresentationMenu_, insertPresentationBeforeMenu_, insertPresentationAfterMenu_;

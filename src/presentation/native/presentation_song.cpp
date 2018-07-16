@@ -31,12 +31,12 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 
 	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
 
-	if(!result->loadFromDb_Uid(json["songUid"].toString()))
-		return nullptr;
-
 	result->customSlideOrder_ = json["customSlideOrder"].toString();
 	result->emptySlideBefore_ = json["emptySlideBefore"].toBool();
 	result->emptySlideAfter_ = json["emptySlideAfter"].toBool();
+
+	if(!result->loadFromDb_Uid(json["songUid"].toString()))
+		return nullptr;
 
 	{
 		PresentationStyle style;

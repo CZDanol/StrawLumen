@@ -43,6 +43,11 @@ int PresentationEngine_Native::currentSlide() const
 	return currentPresentation_ ? currentSlide_ : -1;
 }
 
+bool PresentationEngine_Native::isBlackScreen() const
+{
+	return isBlackScreen_;
+}
+
 void PresentationEngine_Native::activateEngine()
 {
 	projectorWindow->setGeometry(settings->projectionDisplayGeometry());
@@ -60,7 +65,7 @@ void PresentationEngine_Native::setBlackScreen(bool set)
 		return;
 
 	isBlackScreen_ = set;
-	// TODO
+	projectorWindow->update();
 }
 
 void PresentationEngine_Native::setDisplay(const QRect &rect)

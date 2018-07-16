@@ -1,6 +1,8 @@
 #include "colorselectionwidget.h"
 #include "ui_colorselectionwidget.h"
 
+#include <QStyle>
+
 ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::ColorSelectionWidget)
@@ -53,7 +55,11 @@ void ColorSelectionWidget::setReadOnly(bool set)
 		return;
 
 	isReadOnly_ = set;
+
 	ui->lnHex->setReadOnly(set);
+	ui->lnHex->style()->unpolish(ui->lnHex);
+	ui->lnHex->style()->polish(ui->lnHex);
+
 	ui->wgtC1->setEnabled(!set);
 	ui->wgtC2->setEnabled(!set);
 	ui->wgtC3->setEnabled(!set);

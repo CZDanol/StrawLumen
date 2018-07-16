@@ -20,6 +20,8 @@ public:
 	const QSharedPointer<Presentation_NativePresentation> &currentPresentation() const;
 	int currentSlide() const;
 
+	bool isBlackScreen() const;
+
 public:
 	void activateEngine() override;
 	void deactivateEngine() override;

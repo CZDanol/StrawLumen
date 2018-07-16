@@ -73,6 +73,7 @@ qlonglong PresentationStyle::styleId() const
 void PresentationStyle::assumeStyleId(qlonglong set)
 {
 	styleId_ = set;
+	customBackground_ = false;
 }
 
 bool PresentationStyle::operator==(const PresentationStyle &other) const
