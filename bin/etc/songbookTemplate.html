@@ -1,6 +1,7 @@
 <html>
 	<head>
-		
+		<title>Zpěvník | Straw Lumen</title>
+		<meta charset="UTF-8" />
 	</head>
 	<body>		
 		<div id="templates">
@@ -116,6 +117,12 @@
 				page-break-after: avoid;
 			}
 			
+			.songAuthor {
+				margin-top: -4mm;
+				text-align: right;
+				padding-right: 3mm;
+			}
+			
 			.section:first-of-type {
 				page-break-before: avoid;
 			}
@@ -174,91 +181,108 @@
 		</style>
 		
 		<script>
-			function generateDocument(data) {				
-				var contentElem = $("#content");
+			function loadJs(filePath) {
+				var script = document.createElement("script");
+				script.src = filePath;
+				document.body.appendChild(script);
+			}
+			
+			function generateDocument(data) {
+				var contentElem = document.body.querySelector("#content");
 
 				// Various settings
 				{
 					if(data.generateNumbering)
-						contentElem.addClass("generateNumbering");
+						contentElem.classList.add("generateNumbering");
 						
 					if(data.pageBreakMode >= 1)
-						contentElem.addClass("doNotBreakInsideSongs");
+						contentElem.classList.add("doNotBreakInsideSongs");
 						
 					if(data.pageBreakMode >= 2)
-						contentElem.addClass("eachSongOnNewPage");
+						contentElem.classList.add("eachSongOnNewPage");
 						
-					$("body").find(".tocColumnCount").css("column-count", data.tocColumnCount);
-					$("body").find(".lyricsColumnCount").css("column-count", data.lyricsColumnCount);
+					document.body.querySelector(".tocColumnCount").style["column-count"] = data.tocColumnCount;
+					document.body.querySelector(".lyricsColumnCount").style["column-count"] = data.lyricsColumnCount;
 				}
-				
+
 				// Table of contents
 				if(data.generateTableOfContents) {
-					var tocItemTemplate = $("#templates .tocItem");
-				
-					var tocElem = $("#templates .toc").clone().appendTo(contentElem.find(".tocContent"));
-					var tocContentsElem = tocElem.find(".tocContents");
-					
-					tocElem.find(".tocTitle").text(data.tocTitle);
-					
+					var tocItemTemplate = document.body.querySelector("#templates .tocItem");				
+					var tocElem = document.body.querySelector("#templates .toc").cloneNode(true);
+
+					contentElem.querySelector(".tocContent").appendChild(tocElem);
+			
+					var tocContentsElem = tocElem.querySelector(".tocContents");					
+					tocElem.querySelector(".tocTitle").textContent = data.tocTitle;
 					for(songI in data.songs) {
 						var song = data.songs[songI];
-						tocItemTemplate.clone().appendTo(tocContentsElem).text(song.name);
+						var itemNode = tocItemTemplate.cloneNode(true);
+						itemNode.textContent = song.name;
+						tocContentsElem.appendChild(itemNode);
 					}
 				}
 				
 				// Content
 				if(data.generateLyrics) {
-					var songsContentElem = contentElem.find(".songsContent");
+					var songsContentElem = contentElem.querySelector(".songsContent");
 				
-					var songTemplate = $("#templates .song");
-					var sectionTemplate = $("#templates .section");
-					var chordTemplate = $("#templates .chord");
-					var textTemplate = $("#templates .text");
+					var songTemplate = document.body.querySelector("#templates .song");
+					var sectionTemplate = document.body.querySelector("#templates .section");
+					var chordTemplate = document.body.querySelector("#templates .chord");
+					var textTemplate = document.body.querySelector("#templates .text");
 					
-					var chordTextRegex = /(\s*\S*)(.*)/s;
+					var chordTextRegex = /(\s*\S*)([\s\S]*)/;
 					
 					for(songI in data.songs) {
 						var song = data.songs[songI];
-						var songElem = songTemplate.clone().appendTo(songsContentElem);
+						var songElem = songTemplate.cloneNode(true);
+						songsContentElem.appendChild(songElem);
 						
-						songElem.find(".songName").text(song.name);
+						songElem.querySelector(".songName").textContent = song.name;
 						
 						if(song.author)
-							songElem.find(".songAuthor").text(song.author);
-						else
-							songElem.find(".songAuthor").remove();
+							songElem.querySelector(".songAuthor").textContent = song.author;
+						else {
+							var authorElem = songElem.querySelector(".songAuthor");
+							authorElem.parentNode.removeChild(authorElem);
+						}
 						
 						for(sectionI in song.sections) {
 							var section = song.sections[sectionI];
-							var sectionElem = sectionTemplate.clone().appendTo(songElem);
-							var sectionContentElem = sectionElem.find(".sectionContent");
+							var sectionElem = sectionTemplate.cloneNode(true);
+							songElem.appendChild(sectionElem);
 							
-							sectionElem.find(".sectionName").text(section.shorthandName);
+							var sectionContentElem = sectionElem.querySelector(".sectionContent");
+							
+							sectionElem.querySelector(".sectionName").textContent = section.shorthandName;
 							
 							for(var chordSectionI in section.content) {
 								var chordSection = section.content[chordSectionI];
 								
 								if(!chordSection.chordName || !data.generateChords) {
-									textTemplate.clone().appendTo(sectionContentElem).text(chordSection.textFollowing);
+									var elem = textTemplate.cloneNode(true);
+									elem.textContent = chordSection.textFollowing;
+									sectionContentElem.appendChild(elem);
 									continue;
 								}
 								
 								var splitText = chordTextRegex.exec(chordSection.textFollowing);
 								
-								var chordElem = chordTemplate.clone().appendTo(sectionContentElem);							
-								chordElem.find(".chordName").text(chordSection.chordName);
-								chordElem.find(".textFollowingChord").text(splitText[1]);
-								
-								if(splitText[1])
-									textTemplate.clone().appendTo(sectionContentElem).text(splitText[2]);
+								var chordElem = chordTemplate.cloneNode(true);
+								chordElem.querySelector(".chordName").textContent = chordSection.chordName;
+								chordElem.querySelector(".textFollowingChord").textContent = splitText[1];
+								sectionContentElem.appendChild(chordElem);
+							
+								if(splitText[1]) {
+									var elem = textTemplate.cloneNode(true);
+									elem.textContent = splitText[2];
+									sectionContentElem.appendChild(elem);
+								}
 							}
 						}
 					}
 				}
 			}
 		</script>
-		
-		<script src="jquery.js"></script>
 	</body>
 </html>

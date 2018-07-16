@@ -18,6 +18,7 @@
 #include "presentation/presentationmanager.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/native/presentation_blackscreen.h"
+#include "presentation/native/presentation_customslide.h"
 #include "presentation/native/presentation_song.h"
 #include "importexport/opensongimportdialog.h"
 #include "job/settings.h"
@@ -58,6 +59,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		{
 			addPresentationMenu_.addAction(ui->actionAddSong);
 			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
+			addPresentationMenu_.addAction(ui->actionAddCustomSlidePresentation);
 			addPresentationMenu_.addAction(ui->actionAddBlackScreen);
 
 			ui->btnAddPresentation->setMenu(&addPresentationMenu_);
@@ -118,6 +120,11 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		connect(ui->btnNextSlide, SIGNAL(clicked(bool)), presentationManager, SLOT(nextSlide()));
 		connect(ui->btnNextPresentation, SIGNAL(clicked(bool)), presentationManager, SLOT(nextPresentation()));
 		connect(ui->btnBlackScreen, SIGNAL(clicked(bool)), presentationManager, SLOT(setBlackScreen(bool)));
+
+		connect(ui->btnPreviousPresentation, SIGNAL(clicked()), this, SLOT(scrollToCurrentSlideInSlidesView()));
+		connect(ui->btnPreviousSlide, SIGNAL(clicked()), this, SLOT(scrollToCurrentSlideInSlidesView()));
+		connect(ui->btnNextSlide, SIGNAL(clicked()), this, SLOT(scrollToCurrentSlideInSlidesView()));
+		connect(ui->btnNextPresentation, SIGNAL(clicked()), this, SLOT(scrollToCurrentSlideInSlidesView()));
 	}
 
 	// Song list
@@ -230,6 +237,11 @@ void MainWindow_PresentationMode::disablePresentation()
 	presentationManager->setActive(false);
 }
 
+void MainWindow_PresentationMode::scrollToCurrentSlideInSlidesView()
+{
+	ui->tvSlides->scrollTo(ui->tvSlides->currentIndex(), QAbstractItemView::PositionAtCenter);
+}
+
 void MainWindow_PresentationMode::onCurrentTimeTimer()
 {
 	QDateTime currentTime = QDateTime::currentDateTime();
@@ -267,7 +279,8 @@ void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &curr
 	if(!current.isValid())
 		return;
 
-	ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
+	if(!isTwLeftBottomHidden_)
+		ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
 	auto presentation = playlist_->items()[current.row()];
 
 	if(presentationPropertiesWidget_) {
@@ -490,5 +503,11 @@ void MainWindow_PresentationMode::on_btnShowHideTwLeftBottom_clicked()
 
 void MainWindow_PresentationMode::on_twLeftBottom_currentChanged(int)
 {
-	ui->btnShowHideTwLeftBottom->setChecked(false);
+	if(isTwLeftBottomHidden_)
+		ui->btnShowHideTwLeftBottom->click();
+}
+
+void MainWindow_PresentationMode::on_actionAddCustomSlidePresentation_triggered()
+{
+addPresentationsAction_({Presentation_CustomSlide::create()});
 }

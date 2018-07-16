@@ -193,5 +193,6 @@
         <file>icons/16/Upward Arrow_16px.png</file>
         <file>icons/16/Download_16px.png</file>
         <file>icons/16/Upload_16px.png</file>
+        <file>icons/16/Text Box_16px.png</file>
     </qresource>
 </RCC>

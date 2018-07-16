@@ -6,6 +6,7 @@
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/native/presentation_song.h"
 #include "presentation/native/presentation_blackscreen.h"
+#include "presentation/native/presentation_customslide.h"
 #include "util/standarddialogs.h"
 
 Playlist::Playlist()
@@ -196,7 +197,8 @@ bool Playlist::loadFromJSON(const QJsonObject &json)
 		{"powerPoint.powerPoint", F(Presentation_PowerPoint::createFromJSON(json))},
 
 		{"native.song", F(Presentation_Song::createFromJSON(json))},
-		{"native.blackScreen", F(Presentation_BlackScreen::create())}
+		{"native.blackScreen", F(Presentation_BlackScreen::create())},
+		{"native.customSlide", F(Presentation_CustomSlide::createFromJSON(json))}
 	};
 #undef F
 

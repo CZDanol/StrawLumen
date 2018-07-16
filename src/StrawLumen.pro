@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport widgets axcontainer sql xml webenginewidgets
+QT       += core gui printsupport widgets axcontainer sql xml
 
 # For debugging purposes
 # CONFIG += console
@@ -29,6 +29,7 @@ QMAKE_LFLAGS = /LARGEADDRESSAWARE
 
 win32|win64 {
   RC_ICONS += $$PWD/../res/logos/lumen_icon.ico
+  OS_STR = win
 }
 
 Debug:RELEASE_STR = _dbg
@@ -107,7 +108,9 @@ SOURCES += main.cpp \
     importexport/opensongexportdialog.cpp \
     gui/playlistsdialog.cpp \
     util/fusionproxystyle.cpp \
-    job/widgetvalues.cpp
+    job/widgetvalues.cpp \
+    presentation/native/presentation_customslide.cpp \
+    presentation/native/presentationpropertieswidget_customslide.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -137,7 +140,8 @@ FORMS += \
     importexport/lumenimportdialog.ui \
     importexport/opensongimportdialog.ui \
     importexport/opensongexportdialog.ui \
-    gui/playlistsdialog.ui
+    gui/playlistsdialog.ui \
+    presentation/native/presentationpropertieswidget_customslide.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -214,7 +218,9 @@ HEADERS += \
     importexport/opensongexportdialog.h \
     gui/playlistsdialog.h \
     util/fusionproxystyle.h \
-    job/widgetvalues.h
+    job/widgetvalues.h \
+    presentation/native/presentation_customslide.h \
+    presentation/native/presentationpropertieswidget_customslide.h
 
 RESOURCES += \
     ../res/resources.qrc
@@ -222,5 +228,5 @@ RESOURCES += \
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
 
-LIBS += -L$$PWD/../lib/$${QMAKE_TARGET.arch}$${RELEASE_STR}/
-DESTDIR = $$PWD/../bin/bin_$${QMAKE_TARGET.arch}$${RELEASE_STR}
+LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}/
+DESTDIR = $$PWD/../bin/bin_$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}

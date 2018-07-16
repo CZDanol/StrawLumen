@@ -13,6 +13,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 	QSignalBlocker sb(result.data());
 
 	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
+
 	result->style_ = settings->setting_song_defaultStyle();
 	result->emptySlideBefore_ = settings->setting_song_emptySlideBefore();
 	result->emptySlideAfter_ = settings->setting_song_emptySlideAfter();
@@ -26,6 +27,8 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonObject &json)
 {
 	QSharedPointer<Presentation_Song> result(new Presentation_Song());
+	QSignalBlocker sb(result.data());
+
 	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
 
 	if(!result->loadFromDb_Uid(json["songUid"].toString()))
@@ -35,15 +38,18 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 	result->emptySlideBefore_ = json["emptySlideBefore"].toBool();
 	result->emptySlideAfter_ = json["emptySlideAfter"].toBool();
 
-	PresentationStyle style;
-	style.loadFromDb((qlonglong) json["styleId"].toDouble());
-	if(!json["background"].isNull()) {
-		PresentationBackground background;
-		background.loadFromJSON(json["background"]);
-		style.setBackground(background);
+	{
+		PresentationStyle style;
+		style.loadFromDb((qlonglong) json["styleId"].toDouble());
+		if(!json["background"].isNull()) {
+			PresentationBackground background;
+			background.loadFromJSON(json["background"]);
+			style.setBackground(background);
+		}
+
+		result->style_ = style;
 	}
 
-	result->style_ = style;
 	return result;
 }
 

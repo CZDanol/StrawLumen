@@ -1,0 +1,49 @@
+#ifndef PRESENTATION_CUSTOMSLIDE_H
+#define PRESENTATION_CUSTOMSLIDE_H
+
+#include "presentation/native/presentation_nativepresentation.h"
+
+#include "rec/presentationstyle.h"
+
+class Presentation_CustomSlide : public Presentation_NativePresentation
+{
+	Q_OBJECT
+
+	friend class PresentationPropertiesWidget_CustomSlide;
+
+public:
+	static QSharedPointer<Presentation_CustomSlide> create();
+	static QSharedPointer<Presentation_CustomSlide> createFromJSON(const QJsonObject &json);
+
+	QJsonObject toJSON() const override;
+
+public:
+	void drawSlide(QPainter &p, int slideId, const QRect &rect) override;
+
+public:
+	QString identification() const override;
+	QPixmap icon() const override;
+
+	QWidget *createPropertiesWidget(QWidget *parent) override;
+
+	int slideCount() const override;
+	QString slideDescription(int i) const override;
+	QPixmap slideIdentificationIcon(int i) const;
+
+public:
+	QString classIdentifier() const override;
+
+private:
+	Presentation_CustomSlide();
+
+private slots:
+	void onStyleChanged();
+	void onStyleBackgroundChanged();
+
+private:
+	PresentationStyle style_;
+	QString title_, text_;
+
+};
+
+#endif // PRESENTATION_CUSTOMSLIDE_H

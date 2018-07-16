@@ -36,6 +36,7 @@ protected:
 private slots:
 	void updateControlsUIEnabled();
 	void disablePresentation();
+	void scrollToCurrentSlideInSlidesView();
 
 private slots:
 	void onCurrentTimeTimer();
@@ -67,6 +68,7 @@ private slots:
 	void on_actionAddSongsToPlaylist_triggered();
 	void on_btnShowHideTwLeftBottom_clicked();
 	void on_twLeftBottom_currentChanged(int index);
+	void on_actionAddCustomSlidePresentation_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;

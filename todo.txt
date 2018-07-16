@@ -3,22 +3,18 @@
 - refresh scroll u item viewů, když se refreshujou
 - možnost znovu načíst powerpoint prezentaci
 - možnost duplikovat položky playlistu?
-- scrollovat view snímků s prezentacaí
 - associovat lumen exported file na otevření v lumenu
 
-- položka: vlastní text
-- položka: pozadí
+- položka: Obrázky
+- průzkumník souborů
 - možnost uložit výběr u vytváření zpěvníku (aby se dalo přidávat)
 - podpora pro jeden monitor?
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
-- všeeobecné nastavení powerpoint prezentace - dávat na poslední, případně i první místo černý slide (dát i do nastavení pro výchozí)
 
 - vzorník barev u color selectu
-
-- prezentace obrázků
 
 Automatická powerpoint prezentace:
 - přejít na další prezentaci v takový a takový čas

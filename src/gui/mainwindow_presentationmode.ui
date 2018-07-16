@@ -682,6 +682,15 @@
     <string>Přidat do programu</string>
    </property>
   </action>
+  <action name="actionAddCustomSlidePresentation">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Text Box_16px.png</normaloff>:/icons/16/Text Box_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Vlastní snímek</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

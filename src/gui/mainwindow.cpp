@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	ui->swMenu->addWidget(ui->wgtPresentationMode->menuWidget());
 	ui->swMenu->addWidget(ui->wgtSongsMode->menuWidget());
-	ui->menuProgram->insertMenu(ui->actionGenerateDocuments, ui->wgtSongsMode->importMenu());
-	ui->menuProgram->insertMenu(ui->actionGenerateDocuments, ui->wgtSongsMode->exportMenu());
+	ui->menuProgram->insertMenu(ui->menuProgram->actions()[1], ui->wgtSongsMode->importMenu());
+	ui->menuProgram->insertMenu(ui->menuProgram->actions()[2], ui->wgtSongsMode->exportMenu());
 
 	setWindowTitle(QString("Straw Lumen v%1").arg(PROGRAM_VERSION));
 	restoreGeometry(settings->value("window.mainWindow.geometry").toByteArray());
