@@ -95,8 +95,6 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 
 		webPage_ = new QWebEnginePage(webProfile_, this);
 		connect(webPage_, SIGNAL(loadFinished(bool)), this, SLOT(onPageLoaded(bool)));
-
-		splashscreen->close();
 	}
 
 	{
@@ -254,22 +252,22 @@ void DocumentGenerationDialog::onPdfGenerated(const QByteArray &data)
 {
 	splashscreen->close();
 
-	if(data.isNull())
-		return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nepodařilo se připravit PDF data)."));
+	splashscreen->asyncAction(tr("Vytváření PDF souboru"), false, [&]{
+		if(data.isEmpty())
+			return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nepodařilo se připravit PDF data)."));
 
-	QFile f(outputFilePath_);
-	if(!f.open(QIODevice::WriteOnly))
-		return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\" pro zápis.").arg(outputFilePath_));
+		QFile f(outputFilePath_);
+		if(!f.open(QIODevice::WriteOnly))
+			return standardErrorDialog(tr("Nepodařilo se otevřít soubor \"%1\" pro zápis.").arg(outputFilePath_));
 
-	if(f.write(data) != data.length())
-		return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).").arg(outputFilePath_));
+		if(f.write(data) != data.length())
+			return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).").arg(outputFilePath_));
 
-	f.close();
-
-	if(ui->cbOpenWhenDone)
-		QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));
-	else
-		standardSuccessDialog(tr("Zpěvník byl uložen do \"%1\"").arg(outputFilePath_));
+		if(ui->cbOpenWhenDone->isChecked())
+			QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));
+		else
+			standardSuccessDialog(tr("Zpěvník byl uložen do \"%1\"").arg(outputFilePath_));
+	});
 }
 
 

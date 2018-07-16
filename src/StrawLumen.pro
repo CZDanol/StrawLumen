@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport widgets axcontainer sql xml
+QT       += core gui printsupport widgets axcontainer sql xml webenginewidgets
 
 # For debugging purposes
 # CONFIG += console
