@@ -126,6 +126,8 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 			return;
 
 		result->weakPtr_ = result;
+		result->blackSlideBefore_ = settings->setting_ppt_blackSlideBefore();
+		result->blackSlideAfter_ = settings->setting_ppt_blackSlideAfter();
 
 		result_ = result;
 	});
@@ -140,6 +142,8 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromJSON(
 		return nullptr;
 
 	result->isAutoPresentation_ = json["isAutoPresentation"].toBool();
+	result->blackSlideBefore_ = json["blackSlideBefore"].toBool();
+	result->blackSlideAfter_ = json["blackSlideAfter"].toBool();
 
 	return result;
 }
@@ -148,7 +152,9 @@ QJsonObject Presentation_PowerPoint::toJSON() const
 {
 	return QJsonObject {
 		{"filePath", filePath_},
-		{"isAutoPresentation", isAutoPresentation_}
+		{"isAutoPresentation", isAutoPresentation_},
+		{"blackSlideBefore", blackSlideBefore_},
+		{"blackSlideAfter", blackSlideAfter_}
 	};
 }
 
@@ -182,23 +188,73 @@ QWidget *Presentation_PowerPoint::createPropertiesWidget(QWidget *parent)
 
 int Presentation_PowerPoint::slideCount() const
 {
-	return isAutoPresentation_ ? 1 : slideCount_;
+	if(isAutoPresentation_)
+		return 1;
+
+	int result = slideCount_;
+
+	if(blackSlideBefore_)
+		result += 1;
+
+	if(blackSlideAfter_)
+		result += 1;
+
+	return result;
 }
 
 QString Presentation_PowerPoint::slideIdentification(int i) const
 {
-	return isAutoPresentation_ ? "" : tr("%1").arg(i+1);
+	if(isAutoPresentation_)
+		return QString();
+
+	if(blackSlideBefore_ && i == 0)
+		return QString();
+
+	if(blackSlideBefore_)
+		i -= 1;
+
+	if(blackSlideAfter_ && i == slides_.count())
+		return QString();
+
+	return tr("%1").arg(i+1);
 }
 
-QPixmap Presentation_PowerPoint::slideIdentificationIcon(int ) const
+QPixmap Presentation_PowerPoint::slideIdentificationIcon(int i) const
 {
 	static QPixmap autoSlidePixmap(":/icons/16/Repeat_16px.png");
-	return isAutoPresentation_ ? autoSlidePixmap : QPixmap();
+	static QPixmap blackScreenBeforePixmap(":/icons/16/Sign Out_16px.png");
+	static QPixmap blackScreenAfterPixmap(":/icons/16/Logout Rounded Left_16px.png");
+
+	if(isAutoPresentation_)
+		return autoSlidePixmap;
+
+	if(blackSlideBefore_ && i == 0)
+		return blackScreenBeforePixmap;
+
+	if(blackSlideBefore_)
+		i -= 1;
+
+	if(blackSlideAfter_ && i == slides_.size())
+		return blackScreenAfterPixmap;
+
+	return QPixmap();
 }
 
 QString Presentation_PowerPoint::slideDescription(int i) const
 {
-	return isAutoPresentation_ ? QString() : slides_[i]->text;
+	if(isAutoPresentation_)
+		return QString();
+
+	if(blackSlideBefore_ && i == 0)
+		return QString();
+
+	if(blackSlideBefore_)
+		i -= 1;
+
+	if(blackSlideAfter_ && i == slides_.count())
+		return QString();
+
+	return slides_[i]->text;
 }
 
 PresentationEngine *Presentation_PowerPoint::engine() const
@@ -210,16 +266,16 @@ QString Presentation_PowerPoint::classIdentifier() const
 {
 	return "powerPoint.powerPoint";
 }
-
+#include <QThread>
 void Presentation_PowerPoint::activatePresentation(int startingSlide)
 {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 
-	int startingSlide_ = slides_[startingSlide]->ppIndex;
-	QRect rect = settings->projectionDisplayGeometry();
+	const QRect rect = settings->projectionDisplayGeometry();
+	const int pptSlideI = getPptSlideI(startingSlide);
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
-	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide_, rect]{
+	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide, rect, pptSlideI]{
 		auto &pe = *presentationEngine_PowerPoint;
 
 		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
@@ -245,10 +301,8 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
 
-		if(!isAutoPresentation_)
-			pe.axSSView_->dynamicCall("GotoSlide(int)", startingSlide_);
-
-		presentationEngine_PowerPoint->setDisplay(rect);
+		setSlide_axThread(pptSlideI);
+		presentationEngine_PowerPoint->setDisplay_axThread(rect);
 	});
 }
 
@@ -270,17 +324,58 @@ void Presentation_PowerPoint::setSlide(int localSlideId, bool force)
 	Q_UNUSED(force);
 
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
-	activeXJobThread->executeNonblocking([this, selfPtr, localSlideId]{
+
+	const int pptSlideI = getPptSlideI(localSlideId);
+
+	activeXJobThread->executeNonblocking([this, selfPtr, pptSlideI]{
 		auto &pe = *presentationEngine_PowerPoint;
 
-		if(!pe.axPresentation_ || isAutoPresentation_)
+		if(!pe.axPresentation_)
 			return;
 
-		pe.axSSView_->dynamicCall("GotoSlide(int)", slides_[localSlideId]->ppIndex);
+		setSlide_axThread(pptSlideI);
 	});
+}
+
+bool Presentation_PowerPoint::isSlideBlackScreen(int localSlideId) const
+{
+	return getPptSlideI(localSlideId) == -1;
 }
 
 Presentation_PowerPoint::Presentation_PowerPoint()
 {
 
+}
+
+void Presentation_PowerPoint::setSlide_axThread(int pptSlideI)
+{
+	auto &pe = *presentationEngine_PowerPoint;
+
+	if(pptSlideI == -2)
+		return;
+
+	if(pptSlideI == -1) {
+		pe.axSSView_->dynamicCall("SetState(int)", (int) Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen);
+		return;
+	}
+
+	pe.axSSView_->dynamicCall("SetState(int)", (int) Office::PowerPoint::PpSlideShowState::ppSlideShowRunning);
+	pe.axSSView_->dynamicCall("GotoSlide(int)", pptSlideI);
+}
+
+int Presentation_PowerPoint::getPptSlideI(int localSlideId) const
+{
+	if(isAutoPresentation_)
+		return -2;
+
+	if(blackSlideBefore_ && localSlideId == 0)
+		return -1;
+
+	if(blackSlideBefore_)
+		localSlideId -= 1;
+
+	if(blackSlideAfter_ && localSlideId == slides_.count())
+		return -1;
+
+	return slides_[localSlideId]->ppIndex;
 }

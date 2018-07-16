@@ -25,6 +25,9 @@ public:
 	void setBlackScreen(bool set) override;
 	void setDisplay(const QRect &rect) override;
 
+private:
+	void setDisplay_axThread(const QRect &rect);
+
 private slots:
 	void onActivateTimer();
 

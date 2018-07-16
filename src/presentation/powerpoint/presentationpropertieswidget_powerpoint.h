@@ -18,8 +18,13 @@ public:
 	explicit PresentationPropertiesWidget_PowerPoint(const QSharedPointer<Presentation_PowerPoint> &presentation, QWidget *parent);
 	~PresentationPropertiesWidget_PowerPoint();
 
+private:
+	void updateUiEnabled();
+
 private slots:
 	void on_cbAutoPresentation_clicked(bool checked);
+	void on_cbBlackSlideBefore_clicked(bool checked);
+	void on_cbBlackSlideAfter_clicked(bool checked);
 
 private:
 	Ui::PresentationPropertiesWidget_PowerPoint *ui;

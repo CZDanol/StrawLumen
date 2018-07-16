@@ -11,6 +11,11 @@
 #include "wgt/displayselectionwidget.h"
 #include "wgt/styleselectionwidget.h"
 #include "rec/presentationstyle.h"
+#include "gui/settingsdialog.h"
+#include "job/widgetvalues.h"
+
+#define UI_SETTINGSDIALOGPATH "ui_settingsdialog.h"
+#include UI_SETTINGSDIALOGPATH
 
 class SettingsManager {
 
@@ -24,10 +29,18 @@ public:
 
 public:
 	QRect projectionDisplayGeometry() const;
-	const PresentationStyle &defaultPresentationStyle() const;
 
 private:
 	QSettings settings_;
+
+public:
+#define F(settingName, uiControl)\
+	inline const auto& setting_ ## settingName() const {\
+		return getWidgetValue(settingsDialog->ui->uiControl);\
+	}
+
+	SETTINGS_FACTORY(F)
+#undef F
 
 };
 

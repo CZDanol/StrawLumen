@@ -6,9 +6,6 @@
 #include "util/standarddialogs.h"
 #include "main.h"
 
-#define UI_SETTINGSDIALOGPATH "ui_settingsdialog.h"
-#include UI_SETTINGSDIALOGPATH
-
 #define SETTING_SAVE(T) template<> void saveSetting<T>(const QString &name, const T *widget)
 #define SETTING_LOAD(T) template<> void loadSetting<T>(const QString &name, T *widget)
 
@@ -39,11 +36,6 @@ QVariant SettingsManager::value(const QString &key, const QVariant &def) const
 QRect SettingsManager::projectionDisplayGeometry() const
 {
 	return settingsDialog->ui->dsDisplay->selectedScreen()->geometry();
-}
-
-const PresentationStyle &SettingsManager::defaultPresentationStyle() const
-{
-	return settingsDialog->ui->wgtDefaultPresentationStyle->presentationStyle();
 }
 
 SETTING_SAVE(QComboBox)

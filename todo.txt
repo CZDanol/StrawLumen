@@ -3,8 +3,8 @@
 - refresh scroll u item viewů, když se refreshujou
 - možnost znovu načíst powerpoint prezentaci
 - možnost duplikovat položky playlistu?
-- černá obrazovka před/za powerpoint prezentace
 - scrollovat view snímků s prezentacaí
+- associovat lumen exported file na otevření v lumenu
 
 - položka: vlastní text
 - položka: pozadí

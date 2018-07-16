@@ -24,7 +24,7 @@
 #include <QDesktopServices>
 #include <QWebEngineSettings>
 
-#define SETTINGS_FACTORY(F) \
+#define DOCUMENT_GENERATION_SETTINGS_FACTORY(F) \
 	F("generateToc", gbToc) F("tocColumns", sbTocColumns)\
 	F("generateLyrics", gbLyrics) F("generateChords", cbGenerateChords) F("lyricsMode", cmbLyricsMode) F("lyricsColumns", sbLyricsColumns)\
 	F("landscapeOrientation", cbLandscapeOrientation) F("pageBreakMode", cmbPageBreakMode) F("pageSize", cmbPageSize) F("pageMargins", sbPageMargins)\
@@ -59,7 +59,7 @@ DocumentGenerationDialog::DocumentGenerationDialog(QWidget *parent) :
 			saveSetting("dialog.documentGeneration." settingsName, ui->uiControl);\
 		});
 
-	SETTINGS_FACTORY(F)
+	DOCUMENT_GENERATION_SETTINGS_FACTORY(F)
 #undef F
 }
 

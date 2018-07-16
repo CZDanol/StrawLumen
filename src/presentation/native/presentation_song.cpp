@@ -13,9 +13,9 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 	QSignalBlocker sb(result.data());
 
 	result->weakPtr_ = result.staticCast<Presentation_NativePresentation>();
-	result->style_ = settings->defaultPresentationStyle();
-	result->emptySlideBefore_ = settings->value("song.emptySlideBefore").toBool();
-	result->emptySlideAfter_ = settings->value("song.emptySlideAfter", true).toBool();
+	result->style_ = settings->setting_song_defaultStyle();
+	result->emptySlideBefore_ = settings->setting_song_emptySlideBefore();
+	result->emptySlideAfter_ = settings->setting_song_emptySlideAfter();
 
 	if(!result->loadFromDb(songId))
 		return nullptr;

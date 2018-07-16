@@ -59,16 +59,27 @@ public:
 	void deactivatePresentation() override;
 	void setSlide(int localSlideId, bool force = false) override;
 
+public:
+	bool isSlideBlackScreen(int localSlideId) const;
+
 private:
 	Presentation_PowerPoint();
 
 private:
-	int slideCount_ = 0;
+	/// -1 -> blackScreen, -2 -> do nothing (auto presentation)
+	void setSlide_axThread(int getPptSlideI);
+	int getPptSlideI(int localSlideId) const;
+
+private:
 	QString filePath_;
+	bool isAutoPresentation_ = false;
+	bool blackSlideBefore_, blackSlideAfter_;
+
+private:
+	int slideCount_ = 0;
 	QString identification_;
 	QList<QSharedPointer<Slide>> slides_;
 	QWeakPointer<Presentation_PowerPoint> weakPtr_;
-	bool isAutoPresentation_ = false;
 
 };
 
