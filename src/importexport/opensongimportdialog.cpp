@@ -123,11 +123,23 @@ void OpenSongImportDialog::on_btnImport_clicked()
 			QString content = root.firstChildElement("lyrics").text().trimmed();
 
 			// Change sections formet
-			static const QRegularExpression sectionRegex("\\[([VCPBTIOSNR][0-9]*)\\]\\s*");
-			content.replace(sectionRegex, "{\\1}\n");
+			{
+				// Compatible sections format (that a is for the first slide of the section)
+				static const QRegularExpression sectionRegex("\\[([VCBIO][0-9]*)a?\\]\\s*");
+				content.replace(sectionRegex, "{\\1}\n");
 
-			static const QRegularExpression simpleSectionRegex("\\[([0-9]*)\\]\\s*");
-			content.replace(simpleSectionRegex, "{V\\1}\n");
+				// V1b, V1c, ... -> {---} (slide separator)
+				static const QRegularExpression sectionContinuationRegex("\\[([VCBIO][0-9]*[b-z]?)\\]\\s*");
+				content.replace(sectionContinuationRegex, "{---}\n");
+
+				// [1] -> {V1}
+				static const QRegularExpression simpleSectionRegex("\\[([1-9][0-9]*)\\]\\s*");
+				content.replace(simpleSectionRegex, "{V\\1}\n");
+
+				// Other -> {"XXX"}
+				static const QRegularExpression otherSectionRegex("\\[([a-zA-Z0-9]+)\\]\\s*");
+				content.replace(otherSectionRegex, "{\"\\1\"}\n");
+			}
 
 			// Change chords format
 			static const QRegularExpression chordLineRegex("^(\\.[^\n]*\n)([^\n]*)$", QRegularExpression::MultilineOption);

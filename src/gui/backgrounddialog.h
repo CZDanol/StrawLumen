@@ -51,6 +51,8 @@ private slots:
 	void on_actionDelete_triggered();
 	void on_wgtColor_sigColorChangedByUser(const QColor &);
 	void on_lwList_itemActivated(QListWidgetItem *item);
+	void on_cmbBlendMode_activated(int index);
+	void on_btnResetColor_clicked();
 
 private:
 	Ui::BackgroundDialog *ui;

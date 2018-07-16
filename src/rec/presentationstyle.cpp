@@ -70,6 +70,11 @@ qlonglong PresentationStyle::styleId() const
 	return styleId_;
 }
 
+void PresentationStyle::assumeStyleId(qlonglong set)
+{
+	styleId_ = set;
+}
+
 bool PresentationStyle::operator==(const PresentationStyle &other) const
 {
 	if(styleId_ != other.styleId_)
@@ -120,7 +125,15 @@ void PresentationStyle::onDbStyleChanged(qlonglong styleId)
 	if(styleId != styleId_)
 		return;
 
+	PresentationBackground bg;
+	const bool hadCustomBaackground = hasCustomBackground();
+	if(hadCustomBaackground)
+		bg = background();
+
 	loadFromDb(styleId_);
+
+	if(hadCustomBaackground)
+		setBackground(bg);
 }
 
 // Field getters/setters implementation

@@ -34,6 +34,7 @@ QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::createFromJSO
 
 	result->text_ = json["text"].toString();
 	result->title_ = json["title"].toString();
+	result->updateDescription();
 
 	result->weakPtr_ = result;
 	return result;
@@ -79,7 +80,7 @@ int Presentation_CustomSlide::slideCount() const
 
 QString Presentation_CustomSlide::slideDescription(int) const
 {
-	return text_;
+	return description_;
 }
 
 QPixmap Presentation_CustomSlide::slideIdentificationIcon(int) const
@@ -97,6 +98,14 @@ Presentation_CustomSlide::Presentation_CustomSlide()
 {
 	connect(&style_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
+}
+
+void Presentation_CustomSlide::updateDescription()
+{
+	static const QRegularExpression descRegex("\\s+");
+
+	description_ = text_;
+	description_.replace(descRegex, " ");
 }
 
 void Presentation_CustomSlide::onStyleChanged()

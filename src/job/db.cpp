@@ -217,7 +217,7 @@ QString collate(const QString &str)
 
 	QString result = str.normalized(QString::NormalizationForm_KD);
 
-	result.remove(clearRegex);
+	result.replace(clearRegex, " ");
 	result.replace(compactSpacesRegex, " ");
 
 	result = result.trimmed();

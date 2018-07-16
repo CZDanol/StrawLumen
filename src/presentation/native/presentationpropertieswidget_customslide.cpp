@@ -35,6 +35,7 @@ void PresentationPropertiesWidget_CustomSlide::fillData()
 void PresentationPropertiesWidget_CustomSlide::onUpdateTimerTimeout()
 {
 	presentation_->text_ = ui->teText->toPlainText().trimmed();
+	presentation_->updateDescription();
 	emit presentation_->sigSlidesChanged();
 }
 

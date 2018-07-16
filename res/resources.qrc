@@ -194,5 +194,7 @@
         <file>icons/16/Download_16px.png</file>
         <file>icons/16/Upload_16px.png</file>
         <file>icons/16/Text Box_16px.png</file>
+        <file>icons/16/Transition Both Directions_16px.png</file>
+        <file>icons/16/Eraser_16px.png</file>
     </qresource>
 </RCC>

@@ -8,10 +8,10 @@
 #include "wgt/styleselectionwidget.h"
 
 template<typename Widget>
-inline const auto& getWidgetValue(const Widget *wgt) { Q_UNUSED(wgt); __ERROR__; }
+inline decltype(auto) getWidgetValue(const Widget *wgt) { Q_UNUSED(wgt); __ERROR__; }
 
 #define WIDGET_VALUE_GETTER(Widget, getterFunction) \
-	template<> inline const auto& getWidgetValue<Widget>(const Widget *wgt) {return wgt->getterFunction();}
+	template<> inline decltype(auto) getWidgetValue<Widget>(const Widget *wgt) {return wgt->getterFunction();}
 
 WIDGET_VALUE_GETTER(QLineEdit, text)
 WIDGET_VALUE_GETTER(QCheckBox, isChecked)

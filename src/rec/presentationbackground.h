@@ -23,10 +23,12 @@ public:
 
 	const QString &filename() const;
 	const QColor &color() const;
+	int blendMode() const;
 
 public slots:
 	void setFilename(const QString &filename);
 	void setColor(const QColor &color);
+	void setBlendMode(int blendMode);
 
 public:
 	void draw(QPainter &p, const QRect &rect) const;
@@ -46,6 +48,7 @@ private slots:
 private:
 	QString filename_;
 	QColor color_ = Qt::transparent;
+	int blendMode_ = QPainter::CompositionMode_SourceOver;
 
 };
 

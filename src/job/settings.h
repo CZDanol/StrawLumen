@@ -35,7 +35,7 @@ private:
 
 public:
 #define F(settingName, uiControl)\
-	inline const auto& setting_ ## settingName() const {\
+	inline decltype(auto) setting_ ## settingName() const {\
 		return getWidgetValue(settingsDialog->ui->uiControl);\
 	}
 

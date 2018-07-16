@@ -1,14 +1,6 @@
 #include "documentgenerationdialog.h"
 #include "ui_documentgenerationdialog.h"
 
-#include "gui/splashscreen.h"
-#include "job/db.h"
-#include "job/settings.h"
-#include "rec/chord.h"
-#include "rec/songsection.h"
-#include "util/standarddialogs.h"
-#include "util/scopeexit.h"
-
 #include <QLayout>
 #include <QCoreApplication>
 #include <QDir>
@@ -23,6 +15,15 @@
 #include <QPointer>
 #include <QDesktopServices>
 #include <QWebEngineSettings>
+
+#include "gui/splashscreen.h"
+#include "job/db.h"
+#include "job/settings.h"
+#include "rec/chord.h"
+#include "rec/songsection.h"
+#include "util/standarddialogs.h"
+#include "util/scopeexit.h"
+#include "util/execonmainthread.h"
 
 #define DOCUMENT_GENERATION_SETTINGS_FACTORY(F) \
 	F("generateToc", gbToc) F("tocColumns", sbTocColumns)\
@@ -264,7 +265,7 @@ void DocumentGenerationDialog::onPdfGenerated(const QByteArray &data)
 			return standardErrorDialog(tr("Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).").arg(outputFilePath_));
 
 		if(ui->cbOpenWhenDone->isChecked())
-			QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));
+			execOnMainThread([=]{QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));});
 		else
 			standardSuccessDialog(tr("Zpěvník byl uložen do \"%1\"").arg(outputFilePath_));
 	});

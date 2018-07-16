@@ -40,6 +40,7 @@ public:
 
 	/// Returns -1 if style was not loaded from db or the style has been altered
 	qlonglong styleId() const;
+	void assumeStyleId(qlonglong set);
 
 public:
 	bool operator==(const PresentationStyle &other) const;

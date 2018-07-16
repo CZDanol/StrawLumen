@@ -28,12 +28,37 @@ enum ItemDataRole {
 	idrIsIntegratedBackground
 };
 
+static const QList<QPair<const char*,int>> blendModes{
+	{QT_TR_NOOP("Překrýt (klasické)"), QPainter::CompositionMode_SourceOver},
+	{QT_TR_NOOP("Multiply"), QPainter::CompositionMode_Multiply},
+	{QT_TR_NOOP("Screen"), QPainter::CompositionMode_Screen},
+	{QT_TR_NOOP("Overlay"), QPainter::CompositionMode_Overlay},
+	{QT_TR_NOOP("Darken"), QPainter::CompositionMode_Darken},
+	{QT_TR_NOOP("Lighten"), QPainter::CompositionMode_Lighten},
+	{QT_TR_NOOP("Color dodge"), QPainter::CompositionMode_ColorDodge},
+	{QT_TR_NOOP("Color burn"), QPainter::CompositionMode_ColorBurn},
+	{QT_TR_NOOP("Hard light"), QPainter::CompositionMode_HardLight},
+	{QT_TR_NOOP("Soft light"), QPainter::CompositionMode_SoftLight}
+};
+
+static const QHash<int,int> blendModeIndexes = [](){
+	QHash<int,int> result;
+	for(int i = 0; i < blendModes.size(); i++)
+		result.insert(blendModes[i].second, i);
+
+	return result;
+}();
+
 BackgroundDialog::BackgroundDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::BackgroundDialog)
 {
 	ui->setupUi(this);
 	ui->twGallery->setCornerWidget(ui->twGalleryCorner);
+	ui->twColor->setCornerWidget(ui->twColorCorner);
+
+	for(const auto &bm : blendModes)
+		ui->cmbBlendMode->addItem(tr(bm.first), bm.second);
 
 	connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(accept()));
 	connect(ui->btnSelect, SIGNAL(clicked(bool)), this, SLOT(accept()));
@@ -66,6 +91,7 @@ bool BackgroundDialog::showInSelectionMode(PresentationBackground &background)
 	ui->lwList->setCurrentItem(itemsByFilename_.value(presentationBackground_.filename(), nullptr));
 	ui->wgtColor->setColor(presentationBackground_.color());
 	ui->twGallery->setCurrentIndex(0);
+	ui->cmbBlendMode->setCurrentIndex(blendModeIndexes.value(presentationBackground_.blendMode(), 0));
 
 	setMgmtMode(false);
 	updatePreview();
@@ -297,11 +323,10 @@ void BackgroundDialog::on_lwList_currentItemChanged(QListWidgetItem *current, QL
 
 	const QString filename = current ? current->data(idrFilename).toString() : QString();
 
-	if(filename != presentationBackground_.filename()) {
-		presentationBackground_.setFilename(filename);
-		presentationBackground_.setColor(Qt::transparent);
-		ui->wgtColor->setColor(Qt::transparent);
-	}
+	if(filename == presentationBackground_.filename())
+		return;
+
+	presentationBackground_.setFilename(filename);
 	updatePreview();
 }
 
@@ -330,4 +355,21 @@ void BackgroundDialog::on_lwList_itemActivated(QListWidgetItem *item)
 	Q_UNUSED(item);
 	if(!isMgmtMode_)
 		ui->btnSelect->click();
+}
+
+void BackgroundDialog::on_cmbBlendMode_activated(int index)
+{
+	presentationBackground_.setBlendMode(ui->cmbBlendMode->itemData(index).toInt());
+	updatePreview();
+}
+
+void BackgroundDialog::on_btnResetColor_clicked()
+{
+	presentationBackground_.setColor(Qt::transparent);
+	presentationBackground_.setBlendMode(QPainter::CompositionMode_SourceOver);
+
+	ui->wgtColor->setColor(Qt::transparent);
+	ui->cmbBlendMode->setCurrentIndex(0);
+
+	updatePreview();
 }

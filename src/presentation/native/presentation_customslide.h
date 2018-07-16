@@ -37,12 +37,16 @@ private:
 	Presentation_CustomSlide();
 
 private slots:
+	void updateDescription();
+
+private slots:
 	void onStyleChanged();
 	void onStyleBackgroundChanged();
 
 private:
 	PresentationStyle style_;
 	QString title_, text_;
+	QString description_;
 
 };
 
