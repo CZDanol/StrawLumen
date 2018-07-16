@@ -56,14 +56,26 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 		// Menu & controls
 		{
-			playlistContextMenu_.addAction(ui->actionDeletePresentation);
-
 			addPresentationMenu_.addAction(ui->actionAddSong);
 			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
 			addPresentationMenu_.addAction(ui->actionAddBlackScreen);
 
 			ui->btnAddPresentation->setMenu(&addPresentationMenu_);
+			connect(&addPresentationMenu_, SIGNAL(aboutToShow()), this, SLOT(onAddPresentationMenuAboutToShow()));
 
+			insertPresentationBeforeMenu_.setTitle(tr("Přidat před:"));
+			insertPresentationBeforeMenu_.setIcon(QIcon(":/icons/16/Upload_16px.png"));
+			insertPresentationBeforeMenu_.addActions(addPresentationMenu_.actions());
+			connect(&insertPresentationBeforeMenu_, SIGNAL(aboutToShow()), this, SLOT(onAddPresentationBeforeMenuAboutToShow()));
+
+			insertPresentationAfterMenu_.setTitle(tr("Přidat za:"));
+			insertPresentationAfterMenu_.setIcon(QIcon(":/icons/16/Download_16px.png"));
+			insertPresentationAfterMenu_.addActions(addPresentationMenu_.actions());
+			connect(&insertPresentationAfterMenu_, SIGNAL(aboutToShow()), this, SLOT(onAddPresentationAfterMenuAboutToShow()));
+
+			playlistContextMenu_.addAction(ui->actionDeletePresentation);
+			playlistContextMenu_.addMenu(&insertPresentationBeforeMenu_);
+			playlistContextMenu_.addMenu(&insertPresentationAfterMenu_);
 			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
 		}
 	}
@@ -131,7 +143,11 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		connect(new QShortcut(Qt::Key_Delete, ui->tvPlaylist, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDeletePresentation, SLOT(trigger()));
 	}
 
+	ui->twLeftBottom->setCornerWidget(ui->twLeftBottomCorner);
 	ui->twLeftBottom->setTabEnabled(ui->twLeftBottom->indexOf(ui->tabPresentationProperties), false);
+
+	isTwLeftBottomHidden_ = true;
+	ui->btnShowHideTwLeftBottom->click();
 
 	updateControlsUIEnabled();
 }
@@ -303,6 +319,31 @@ void MainWindow_PresentationMode::onSongListItemActivated(qlonglong songId)
 	playlist_->addItem(Presentation_Song::createFromDb(songId));
 }
 
+void MainWindow_PresentationMode::onAddPresentationMenuAboutToShow()
+{
+	addPresentationsAction_ = [this](const QVector<QSharedPointer<Presentation > > &presentations) {
+		playlist_->addItems(presentations);
+	};
+}
+
+void MainWindow_PresentationMode::onAddPresentationBeforeMenuAboutToShow()
+{
+	const int insertPos = ui->tvPlaylist->currentIndex().row();
+
+	addPresentationsAction_ = [this, insertPos](const QVector<QSharedPointer<Presentation > > &presentations) {
+		playlist_->insertItems(insertPos, presentations);
+	};
+}
+
+void MainWindow_PresentationMode::onAddPresentationAfterMenuAboutToShow()
+{
+	const int insertPos = ui->tvPlaylist->currentIndex().row()+1;
+
+	addPresentationsAction_ = [this, insertPos](const QVector<QSharedPointer<Presentation > > &presentations) {
+		playlist_->insertItems(insertPos, presentations);
+	};
+}
+
 void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)
 {
 	if(!checked) {
@@ -343,7 +384,7 @@ void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
 
 void MainWindow_PresentationMode::on_actionAddBlackScreen_triggered()
 {
-	playlist_->addItem(Presentation_BlackScreen::create());
+	addPresentationsAction_({Presentation_BlackScreen::create()});
 }
 
 void MainWindow_PresentationMode::on_btnSettings_clicked()
@@ -368,10 +409,15 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 
 	settings->setValue("dialog.addPowerpointPresentation.directory", dlg.directory().absolutePath());
 
+	QVector<QSharedPointer<Presentation> > presentations;
 	for(auto &filename : dlg.selectedFiles()) {
-		if(!playlist_->addItem(Presentation_PowerPoint::createFromFilename(filename)))
+		QSharedPointer<Presentation> presentation = Presentation_PowerPoint::createFromFilename(filename);
+		if(!presentation)
 			break;
+
+		presentations << presentation;
 	}
+	addPresentationsAction_(presentations);
 }
 
 #include <QGraphicsDropShadowEffect>
@@ -380,6 +426,10 @@ void MainWindow_PresentationMode::on_actionAddSong_triggered()
 {
 	//standardInfoDialog(tr("Vyberte píseň v panelu \"Písně\" vlevo dole a přetáhněte ji do panelu \"Program\"."));
 	ui->twLeftBottom->setCurrentWidget(ui->tabSongList);
+
+	if(isTwLeftBottomHidden_)
+		ui->btnShowHideTwLeftBottom->click();
+
 	flashWidget(ui->twLeftBottom);
 }
 
@@ -414,4 +464,31 @@ void MainWindow_PresentationMode::on_actionAddSongsToPlaylist_triggered()
 		items << Presentation_Song::createFromDb(songId);
 
 	playlist_->addItems(items);
+}
+
+void MainWindow_PresentationMode::on_btnShowHideTwLeftBottom_clicked()
+{
+	if(isTwLeftBottomHidden_) {
+		ui->twLeftBottom->currentWidget()->show();
+		ui->twLeftBottom->setMaximumHeight(QWIDGETSIZE_MAX);
+
+		static const QPixmap pixmap(":/icons/16/Expand Arrow_16px.png");
+		ui->btnShowHideTwLeftBottom->setIcon(pixmap);
+		ui->btnShowHideTwLeftBottom->setText(tr("Skrýt"));
+		isTwLeftBottomHidden_ = false;
+
+	} else {
+		ui->twLeftBottom->currentWidget()->hide();
+		ui->twLeftBottom->setMaximumHeight(ui->twLeftBottom->tabBar()->height() + 8);
+
+		static const QPixmap pixmap(":/icons/16/Collapse Arrow_16px.png");
+		ui->btnShowHideTwLeftBottom->setIcon(pixmap);
+		ui->btnShowHideTwLeftBottom->setText(tr("Zobrazit"));
+		isTwLeftBottomHidden_ = true;
+	}
+}
+
+void MainWindow_PresentationMode::on_twLeftBottom_currentChanged(int)
+{
+	ui->btnShowHideTwLeftBottom->setChecked(false);
 }

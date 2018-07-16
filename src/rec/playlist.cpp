@@ -97,7 +97,7 @@ void Playlist::deleteItem(const QSharedPointer<Presentation> &item)
 
 void Playlist::insertItems(int pos, const QVector<QSharedPointer<Presentation> > &items)
 {
-	if(pos > items_.count() || pos < -1)
+	if(pos > items_.count() || pos < 0)
 		pos = items_.count() - 1;
 
 	items_.insert(pos, items.count() - items.count(nullptr), nullptr);

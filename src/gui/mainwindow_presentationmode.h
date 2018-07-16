@@ -48,6 +48,9 @@ private slots:
 	void onPlaylistContextMenuRequested(const QPoint &point);
 	void onSongListContextMenuRequested(const QPoint &point);
 	void onSongListItemActivated(qlonglong songId);
+	void onAddPresentationMenuAboutToShow();
+	void onAddPresentationBeforeMenuAboutToShow();
+	void onAddPresentationAfterMenuAboutToShow();
 
 private slots:
 	void on_btnEnableProjection_clicked(bool checked);
@@ -62,12 +65,19 @@ private slots:
 	void on_actionEditSong_triggered();
 	void on_actionDeleteSongs_triggered();
 	void on_actionAddSongsToPlaylist_triggered();
+	void on_btnShowHideTwLeftBottom_clicked();
+	void on_twLeftBottom_currentChanged(int index);
 
 private:
 	Ui::MainWindow_PresentationMode *ui;
 	PresentationPropertiesWidget *presentationPropertiesWidget_ = nullptr;
 	QTimer currentTimeTimer_;
-	QMenu playlistContextMenu_, addPresentationMenu_, songListContextMenu_;
+	QMenu playlistContextMenu_, songListContextMenu_;
+	bool isTwLeftBottomHidden_ = false;
+
+private:
+	QMenu addPresentationMenu_, insertPresentationBeforeMenu_, insertPresentationAfterMenu_;
+	std::function<void(const QVector<QSharedPointer<Presentation> >&)> addPresentationsAction_;
 
 private:
 	QSharedPointer<Playlist> playlist_;

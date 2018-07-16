@@ -138,7 +138,7 @@
           <item>
            <widget class="QPushButton" name="btnSettings">
             <property name="text">
-             <string> Nastavení</string>
+             <string>Nastavení</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -335,7 +335,7 @@
           <item>
            <widget class="QPushButton" name="btnPlaylists">
             <property name="text">
-             <string> Programy</string>
+             <string>Programy</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -454,6 +454,38 @@
         </widget>
        </item>
        <item>
+        <widget class="QWidget" name="twLeftBottomCorner" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnShowHideTwLeftBottom">
+            <property name="text">
+             <string notr="true">Show/hide</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Expand Arrow_16px.png</normaloff>:/icons/16/Expand Arrow_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QTabWidget" name="twLeftBottom">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -524,7 +556,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>302</width>
-                <height>119</height>
+                <height>89</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9"/>

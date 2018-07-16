@@ -185,5 +185,13 @@
         <file>icons/16/Database_16px.png</file>
         <file>icons/16/Ok_16px.png</file>
         <file>icons/32/Ok_32px.png</file>
+        <file>icons/16/Expand Arrow_16px.png</file>
+        <file>icons/16/Collapse Arrow_16px.png</file>
+        <file>icons/16/Insert Row Above_16px.png</file>
+        <file>icons/16/Insert Row_16px.png</file>
+        <file>icons/16/Below_16px.png</file>
+        <file>icons/16/Upward Arrow_16px.png</file>
+        <file>icons/16/Download_16px.png</file>
+        <file>icons/16/Upload_16px.png</file>
     </qresource>
 </RCC>
