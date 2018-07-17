@@ -8,7 +8,7 @@ StartupSplashscreen::StartupSplashscreen(QWidget *parent) :
 	ui->setupUi(this);
 	setFixedSize(size());
 	setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
-	setWindowTitle(QString("Straw Lumen v%1").arg(PROGRAM_VERSION));
+	setWindowTitle(QString("Straw Lumen %1").arg(PROGRAM_VERSION));
 }
 
 StartupSplashscreen::~StartupSplashscreen()

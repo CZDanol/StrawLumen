@@ -7,6 +7,7 @@
 #include <QUuid>
 #include <QFile>
 #include <QDateTime>
+#include <QCryptographicHash>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -18,6 +19,12 @@
 #include "presentation/native/presentation_song.h"
 #include "util/scopeexit.h"
 #include "util/standarddialogs.h"
+
+enum ConflictBehavior {
+	cbSkip,
+	cbOverwriteIfNewer,
+	cbAlwaysOverwrite
+};
 
 OpenSongImportDialog *openSongImportDialog()
 {
@@ -72,6 +79,7 @@ void OpenSongImportDialog::on_btnImport_clicked()
 	const QSet<QString> tags = ui->lnTags->toTags();
 
 	QVector<QSharedPointer<Presentation> > presentations;
+	const int conflictBehavior = ui->cmbConflictBehavior->currentIndex();
 
 	splashscreen->asyncAction(tr("Import písní"), true, [&]{
 		db->beginTransaction();
@@ -92,84 +100,104 @@ void OpenSongImportDialog::on_btnImport_clicked()
 				break;
 			}
 
-			QDomDocument dom;
-			if(!dom.setContent(&f)) {
-				splashscreen->storno();
-				standardErrorDialog(tr("Nepodařilo se načíst soubor \"%1\".").arg(filename));
-				break;
-			}
+			const qlonglong lastEdit = QFileInfo(filename).lastModified().toSecsSinceEpoch();
 
-			f.close();
-
-			QDomElement root = dom.documentElement();
-			if(root.tagName() != "song") {
-				splashscreen->storno();
-				standardErrorDialog(tr("Soubor \"%1\" není formátu OpenSong.").arg(filename));
-				break;
-			}
-
-			// #: SONGS_TABLE_FIELDS
-			// Denullify - the database has NOT NULL columns for error checking
-			QHash<QString,QVariant> fields {
-				{"uid", QUuid::createUuid().toString()},
-				{"lastEdit", QDateTime::currentSecsSinceEpoch()},
-
-				{"name", denullifyString(root.firstChildElement("title").text())},
-				{"author", denullifyString(root.firstChildElement("author").text())},
-				{"copyright", denullifyString(root.firstChildElement("copyright").text())},
-				{"slideOrder", denullifyString(root.firstChildElement("presentation").text())}
-			};
-
-			QString content = root.firstChildElement("lyrics").text().trimmed();
-
-			// Change sections formet
+			QByteArray uid;
 			{
-				// Compatible sections format (that a is for the first slide of the section)
-				static const QRegularExpression sectionRegex("\\[([VCBIO][0-9]*)a?\\]\\s*");
-				content.replace(sectionRegex, "{\\1}\n");
-
-				// V1b, V1c, ... -> {---} (slide separator)
-				static const QRegularExpression sectionContinuationRegex("\\[([VCBIO][0-9]*[b-z]?)\\]\\s*");
-				content.replace(sectionContinuationRegex, "{---}\n");
-
-				// [1] -> {V1}
-				static const QRegularExpression simpleSectionRegex("\\[([1-9][0-9]*)\\]\\s*");
-				content.replace(simpleSectionRegex, "{V\\1}\n");
-
-				// Other -> {"XXX"}
-				static const QRegularExpression otherSectionRegex("\\[([a-zA-Z0-9]+)\\]\\s*");
-				content.replace(otherSectionRegex, "{\"\\1\"}\n");
+				QCryptographicHash hash(QCryptographicHash::Sha3_224);
+				hash.addData(f.readAll());
+				uid = hash.result().toBase64();
+				f.reset();
 			}
 
-			// Change chords format
-			static const QRegularExpression chordLineRegex("^(\\.[^\n]*\n)([^\n]*)$", QRegularExpression::MultilineOption);
-			int offsetCorrection = 0;
-			QRegularExpressionMatchIterator it = chordLineRegex.globalMatch(content);
-			while(it.hasNext()) {
-				const QRegularExpressionMatch m = it.next();
+			// Check existing
+			QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE uid = ?", {uid});
+			qlonglong songId = existingSong.isEmpty() ? -1 : existingSong.value("id").toLongLong();
 
-				content.remove(m.capturedStart(1)+offsetCorrection, m.capturedLength(1));
-				offsetCorrection -= m.capturedLength(1);
-
-				static const QRegularExpression chordRegex("\\S+");
-				QRegularExpressionMatchIterator it2 = chordRegex.globalMatch(m.captured(1), 1);
-				while(it2.hasNext()) {
-					const QRegularExpressionMatch m2 = it2.next();
-					const QString insertText = QString("[%1]").arg(m2.captured());
-					content.insert(m.capturedStart(2)+qMin(m2.capturedStart(),m.capturedLength(2)-1)+offsetCorrection, insertText);
-					offsetCorrection += insertText.length();
+			if(songId == -1 || conflictBehavior == cbAlwaysOverwrite || (conflictBehavior == cbOverwriteIfNewer && existingSong.value("lastEdit") < lastEdit)) {
+				QDomDocument dom;
+				if(!dom.setContent(&f)) {
+					splashscreen->storno();
+					standardErrorDialog(tr("Nepodařilo se načíst soubor \"%1\".").arg(filename));
+					break;
 				}
+
+				f.close();
+
+				QDomElement root = dom.documentElement();
+				if(root.tagName() != "song") {
+					splashscreen->storno();
+					standardErrorDialog(tr("Soubor \"%1\" není formátu OpenSong.").arg(filename));
+					break;
+				}
+
+				// #: SONGS_TABLE_FIELDS
+				// Denullify - the database has NOT NULL columns for error checking
+				QHash<QString,QVariant> fields {
+					{"uid", uid},
+					{"lastEdit", lastEdit},
+
+					{"name", denullifyString(root.firstChildElement("title").text())},
+					{"author", denullifyString(root.firstChildElement("author").text())},
+					{"copyright", denullifyString(root.firstChildElement("copyright").text())},
+					{"slideOrder", denullifyString(root.firstChildElement("presentation").text())}
+				};
+
+				QString content = root.firstChildElement("lyrics").text().trimmed();
+
+				// Change sections formet
+				{
+					// Compatible sections format (that a is for the first slide of the section)
+					static const QRegularExpression sectionRegex("\\[([VCBIO][0-9]*)a?\\]\\s*");
+					content.replace(sectionRegex, "{\\1}\n");
+
+					// V1b, V1c, ... -> {---} (slide separator)
+					static const QRegularExpression sectionContinuationRegex("\\[([VCBIO][0-9]*[b-z]?)\\]\\s*");
+					content.replace(sectionContinuationRegex, "{---}\n");
+
+					// [1] -> {V1}
+					static const QRegularExpression simpleSectionRegex("\\[([1-9][0-9]*)\\]\\s*");
+					content.replace(simpleSectionRegex, "{V\\1}\n");
+
+					// Other -> {"XXX"}
+					static const QRegularExpression otherSectionRegex("\\[([a-zA-Z0-9]+)\\]\\s*");
+					content.replace(otherSectionRegex, "{\"\\1\"}\n");
+				}
+
+				// Change chords format
+				static const QRegularExpression chordLineRegex("^(\\.[^\n]*\n)([^\n]*)$", QRegularExpression::MultilineOption);
+				int offsetCorrection = 0;
+				QRegularExpressionMatchIterator it = chordLineRegex.globalMatch(content);
+				while(it.hasNext()) {
+					const QRegularExpressionMatch m = it.next();
+
+					content.remove(m.capturedStart(1)+offsetCorrection, m.capturedLength(1));
+					offsetCorrection -= m.capturedLength(1);
+
+					static const QRegularExpression chordRegex("\\S+");
+					QRegularExpressionMatchIterator it2 = chordRegex.globalMatch(m.captured(1), 1);
+					while(it2.hasNext()) {
+						const QRegularExpressionMatch m2 = it2.next();
+						const QString insertText = QString("[%1]").arg(m2.captured());
+						content.insert(m.capturedStart(2)+qMin(m2.capturedStart(),m.capturedLength(2)-1)+offsetCorrection, insertText);
+						offsetCorrection += insertText.length();
+					}
+				}
+
+				// Trim spaces on line beginnings and ends
+				static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
+				content.remove(trimmingRegex);
+				content.remove('_');
+
+				fields.insert("content", content);
+
+				if(songId == -1)
+					songId = db->insert("songs", fields).toLongLong();
+				else
+					db->update("songs", fields, "id = ?", {songId});
+
+				db->updateSongFulltextIndex(songId);
 			}
-
-			// Trim spaces on line beginnings and ends
-			static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
-			content.remove(trimmingRegex);
-			content.remove('_');
-
-			fields.insert("content", content);
-
-			const qlonglong songId = db->insert("songs", fields).toLongLong();
-			db->updateSongFulltextIndex(songId);
 
 			for(const QString &tag : tags)
 				db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});

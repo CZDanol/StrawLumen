@@ -1,5 +1,7 @@
 - reentrant splashscreen
 
+- v song editu dát anotaci na to, aby se akord vzal z předchozí sloky (dle pořadí akordů v předchozí sloce)
+
 - refresh scroll u item viewů, když se refreshujou
 - možnost znovu načíst powerpoint prezentaci
 - možnost duplikovat položky playlistu?

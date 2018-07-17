@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->menuProgram->insertMenu(ui->menuProgram->actions()[1], ui->wgtSongsMode->importMenu());
 	ui->menuProgram->insertMenu(ui->menuProgram->actions()[2], ui->wgtSongsMode->exportMenu());
 
-	setWindowTitle(QString("Straw Lumen v%1").arg(PROGRAM_VERSION));
+	setWindowTitle(QString("Straw Lumen %1").arg(PROGRAM_VERSION));
 	restoreGeometry(settings->value("window.mainWindow.geometry").toByteArray());
 
 	connect(db, SIGNAL(sigQueryError(QString,QString)), this, SLOT(onDbQueryError(QString,QString)));

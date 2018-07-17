@@ -355,7 +355,7 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 	// Tags
 	db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
 	for(QString tag : ui->lnTags->toTags())
-		db->exec("INSERT INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
+		db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
 
 	db->commitTransaction();
 

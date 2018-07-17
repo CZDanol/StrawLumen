@@ -42,7 +42,7 @@ public:
 	QVariant insert(const QString &query, const Args &args = Args());
 	QVariant insert(const QString &table, const QHash<QString,QVariant> &fields);
 
-	void update(const QString &table, const QHash<QString,QVariant> &fields, const QString &where = "TRUE", const QVariantList &whereArgs = QVariantList());
+	void update(const QString &table, const QHash<QString,QVariant> &fields, const QString &where, const QVariantList &whereArgs = QVariantList());
 
 	/// Blocking query, returns first row selected (or throws error if no rows)
 	QSqlRecord selectRowAssoc(const QString &query, const AssocArgs &args = AssocArgs());

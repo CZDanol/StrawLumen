@@ -122,7 +122,7 @@ void LumenImportDialog::on_btnImport_clicked()
 
 				QSqlQuery q = importDb.selectQuery("SELECT tag FROM song_tags WHERE song = ?", {songId});
 				while(q.next())
-					db->exec("INSERT INTO song_tags(song, tag) VALUES(?, ?)", {songId, q.value("tag")});
+					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, q.value("tag")});
 			}
 
 			for(const QString &tag : tags)
