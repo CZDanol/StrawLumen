@@ -110,7 +110,8 @@ SOURCES += main.cpp \
     util/fusionproxystyle.cpp \
     job/widgetvalues.cpp \
     presentation/native/presentation_customslide.cpp \
-    presentation/native/presentationpropertieswidget_customslide.cpp
+    presentation/native/presentationpropertieswidget_customslide.cpp \
+    simpleUpdater/simpleupdater.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -141,7 +142,8 @@ FORMS += \
     importexport/opensongimportdialog.ui \
     importexport/opensongexportdialog.ui \
     gui/playlistsdialog.ui \
-    presentation/native/presentationpropertieswidget_customslide.ui
+    presentation/native/presentationpropertieswidget_customslide.ui \
+    simpleUpdater/simpleupdater.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -220,7 +222,8 @@ HEADERS += \
     util/fusionproxystyle.h \
     job/widgetvalues.h \
     presentation/native/presentation_customslide.h \
-    presentation/native/presentationpropertieswidget_customslide.h
+    presentation/native/presentationpropertieswidget_customslide.h \
+    simpleUpdater/simpleupdater.h
 
 RESOURCES += \
     ../res/resources.qrc

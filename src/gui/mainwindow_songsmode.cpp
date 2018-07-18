@@ -76,7 +76,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	// Insert song section menu
 	{
 		const QStringList sectionNames {
-			"C", "V1", "V2", "V3", "B", "I", "O"
+			"C", "V1", "V2", "V3", "B", "I", "O", "M"
 		};
 
 		for(auto &sectionName : sectionNames) {

@@ -168,10 +168,10 @@
 			}
 			
 			.chord .chordName {
-				padding-right: .4em;
+				padding-right: .6em;
 				padding-top: .1em;
 				
-				color: black;
+				color: blue;
 				font-weight: bold;
 			}
 			
@@ -236,7 +236,10 @@
 					var chordTemplate = document.body.querySelector("#templates .chord");
 					var textTemplate = document.body.querySelector("#templates .text");
 					
-					var chordTextRegex = /(\s*\S*)([\s\S]*)/;
+					// First capture group: what to put "under" the chord:
+					// There can be some spaces in the beginning
+					// Then either ~6-16 characters or spaces followed by a word end (this is to match more words when the first word is too short)
+					var chordTextRegex = /([ \t]*(?:[\S \t]{0,8}\S(?:[ \t]|$)|\S*))([\s\S]*)/u;
 					
 					for(songI in data.songs) {
 						var song = data.songs[songI];
@@ -278,7 +281,7 @@
 								chordElem.querySelector(".textFollowingChord").textContent = splitText[1];
 								sectionContentElem.appendChild(chordElem);
 							
-								if(splitText[1]) {
+								if(splitText[2]) {
 									var elem = textTemplate.cloneNode(true);
 									elem.textContent = splitText[2];
 									sectionContentElem.appendChild(elem);

@@ -9,7 +9,7 @@ Chord::Chord(const QString &str)
 {
 	static const QRegularExpression chordRegex(
 				"^"
-				"([a-hA-H])(s|S|is|IS|es|ES|#|b|♭)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
+				"([Bb][b♭]|[a-hA-H])(s|S|is|IS|es|ES|#|b|♭)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
 				"((?:[0-9(#+\\-]|sus)[0-9a-zA-Z()#+\\-]*)?" // Extra
 				"(?:/([a-hA-H])(s|S|is|IS|es|ES|#|b)?)?" // Inversions
 				"$",
@@ -22,8 +22,8 @@ Chord::Chord(const QString &str)
 		mpInversionNote, mpInversionNoteModifier
 	};
 
-	static const QHash<QChar, int> notePitches {
-		{'c', 0}, {'d', 2}, {'e', 4}, {'f', 5}, {'g', 7}, {'a', 9}, {'b', 10}, {'h', 11}
+	static const QHash<QString, int> notePitches {
+		{"c", 0}, {"d", 2}, {"e", 4}, {"f", 5}, {"g", 7}, {"a", 9}, {"b", 10}, {"b♭", 10}, {"h", 11}
 	};
 
 	static const QHash<QString, int> noteModifierEffects {
@@ -46,14 +46,14 @@ Chord::Chord(const QString &str)
 		return;
 
 	// Base note
-	QChar baseNoteChar = m.captured(mpBaseNote)[0];
+	QString baseNote = m.captured(mpBaseNote);
 
-	if(baseNoteChar.isLower()) {
+	if(baseNote == baseNote.toLower()) {
 		quality_ = cvMoll;
-		baseNote_ = notePitches[baseNoteChar];
+		baseNote_ = notePitches[baseNote];
 	} else {
 		quality_ = cvDur;
-		baseNote_ = notePitches[baseNoteChar.toLower()];
+		baseNote_ = notePitches[baseNote.toLower()];
 	}
 
 	// Base note modifier
@@ -115,8 +115,8 @@ QString Chord::toString(bool flatVariant) const
 {
 	static const QString variantStrings[_cvCount] = {"", "m", "maj", "aug", "dim"};
 
-	static const QString noteNames[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"};
-	static const QString flatNoteNames[12] = {"C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "H♭", "H"};
+	static const QString noteNames[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B♭", "H"};
+	static const QString flatNoteNames[12] = {"C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "H"};
 
 	const auto &names = flatVariant ? flatNoteNames : noteNames;
 

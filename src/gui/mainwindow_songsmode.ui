@@ -79,7 +79,7 @@
           <item>
            <widget class="QPushButton" name="btnInsertSection">
             <property name="text">
-             <string>Sekci</string>
+             <string>Sekce</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">

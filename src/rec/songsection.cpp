@@ -9,9 +9,9 @@ SongSection::SongSection(const QString &str)
 {
 	static const QRegularExpression regex("^"
 																				"(?:"
-																				"([VCBIO])([1-9][0-9]*)?" // Standard section format
+																				"([VCBIOM])([1-9][0-9]*)?" // Standard section format
 																				"|"
-																				"\"([a-zA-Z0-9_\\-]+)\"" // Custom section name
+																				"\"([a-zA-Z0-9_\\-+]+)\"" // Custom section name
 																				")"
 																				"$",
 																				QRegularExpression::UseUnicodePropertiesOption);
@@ -58,6 +58,7 @@ QString SongSection::userFriendlyName() const
 		{"I", tr("Intro")},
 		{"O", tr("Outro")},
 		{"B", tr("Bridge")},
+		{"M", tr("Mezihra")},
 	};
 
 	if(!isValid_)
@@ -74,9 +75,10 @@ QString SongSection::shorthandName() const
 	static QHash<QString,QString> shorthandNames {
 		{"C", tr("Ref. %1")},
 		{"V", tr("%1.")},
-		{"I", tr("Intro %1")},
-		{"O", tr("Outro %1")},
+		{"I", tr("In. %1")},
+		{"O", tr("Out. %1")},
 		{"B", tr("Bridge %1")},
+		{"M", tr("Mezihra %1")},
 	};
 
 	if(!isValid_)
@@ -106,6 +108,7 @@ QPixmap SongSection::icon() const
 		{"I", QPixmap(":/icons/16/Curved Arrow_16px.png")},
 		{"O", QPixmap(":/icons/16/Right 2_16px.png")},
 		{"B", QPixmap(":/icons/16/Circle_16px.png")},
+		{"M", QPixmap(":/icons/16/Musical Notes_16px.png")},
 
 		{"V", QPixmap(":/icons/16/Level 1_16px.png")},
 		{"V1", QPixmap(":/icons/16/Level 1_16px.png")},
@@ -177,7 +180,7 @@ QVector<SongSectionWithContent> songSectionsWithContent(const QString &song)
 
 const QRegularExpression &songSectionAnnotationRegex()
 {
-	static const QRegularExpression result("(\\{)([a-zA-Z0-9\"_\\-]+)(\\})");
+	static const QRegularExpression result("(\\{)([a-zA-Z0-9\"_\\-+]+)(\\})");
 	return result;
 }
 
