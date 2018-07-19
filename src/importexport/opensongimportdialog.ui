@@ -161,7 +161,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="sizeAdjustPolicy">
           <enum>QComboBox::AdjustToContents</enum>
@@ -173,12 +173,7 @@
          </item>
          <item>
           <property name="text">
-           <string>Přepsat, pokud je importovaná píseň novější</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Vždy přepsat</string>
+           <string>Přepsat</string>
           </property>
          </item>
         </widget>

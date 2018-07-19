@@ -45,6 +45,8 @@ private slots:
 	void on_actionGenerateDocuments_triggered();
 	void on_actionAbout_triggered();
 
+	void on_actionSendFeedback_triggered();
+
 private:
 	Ui::MainWindow *ui;
 

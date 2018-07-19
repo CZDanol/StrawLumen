@@ -138,6 +138,7 @@
     <addaction name="actionStyles"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
+    <addaction name="actionSendFeedback"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuProgram"/>
@@ -203,6 +204,15 @@
    </property>
    <property name="text">
     <string>Importovat</string>
+   </property>
+  </action>
+  <action name="actionSendFeedback">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Feedback_16px.png</normaloff>:/icons/16/Feedback_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zpětná vazba</string>
    </property>
   </action>
  </widget>

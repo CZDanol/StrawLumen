@@ -22,8 +22,7 @@
 
 enum ConflictBehavior {
 	cbSkip,
-	cbOverwriteIfNewer,
-	cbAlwaysOverwrite
+	cbOverwrite
 };
 
 OpenSongImportDialog *openSongImportDialog()
@@ -114,7 +113,7 @@ void OpenSongImportDialog::on_btnImport_clicked()
 			QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE uid = ?", {uid});
 			qlonglong songId = existingSong.isEmpty() ? -1 : existingSong.value("id").toLongLong();
 
-			if(songId == -1 || conflictBehavior == cbAlwaysOverwrite || (conflictBehavior == cbOverwriteIfNewer && existingSong.value("lastEdit") < lastEdit)) {
+			if(songId == -1 || conflictBehavior == cbOverwrite) {
 				QDomDocument dom;
 				if(!dom.setContent(&f)) {
 					splashscreen->storno();

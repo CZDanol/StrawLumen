@@ -10,6 +10,7 @@
 #include "importexport/documentgenerationdialog.h"
 #include "importexport/lumenimportdialog.h"
 #include "gui/aboutdialog.h"
+#include "strawapi/feedbackdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
 #include "util/guianimations.h"
@@ -127,4 +128,9 @@ void MainWindow::on_actionGenerateDocuments_triggered()
 void MainWindow::on_actionAbout_triggered()
 {
 	aboutDialog()->show();
+}
+
+void MainWindow::on_actionSendFeedback_triggered()
+{
+	feedbackDialog()->show();
 }

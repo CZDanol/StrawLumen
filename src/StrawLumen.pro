@@ -17,8 +17,15 @@ QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"
 QMAKE_TARGET_DESCRIPTION = "Straw Lumen"
 
+win32|win64 {
+  RC_ICONS += $$PWD/../res/logos/lumen_icon.ico
+  OS_STR = win
+}
+
+DEFINES += PRODUCT_IDSTR=\\\"lumen\\\"
 DEFINES += PROGRAM_VERSION=\\\"$$VERSION\\\"
-win32:DEFINES += PLATFORM_SUFFIX=\\\"win32\\\"
+DEFINES += UPSTREAM_VERSION=\\\"1.0.0.0\\\" # If the updater gets this upstream version, it does not promote update
+DEFINES += PLATFORM_ID=\\\"$${OS_STR}_$${QMAKE_TARGET.arch}\\\"
 
 TARGET = strawLumen
 
@@ -26,11 +33,6 @@ CONFIG += c++17
 
 # Without this, the program can use max 2GB ram
 QMAKE_LFLAGS = /LARGEADDRESSAWARE
-
-win32|win64 {
-  RC_ICONS += $$PWD/../res/logos/lumen_icon.ico
-  OS_STR = win
-}
 
 Debug:RELEASE_STR = _dbg
 Release:RELEASE_STR =
@@ -111,7 +113,9 @@ SOURCES += main.cpp \
     job/widgetvalues.cpp \
     presentation/native/presentation_customslide.cpp \
     presentation/native/presentationpropertieswidget_customslide.cpp \
-    simpleUpdater/simpleupdater.cpp
+    strawapi/simpleupdater.cpp \
+    strawapi/strawapi.cpp \
+    strawapi/feedbackdialog.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -143,7 +147,8 @@ FORMS += \
     importexport/opensongexportdialog.ui \
     gui/playlistsdialog.ui \
     presentation/native/presentationpropertieswidget_customslide.ui \
-    simpleUpdater/simpleupdater.ui
+    strawapi/simpleupdater.ui \
+    strawapi/feedbackdialog.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -223,7 +228,9 @@ HEADERS += \
     job/widgetvalues.h \
     presentation/native/presentation_customslide.h \
     presentation/native/presentationpropertieswidget_customslide.h \
-    simpleUpdater/simpleupdater.h
+    strawapi/simpleupdater.h \
+    strawapi/strawapi.h \
+    strawapi/feedbackdialog.h
 
 RESOURCES += \
     ../res/resources.qrc
@@ -233,3 +240,6 @@ DEPENDPATH += $$PWD/../include
 
 LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}/
 DESTDIR = $$PWD/../bin/bin_$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}
+
+DISTFILES += \
+    ../res/changelogStylesheet.css

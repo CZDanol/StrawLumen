@@ -14,6 +14,7 @@
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
 #include "gui/startupsplashscreen.h"
+#include "strawapi/simpleupdater.h"
 #include "importexport/lumenexportdialog.h"
 #include "job/activexjobthread.h"
 #include "job/db.h"
@@ -49,7 +50,10 @@ int main(int argc, char *argv[]) {
 
 		initApplication();
 		mainWindow->show();
+		simpleUpdater()->checkForUpdates();
 		startupSplashscreen.close();
+
+		standardInfoDialog(MainWindow::tr("Toto je záběhová verze programu Straw Lumen. Pokud narazíte na nějaké chyby, prosím, nahlašte je. Budeme rádi i za jakékoli připomínky a podněty.\n\nZpětnou vazbu můžete odesílat buď prostřednictvím dialogu \"Zpětná vazba\" v menu programu nebo na e-mail danol@straw-solutions.cz."));
 	});
 
 	int result = app.exec();

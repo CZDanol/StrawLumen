@@ -196,5 +196,9 @@
         <file>icons/16/Text Box_16px.png</file>
         <file>icons/16/Transition Both Directions_16px.png</file>
         <file>icons/16/Eraser_16px.png</file>
+        <file>changelogStylesheet.css</file>
+        <file>icons/16/Feedback_16px.png</file>
+        <file>icons/16/Comments_16px.png</file>
+        <file>icons/16/Email_16px.png</file>
     </qresource>
 </RCC>
