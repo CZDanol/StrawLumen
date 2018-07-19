@@ -1,3 +1,19 @@
+- podlomítko nebo něco, co vynutí místo pro akord (aby se akord nevázal k následujícímu textu)
+- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
+- song select dialog - možnost vybrané přetáhnout zpět do songlistu (ekvivalent mazání)
+- rychlá volba na uložení programu
+- při neuloženém programu se ptát před vypnutím
+- enter stiskne "nový program" v program dialogu
+- ctrl+s v módu promítání - uložit program
+- bug - když se přidá vlastní pořadí u položky -> crash
+- možnost přeskakovat po akordech
+- když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
+- dávat jako první výsledky ty, které sedí názvem a autorem (potom teprv text)
+- když se začne psát do songlistu, dát to do search baru
+- možnost posouvat akord v textu
+- tlačítko na standardizaci formátování
+??? - načíst - program prázdný - nahlásit ???
+
 - reentrant splashscreen
 
 - v song editu dát anotaci na to, aby se akord vzal z předchozí sloky (dle pořadí akordů v předchozí sloce)

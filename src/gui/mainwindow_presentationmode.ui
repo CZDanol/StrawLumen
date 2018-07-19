@@ -335,11 +335,11 @@
           <item>
            <widget class="QPushButton" name="btnPlaylists">
             <property name="text">
-             <string>Programy</string>
+             <string>Uložit/načíst</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
+              <normaloff>:/icons/16/Save_16px.png</normaloff>:/icons/16/Save_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -348,12 +348,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnClearPlaylist">
-            <property name="text">
-             <string/>
+            <property name="toolTip">
+             <string>Vymazat program</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Broom_16px.png</normaloff>:/icons/16/Broom_16px.png</iconset>
+              <normaloff>:/icons/16/Trash Can_16px.png</normaloff>:/icons/16/Trash Can_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -362,6 +362,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnAddPresentation">
+            <property name="toolTip">
+             <string>Přidat do programu</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -539,9 +542,10 @@
             <widget class="QScrollArea" name="saPresentationProperties">
              <property name="styleSheet">
               <string notr="true">#saPresentationProperties,
-#PresentationPropertiesWidget
+#saPresentationPropertiesContent,
+PresentationPropertiesWidget
 {
-	background: palette(base);
+	background: transparent;
 }</string>
              </property>
              <property name="frameShape">
@@ -550,7 +554,7 @@
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
+             <widget class="QWidget" name="saPresentationPropertiesContent">
               <property name="geometry">
                <rect>
                 <x>0</x>
@@ -689,6 +693,15 @@
    </property>
    <property name="text">
     <string>Vlastní snímek</string>
+   </property>
+  </action>
+  <action name="actionEditPresentation">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Edit_16px.png</normaloff>:/icons/16/Edit_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upravit</string>
    </property>
   </action>
  </widget>

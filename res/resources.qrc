@@ -200,5 +200,12 @@
         <file>icons/16/Feedback_16px.png</file>
         <file>icons/16/Comments_16px.png</file>
         <file>icons/16/Email_16px.png</file>
+        <file>icons/16/Color Wheel_16px.png</file>
+        <file>icons/16/First Quarter_16px.png</file>
+        <file>icons/16/Opacity_16px.png</file>
+        <file>icons/16/Saturation_16px.png</file>
+        <file>icons/16/Rubik's Cube_16px.png</file>
+        <file>icons/16/Light On_16px.png</file>
+        <file>icons/16/Summer_16px.png</file>
     </qresource>
 </RCC>

@@ -233,7 +233,7 @@ bool Playlist::loadFromJSON(const QJsonObject &json)
 	emit sigItemsAdded();
 
 	if(!failedToLoadList.empty())
-		standardErrorDialog(tr("Níže vyčtené položky se nepodařilo načíst.\n\n%1").arg(failedToLoadList.join('\n')));
+		standardErrorDialog(tr("Níže vyčtené položky se nepodařilo načíst:\n\n%1").arg(failedToLoadList.join('\n')));
 
 	return failedToLoadList.empty();
 }

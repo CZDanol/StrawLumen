@@ -28,6 +28,9 @@ private slots:
 
 private slots:
 	void onStyleChangedByUser();
+	void onPresentationStyleChanged();
+
+private slots:
 	void on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &);
 	void on_lnSlideOrder_editingFinished();
 	void on_lnSlideOrder_sigFocused();

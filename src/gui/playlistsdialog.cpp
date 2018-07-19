@@ -134,8 +134,10 @@ void PlaylistsDialog::on_btnLoad_clicked()
 	if(!playlist->items().isEmpty() && !standardConfirmDialog(tr("Aktuální program aplikace není prázdný. Načtením položky přepíšete. Opravdu chcete pokračovat?")))
 		return;
 
-	if(playlist->loadFromJSON(currentPlaylistJson_))
+	if(playlist->loadFromJSON(currentPlaylistJson_)) {
+		accept();
 		standardSuccessDialog(tr("Program načten."));
+	}
 }
 
 void PlaylistsDialog::on_btnSave_clicked()
@@ -152,6 +154,7 @@ void PlaylistsDialog::on_btnSave_clicked()
 	db->exec("UPDATE playlists SET data = ? WHERE id = ?", {QJsonDocument(mainWindow->presentationMode()->playlist()->toJSON()).toJson(QJsonDocument::Compact), playlistId});
 	on_lstPlaylists_currentItemChanged(i, nullptr);
 
+	accept();
 	standardSuccessDialog(tr("Program uložen."));
 }
 

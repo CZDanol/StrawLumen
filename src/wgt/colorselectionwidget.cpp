@@ -47,6 +47,8 @@ void ColorSelectionWidget::setAlphaChannelEnabled(bool set)
 
 	isAlphaChannelEnabled_ = set;
 	ui->wgtCAlpha->setVisible(set);
+	ui->lblAlpha->setVisible(set);
+	ui->lblAlphaIcon->setVisible(set);
 }
 
 void ColorSelectionWidget::setReadOnly(bool set)

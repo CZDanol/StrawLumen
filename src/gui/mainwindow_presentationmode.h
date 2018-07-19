@@ -69,6 +69,7 @@ private slots:
 	void on_btnShowHideTwLeftBottom_clicked();
 	void on_twLeftBottom_currentChanged(int index);
 	void on_actionAddCustomSlidePresentation_triggered();
+	void on_actionEditPresentation_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;

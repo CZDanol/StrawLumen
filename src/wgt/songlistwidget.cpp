@@ -45,7 +45,7 @@ SongListWidget::~SongListWidget()
 	delete ui;
 }
 
-int SongListWidget::currentRowId() const
+int SongListWidget::currentRowIndex() const
 {
 	return ui->tvSongs->currentIndex().row();
 }
@@ -53,6 +53,14 @@ int SongListWidget::currentRowId() const
 int SongListWidget::selectedRowCount() const
 {
 	return ui->tvSongs->selectionModel()->selectedRows().size();
+}
+
+qlonglong SongListWidget::currentRowId() const
+{
+	if(!ui->tvSongs->currentIndex().isValid())
+		return -1;
+
+	return songsModel_.record(ui->tvSongs->currentIndex().row()).value("id").toLongLong();
 }
 
 QVector<qlonglong> SongListWidget::selectedRowIds() const
@@ -86,6 +94,8 @@ void SongListWidget::requery()
 	const int prevRow = ui->tvSongs->currentIndex().row();
 	const qlonglong prevSelectId = prevRow < 0 ? -1 : songsModel_.record(prevRow).value("id").toLongLong();
 
+	const bool isTagFilter = ui->lvTags->currentIndex().row() > 0;
+
 	// Query data
 	{
 		QString joins;
@@ -101,7 +111,7 @@ void SongListWidget::requery()
 			args += filter;
 		}
 
-		if(ui->lvTags->currentIndex().row() > 0) {
+		if(isTagFilter) {
 			joins += "INNER JOIN song_tags ON songs.id == song_tags.song ";
 			filters += "(song_tags.tag = ?)";
 			args += tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag");
@@ -135,6 +145,10 @@ void SongListWidget::requery()
 		if(prevSelectId == newSelectId)
 			ui->tvSongs->selectionModel()->setCurrentIndex(songsModel_.index(prevRow, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 	}
+
+	ui->wgtTagDisplayNotice->setVisible(isTagFilter);
+	if(isTagFilter)
+		ui->lblTagDisplayNotice->setText(tr("Zobrazeny pouze písně se štítkem \"%1\".").arg(tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag").toString()));
 
 	emit sigSelectionChanged();
 }
@@ -238,4 +252,17 @@ void SongListWidget::on_tvSongs_sigUpPressed()
 		ui->lnSearch->setFocus();
 		ui->lnSearch->selectAll();
 	}
+}
+
+void SongListWidget::on_lvTags_activated(const QModelIndex &index)
+{
+	Q_UNUSED(index);
+
+	ui->lnSearch->clear();
+	requery();
+}
+
+void SongListWidget::on_btnClearTagFilter_clicked()
+{
+	ui->lvTags->setCurrentIndex(tagsModel_.index(0,0));
 }

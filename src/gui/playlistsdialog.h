@@ -32,11 +32,8 @@ private slots:
 	void on_lstPlaylists_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 	void on_btnLoad_clicked();
 	void on_btnSave_clicked();
-
 	void on_btnClose_clicked();
-
 	void on_btnDelete_clicked();
-
 	void on_lstPlaylists_itemActivated(QListWidgetItem *item);
 
 private:

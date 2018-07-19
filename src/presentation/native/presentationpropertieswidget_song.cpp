@@ -14,6 +14,8 @@ PresentationPropertiesWidget_Song::PresentationPropertiesWidget_Song(const QShar
 	connect(presentation.data(), SIGNAL(sigItemChanged(Presentation*)), this, SLOT(fillData()));
 	connect(ui->wgtStyle, SIGNAL(sigPresentationStyleChangedByUser()), this, SLOT(onStyleChangedByUser()));
 
+	connect(&presentation->style_, SIGNAL(sigChanged()), this, SLOT(onPresentationStyleChanged()));
+
 	// Slide order
 	{
 		slideOrderCompleter_.setModel(&slideOrderCompleterModel_);
@@ -43,6 +45,8 @@ void PresentationPropertiesWidget_Song::fillData()
 
 	ui->cbEmptySlideBefore->setChecked(presentation_->emptySlideBefore_);
 	ui->cbEmptySlideAfter->setChecked(presentation_->emptySlideAfter_);
+
+	ui->wgtStylePreview->setPresentationStyle(presentation_->style_);
 }
 
 void PresentationPropertiesWidget_Song::onStyleChangedByUser()
@@ -50,6 +54,11 @@ void PresentationPropertiesWidget_Song::onStyleChangedByUser()
 	presentation_->style_ = ui->wgtStyle->presentationStyle();
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
 	// No need to emit
+}
+
+void PresentationPropertiesWidget_Song::onPresentationStyleChanged()
+{
+	ui->wgtStylePreview->setPresentationStyle(presentation_->style_);
 }
 
 void PresentationPropertiesWidget_Song::on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &background)

@@ -92,6 +92,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnInsertChord">
+            <property name="toolTip">
+             <string>Vložit akord do textu.
+V Lumenu se akordy vkládají přímo do řádku textu, nikoli nad něj.
+
+Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
+            </property>
             <property name="text">
              <string>Akord</string>
             </property>
@@ -303,6 +309,9 @@
          </property>
          <item>
           <widget class="QPushButton" name="btnTransposeFlat">
+           <property name="toolTip">
+            <string>Používat béčkové akordy místo křížkových (např. Gb místo F#)</string>
+           </property>
            <property name="text">
             <string>akordy</string>
            </property>
@@ -749,17 +758,17 @@
    </slots>
   </customwidget>
   <customwidget>
-   <class>SongContentTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>wgt/songcontenttextedit.h</header>
-  </customwidget>
-  <customwidget>
    <class>WordCompletingLineEdit</class>
    <extends>QLineEdit</extends>
    <header>wgt/wordcompletinglineedit.h</header>
    <slots>
     <signal>sigFocused()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>SongContentTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>wgt/songcontenttextedit.h</header>
   </customwidget>
   <customwidget>
    <class>SongTagsLineEdit</class>

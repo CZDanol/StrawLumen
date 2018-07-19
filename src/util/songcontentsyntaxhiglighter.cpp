@@ -33,6 +33,10 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 		slideSeparatorFormat_.setBackground(QColor("#555"));
 	}
 
+	{
+		invalidWhitespaceFormat_.setBackground(QColor("red"));
+	}
+
 	invalidAnnotationFormat_.setForeground(Qt::red);
 }
 
@@ -82,5 +86,12 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 	while(it.hasNext()) {
 		const QRegularExpressionMatch m = it.next();
 		setFormat(m.capturedStart(), m.capturedLength(), slideSeparatorFormat_);
+	}
+
+	static const QRegularExpression doubleSpaceRegex("\t+|  +|^\\s+|\\s+$");
+	it = doubleSpaceRegex.globalMatch(text);
+	while(it.hasNext()) {
+		const QRegularExpressionMatch m = it.next();
+		setFormat(m.capturedStart(), m.capturedLength(), invalidWhitespaceFormat_);
 	}
 }

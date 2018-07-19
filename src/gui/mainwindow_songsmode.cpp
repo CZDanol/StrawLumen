@@ -88,7 +88,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 		SongSection customSection = SongSection::customSection("");
 		insertSectionMenu_.addAction(customSection.icon(), tr("Vlastní název"), [=]{
-			insertSongSection(customSection);
+			insertSongSection(customSection, true);
 		});
 
 		ui->btnInsertSection->setMenu(&insertSectionMenu_);
@@ -148,7 +148,7 @@ QMenu *MainWindow_SongsMode::exportMenu()
 
 void MainWindow_SongsMode::editSong(qlonglong songId)
 {
-	onCurrentSongChanged(songId, ui->wgtSongList->currentRowId());
+	onCurrentSongChanged(songId, ui->wgtSongList->currentRowIndex());
 	ui->btnEdit->click();
 }
 
@@ -238,7 +238,7 @@ void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
 	ui->actionPresentSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 }
 
-void MainWindow_SongsMode::insertSongSection(const SongSection &section)
+void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool positionCursorInMiddle)
 {
 	if(!isSongEditMode_)
 		return;
@@ -248,6 +248,12 @@ void MainWindow_SongsMode::insertSongSection(const SongSection &section)
 
 	ui->teContent->insertPlainText("\n" + section.annotation() + "\n");
 	ui->teContent->setFocus();
+
+	if(positionCursorInMiddle) {
+		QTextCursor c = ui->teContent->textCursor();
+		c.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1 + section.annotation().length()/2);
+		ui->teContent->setTextCursor(c);
+	}
 }
 
 void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
@@ -417,7 +423,11 @@ void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed()
 {
 	addCustomSlideOrderItemMenu_.clear();
 
-	for(SongSection section : songSections(ui->teContent->toPlainText()))
+	const auto sections = songSections(ui->teContent->toPlainText());
+	if(sections.isEmpty())
+		return standardInfoDialog(tr("Píseň aktuálně neobsahuje žádné sekce."));
+
+	for(SongSection section : sections)
 		addCustomSlideOrderItemMenu_.addAction(section.icon(), section.userFriendlyName(), [this, section]{
 			const QString text = ui->lnSlideOrder->text();
 			ui->lnSlideOrder->setText((text.isEmpty() ? "" : text + " ") + section.standardName());

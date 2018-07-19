@@ -241,5 +241,4 @@ DEPENDPATH += $$PWD/../include
 LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}/
 DESTDIR = $$PWD/../bin/bin_$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}
 
-DISTFILES += \
-    ../res/changelogStylesheet.css
+DISTFILES +=

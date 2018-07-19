@@ -75,6 +75,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			insertPresentationAfterMenu_.addActions(addPresentationMenu_.actions());
 			connect(&insertPresentationAfterMenu_, SIGNAL(aboutToShow()), this, SLOT(onAddPresentationAfterMenuAboutToShow()));
 
+			playlistContextMenu_.addAction(ui->actionEditPresentation);
 			playlistContextMenu_.addAction(ui->actionDeletePresentation);
 			playlistContextMenu_.addMenu(&insertPresentationBeforeMenu_);
 			playlistContextMenu_.addMenu(&insertPresentationAfterMenu_);
@@ -515,5 +516,14 @@ void MainWindow_PresentationMode::on_twLeftBottom_currentChanged(int)
 
 void MainWindow_PresentationMode::on_actionAddCustomSlidePresentation_triggered()
 {
-addPresentationsAction_({Presentation_CustomSlide::create()});
+	addPresentationsAction_({Presentation_CustomSlide::create()});
+}
+
+void MainWindow_PresentationMode::on_actionEditPresentation_triggered()
+{
+	if(!ui->tabPresentationProperties->isEnabled())
+		return;
+
+	ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
+	flashWidget(ui->twLeftBottom);
 }

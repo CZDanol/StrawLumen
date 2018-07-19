@@ -39,7 +39,7 @@ private:
 	void setSongEditMode(bool set);
 
 	void updateSongManipulationButtonsEnabled();
-	void insertSongSection(const SongSection &section);
+	void insertSongSection(const SongSection &section, bool positionCursorInMiddle = false);
 
 private slots:
 	void onCurrentSongChanged(qlonglong songId, int prevRowId);

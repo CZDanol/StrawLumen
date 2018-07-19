@@ -236,6 +236,8 @@ QString collateFulltextQuery(const QString &str)
 	result.replace(' ', " *");
 	result.append('*');
 
+	//result.replace(' ', " NEAR ");
+
 	return result;
 }
 
