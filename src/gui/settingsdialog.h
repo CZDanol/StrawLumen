@@ -8,7 +8,7 @@
 // F(settingName, uiControl)
 #define SETTINGS_FACTORY(F)\
 	F(display, dsDisplay)\
-	F(song_defaultStyle, wgtDefaultPresentationStyle) F(song_emptySlideBefore, cbEmptySlideBeforeSong) F(song_emptySlideAfter, cbEmptySlideAfterSong)\
+	F(song_defaultStyle, wgtDefaultPresentationStyle) F(song_emptySlideBefore, cbEmptySlideBeforeSong) F(song_emptySlideAfter, cbEmptySlideAfterSong) F(song_ignoreEmptySlides, cbIgnoreEmptySongSlides)\
 	F(ppt_blackSlideBefore, cbBlackSlideBeforePPT) F(ppt_blackSlideAfter, cbBlackSlideAfterPPT)
 
 namespace Ui {

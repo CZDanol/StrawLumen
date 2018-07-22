@@ -39,6 +39,8 @@ private slots:
 	void on_cbEmptySlideAfter_clicked(bool checked);
 	void on_btnEditSong_clicked();
 
+	void on_cbIgnoreEmptySlides_clicked(bool checked);
+
 private:
 	Ui::PresentationPropertiesWidget_Song *ui;
 	QSharedPointer<Presentation_Song> presentation_;

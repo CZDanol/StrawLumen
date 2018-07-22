@@ -212,7 +212,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="quickEditStyle" stdset="0">
       <bool>true</bool>

@@ -2,11 +2,13 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Straw Lumen"
-#define MyAppVersion "1.0.0.0"
+#define MyAppVersion "0.9.2.0"
 #define MyAppPublisher "Straw Solutions"
 #define MyAppCopyright "(c) 2018 Straw Solutions, Daniel Èejchan"
 #define MyAppURL "http://straw-solutions.cz"
 #define MyAppExeName "strawLumen.exe"
+
+#define PlatformId "win_x86_64"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -27,10 +29,10 @@ VersionInfoCompany={#MyAppPublisher}
 VersionInfoCopyRight={#MyAppCopyright}
 DisableProgramGroupPage=yes
 OutputDir=setup
-OutputBaseFilename=strawLumen_win_x86_64
+OutputBaseFilename=strawLumen_{#PlatformId}
 Compression=lzma
 SolidCompression=yes
-UninstallDisplayIcon="{app}\{#MyAppExeName}"
+UninstallDisplayIcon="{app}\bin_{#PlatformId}\{#MyAppExeName}"
 ; Sign tools configured in inno setup ide
 SignTool=ComodoSign
 SignedUninstaller=yes
@@ -43,43 +45,47 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "installDeps\vc2015_redist.x86.exe"; DestDir: {tmp}; AfterInstall: InstallVc2015Redist; Flags: deleteafterinstall
-Source: "bin\photobox.exe"; DestDir: "{app}"; Flags: ignoreversion sign
-Source: "bin\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "bin\printsupport\*"; DestDir: "{app}\printsupport"; Flags: ignoreversion
-Source: "bin\imageformats\*"; DestDir: "{app}\imageformats"; Flags: ignoreversion
-Source: "bin\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion
-Source: "bin\docs\*"; DestDir: "{app}\docs"; Flags: ignoreversion recursesubdirs
-Source: "bin\help\*"; DestDir: "{app}\help"; Flags: ignoreversion recursesubdirs
-Source: "bin\secondScreenStyles\*"; DestDir: "{app}\secondScreenStyles"; Flags: ignoreversion recursesubdirs
-Source: "bin\soundSets\*"; DestDir: "{app}\soundSets"; Flags: ignoreversion recursesubdirs
-Source: "bin\support\*"; DestDir: "{app}\support"; Flags: ignoreversion recursesubdirs
-Source: "bin\templates\*"; DestDir: "{app}\templates"; Flags: ignoreversion recursesubdirs
+Source: "installDeps\VC_redist.x64.exe"; DestDir: {tmp}; AfterInstall: InstallVcRedist; Flags: deleteafterinstall
+Source: "bin\bin_{#PlatformId}\strawLumen.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion sign
+Source: "bin\bin_{#PlatformId}\*.dll"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
+Source: "bin\backgrounds\*"; DestDir: "{app}\backgrounds"; Flags: ignoreversion
+Source: "bin\etc\*"; DestDir: "{app}\etc"; Flags: ignoreversion recursesubdirs
+Source: "bin\changelog.html"; DestDir: "{app}\changelog.html"; Flags: ignoreversion recursesubdirs
+Source: "fonts\SourceSansPro-*.ttf"; DestDir: "{fonts}"; FontInstall: "Source Sans Pro"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "portableMode"; DestDir: "{app}"; Components: portable
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+
+[Types]
+Name: "full"; Description: "Nepøenosná instalace"
+Name: "portable"; Description: "Portable/pøenosná instalace"
+
+[Components]
+Name: "core"; Description: "Aplikace"; Types: full portable; Flags: fixed
+Name: "portable"; Description: "Portable/pøenosný mód (data programu se ukládají do složky s aplikací)"; Types: portable
 
 [Dirs]
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{group}\{#MyAppName}"; Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-procedure InstallVc2015Redist;
+procedure InstallVcRedist;
 var
   StatusText: string;
   ResultCode: integer;
 begin
   StatusText := WizardForm.StatusLabel.Caption;
-  WizardForm.StatusLabel.Caption := 'Instaluji Microsoft Visual Studio 2015 Redistributable...';
+  WizardForm.StatusLabel.Caption := 'Instaluji Microsoft Visual Studio Redistributable...';
   WizardForm.ProgressGauge.Style := npbstMarquee;
   try
-    if not Exec(ExpandConstant('{tmp}\vc2015_redist.x86.exe'), '/install /passive /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
+    if not Exec(ExpandConstant('{tmp}\VC_redist.x64.exe'), '/install /passive /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
     then
-      MsgBox('Nepodaøilo se spustit instalátor MSVC 2015 Redist. Aplikace PhotoBox bez této knihovny nemusí fungovat.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
+      MsgBox('Nepodaøilo se spustit instalátor MSVC Redist. Aplikace bez této knihovny nemusí fungovat.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
   finally
     WizardForm.StatusLabel.Caption := StatusText;
     WizardForm.ProgressGauge.Style := npbstNormal;

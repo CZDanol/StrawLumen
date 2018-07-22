@@ -18,6 +18,9 @@ public slots:
 protected:
 	void paintEvent(QPaintEvent *event) override;
 
+private slots:
+	void onNeedsRepaint();
+
 private:
 	PresentationBackground presentationBackground_;
 

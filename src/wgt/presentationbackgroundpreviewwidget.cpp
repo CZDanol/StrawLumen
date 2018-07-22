@@ -6,7 +6,7 @@
 
 PresentationBackgroundPreviewWidget::PresentationBackgroundPreviewWidget(QWidget *parent) : QWidget(parent)
 {
-	connect(&presentationBackground_, SIGNAL(sigChanged()), this, SLOT(update()));
+	connect(&presentationBackground_, &PresentationBackground::sigNeedsRepaint, this, &PresentationBackgroundPreviewWidget::onNeedsRepaint);
 }
 
 void PresentationBackgroundPreviewWidget::setPresentationBackground(const PresentationBackground &background)
@@ -23,4 +23,9 @@ void PresentationBackgroundPreviewWidget::paintEvent(QPaintEvent *)
 	QPainter p(this);
 	p.setRenderHint(QPainter::SmoothPixmapTransform);
 	presentationBackground_.draw(p, previewRect);
+}
+
+void PresentationBackgroundPreviewWidget::onNeedsRepaint()
+{
+	update();
 }

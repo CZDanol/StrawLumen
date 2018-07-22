@@ -4,6 +4,7 @@
 #include <QShortcut>
 #include <QDragEnterEvent>
 #include <QMimeData>
+#include <QDrag>
 
 #include "gui/splashscreen.h"
 #include "job/db.h"
@@ -18,6 +19,27 @@ MultiSongSelectionWidget::MultiSongSelectionWidget(QWidget *parent) :
 	ui->twSelection->setCornerWidget(ui->twSelectionCorner);
 
 	ui->tvSelection->setModel(&selectionModel_);
+	ui->tvSelection->setStartDragFunction([=](Qt::DropActions){
+		const QModelIndexList selection = ui->tvSelection->selectionModel()->selectedIndexes();
+
+		if(selection.isEmpty())
+			return false;
+
+		//QMimeData *mime = new QMimeData;
+		QMimeData *mime = selectionModel_.mimeData(selection);
+		mime->setData("application/straw.lumen.song.null", QByteArray());
+
+		const QPixmap pixmap = selection.first().data(Qt::DecorationRole).value<QPixmap>();
+
+		QDrag *drag = new QDrag(this);
+		drag->setMimeData(mime);
+		drag->setPixmap(pixmap);
+
+		if(drag->exec(Qt::LinkAction, Qt::LinkAction) != Qt::IgnoreAction && drag->target()->parent() != ui->tvSelection)
+			deleteSelected();
+
+		return true;
+	});
 
 	connect(&selectionModel_, SIGNAL(sigItemsManipulated(int,int)), this, SLOT(onSelectionItemsManipulated(int,int)));
 
@@ -27,37 +49,6 @@ MultiSongSelectionWidget::MultiSongSelectionWidget(QWidget *parent) :
 		header->setSectionResizeMode(0, QHeaderView::Fixed);
 		header->resizeSection(0, 150);
 		header->setSectionResizeMode(1, QHeaderView::Stretch);
-	}
-
-	// Setup drag & drop
-	{
-		/*ui->tvSelection->setDragEnterEventHandler([this](QDragEnterEvent *e){
-			if(!e->mimeData()->hasFormat("application/straw.lumen.song.ids"))
-				return false;
-
-			e->setDropAction(Qt::MoveAction);
-			e->accept();
-			return true;
-		});
-		ui->tvSelection->setDropEventHandler([this](QTreeWidgetItem *, int row, const QMimeData* mime, Qt::DropAction){
-			if(!mime->hasFormat("application/straw.lumen.song.ids"))
-				return false;
-
-			QList<QTreeWidgetItem*> items;
-
-			splashscreen->asyncAction(tr("Přidávání písní"), false, [&]{
-				QDataStream stream(mime->data("application/straw.lumen.song.ids"));
-				while(!stream.atEnd()) {
-					qlonglong songId;
-					stream >> songId;
-					items << createItem(songId);
-				}
-			});
-
-			ui->tvSelection->insertTopLevelItems(row, items);
-
-			return true;
-		});*/
 	}
 
 	// Shortcuts

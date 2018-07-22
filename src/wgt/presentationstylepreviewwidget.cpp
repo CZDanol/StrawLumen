@@ -7,7 +7,7 @@
 
 PresentationStylePreviewWidget::PresentationStylePreviewWidget(QWidget *parent) : QWidget(parent)
 {
-	connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(update()));
+	connect(&presentationStyle_, SIGNAL(sigNeedsRepaint()), this, SLOT(update()));
 }
 
 void PresentationStylePreviewWidget::setPresentationStyle(const PresentationStyle &style)

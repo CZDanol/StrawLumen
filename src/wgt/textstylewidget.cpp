@@ -12,6 +12,7 @@ TextStyleWidget::TextStyleWidget(QWidget *parent) :
 	connect(this, SIGNAL(sigTextStyleChangedByUser(TextStyle)), ui->wgtPreview, SLOT(setTextStyle(TextStyle)));
 
 	forceSetTextStyle(textStyle_);
+	ui->twItems->setCurrentIndex(0);
 }
 
 TextStyleWidget::~TextStyleWidget()
@@ -41,11 +42,11 @@ void TextStyleWidget::forceSetTextStyle(const TextStyle &style)
 	ui->wgtFont->setSelectedFont(style.font);
 	ui->wgtColor->setColor(style.color);
 
-	ui->gbOutline->setChecked(style.outlineEnabled);
+	ui->cbOutline->setChecked(style.outlineEnabled);
 	ui->wgtOutlineColor->setColor(style.outlineColor);
 	ui->sbOutlineWidth->setValue(style.outlineWidth);
 
-	ui->gbBackground->setChecked(style.backgroundEnabled);
+	ui->cbBackground->setChecked(style.backgroundEnabled);
 	ui->wgtBackgroundColor->setColor(style.backgroundColor);
 	ui->sbBackgroundPadding->setValue(style.backgroundPadding);
 
@@ -68,8 +69,8 @@ void TextStyleWidget::setReadOnly(bool set)
 	ui->sbBackgroundPadding->setReadOnly(set);
 	ui->sbOutlineWidth->setReadOnly(set);
 
-	ui->gbBackground->setEnabled(!set);
-	ui->gbOutline->setEnabled(!set);
+	ui->cbBackground->setEnabled(!set);
+	ui->cbOutline->setEnabled(!set);
 }
 
 void TextStyleWidget::on_wgtFont_sigFontChangedByUser(const QFont &font)
@@ -84,7 +85,7 @@ void TextStyleWidget::on_wgtColor_sigColorChangedByUser(const QColor &color)
 	emit sigTextStyleChangedByUser(textStyle_);
 }
 
-void TextStyleWidget::on_gbOutline_clicked(bool checked)
+void TextStyleWidget::on_cbOutline_clicked(bool checked)
 {
 	textStyle_.outlineEnabled = checked;
 	emit sigTextStyleChangedByUser(textStyle_);
@@ -94,25 +95,27 @@ void TextStyleWidget::on_sbOutlineWidth_valueChanged(int arg1)
 {
 	textStyle_.outlineWidth = arg1;
 
-	if(!isSettingUp_) {
-		textStyle_.outlineEnabled = true;
+	if(isSettingUp_)
+		return;
 
-		emit sigTextStyleChangedByUser(textStyle_);
-	}
+	textStyle_.outlineEnabled = true;
+	ui->cbOutline->setChecked(true);
+	emit sigTextStyleChangedByUser(textStyle_);
 }
 
 void TextStyleWidget::on_wgtOutlineColor_sigColorChangedByUser(const QColor &color)
 {
 	textStyle_.outlineColor = color;
 
-	if(!isSettingUp_) {
-		textStyle_.outlineEnabled = true;
+	if(isSettingUp_)
+		return;
 
-		emit sigTextStyleChangedByUser(textStyle_);
-	}
+	textStyle_.outlineEnabled = true;
+	ui->cbOutline->setChecked(true);
+	emit sigTextStyleChangedByUser(textStyle_);
 }
 
-void TextStyleWidget::on_gbBackground_clicked(bool checked)
+void TextStyleWidget::on_cbBackground_clicked(bool checked)
 {
 	textStyle_.backgroundEnabled = checked;
 	emit sigTextStyleChangedByUser(textStyle_);
@@ -122,20 +125,24 @@ void TextStyleWidget::on_sbBackgroundPadding_valueChanged(int arg1)
 {
 	textStyle_.backgroundPadding = arg1;
 
-	if(!isSettingUp_) {
-		textStyle_.backgroundEnabled = true;
+	if(isSettingUp_)
+		return;
 
-		emit sigTextStyleChangedByUser(textStyle_);
-	}
+	ui->cbBackground->setChecked(true);
+	textStyle_.backgroundEnabled = true;
+
+	emit sigTextStyleChangedByUser(textStyle_);
 }
 
 void TextStyleWidget::on_wgtBackgroundColor_sigColorChangedByUser(const QColor &color)
 {
 	textStyle_.backgroundColor = color;
 
-	if(!isSettingUp_) {
-		textStyle_.backgroundEnabled = true;
+	if(isSettingUp_)
+		return;
 
-		emit sigTextStyleChangedByUser(textStyle_);
-	}
+	ui->cbBackground->setChecked(true);
+	textStyle_.backgroundEnabled = true;
+
+	emit sigTextStyleChangedByUser(textStyle_);
 }

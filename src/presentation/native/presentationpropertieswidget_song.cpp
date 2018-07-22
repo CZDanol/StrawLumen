@@ -47,6 +47,7 @@ void PresentationPropertiesWidget_Song::fillData()
 
 	ui->cbEmptySlideBefore->setChecked(presentation_->emptySlideBefore_);
 	ui->cbEmptySlideAfter->setChecked(presentation_->emptySlideAfter_);
+	ui->cbIgnoreEmptySlides->setChecked(presentation_->emptySlideAfter_);
 
 	ui->wgtStylePreview->setPresentationStyle(presentation_->style_);
 }
@@ -113,4 +114,10 @@ void PresentationPropertiesWidget_Song::on_btnEditSong_clicked()
 {
 	mainWindow->showSongsMode();
 	mainWindow->songsMode()->editSong(presentation_->songId_);
+}
+
+void PresentationPropertiesWidget_Song::on_cbIgnoreEmptySlides_clicked(bool checked)
+{
+	presentation_->ignoreEmptySlides_ = checked;
+	presentation_->loadSlideOrder();
 }

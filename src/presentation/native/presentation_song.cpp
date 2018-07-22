@@ -17,6 +17,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 	result->style_ = settings->setting_song_defaultStyle();
 	result->emptySlideBefore_ = settings->setting_song_emptySlideBefore();
 	result->emptySlideAfter_ = settings->setting_song_emptySlideAfter();
+	result->ignoreEmptySlides_ = settings->setting_song_ignoreEmptySlides();
 
 	if(!result->loadFromDb(songId))
 		return nullptr;
@@ -34,6 +35,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 	result->customSlideOrder_ = json["customSlideOrder"].toString();
 	result->emptySlideBefore_ = json["emptySlideBefore"].toBool();
 	result->emptySlideAfter_ = json["emptySlideAfter"].toBool();
+	result->ignoreEmptySlides_ = json["ignoreEmptySlides"].toBool();
 
 	if(!result->loadFromDb_Uid(json["songUid"].toString()))
 		return nullptr;
@@ -60,6 +62,7 @@ QJsonObject Presentation_Song::toJSON() const
 		{"customSlideOrder", customSlideOrder_},
 		{"emptySlideBefore", emptySlideBefore_},
 		{"emptySlideAfter", emptySlideAfter_},
+		{"ignoreEmptySlides", ignoreEmptySlides_},
 		{"styleId", style_.styleId()},
 		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()}
 	};
@@ -163,8 +166,8 @@ void Presentation_Song::loadFromDb(const QSqlRecord &rec)
 		for(QString content : swc.content.split(songSlideSeparatorRegex())) {
 			content = content.trimmed();
 
-			if(content.isEmpty())
-				continue;
+			/*if(content.isEmpty())
+				continue;*/
 
 			static const QRegularExpression multiSpacesRegex("[ \t]+");
 			content.replace(multiSpacesRegex, " ");
@@ -212,7 +215,10 @@ void Presentation_Song::loadSlideOrder()
 			const SlideData &slideData = sr.slides[i];
 			const QString slideName = sr.slides.size() > 1 ? tr("%1-%2", "%1 - section name, %2 - slide in section index (for multiple slides per section)").arg(sr.section.standardName()).arg(i+1) : sr.section.standardName();
 
-			slides_.append(SlideRec{slideName, slideData.content_, slideData.description_});
+			if(slideData.content_.isEmpty() && ignoreEmptySlides_)
+				continue;
+
+			slides_.append(SlideRec{slideName, slideData.content_, slideData.description_, QPixmap()});
 		}
 	}
 

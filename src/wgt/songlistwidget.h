@@ -65,7 +65,8 @@ private slots:
 
 private:
 	Ui::SongListWidget *ui;
-	SongsItemModel songsModel_, tagsModel_;
+	SongsItemModel songsModel_;
+	QSqlQueryModel tagsModel_;
 	QString currentFilterText_;
 	QTimer typingTimer_;
 

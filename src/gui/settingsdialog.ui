@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>514</width>
-    <height>338</height>
+    <height>361</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -108,17 +108,16 @@
        <string>Písně</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
+       <item row="0" column="3">
+        <widget class="StyleSelectionWidget" name="wgtDefaultPresentationStyle" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="3">
-        <widget class="QCheckBox" name="cbEmptySlideBeforeSong">
-         <property name="text">
-          <string>Prázdný snímek na začátku</string>
+         <property name="preferNonprimaryScreens" stdset="0">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -129,10 +128,24 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_3">
+       <item row="1" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbEmptySlideBeforeSong">
          <property name="text">
-          <string>Výchozí styl:</string>
+          <string>Prázdný snímek na začátku</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
          </property>
         </widget>
        </item>
@@ -152,23 +165,10 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="3">
-        <widget class="StyleSelectionWidget" name="wgtDefaultPresentationStyle" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="preferNonprimaryScreens" stdset="0">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Výchozí styl:</string>
          </property>
         </widget>
        </item>
@@ -176,6 +176,23 @@
         <widget class="QCheckBox" name="cbEmptySlideAfterSong">
          <property name="text">
           <string>Prázdný snímek na konci</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Last_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbIgnoreEmptySongSlides">
+         <property name="text">
+          <string>Ignorovat prázdné snímky</string>
          </property>
          <property name="checked">
           <bool>true</bool>
