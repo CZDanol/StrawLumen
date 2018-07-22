@@ -3,6 +3,7 @@
 
 #include <QJsonDocument>
 #include <QDateTime>
+#include <QShortcut>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -18,6 +19,8 @@ PlaylistsDialog::PlaylistsDialog(QWidget *parent) :
 	ui->setupUi(this);
 
 	ui->lstItems->setModel(&itemsModel_);
+
+	new QShortcut(Qt::Key_Delete, ui->btnDelete, SLOT(click()));
 }
 
 PlaylistsDialog::~PlaylistsDialog()
@@ -126,7 +129,7 @@ PlaylistsDialog *playlistsDialog()
 void PlaylistsDialog::on_btnNew_clicked()
 {
 	const QString playlistName = tr("Nový program", "Newly created playlist name");
-	const QVariant playlistId = db->insert("INSERT INTO playlists(name) VALUES(?)", {playlistName});
+	const QVariant playlistId = db->insert("INSERT INTO playlists(name, lastTouch) VALUES(?, ?)", {playlistName, QDateTime::currentSecsSinceEpoch()});
 
 	{
 		QListWidgetItem *i = new QListWidgetItem();

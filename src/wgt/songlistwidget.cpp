@@ -28,11 +28,15 @@ SongListWidget::SongListWidget(QWidget *parent) :
 	connect(ui->tvSongs->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentSongChanged(QModelIndex,QModelIndex)));
 	connect(ui->tvSongs->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SIGNAL(sigSelectionChanged()));
 	connect(ui->tvSongs, SIGNAL(activated(QModelIndex)), this, SLOT(onSongItemActivated(QModelIndex)));
+	connect(ui->tvSongs, &ExtendedTreeView::sigTextTyped, this, &SongListWidget::onTextTypedToList);
 
 	connect(ui->lvTags->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentTagChanged(QModelIndex,QModelIndex)));
 
-	connect(new QShortcut(Qt::Key_Escape, ui->lnSearch, nullptr, nullptr, Qt::WidgetShortcut), SIGNAL(activated()), this, SLOT(clearFilters()));
-
+	{
+		auto sc = new QShortcut(Qt::Key_Escape, ui->lnSearch, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+		connect(sc, SIGNAL(activated()), this, SLOT(clearFilters()));
+		connect(sc, SIGNAL(activatedAmbiguously()), this, SLOT(clearFilters()));
+	}
 	{
 		auto sc = new QShortcut(Qt::CTRL | Qt::Key_F, ui->lnSearch);
 		connect(sc, SIGNAL(activated()), ui->lnSearch, SLOT(setFocus()));
@@ -229,6 +233,12 @@ void SongListWidget::onSongItemActivated(const QModelIndex &index)
 		return;
 
 	emit sigItemActivated(songsModel_.record(index.row()).value("id").toLongLong());
+}
+
+void SongListWidget::onTextTypedToList(const QString &text)
+{
+	ui->lnSearch->setFocus();
+	ui->lnSearch->setText(text);
 }
 
 void SongListWidget::on_tvSongs_customContextMenuRequested(const QPoint &pos)

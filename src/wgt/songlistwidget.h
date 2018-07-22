@@ -54,13 +54,13 @@ private slots:
 	void onCurrentSongChanged(const QModelIndex &index, const QModelIndex &prevIndex);
 	void onCurrentTagChanged(const QModelIndex &index, const QModelIndex &prevIndex);
 	void onSongItemActivated(const QModelIndex &index);
+	void onTextTypedToList(const QString &text);
 
 private slots:
 	void on_tvSongs_customContextMenuRequested(const QPoint &pos);
 	void on_lnSearch_sigDownPressed();
 	void on_tvSongs_sigUpPressed();
 	void on_lvTags_activated(const QModelIndex &index);
-
 	void on_btnClearTagFilter_clicked();
 
 private:

@@ -13,6 +13,7 @@ public:
 signals:
 	void sigUpPressed();
 	void sigDownPressed();
+	void sigTextTyped(const QString &text);
 
 protected:
 	virtual void keyPressEvent(QKeyEvent *e) override;

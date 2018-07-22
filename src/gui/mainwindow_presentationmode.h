@@ -54,6 +54,7 @@ private slots:
 	void onAddPresentationMenuAboutToShow();
 	void onAddPresentationBeforeMenuAboutToShow();
 	void onAddPresentationAfterMenuAboutToShow();
+	void onSaveRequested();
 
 private slots:
 	void on_btnEnableProjection_clicked(bool checked);

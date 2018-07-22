@@ -15,5 +15,8 @@ void ExtendedTreeView::keyPressEvent(QKeyEvent *e)
 	else if(e->key() == Qt::Key_Down)
 		emit sigDownPressed();
 
+	else if(!e->text().isEmpty())
+		emit sigTextTyped(e->text());
+
 	QTreeView::keyPressEvent(e);
 }

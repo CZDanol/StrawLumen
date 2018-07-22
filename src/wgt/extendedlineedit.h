@@ -14,6 +14,7 @@ signals:
 	void sigFocused();
 	void sigDownPressed();
 	void sigUpPressed();
+	void sigTextTyped(const QString &text);
 
 protected:
 	virtual void focusInEvent(QFocusEvent *e) override;

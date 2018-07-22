@@ -37,6 +37,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	playlist_.reset(new Playlist());
 	connect(playlist_.data(), SIGNAL(sigSlidesChanged()), this, SLOT(updateControlsUIEnabled()));
 
+	new QShortcut(Qt::CTRL + Qt::Key_S, this, SLOT(onSaveRequested()));
+
 	// Playlist tab
 	{
 		ui->twPlaylist->setCornerWidget(ui->twPlaylistCorner);
@@ -378,6 +380,24 @@ void MainWindow_PresentationMode::onAddPresentationAfterMenuAboutToShow()
 	addPresentationsAction_ = [this, insertPos](const QVector<QSharedPointer<Presentation > > &presentations) {
 		playlist_->insertItems(insertPos, presentations);
 	};
+}
+
+void MainWindow_PresentationMode::onSaveRequested()
+{
+	const qlonglong lastTouchPlaylistId = playlistsDialog()->lastTouchPlaylistId();
+
+	if(lastTouchPlaylistId == -1) {
+		playlistsDialog()->show();
+		return;
+	}
+
+	QString name = db->selectValue("SELECT name, lastTouch FROM playlists WHERE id = ?", {lastTouchPlaylistId}).toString();
+	if(!standardConfirmDialog(tr("Uložit program jako \"%1\"?").arg(name))) {
+		playlistsDialog()->show();
+		return;
+	}
+
+	playlistsDialog()->saveWorkingPlaylist(lastTouchPlaylistId);
 }
 
 void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)

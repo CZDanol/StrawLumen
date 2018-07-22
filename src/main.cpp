@@ -66,7 +66,10 @@ int main(int argc, char *argv[]) {
 void initApplication() {
 	qRegisterMetaType<QSharedPointer<Presentation>>();
 
-	appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+	if(QFile::exists(QDir(qApp->applicationDirPath()).absoluteFilePath("../portableMode")))
+		appDataDirectory = QDir(QDir(qApp->applicationDirPath()).absoluteFilePath("../programData"));
+	else
+		appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
 
 	if( !appDataDirectory.mkpath(".") )
 		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));

@@ -79,7 +79,7 @@ void createDb(DatabaseManager *db)
 
 		db->exec("INSERT INTO keyValueAssoc(key, value)"
 						 "VALUES"
-						 "('database.version', 1)");
+						 "('database.version', 2)");
 	}
 
 	// PLAYLISTS
