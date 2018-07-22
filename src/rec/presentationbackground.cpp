@@ -8,6 +8,7 @@
 PresentationBackground::PresentationBackground()
 {
 	connect(backgroundManager, SIGNAL(sigBackgroundLoaded(QString)), this, SLOT(onBackgroundManagerBackgroundLoaded(QString)));
+	connect(this, &PresentationBackground::sigChanged, this, &PresentationBackground::sigNeedsRepaint);
 }
 
 PresentationBackground::PresentationBackground(const PresentationBackground &other) : PresentationBackground()
@@ -121,5 +122,5 @@ void PresentationBackground::operator=(const PresentationBackground &other)
 void PresentationBackground::onBackgroundManagerBackgroundLoaded(const QString &filename)
 {
 	if(filename == filename_)
-		emit sigChanged();
+		emit sigNeedsRepaint();
 }

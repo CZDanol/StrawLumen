@@ -116,6 +116,8 @@ Presentation_Song::Presentation_Song()
 	connect(db, &DatabaseManager::sigSongChanged, this, &Presentation_Song::onDbManagerSongChanged);
 	connect(&style_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
+	connect(&style_, SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
+	connect(&style_, &PresentationStyle::sigNeedsRepaint, this, &Presentation_Song::onStyleNeedsRepaint);
 }
 
 bool Presentation_Song::loadFromDb(qlonglong songId)
@@ -202,7 +204,7 @@ void Presentation_Song::loadSlideOrder()
 		slides_.append(SlideRec{QString(), QString(), QString(), emptySlideBeforePixmap});
 
 	for(const QString &sectionName : slideOrder) {
-		if(sectionName.isEmpty())
+		if(sectionName.isEmpty() || !sections_.contains(sectionName))
 			continue;
 
 		const SectionRec &sr = sections_[sectionName];
@@ -243,4 +245,13 @@ void Presentation_Song::onStyleChanged()
 void Presentation_Song::onStyleBackgroundChanged()
 {
 	backgroundManager->preloadBackground(style_.background().filename(), settings->projectionDisplayGeometry().size());
+}
+
+void Presentation_Song::onStyleNeedsRepaint()
+{
+	if(signalsBlocked())
+		return;
+
+	if(isActive())
+		projectorWindow->update();
 }

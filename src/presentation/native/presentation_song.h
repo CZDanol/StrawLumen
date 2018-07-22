@@ -68,6 +68,7 @@ private slots:
 	void onDbManagerSongChanged(qlonglong songId);
 	void onStyleChanged();
 	void onStyleBackgroundChanged();
+	void onStyleNeedsRepaint();
 
 private:
 	qlonglong songId_ = -1;

@@ -86,7 +86,7 @@ QVariant SlidesItemModel::data(const QModelIndex &index, int role) const
 	const auto column = index.column();
 
 	if (role == Qt::DisplayRole) {
-		switch(column) {
+		switch(static_cast<Column>(column)) {
 
 		case Column::presentation:
 			return presentation->identification();
@@ -103,7 +103,7 @@ QVariant SlidesItemModel::data(const QModelIndex &index, int role) const
 		}
 
 	} else if(role == Qt::DecorationRole) {
-		switch( column ) {
+		switch(static_cast<Column>(column)) {
 
 		case Column::presentation:
 			return presentation->icon();
@@ -114,14 +114,14 @@ QVariant SlidesItemModel::data(const QModelIndex &index, int role) const
 		}
 	}
 
-	else if(role == (int) UserData::isLastInPresentation)
+	else if(role == static_cast<int>(UserData::isLastInPresentation))
 		return slideId == presentation->slideCount() - 1;
 
-	else if(role == (int) UserData::customIcon)
+	else if(role == static_cast<int>(UserData::customIcon))
 		return presentation->slideIdentificationIcon(slideId);
 
 	else if(role == Qt::TextAlignmentRole)
-		return column == (int) Column::id ? Qt::AlignCenter : QVariant();
+		return column == static_cast<int>(Column::id) ? Qt::AlignCenter : QVariant();
 
 	else
 		return QVariant();

@@ -28,9 +28,6 @@ public:
 public:
 	void updateSongFulltextIndex(qlonglong songId);
 
-private:
-	void createDb();
-
 private slots:
 	void onSongChanged();
 

@@ -43,6 +43,8 @@ void PresentationPropertiesWidget_Song::fillData()
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
 
+	ui->lnSlideOrder->setText(presentation_->customSlideOrder_);
+
 	ui->cbEmptySlideBefore->setChecked(presentation_->emptySlideBefore_);
 	ui->cbEmptySlideAfter->setChecked(presentation_->emptySlideAfter_);
 

@@ -44,12 +44,21 @@ public:
 
 	static QStringList itemNamesFromJSON(const QJsonObject &json);
 
+	bool areChangesSaved() const;
+	void assumeChangesSaved();
+
 signals:
 	// Do not emit these signals on your own, rather use emitItems/slides changed
+	/// When item order was changed or items were added/removed
 	void sigItemsChanged();
 	void sigItemsAdded();
 	void sigSlidesChanged();
-	void sigItemChanged(Presentation *item); // When item icon/identification/whatever changes
+
+	/// When item icon/identification/whatever changes
+	void sigItemChanged(Presentation *item);
+
+	/// When ANYTHING has changed (for saving tracking purposes)
+	void sigChanged();
 
 public slots:
 	void emitItemsChanged();
@@ -58,10 +67,14 @@ public slots:
 private:
 	void updatePlaylistData();
 
+private slots:
+	void onChanged();
+
 private:
 	QVector<QSharedPointer<Presentation> > items_;
 	QVector<int> itemOffsets_;
 	int slideCount_ = 0;
+	bool areChangesSaved_ = true;
 
 };
 

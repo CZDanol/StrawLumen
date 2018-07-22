@@ -11,7 +11,8 @@
 
 Playlist::Playlist()
 {
-
+	connect(this, SIGNAL(sigItemsChanged()), this, SIGNAL(sigChanged()));
+	connect(this, SIGNAL(sigChanged()), this, SLOT(onChanged()));
 }
 
 bool Playlist::addItem(const QSharedPointer<Presentation> &item)
@@ -26,6 +27,7 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	items_.append(item);
 	connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
 	connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
+	connect(item.data(), SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
 
 	emitItemsChanged();
 	emit sigItemsAdded();
@@ -139,6 +141,9 @@ void Playlist::clear()
 		item->playlist_ = nullptr;
 
 	items_.clear();
+	itemOffsets_.clear();
+	slideCount_ = 0;
+
 	emitItemsChanged();
 }
 
@@ -203,7 +208,7 @@ bool Playlist::loadFromJSON(const QJsonObject &json)
 #undef F
 
 	QSignalBlocker sb(this);
-	items_.clear();
+	clear();
 
 	QStringList failedToLoadList;
 
@@ -247,6 +252,16 @@ QStringList Playlist::itemNamesFromJSON(const QJsonObject &json)
 	return result;
 }
 
+bool Playlist::areChangesSaved() const
+{
+	return areChangesSaved_;
+}
+
+void Playlist::assumeChangesSaved()
+{
+	areChangesSaved_ = true;
+}
+
 void Playlist::emitItemsChanged()
 {
 	if(signalsBlocked())
@@ -277,4 +292,9 @@ void Playlist::updatePlaylistData()
 		itemOffsets_[i] = slideCount_;
 		slideCount_ += item->slideCount();
 	}
+}
+
+void Playlist::onChanged()
+{
+	areChangesSaved_ = false;
 }

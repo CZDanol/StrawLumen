@@ -22,8 +22,14 @@ public:
 	virtual ~Presentation() {}
 
 signals:
+	/// Is emitted when slide order/description/anything has changed for this presentation
 	void sigSlidesChanged();
+
+	/// Is emitted when the presentation icon/title has changed (anything that is visible from the playlist view)
 	void sigItemChanged(Presentation *presentation);
+
+	/// Is emitted whenever ANYTHING about the presentation is changed (for saving tracking purposes)
+	void sigChanged();
 
 public:
 	virtual int slideCount() const = 0;
@@ -61,7 +67,7 @@ public:
 	virtual void setSlide(int localSlideId, bool force = false) = 0;
 
 protected:
-	Presentation() {}
+	Presentation();
 
 private:
 	Playlist *playlist_ = nullptr;

@@ -115,7 +115,8 @@ SOURCES += main.cpp \
     presentation/native/presentationpropertieswidget_customslide.cpp \
     strawapi/simpleupdater.cpp \
     strawapi/strawapi.cpp \
-    strawapi/feedbackdialog.cpp
+    strawapi/feedbackdialog.cpp \
+    job/dbmigration.cpp
 
 FORMS += \
     gui/mainwindow.ui \

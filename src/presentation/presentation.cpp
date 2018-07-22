@@ -40,3 +40,9 @@ QWidget *Presentation::createPropertiesWidget(QWidget *)
 {
 	return nullptr;
 }
+
+Presentation::Presentation()
+{
+	connect(this, SIGNAL(sigSlidesChanged()), this, SIGNAL(sigChanged()));
+	connect(this, SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigChanged()));
+}

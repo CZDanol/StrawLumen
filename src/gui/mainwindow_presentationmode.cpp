@@ -22,6 +22,7 @@
 #include "presentation/native/presentation_song.h"
 #include "importexport/opensongimportdialog.h"
 #include "job/settings.h"
+#include "job/db.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
 #include "util/guianimations.h"
@@ -80,6 +81,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			playlistContextMenu_.addMenu(&insertPresentationBeforeMenu_);
 			playlistContextMenu_.addMenu(&insertPresentationAfterMenu_);
 			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
+
+			ui->btnPlaylists->setMenu(&playlistsMenu_);
 		}
 	}
 
@@ -168,6 +171,17 @@ MainWindow_PresentationMode::~MainWindow_PresentationMode()
 QWidget *MainWindow_PresentationMode::menuWidget()
 {
 	return ui->wgtMenu;
+}
+
+bool MainWindow_PresentationMode::askSaveChanges()
+{
+	if(!playlist_->items().count() || playlist_->areChangesSaved())
+		return true;
+
+	if(!standardConfirmDialog(tr("Program promítání obsahuje neuložené změny. Opravdu chcete pokračovat?")))
+		return false;
+
+	return true;
 }
 
 QSharedPointer<Playlist> MainWindow_PresentationMode::playlist()
@@ -269,7 +283,7 @@ void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
 	presentationManager->setSlide(playlist_.data(), current.row());
 
 	auto presentation = presentationManager->currentPresentation();
-	if(presentation)
+	if(presentation && !disablePlaylistSelectionChange_)
 		ui->tvPlaylist->setCurrentIndex(playlistItemModel_.index(presentation->positionInPlaylist(), 0));
 }
 
@@ -310,7 +324,9 @@ void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
 		return presentationManager->setActive(false);
 
 	// In case presentation slide count changed to ensure to stay in the current presentation
+	disablePlaylistSelectionChange_++;
 	presentationManager->setSlide(playlist_.data(), presentation->globalSlideIdOffset() + qMin(presentationManager->currentLocalSlideId(), presentation->slideCount()-1), true);
+	disablePlaylistSelectionChange_--;
 }
 
 void MainWindow_PresentationMode::onPlaylistModelReset()
@@ -453,19 +469,6 @@ void MainWindow_PresentationMode::on_actionAddSong_triggered()
 	flashWidget(ui->twLeftBottom);
 }
 
-void MainWindow_PresentationMode::on_btnPlaylists_clicked()
-{
-	playlistsDialog()->show();
-}
-
-void MainWindow_PresentationMode::on_btnClearPlaylist_clicked()
-{
-	if(!standardConfirmDialog(tr("Opravdu vymazat všechny položky programu?")))
-		return;
-
-	playlist_->clear();
-}
-
 void MainWindow_PresentationMode::on_actionEditSong_triggered()
 {
 	mainWindow->showSongsMode();
@@ -526,4 +529,57 @@ void MainWindow_PresentationMode::on_actionEditPresentation_triggered()
 
 	ui->twLeftBottom->setCurrentWidget(ui->tabPresentationProperties);
 	flashWidget(ui->twLeftBottom);
+}
+
+void MainWindow_PresentationMode::on_actionClearPlaylist_triggered()
+{
+	if(!standardConfirmDialog(tr("Opravdu vymazat všechny položky programu?")))
+		return;
+
+	playlistsDialog()->clearLastTouchPlaylistId();
+	playlist_->clear();
+	playlist_->assumeChangesSaved();
+}
+
+void MainWindow_PresentationMode::on_btnPlaylists_pressed()
+{
+	playlistsMenu_.clear();
+
+	playlistsMenu_.addAction(ui->actionSavePlaylist);
+	playlistsMenu_.addAction(ui->actionLoadPlaylist);
+	playlistsMenu_.addAction(ui->actionClearPlaylist);
+
+	static const QIcon saveIcon(":/icons/16/Save_16px.png");
+	static const QIcon loadIcon(":/icons/16/Open_16px.png");
+
+	if(playlistsDialog()->lastTouchPlaylistId() != -1) {
+		playlistsMenu_.addSeparator();
+
+		QSqlRecord r = db->selectRow("SELECT id, name, lastTouch FROM playlists WHERE id = ?", {playlistsDialog()->lastTouchPlaylistId()});
+		const qlonglong id = r.value("id").toLongLong();
+
+		playlistsMenu_.addAction(saveIcon, tr("Uložit jako \"%1\"").arg(r.value("name").toString()), [id]{
+			playlistsDialog()->saveWorkingPlaylist(id);
+		});
+	}
+
+	playlistsMenu_.addSeparator();
+
+	QSqlQuery q = db->selectQuery("SELECT id, name, lastTouch FROM playlists ORDER BY lastTouch DESC LIMIT 5");
+	while(q.next()) {
+		const qlonglong id = q.value("id").toLongLong();
+		playlistsMenu_.addAction(loadIcon, tr("Načíst \"%1\"").arg(q.value("name").toString()), [id]{
+			playlistsDialog()->loadPlaylist(id);
+		});
+	}
+}
+
+void MainWindow_PresentationMode::on_actionSavePlaylist_triggered()
+{
+	playlistsDialog()->show();
+}
+
+void MainWindow_PresentationMode::on_actionLoadPlaylist_triggered()
+{
+	playlistsDialog()->show();
 }

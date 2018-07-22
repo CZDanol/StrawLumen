@@ -10,7 +10,10 @@
 PresentationStyle::PresentationStyle(QObject *parent) : QObject(parent)
 {
 	connect(db, SIGNAL(sigStyleChanged(qlonglong)), this, SLOT(onDbStyleChanged(qlonglong)));
+	connect(this, &PresentationStyle::sigChanged, this, &PresentationStyle::sigNeedsRepaint);
+
 	connect(&background_, SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
+	connect(&background_, &PresentationBackground::sigNeedsRepaint, this, &PresentationStyle::sigNeedsRepaint);
 }
 
 void PresentationStyle::loadFromJSON(const QJsonValue &val)

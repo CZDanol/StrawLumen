@@ -207,5 +207,7 @@
         <file>icons/16/Rubik's Cube_16px.png</file>
         <file>icons/16/Light On_16px.png</file>
         <file>icons/16/Summer_16px.png</file>
+        <file>icons/16/Menu Vertical_16px.png</file>
+        <file>icons/16/Services_16px.png</file>
     </qresource>
 </RCC>

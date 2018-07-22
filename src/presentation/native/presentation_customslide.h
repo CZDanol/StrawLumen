@@ -42,6 +42,7 @@ private slots:
 private slots:
 	void onStyleChanged();
 	void onStyleBackgroundChanged();
+	void onStyleNeedsRepaint();
 
 private:
 	PresentationStyle style_;

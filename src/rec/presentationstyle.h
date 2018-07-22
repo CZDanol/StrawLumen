@@ -25,6 +25,7 @@ public:
 
 signals:
 	void sigChanged();
+	void sigNeedsRepaint();
 
 public:
 	void drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const;

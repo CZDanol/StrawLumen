@@ -98,6 +98,8 @@ Presentation_CustomSlide::Presentation_CustomSlide()
 {
 	connect(&style_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
+	connect(&style_, SIGNAL(sigChanged()), this, SLOT(sigChanged()));
+	connect(&style_, &PresentationStyle::sigNeedsRepaint, this, &Presentation_CustomSlide::onStyleNeedsRepaint);
 }
 
 void Presentation_CustomSlide::updateDescription()
@@ -120,4 +122,13 @@ void Presentation_CustomSlide::onStyleChanged()
 void Presentation_CustomSlide::onStyleBackgroundChanged()
 {
 	backgroundManager->preloadBackground(style_.background().filename(), settings->projectionDisplayGeometry().size());
+}
+
+void Presentation_CustomSlide::onStyleNeedsRepaint()
+{
+	if(signalsBlocked())
+		return;
+
+	if(isActive())
+		projectorWindow->update();
 }

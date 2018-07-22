@@ -2,6 +2,7 @@
 #include "ui_playlistsdialog.h"
 
 #include <QJsonDocument>
+#include <QDateTime>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -27,9 +28,53 @@ PlaylistsDialog::~PlaylistsDialog()
 void PlaylistsDialog::show()
 {
 	requery();
-	ui->lstPlaylists->setCurrentRow(0);
 	updateUiEnabled();
 	QDialog::show();
+}
+
+void PlaylistsDialog::saveWorkingPlaylist(qlonglong playlistId)
+{
+	auto playlist = mainWindow->presentationMode()->playlist();
+	db->exec(
+				"UPDATE playlists SET data = ?, lastTouch = ? WHERE id = ?",
+				{
+					QJsonDocument(playlist->toJSON()).toJson(QJsonDocument::Compact),
+					QDateTime::currentSecsSinceEpoch(),
+					playlistId
+				});
+
+	lastTouchId_ = playlistId;
+	playlist->assumeChangesSaved();
+	standardSuccessDialog(tr("Program uložen."));
+}
+
+bool PlaylistsDialog::loadPlaylist(qlonglong playlistId)
+{
+	auto playlist = mainWindow->presentationMode()->playlist();
+	if(!playlist->items().isEmpty() && !standardConfirmDialog(tr("Aktuální program aplikace není prázdný. Načtením položky přepíšete. Opravdu chcete pokračovat?")))
+		return false;
+
+	db->exec("UPDATE playlists SET lastTouch = ? WHERE id = ?", {QDateTime::currentSecsSinceEpoch(), playlistId});
+	const QJsonObject json = QJsonDocument::fromJson(db->selectValue("SELECT data FROM playlists WHERE id = ?", {playlistId}).toByteArray()).object();
+	const bool success = playlist->loadFromJSON(json);
+
+	if(success)
+		standardSuccessDialog(tr("Program načten."));
+
+	lastTouchId_ = playlistId;
+	playlist->assumeChangesSaved();
+
+	return success;
+}
+
+qlonglong PlaylistsDialog::lastTouchPlaylistId() const
+{
+	return lastTouchId_;
+}
+
+void PlaylistsDialog::clearLastTouchPlaylistId()
+{
+	lastTouchId_ = -1;
 }
 
 void PlaylistsDialog::updateUiEnabled()
@@ -45,14 +90,16 @@ void PlaylistsDialog::updateUiEnabled()
 
 void PlaylistsDialog::requery()
 {
+	const qlonglong selectedId = ui->lstPlaylists->currentItem() ? ui->lstPlaylists->currentItem()->data(Qt::UserRole).toLongLong() : -1;
+
 	ui->lstPlaylists->clear();
 
-	{
+	/*{
 		QListWidgetItem *i = new QListWidgetItem();
 		i->setText(tr("(aktuální program)"));
 		i->setData(Qt::UserRole, -1);
 		ui->lstPlaylists->addItem(i);
-	}
+	}*/
 
 	QSqlQuery q = db->selectQuery("SELECT name, id FROM playlists ORDER BY name ASC");
 	while(q.next()) {
@@ -61,6 +108,9 @@ void PlaylistsDialog::requery()
 		i->setData(Qt::UserRole, q.value("id"));
 		i->setFlags(i->flags() | Qt::ItemIsEditable);
 		ui->lstPlaylists->addItem(i);
+
+		if(q.value("id").toLongLong() == selectedId)
+			ui->lstPlaylists->setCurrentItem(i);
 	}
 }
 
@@ -123,21 +173,14 @@ void PlaylistsDialog::on_lstPlaylists_currentItemChanged(QListWidgetItem *i, QLi
 	}
 
 	const qlonglong playlistId = i->data(Qt::UserRole).toLongLong();
-	currentPlaylistJson_ = QJsonDocument::fromJson(db->selectValue("SELECT data FROM playlists WHERE id = ?", {playlistId}).toByteArray()).object();
-
-	itemsModel_.setStringList(Playlist::itemNamesFromJSON(currentPlaylistJson_));
+	const QJsonObject json = QJsonDocument::fromJson(db->selectValue("SELECT data FROM playlists WHERE id = ?", {playlistId}).toByteArray()).object();
+	itemsModel_.setStringList(Playlist::itemNamesFromJSON(json));
 }
 
 void PlaylistsDialog::on_btnLoad_clicked()
 {
-	auto playlist = mainWindow->presentationMode()->playlist();
-	if(!playlist->items().isEmpty() && !standardConfirmDialog(tr("Aktuální program aplikace není prázdný. Načtením položky přepíšete. Opravdu chcete pokračovat?")))
-		return;
-
-	if(playlist->loadFromJSON(currentPlaylistJson_)) {
+	if(loadPlaylist(ui->lstPlaylists->currentItem()->data(Qt::UserRole).toLongLong()))
 		accept();
-		standardSuccessDialog(tr("Program načten."));
-	}
 }
 
 void PlaylistsDialog::on_btnSave_clicked()
@@ -150,12 +193,9 @@ void PlaylistsDialog::on_btnSave_clicked()
 		return;
 
 	const qlonglong playlistId = i->data(Qt::UserRole).toLongLong();
-
-	db->exec("UPDATE playlists SET data = ? WHERE id = ?", {QJsonDocument(mainWindow->presentationMode()->playlist()->toJSON()).toJson(QJsonDocument::Compact), playlistId});
+	saveWorkingPlaylist(playlistId);
 	on_lstPlaylists_currentItemChanged(i, nullptr);
-
 	accept();
-	standardSuccessDialog(tr("Program uložen."));
 }
 
 void PlaylistsDialog::on_btnClose_clicked()
@@ -178,5 +218,5 @@ void PlaylistsDialog::on_btnDelete_clicked()
 
 void PlaylistsDialog::on_lstPlaylists_itemActivated(QListWidgetItem *)
 {
-	ui->btnLoad->click();
+	//ui->btnLoad->click();
 }

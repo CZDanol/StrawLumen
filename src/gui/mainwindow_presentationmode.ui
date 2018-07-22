@@ -335,25 +335,11 @@
           <item>
            <widget class="QPushButton" name="btnPlaylists">
             <property name="text">
-             <string>Uložit/načíst</string>
+             <string>Program</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Save_16px.png</normaloff>:/icons/16/Save_16px.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnClearPlaylist">
-            <property name="toolTip">
-             <string>Vymazat program</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Trash Can_16px.png</normaloff>:/icons/16/Trash Can_16px.png</iconset>
+              <normaloff>:/icons/16/Menu Vertical_16px.png</normaloff>:/icons/16/Menu Vertical_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -366,7 +352,7 @@
              <string>Přidat do programu</string>
             </property>
             <property name="text">
-             <string/>
+             <string>Přidat</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -702,6 +688,33 @@ PresentationPropertiesWidget
    </property>
    <property name="text">
     <string>Upravit</string>
+   </property>
+  </action>
+  <action name="actionClearPlaylist">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Broom_16px.png</normaloff>:/icons/16/Broom_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Vymazat program</string>
+   </property>
+  </action>
+  <action name="actionSavePlaylist">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Save_16px.png</normaloff>:/icons/16/Save_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Uložit jako</string>
+   </property>
+  </action>
+  <action name="actionLoadPlaylist">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Open_16px.png</normaloff>:/icons/16/Open_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Načíst</string>
    </property>
   </action>
  </widget>

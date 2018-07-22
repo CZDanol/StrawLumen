@@ -37,9 +37,21 @@ DatabaseManager::DatabaseManager()
 	});
 
 	if(!dbExists)
-		createDb();
+		createDb(this);
 
 	int version = selectValue("SELECT value FROM keyValueAssoc WHERE key = 'database.version'").toInt();
+
+#define F(v)\
+	if(version == v) {\
+		beginTransaction();\
+		migrateDbFrom_v ## v(this);\
+		exec("UPDATE keyValueAssoc SET value = ? WHERE key = 'database.version'", {v+1});\
+		commitTransaction();\
+		version++;\
+	}
+	DB_VERSION_HISTORY_FACTORY(F)
+#undef F
+
 	if(version != CURRENT_DB_VERSION)
 		criticalBootError(DBManager::tr("Nepodporovaná verze databáze"));
 
@@ -72,136 +84,6 @@ void DatabaseManager::updateSongFulltextIndex(qlonglong songId)
 	db->exec(
 				"INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
 				{songId, collate(r.value("name").toString()), collate(r.value("author").toString()), content});
-}
-
-void DatabaseManager::createDb()
-{
-	// #: SONGS_TABLE_FIELDS
-	// Columns are set to NOT NULL so it throws errors when someone forgets to set a column value
-
-	// SONGS
-	{
-		exec("CREATE TABLE songs ("
-				 "id INTEGER PRIMARY KEY,"
-				 "uid TEXT NOT NULL,"
-				 "name TEXT NOT NULL,"
-				 "author TEXT NOT NULL,"
-				 "copyright TEXT NOT NULL,"
-				 "content TEXT NOT NULL,"
-				 "slideOrder TEXT NOT NULL,"
-				 "lastEdit INTEGER NOT NULL"
-				 ")");
-
-		exec("CREATE INDEX i_songs_uid ON songs (uid)");
-		exec("CREATE INDEX i_songs_name ON songs (name)");
-		exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
-	}
-
-	// SONGS_FULLTEXT
-	{
-		exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
-				 "name TEXT NOT NULL,"
-				 "author TEXT NOT NULL,"
-				 "content TEXT NOT NULL"
-				 ")");
-	}
-
-	// SONG_TAGS
-	{
-		exec("CREATE TABLE song_tags ("
-				 "song INTEGER NOT NULL,"
-				 "tag TEXT NOT NULL,"
-				 "PRIMARY KEY(song, tag)"
-				 ")");
-
-		exec("CREATE INDEX i_song_tags_song ON song_tags (song, tag)");
-		exec("CREATE INDEX i_song_tags_tag ON song_tags (tag)");
-	}
-
-	// STYLES
-	{
-		exec("CREATE TABLE styles ("
-				 "id INTEGER PRIMARY KEY,"
-				 "name STRING NOT NULL,"
-				 "isInternal bool NOT NULL,"
-				 "data BLOB"
-				 ")");
-
-		exec("CREATE INDEX i_styles_name ON styles (name)");
-	}
-
-	// BACKGROUNDS
-	{
-		exec("CREATE TABLE backgrounds ("
-				 "id INTEGER PRIMARY KEY,"
-				 "thumbnail BLOB NOT NULL,"
-				 "data BLOB NOT NULL"
-				 ")");
-	}
-
-	// KEYVALUE ASSOC
-	{
-		exec("CREATE TABLE keyValueAssoc ("
-				 "key STRING NOT NULL,"
-				 "value"
-				 ")");
-
-		exec("CREATE UNIQUE INDEX i_keyValueAssoc_key ON keyValueAssoc(key)");
-
-		exec("INSERT INTO keyValueAssoc(key, value)"
-						 "VALUES"
-						 "('database.version', 1)");
-	}
-
-	// PLAYLISTS
-	{
-		exec("CREATE TABLE playlists ("
-				 "id INTEGER PRIMARY KEY,"
-				 "name STRING NOT NULL,"
-				 "data BLOB"
-					")");
-
-		exec("CREATE INDEX i_playlists_name ON playlists(name)");
-	}
-
-	if(false) {
-		beginTransaction();
-
-		QSqlQuery q(database());
-		QSqlQuery q2(database());
-
-		q.prepare("INSERT INTO songs(uid, name, author, content, slideOrder) VALUES(?, ?, ?, ?, 'V1 C V2')");
-		q2.prepare("INSERT INTO songs_fulltext(docid, name, author, content) VALUES (?, ?, ?, ?)");
-
-		for(int i = 0; i < 100000; i++) {
-
-			QString name;
-			name.resize(2+qrand()%8);
-			for(int i = 0; i < name.size(); i++)
-				name[i] = 'a' + qrand() % ('z' - 'a');
-
-			QString author;
-			author.resize(2+qrand()%8);
-			for(int i = 0; i < author.size(); i++)
-				author[i] = 'a' + qrand() % ('z' - 'a');
-
-			QString content = "Hokus pokus";
-
-			q.bindValue(0, QUuid::createUuid().toString());
-			q.bindValue(1, name);
-			q.bindValue(2, author);
-			q.bindValue(3, content);
-			q.exec();
-
-			q2.bindValue(0, q.lastInsertId());
-			q2.bindValue(1, collate(name));
-			q2.bindValue(2, collate(author));
-			q2.bindValue(3, collate(content));
-			q2.exec();
-		}
-
-		commitTransaction();
-	}
 }
 
 void DatabaseManager::onSongChanged()

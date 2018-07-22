@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QCloseEvent>
+
 #include "util/standarddialogs.h"
 #include "gui/settingsdialog.h"
 #include "gui/projectorwindow.h"
@@ -85,7 +87,15 @@ void MainWindow::onDbDatabaseError(const QString &error)
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-	ui->wgtSongsMode->askFinishEditMode();
+	if(!ui->wgtSongsMode->askFinishEditMode()) {
+		e->ignore();
+		return;
+	}
+
+	if(!ui->wgtPresentationMode->askSaveChanges()) {
+		e->ignore();
+		return;
+	}
 
 	projectorWindow->close();
 	QMainWindow::closeEvent(e);
@@ -98,7 +108,8 @@ void MainWindow::on_actionSettings_triggered()
 
 void MainWindow::on_btnPresentationMode_clicked()
 {
-	ui->wgtSongsMode->askFinishEditMode();
+	if(!ui->wgtSongsMode->askFinishEditMode())
+		return;
 
 	ui->swModes->setCurrentWidget(ui->wgtPresentationMode);
 	ui->swMenu->setCurrentWidget(ui->wgtPresentationMode->menuWidget());

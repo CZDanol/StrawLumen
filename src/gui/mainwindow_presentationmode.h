@@ -26,6 +26,8 @@ public:
 public:
 	QWidget *menuWidget();
 
+	bool askSaveChanges();
+
 public:
 	QSharedPointer<Playlist> playlist();
 
@@ -61,8 +63,6 @@ private slots:
 	void on_btnSettings_clicked();
 	void on_actionAddPowerpointPresentation_triggered();
 	void on_actionAddSong_triggered();
-	void on_btnPlaylists_clicked();
-	void on_btnClearPlaylist_clicked();
 	void on_actionEditSong_triggered();
 	void on_actionDeleteSongs_triggered();
 	void on_actionAddSongsToPlaylist_triggered();
@@ -70,12 +70,19 @@ private slots:
 	void on_twLeftBottom_currentChanged(int index);
 	void on_actionAddCustomSlidePresentation_triggered();
 	void on_actionEditPresentation_triggered();
+	void on_actionClearPlaylist_triggered();
+	void on_btnPlaylists_pressed();
+	void on_actionSavePlaylist_triggered();
+	void on_actionLoadPlaylist_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;
 	QTimer currentTimeTimer_;
-	QMenu playlistContextMenu_, songListContextMenu_;
+	QMenu playlistContextMenu_, songListContextMenu_, playlistsMenu_;
 	bool isTwLeftBottomHidden_ = false;
+
+	/// !=0 -> disabled; DO NOT SET THIS VALUE, ONLY INCREASE/DECREASE
+	int disablePlaylistSelectionChange_ = 0;
 
 private:
 	QSharedPointer<Presentation> currentPresentation_;

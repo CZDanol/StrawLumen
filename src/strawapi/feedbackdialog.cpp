@@ -25,6 +25,7 @@ FeedbackDialog::~FeedbackDialog()
 void FeedbackDialog::show()
 {
 	ui->teMessage->clear();
+	ui->lnEmail->setFocus();
 	QDialog::show();
 }
 

@@ -14,6 +14,9 @@ SlidesItemDelegate::SlidesItemDelegate()
 
 void SlidesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	if(!index.isValid())
+		return;
+
 	bool isLast = index.data((int) SlidesItemModel::UserData::isLastInPresentation).toBool();
 
 	if(isLast) {
@@ -39,8 +42,8 @@ void SlidesItemDelegate::_paintImpl(QPainter *painter, const QStyleOptionViewIte
 {
 	QStyledItemDelegate::paint(painter, option, index);
 
-	if(index.column() == (int) SlidesItemModel::Column::id) {
-		QPixmap icon = index.data((int) SlidesItemModel::UserData::customIcon).value<QPixmap>();
+	if(index.column() == static_cast<int>(SlidesItemModel::Column::id)) {
+		QPixmap icon = index.data(static_cast<int>(SlidesItemModel::UserData::customIcon)).value<QPixmap>();
 		if(!icon.isNull()) {
 			QRect rct = icon.rect();
 			rct.moveCenter(option.rect.center());

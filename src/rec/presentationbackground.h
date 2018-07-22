@@ -17,6 +17,7 @@ public:
 
 signals:
 	void sigChanged();
+	void sigNeedsRepaint();
 
 public:
 	QString caption() const;

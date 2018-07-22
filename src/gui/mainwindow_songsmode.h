@@ -20,7 +20,7 @@ class MainWindow_SongsMode : public QWidget
 	Q_OBJECT
 
 public:
-	explicit MainWindow_SongsMode(QWidget *parent = 0);
+	explicit MainWindow_SongsMode(QWidget *parent = nullptr);
 	~MainWindow_SongsMode();
 
 public:
