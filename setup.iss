@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Straw Lumen"
-#define MyAppVersion "0.9.2.0"
+#define MyAppVersion "0.9.2.2"
 #define MyAppPublisher "Straw Solutions"
 #define MyAppCopyright "(c) 2018 Straw Solutions, Daniel Èejchan"
 #define MyAppURL "http://straw-solutions.cz"
@@ -29,13 +29,14 @@ VersionInfoCompany={#MyAppPublisher}
 VersionInfoCopyRight={#MyAppCopyright}
 DisableProgramGroupPage=yes
 OutputDir=setup
-OutputBaseFilename=strawLumen_{#PlatformId}
+OutputBaseFilename=lumen_{#PlatformId}
 Compression=lzma
 SolidCompression=yes
 UninstallDisplayIcon="{app}\bin_{#PlatformId}\{#MyAppExeName}"
 ; Sign tools configured in inno setup ide
 SignTool=ComodoSign
 SignedUninstaller=yes
+ArchitecturesInstallIn64BitMode=x64
 
 [Languages]
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
@@ -47,7 +48,10 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: "installDeps\VC_redist.x64.exe"; DestDir: {tmp}; AfterInstall: InstallVcRedist; Flags: deleteafterinstall
 Source: "bin\bin_{#PlatformId}\strawLumen.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion sign
+Source: "bin\bin_{#PlatformId}\QtWebEngineProcess.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\bin_{#PlatformId}\*.dll"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
+Source: "bin\bin_{#PlatformId}\*.pak"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
+Source: "bin\bin_{#PlatformId}\*.dat"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\backgrounds\*"; DestDir: "{app}\backgrounds"; Flags: ignoreversion
 Source: "bin\etc\*"; DestDir: "{app}\etc"; Flags: ignoreversion recursesubdirs
 Source: "bin\changelog.html"; DestDir: "{app}\changelog.html"; Flags: ignoreversion recursesubdirs
@@ -66,6 +70,7 @@ Name: "portable"; Description: "Portable/pøenosný mód (data programu se ukládají
 [Dirs]
 
 [Icons]
+Name: "{app}\{#MyAppName}"; Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"
 Name: "{group}\{#MyAppName}"; Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon

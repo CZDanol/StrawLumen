@@ -20,8 +20,8 @@ class MainWindow_PresentationMode : public QWidget
 	Q_OBJECT
 
 public:
-	explicit MainWindow_PresentationMode(QWidget *parent = 0);
-	~MainWindow_PresentationMode();
+	explicit MainWindow_PresentationMode(QWidget *parent = nullptr);
+	~MainWindow_PresentationMode() override;
 
 public:
 	QWidget *menuWidget();

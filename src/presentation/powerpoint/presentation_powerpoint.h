@@ -49,7 +49,7 @@ public:
 
 	int slideCount() const override;
 	QString slideIdentification(int i) const override;
-	QPixmap slideIdentificationIcon(int i) const;
+	QPixmap slideIdentificationIcon(int i) const override;
 	QString slideDescription(int i) const override;
 
 	PresentationEngine *engine() const override;

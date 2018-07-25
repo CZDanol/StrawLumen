@@ -101,6 +101,8 @@ void SimpleUpdater::onDownloadFinished()
 
 	if(!QProcess::startDetached(newFileName, {}))
 		 return standardErrorDialog(tr("Nepodařilo se spustit aktualizaci."));
+
+	qApp->quit();
 }
 
 void SimpleUpdater::onDownloadProgress(qint64 received, qint64 total)
