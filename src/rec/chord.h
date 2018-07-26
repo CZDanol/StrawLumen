@@ -50,7 +50,16 @@ const QRegularExpression &songChordAnnotationRegex();
 /// Returns all valid chords in the song
 ChordsInSong songChords(const QString &song);
 
+/// Removes all chord annotations from the song
+QString removeSongChords(const QString &song);
+
+/// Removes all chord annotations from the song and stores them in the chords variable
+QString removeSongChords(const QString &song, QVector<ChordInSong> &chords);
+
 /// Transposes all valid chords in the song. All chords are changed to standard format (even when by=0)
 void transposeSong(QString &song, int by, bool flatChords = false);
+
+/// Copies chords from source and inserts them into target (based on syllable count)
+QString copySongChords(const QString &source, const QString &target);
 
 #endif // CHORD_H

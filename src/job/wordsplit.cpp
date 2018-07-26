@@ -2,24 +2,7 @@
 
 #include <QRegularExpression>
 
-#include <QDebug>
-
-#include "rec/chord.h"
-
 namespace WordSplit {
-
-	QString stripChords(const QString &input, ChordsInSong &chords) {
-		chords = songChords(input);
-
-		QString result = input;
-		int correction = 0;
-		for(const ChordInSong &chs : chords) {
-			result.remove(chs.annotationPos + correction, chs.annotationLength);
-			correction -= chs.annotationLength;
-		}
-
-		return result;
-	}
 
 	void correctResult(QVector<int> &result, const ChordsInSong &chords) {
 		int i = 0;
@@ -28,7 +11,7 @@ namespace WordSplit {
 		for(int &item : result) {
 			item += correction;
 
-			if(i < chords.length() && item >= chords[i].annotationPos) {
+			if(i < chords.length() && item > chords[i].annotationPos) {
 				correction += chords[i].annotationLength;
 				item += chords[i].annotationLength;
 				i ++;
@@ -36,10 +19,9 @@ namespace WordSplit {
 		}
 	}
 
-	QVector<int> czech(QString str)
+	QVector<int> czech(QString str, ChordsInSong &chords)
 	{
-		ChordsInSong chords;
-		str = stripChords(str, chords);
+		str = removeSongChords(str, chords);
 
 		QVector<int> result;
 
@@ -48,7 +30,7 @@ namespace WordSplit {
 
 		static const QString rxsOnlyStartConsonant = QString(
 					"(?:"
-					"kr[km]|pl[nň]|srd|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
+					"jsm|kr[km]|pl[nň]|srd|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
 					"|ch[cčlmrřv]"
 					"|[jkrvz]d|[jlmsvzž]h|[fsvz]j|[lsštz]k|[bcčdfhkmpsštvz]l|[čdhjkrřsštvz]m|[čdfghkmpsšvz]n|[fhkmpsšvz]ň|[cčlsšvz]p|[bcčdfghkmpsštvz]r|[bdhkmpttvz]ř|[jklmpv]s|[pvz]š|[cčrsšvz]t|[cš]ť|[cčdhkrřsštz]v|[dlmrsvz]ž"
 					")"
@@ -87,7 +69,7 @@ namespace WordSplit {
 																						"|%1"
 																						"))").arg(rxsVowel, rxsMiddle, rxsEnd, rxsConsonant);
 
-		qDebug() << "";
+		/*qDebug() << "";
 		qDebug() << "";
 		qDebug() << "";
 		qDebug().noquote() << rxsStartConsonant;
@@ -98,7 +80,7 @@ namespace WordSplit {
 		qDebug() << "";
 		qDebug().noquote() << rxsEnd;
 		qDebug() << "";
-		qDebug().noquote() << QString("\\b(%1)(%2*)(%3?)\\b").arg(rxsStart, rxsMiddle, rxsEnd);
+		qDebug().noquote() << QString("\\b(%1)(%2*)(%3?)\\b").arg(rxsStart, rxsMiddle, rxsEnd);*/
 
 		static QRegularExpression rxWord(
 					QString("\\b(?:(%1)(%2*)(%3?)|\\p{L}+)\\b").arg(rxsStart, rxsMiddle, rxsEnd),
@@ -131,6 +113,8 @@ namespace WordSplit {
 
 			if(m.capturedLength(3))
 				result += m.capturedStart(3);
+
+			result += m.capturedEnd();
 		}
 
 		correctResult(result, chords);

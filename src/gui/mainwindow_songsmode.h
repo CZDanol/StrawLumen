@@ -68,10 +68,11 @@ private slots:
 	void on_actionPresentSongs_triggered();
 	void on_actionAddSongsToPlaylist_triggered();
 	void on_actionExportToOpenSong_triggered();
+	void on_btnCopyChords_pressed();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
-	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_;
+	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_;
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;

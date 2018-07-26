@@ -1,5 +1,7 @@
 #include "chord.h"
 
+#include "job/wordsplit.h"
+
 Chord::Chord()
 {
 	isValid_ = false;
@@ -167,4 +169,66 @@ const QRegularExpression &songChordAnnotationRegex()
 {
 	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭/]+)(\\])");
 	return result;
+}
+
+QString removeSongChords(const QString &song)
+{
+	QVector<ChordInSong> chords;
+	return removeSongChords(song, chords);
+}
+
+QString removeSongChords(const QString &song, QVector<ChordInSong> &chords)
+{
+	chords = songChords(song);
+
+	QString result = song;
+	int correction = 0;
+	for(const ChordInSong &chs : chords) {
+		result.remove(chs.annotationPos + correction, chs.annotationLength);
+		correction -= chs.annotationLength;
+	}
+
+	return result;
+}
+
+QString copySongChords(const QString &source, const QString &target)
+{
+	const QStringList sourceLines = source.split('\n');
+	QStringList resultLines = target.split('\n');
+
+	ChordsInSong sourceChords;
+	ChordsInSong targetChords;
+
+	for(int lineI = 0; lineI < qMin(sourceLines.length(), resultLines.length()); lineI++) {
+		const QString sourceLine = sourceLines[lineI];
+		QString &resultLine = resultLines[lineI];
+
+		const QVector<int> sourceSplitPositions = WordSplit::czech(sourceLine, sourceChords);
+		const QVector<int> targetSplitPositions = WordSplit::czech(resultLine, targetChords);
+
+		const int splitCount = qMin(sourceSplitPositions.length(), targetSplitPositions.length());
+
+		int splitId = 0;
+		int splitPos = 0;
+		int correction = 0;
+		for(const ChordInSong &chs : sourceChords) {
+			while(splitId < splitCount && chs.annotationPos >= sourceSplitPositions[splitId]) {
+				splitPos = targetSplitPositions[splitId];
+				splitId ++;
+			}
+
+			const bool chordIsFollowedBySpace = sourceLine.mid(chs.annotationPos + chs.annotationLength, 1) == " ";
+			const QString chordAnnotation = sourceLine.mid(chs.annotationPos, chs.annotationLength); // Use exactly the same chord annotation
+
+			resultLine.insert(splitPos + correction, chordAnnotation);
+			correction += chordAnnotation.length();
+
+			if(chordIsFollowedBySpace) {
+				resultLine.insert(splitPos + correction, ' ');
+				correction += 1;
+			}
+		}
+	}
+
+	return resultLines.join('\n');
 }

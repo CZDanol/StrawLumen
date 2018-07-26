@@ -36,6 +36,9 @@ private:
 struct SongSectionWithContent {
 	SongSection section;
 	QString content;
+	int contentPos;
+	int annotationPos;
+	int untrimmedContentEnd;
 };
 
 /// Captures: 0 - whole annotation; 1 - annotation prefix, 2 - section name, 3 - annotation suffix

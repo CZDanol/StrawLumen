@@ -27,6 +27,8 @@
 #include "job/settings.h"
 #include "presentation/presentationmanager.h"
 
+#include <QDebug>
+
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
 	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags)
@@ -108,6 +110,11 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 		ui->btnImport->setMenu(&importMenu_);
 		ui->btnExport->setMenu(&exportMenu_);
+	}
+
+	// Insert panel
+	{
+		ui->btnCopyChords->setMenu(&copyChordsMenu_);
 	}
 
 	// Shortcuts
@@ -511,4 +518,61 @@ void MainWindow_SongsMode::on_actionExportToOpenSong_triggered()
 {
 	openSongExportDialog()->show();
 	openSongExportDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
+}
+
+void MainWindow_SongsMode::on_btnCopyChords_pressed()
+{
+	int cursorPos = ui->teContent->textCursor().position();
+
+	const auto sections = songSectionsWithContent(ui->teContent->toPlainText());
+
+	int cursorSectionContentPos = -1;
+	QString cursorSectionContent;
+	bool cursorSectionContainsChords;
+
+	QList<SongSectionWithContent> relevantSections;
+	for(const SongSectionWithContent &sc : sections) {
+		QVector<ChordInSong> chords;
+		const QString sectionContentWithoutChords = removeSongChords(sc.content, chords).trimmed();
+
+		if(cursorPos >= sc.annotationPos && cursorPos < sc.untrimmedContentEnd) {
+			cursorSectionContentPos = sc.contentPos;
+			cursorSectionContainsChords = !chords.isEmpty();
+			cursorSectionContent = sc.content;
+		}
+
+		if(sectionContentWithoutChords.isEmpty() || chords.isEmpty())
+			continue;
+
+		relevantSections += sc;
+	}
+
+	if(relevantSections.isEmpty())
+		return standardErrorDialog(tr("Píseň neobsahuje žádné sekce s textem i akordy."));
+
+	if(cursorSectionContentPos == -1)
+		return standardErrorDialog(tr("Nejprve najeďte kurzorem do sekce, kam chcete zkopírovat akordy."));
+
+	copyChordsMenu_.clear();
+
+	for(const SongSectionWithContent &sc : relevantSections) {
+		const QString sourceSectionContent = sc.content;
+		copyChordsMenu_.addAction(sc.section.icon(), sc.section.userFriendlyName(), [this, sourceSectionContent, cursorSectionContainsChords, cursorSectionContent, cursorSectionContentPos]{
+			QString content = cursorSectionContent;
+
+			if(cursorSectionContainsChords) {
+				if(!standardConfirmDialog(tr("Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?")))
+					return;
+
+				content = removeSongChords(content);
+			}
+
+			content = copySongChords(sourceSectionContent, content);
+
+			QTextCursor cursor = ui->teContent->textCursor();
+			cursor.setPosition(cursorSectionContentPos);
+			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, cursorSectionContent.length());
+			cursor.insertText(content);
+		});
+	}
 }

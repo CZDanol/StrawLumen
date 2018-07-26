@@ -91,6 +91,23 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btnInsertSlideSeparator">
+            <property name="toolTip">
+             <string>Jedna sekce může být v prezentaci rozdělena do více snímků. Toto se řídí právě oddělovači.</string>
+            </property>
+            <property name="text">
+             <string>Oddělovač</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Mockup_16px.png</normaloff>:/icons/16/Mockup_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btnInsertChord">
             <property name="toolTip">
              <string>Vložit akord do textu.
@@ -111,16 +128,16 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnInsertSlideSeparator">
+           <widget class="QPushButton" name="btnCopyChords">
             <property name="toolTip">
-             <string>Jedna sekce může být v prezentaci rozdělena do více snímků. Toto se řídí právě oddělovači.</string>
+             <string>Zkopíruje akordy z uvedené sekce a vloží je do aktuální sekce. Pozice akordů je určena podle slabik.</string>
             </property>
             <property name="text">
-             <string>Oddělovač snímků</string>
+             <string>Akordy z...</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Mockup_16px.png</normaloff>:/icons/16/Mockup_16px.png</iconset>
+              <normaloff>:/icons/16/Music Notation_16px.png</normaloff>:/icons/16/Music Notation_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -164,7 +181,7 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
            <normaloff>:/icons/16/Split Vertical_16px.png</normaloff>:/icons/16/Split Vertical_16px.png</iconset>
          </attribute>
          <attribute name="title">
-          <string>Transponovat</string>
+          <string>Transpozice</string>
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
           <property name="leftMargin">
@@ -181,8 +198,8 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
           </property>
           <item>
            <widget class="QPushButton" name="btnTransposeUp">
-            <property name="text">
-             <string>Nahoru</string>
+            <property name="toolTip">
+             <string>Transponovat píseň o půltón nahoru</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
@@ -195,12 +212,29 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
           </item>
           <item>
            <widget class="QPushButton" name="btnTransposeDown">
-            <property name="text">
-             <string>Dolů</string>
+            <property name="toolTip">
+             <string>Transponovat píseň o půltón dolů</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
               <normaloff>:/icons/16/Down Arrow_16px.png</normaloff>:/icons/16/Down Arrow_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnTransposeFlat">
+            <property name="toolTip">
+             <string>Používat béčkové akordy místo křížkových (např. Gb místo F#)</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Flat Sign_16px.png</normaloff>:/icons/16/Flat Sign_16px.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -307,26 +341,6 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QPushButton" name="btnTransposeFlat">
-           <property name="toolTip">
-            <string>Používat béčkové akordy místo křížkových (např. Gb místo F#)</string>
-           </property>
-           <property name="text">
-            <string>akordy</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../../res/resources.qrc">
-             <normaloff>:/icons/16/Flat Sign_16px.png</normaloff>:/icons/16/Flat Sign_16px.png</iconset>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
@@ -779,10 +793,8 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
  <tabstops>
   <tabstop>twEdit</tabstop>
   <tabstop>btnInsertSection</tabstop>
-  <tabstop>btnInsertChord</tabstop>
   <tabstop>btnInsertSlideSeparator</tabstop>
   <tabstop>twTranspose</tabstop>
-  <tabstop>btnTransposeFlat</tabstop>
   <tabstop>btnTransposeUp</tabstop>
   <tabstop>btnTransposeDown</tabstop>
   <tabstop>twImportExport</tabstop>

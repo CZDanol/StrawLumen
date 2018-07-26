@@ -149,10 +149,13 @@ QVector<SongSection> songSections(const QString &song)
 
 QVector<SongSectionWithContent> songSectionsWithContent(const QString &song)
 {
+	static const QRegularExpression rxTrim("^\\s*(.*?)\\s*$", QRegularExpression::DotMatchesEverythingOption);
+
 	// Default - intro
 	SongSection currentSection("I");
 	QVector<SongSectionWithContent> result;
 	int sectionStart = 0;
+	int annotationStart = 0;
 
 	QRegularExpressionMatchIterator it = songSectionAnnotationRegex().globalMatch(song);
 	while(it.hasNext()) {
@@ -162,17 +165,22 @@ QVector<SongSectionWithContent> songSectionsWithContent(const QString &song)
 		if(!ss.isValid())
 			continue;
 
-		QString content = song.mid(sectionStart, m.capturedStart()-sectionStart).trimmed();
+		const QString baseContent = song.mid(sectionStart, m.capturedStart()-sectionStart);
+		const auto m2 = rxTrim.match(baseContent);
+		const QString content = m2.captured(1);
+
 		if(!content.isEmpty() || sectionStart != 0)
-			result.append(SongSectionWithContent{currentSection, content});
+			result.append(SongSectionWithContent{currentSection, content, sectionStart + m2.capturedStart(1), annotationStart, m.capturedStart()});
 
 		currentSection = ss;
 		sectionStart = m.capturedEnd();
+		annotationStart = m.capturedStart();
 	}
 
 	{
-		QString content = song.mid(sectionStart, song.length()-sectionStart).trimmed();
-		result.append(SongSectionWithContent{currentSection, content});
+		const QString baseContent = song.mid(sectionStart, song.length()-sectionStart);
+		const auto m2 = rxTrim.match(baseContent);
+		result.append(SongSectionWithContent{currentSection, m2.captured(1), sectionStart + m2.capturedStart(1), annotationStart, song.length()});
 	}
 
 	return result;
