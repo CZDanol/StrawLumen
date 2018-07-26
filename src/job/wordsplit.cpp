@@ -19,7 +19,7 @@ namespace WordSplit {
 		}
 	}
 
-	QVector<int> czech(QString str, ChordsInSong &chords)
+	QVector<int> czech(QString str, ChordsInSong &chords, int options)
 	{
 		str = removeSongChords(str, chords);
 
@@ -82,9 +82,9 @@ namespace WordSplit {
 		qDebug() << "";
 		qDebug().noquote() << QString("\\b(%1)(%2*)(%3?)\\b").arg(rxsStart, rxsMiddle, rxsEnd);*/
 
-		static QRegularExpression rxWord(
-					QString("\\b(?:(%1)(%2*)(%3?)|\\p{L}+)\\b").arg(rxsStart, rxsMiddle, rxsEnd),
-					QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
+		QRegularExpression rxWord(
+					QString("\\b(?:(%1)(%2*)(%3?)|\\p{L}+%4)\\b").arg(rxsStart, rxsMiddle, rxsEnd, options & IncludeNewlines ? "|$" : ""),
+					QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption | QRegularExpression::MultilineOption);
 
 		static QRegularExpression rxMiddle(
 					QString("^(%1)(%1*)$").arg(rxsMiddle),
@@ -113,8 +113,6 @@ namespace WordSplit {
 
 			if(m.capturedLength(3))
 				result += m.capturedStart(3);
-
-			result += m.capturedEnd();
 		}
 
 		correctResult(result, chords);

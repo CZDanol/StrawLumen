@@ -24,13 +24,14 @@ public:
 
 public:
 	bool isValid() const;
+	bool isFlat() const;
 
 	Chord transposed(int by) const;
 
 	QString toString(bool flatVariant = false) const;
 
 private:
-	bool isValid_;
+	bool isValid_, isFlat_;
 	int baseNote_;
 	Quality quality_;
 	QString extra_;

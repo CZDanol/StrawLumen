@@ -47,6 +47,8 @@ Chord::Chord(const QString &str)
 	if(!isValid_)
 		return;
 
+	isFlat_ = false;
+
 	// Base note
 	QString baseNote = m.captured(mpBaseNote);
 
@@ -59,8 +61,12 @@ Chord::Chord(const QString &str)
 	}
 
 	// Base note modifier
-	if(m.capturedLength(mpBaseNoteModifier))
-		baseNote_ += noteModifierEffects[m.captured(mpBaseNoteModifier)];
+	if(m.capturedLength(mpBaseNoteModifier)) {
+		const int effect = noteModifierEffects[m.captured(mpBaseNoteModifier)];
+		baseNote_ += effect;
+		if(effect < 0)
+			isFlat_ = true;
+	}
 
 	if(baseNote_ < 0)
 		baseNote_ += 12;
@@ -87,6 +93,11 @@ Chord::Chord(const QString &str)
 bool Chord::isValid() const
 {
 	return isValid_;
+}
+
+bool Chord::isFlat() const
+{
+	return isFlat_;
 }
 
 Chord Chord::transposed(int by) const
@@ -203,8 +214,11 @@ QString copySongChords(const QString &source, const QString &target)
 		const QString sourceLine = sourceLines[lineI];
 		QString &resultLine = resultLines[lineI];
 
-		const QVector<int> sourceSplitPositions = WordSplit::czech(sourceLine, sourceChords);
-		const QVector<int> targetSplitPositions = WordSplit::czech(resultLine, targetChords);
+		QVector<int> sourceSplitPositions = WordSplit::czech(sourceLine, sourceChords, WordSplit::IncludeNewlines);
+		QVector<int> targetSplitPositions = WordSplit::czech(resultLine, targetChords, WordSplit::IncludeNewlines);
+
+		sourceSplitPositions += sourceLine.length();
+		targetSplitPositions += resultLine.length();
 
 		const int splitCount = qMin(sourceSplitPositions.length(), targetSplitPositions.length());
 

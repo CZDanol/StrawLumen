@@ -21,6 +21,7 @@
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
 #include "util/execonmainthread.h"
+#include "util/regex.h"
 #include "rec/chord.h"
 #include "rec/playlist.h"
 #include "job/db.h"
@@ -31,7 +32,7 @@
 
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
-	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags)
+	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags) F(teNotes)
 
 MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	QWidget(parent),
@@ -41,6 +42,8 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	ui->twSong->setCornerWidget(ui->twSongCorner);
 	ui->twSongs->setCornerWidget(ui->twSongsCorner);
 	ui->twTranspose->setCornerWidget(ui->twTransposeCorner);
+
+	ui->twSong->setCurrentIndex(0);
 
 	// Song list
 	{
@@ -321,6 +324,22 @@ void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool po
 	}
 }
 
+void MainWindow_SongsMode::contentSelectionMorph(const std::function<QString (QString)> &callback)
+{
+	QTextCursor cursor = ui->teContent->textCursor();
+
+	const bool hasSelection = cursor.hasSelection();
+	if(!hasSelection)
+		cursor.select(QTextCursor::Document);
+
+	QString data = callback(cursor.selectedText());
+	cursor.insertText(data);
+	cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, data.length());
+
+	if(hasSelection)
+		ui->teContent->setTextCursor(cursor);
+}
+
 QPair<int, QString> MainWindow_SongsMode::songSectionAround(int pos)
 {
 	for(const SongSectionWithContent &sc : songSectionsWithContent(ui->teContent->toPlainText())) {
@@ -342,6 +361,7 @@ void MainWindow_SongsMode::fillSongData()
 	ui->lnSlideOrder->setText(r.value("slideOrder").toString());
 	ui->teContent->setText(r.value("content").toString());
 	ui->lnCopyright->setText(r.value("copyright").toString());
+	ui->teNotes->setPlainText(r.value("notes").toString());
 
 	QString tags;
 	QSqlQuery q = db->selectQuery("SELECT tag FROM song_tags WHERE song = ? ORDER BY tag ASC", {currentSongId_});
@@ -398,6 +418,8 @@ void MainWindow_SongsMode::on_btnNew_clicked()
 	ui->lnAuthor->clear();
 	ui->lnSlideOrder->clear();
 	ui->teContent->clear();
+	ui->teNotes->clear();
+	ui->lnTags->setText(ui->wgtSongList->currentTagFilterName());
 
 	currentSongId_ = -1;
 
@@ -429,6 +451,7 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 		{"copyright", ui->lnCopyright->text()},
 		{"content", ui->teContent->toPlainText()},
 		{"slideOrder", ui->lnSlideOrder->text()},
+		{"notes", ui->teNotes->toPlainText()},
 		{"lastEdit", QDateTime::currentSecsSinceEpoch()}
 	};
 
@@ -490,16 +513,18 @@ void MainWindow_SongsMode::on_btnInsertChord_clicked()
 
 void MainWindow_SongsMode::on_btnTransposeUp_clicked()
 {
-	QString song = ui->teContent->toPlainText();
-	transposeSong(song, 1, ui->btnTransposeFlat->isChecked());
-	ui->teContent->setPlainText(song);
+	contentSelectionMorph([=](QString content) {
+		transposeSong(content, 1, ui->btnTransposeFlat->isChecked());
+		return content;
+	});
 }
 
 void MainWindow_SongsMode::on_btnTransposeDown_clicked()
 {
-	QString song = ui->teContent->toPlainText();
-	transposeSong(song, -1, ui->btnTransposeFlat->isChecked());
-	ui->teContent->setPlainText(song);
+	contentSelectionMorph([=](QString content) {
+		transposeSong(content, -1, ui->btnTransposeFlat->isChecked());
+		return content;
+	});
 }
 
 void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed()
@@ -628,4 +653,34 @@ void MainWindow_SongsMode::on_actionDeleteChordsInSection_triggered()
 	cursor.setPosition(section.first);
 	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
 	cursor.insertText(newContent);
+}
+
+void MainWindow_SongsMode::on_btnAutoFormat_clicked()
+{
+	contentSelectionMorph([=](QString content){
+		// Standardize chords
+		ChordsInSong chords = songChords(content);
+		int correction = 0;
+		for(const ChordInSong &chs : chords) {
+			const QString newAnnotation = QString("[%1]").arg(chs.chord.toString(chs.chord.isFlat()));
+			content.replace(chs.annotationPos + correction, chs.annotationLength, newAnnotation);
+			correction += newAnnotation.length() - chs.annotationLength;
+		}
+
+		// Trim whitespaces
+		static const QRegularExpression rxTrim("^\\s+|\\s+$", QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption);
+		content.remove(rxTrim);
+
+		// Compact spaces
+		static const QRegularExpression rxCompactSpaces("[ \t]+");
+		content.replace(rxCompactSpaces, " ");
+
+		// Newline after section annotation
+		static const QRegularExpression rxAnnotationNewline(QString("(%1)\\s+").arg(songSectionAnnotationRegex().pattern()));
+		replaceCallback(content, rxAnnotationNewline, [](const QRegularExpressionMatch &m){ return QString("%1\n").arg(m.captured(1)); });
+
+		content = content.trimmed();
+
+		return content;
+	});
 }

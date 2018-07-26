@@ -210,5 +210,7 @@
         <file>icons/16/Menu Vertical_16px.png</file>
         <file>icons/16/Services_16px.png</file>
         <file>icons/16/Last_16px.png</file>
+        <file>icons/16/Indent_16px.png</file>
+        <file>icons/16/Note_16px.png</file>
     </qresource>
 </RCC>

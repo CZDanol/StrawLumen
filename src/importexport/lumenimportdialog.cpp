@@ -88,7 +88,7 @@ void LumenImportDialog::on_btnImport_clicked()
 			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE uid = ?", {q.value("uid")});
 			qlonglong songId;
 
-			static const QStringList dataFields {"name", "author", "copyright", "content", "slideOrder", "lastEdit"};
+			static const QStringList dataFields {"name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
 			bool updateData = true;
 
 			if(!existingSong.isEmpty() && (conflictBehavior == cbSkip || (conflictBehavior == cbOverwriteIfNewer && existingSong.value("lastEdit").toLongLong() >= q.value("lastEdit").toLongLong()))) {

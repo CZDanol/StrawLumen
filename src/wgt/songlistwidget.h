@@ -32,6 +32,8 @@ public:
 	qlonglong currentRowId() const;
 	QVector<qlonglong> selectedRowIds() const;
 
+	QString currentTagFilterName() const;
+
 	/// Returns vector of row ids that are currently in the song list (considering user filter)
 	QVector<qlonglong> rowIds() const;
 
@@ -68,6 +70,7 @@ private:
 	SongsItemModel songsModel_;
 	QSqlQueryModel tagsModel_;
 	QString currentFilterText_;
+	QString currentTagFitler();
 	QTimer typingTimer_;
 
 };

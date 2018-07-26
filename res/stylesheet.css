@@ -8,7 +8,7 @@ QAbstractItemView::item:selected {
 	color: black;
 }
 
-QTextEdit[readOnly="true"] {
+QTextEdit[readOnly="true"], QPlainTextEdit[readOnly="true"] {
   border: 1px solid #eee;
 	background: transparent;
 }
@@ -17,14 +17,14 @@ QTextEdit[readOnly="true"] {
   color: gray;
 }*/
 
-QTextEdit, QDateEdit, QLineEdit {
+QTextEdit, QPlainTextEdit, QDateEdit, QLineEdit {
   padding: 3px;
 	background: white;
 	border: 1px solid #ccc;
 	border-radius: 2px;
 }
 
-QTextEdit:focus[readOnly="false"], QDateEdit:focus[readOnly="false"], QLineEdit:focus[readOnly="false"] {
+QTextEdit:focus[readOnly="false"], QPlainTextEdit:focus[readOnly="false"], QDateEdit:focus[readOnly="false"], QLineEdit:focus[readOnly="false"] {
   border-color: #6dace8;
 }
 

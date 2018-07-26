@@ -117,7 +117,8 @@ SOURCES += main.cpp \
     strawapi/strawapi.cpp \
     strawapi/feedbackdialog.cpp \
     job/dbmigration.cpp \
-    job/wordsplit.cpp
+    job/wordsplit.cpp \
+    util/regex.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -233,7 +234,8 @@ HEADERS += \
     strawapi/simpleupdater.h \
     strawapi/strawapi.h \
     strawapi/feedbackdialog.h \
-    job/wordsplit.h
+    job/wordsplit.h \
+    util/regex.h
 
 RESOURCES += \
     ../res/resources.qrc

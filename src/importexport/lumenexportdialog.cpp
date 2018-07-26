@@ -85,11 +85,16 @@ void LumenExportDialog::on_btnExport_clicked()
 
 			const qlonglong songId = songIds[i];
 
-			const QSqlRecord r = db->selectRow("SELECT uid, name, author, copyright, content, slideOrder, lastEdit FROM songs WHERE id = ?", {songId});
+			static const QStringList fields {
+				"uid", "name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"
+			};
+			const QSqlRecord r = db->selectRow(QString("SELECT %1 FROM songs WHERE id = ?").arg(fields.join(',')), {songId});
 
-			const qlonglong exportSongId = exportDb.insert(
-						"INSERT INTO songs(uid, name, author, copyright, content, slideOrder, lastEdit) VALUES(?, ?, ?, ?, ?, ?, ?)",
-						{r.value("uid"), r.value("name"), r.value("author"), r.value("copyright"), r.value("content"), r.value("slideOrder"), r.value("lastEdit")}).toLongLong();
+			QHash<QString,QVariant> data;
+			for(const QString &field : fields)
+				data.insert(field, r.value(field));
+
+			const qlonglong exportSongId = exportDb.insert("songs", data).toLongLong();
 
 			QSqlQuery q = db->selectQuery("SELECT tag FROM song_tags WHERE song = ?", {songId});
 			while(q.next())

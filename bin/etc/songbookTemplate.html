@@ -17,6 +17,7 @@
 			<div class="song">
 				<div class="songName"></div>
 				<div class="songAuthor"></div>
+				<div class="songNotes"></div>
 			</div>
 			
 			<div class="section">
@@ -107,7 +108,7 @@
 				margin-bottom: 10mm;
 			}
 			
-			.songName, .songAuthor {
+			.songName, .songAuthor, .songNotes {
 				page-break-inside: avoid;
 				page-break-after: avoid;
 			}
@@ -120,6 +121,12 @@
 				margin-bottom: 5mm;
 			
 				page-break-after: avoid;
+			}
+			
+			.songNotes {
+				font-style: italic;
+				margin-bottom: 1em;
+				white-space: pre-wrap;
 			}
 			
 			.songAuthor {
@@ -252,6 +259,13 @@
 						else {
 							var authorElem = songElem.querySelector(".songAuthor");
 							authorElem.parentNode.removeChild(authorElem);
+						}
+						
+						if(song.notes)
+							songElem.querySelector(".songNotes").textContent = song.notes;
+						else {
+							var notesElem = songElem.querySelector(".songNotes");
+							notesElem.parentNode.removeChild(notesElem);
 						}
 						
 						for(sectionI in song.sections) {

@@ -129,12 +129,13 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 
 void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output)
 {
-	QSqlRecord r = db->selectRow("SELECT name, author, content, slideOrder FROM songs WHERE id = ?", {songId});
+	QSqlRecord r = db->selectRow("SELECT name, author, content, notes, slideOrder FROM songs WHERE id = ?", {songId});
 
 	QJsonObject jsonSong;
 
 	jsonSong["name"] = r.value("name").toString();
 	jsonSong["author"] = r.value("author").toString();
+	jsonSong["notes"] = r.value("notes").toString();
 
 	static const QRegularExpression compactSpacesRegex("[ \t]+");
 	QString songContent = r.value("content").toString().trimmed();

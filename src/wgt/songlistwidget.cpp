@@ -77,6 +77,11 @@ QVector<qlonglong> SongListWidget::selectedRowIds() const
 	return result;
 }
 
+QString SongListWidget::currentTagFilterName() const
+{
+	return ui->lvTags->currentIndex().row() > 0 ? tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag").toString() : "";
+}
+
 QVector<qlonglong> SongListWidget::rowIds() const
 {
 	QVector<qlonglong> result;

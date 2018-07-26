@@ -17,6 +17,7 @@ void createDb(DatabaseManager *db)
 				 "author TEXT NOT NULL,"
 				 "copyright TEXT NOT NULL,"
 				 "content TEXT NOT NULL,"
+				 "notes TEXT NOT NULL,"
 				 "slideOrder TEXT NOT NULL,"
 				 "lastEdit INTEGER NOT NULL"
 				 ")");
@@ -102,7 +103,32 @@ DB_MIGRATION_PROCEDURE(1, 2)
 			 "lastTouch INTEGER NOT NULL"
 				")");
 
+	db->exec("CREATE INDEX i_playlists_name ON playlists(name)");
+
 	db->exec("INSERT INTO playlists_tmp SELECT *, 0 AS lastTouch FROM playlists");
 	db->exec("DROP TABLE playlists");
 	db->exec("ALTER TABLE playlists_tmp RENAME TO playlists");
+}
+
+DB_MIGRATION_PROCEDURE(2, 3)
+{
+	db->exec("CREATE TABLE songs_tmp ("
+			 "id INTEGER PRIMARY KEY,"
+			 "uid TEXT NOT NULL,"
+			 "name TEXT NOT NULL,"
+			 "author TEXT NOT NULL,"
+			 "copyright TEXT NOT NULL,"
+			 "content TEXT NOT NULL,"
+			 "notes TEXT NOT NULL,"
+			 "slideOrder TEXT NOT NULL,"
+			 "lastEdit INTEGER NOT NULL"
+			 ")");
+
+	db->exec("INSERT INTO songs_tmp SELECT id, uid, name, author, copyright, content, '' AS notes, slideOrder, lastEdit FROM songs");
+	db->exec("DROP TABLE songs");
+	db->exec("ALTER TABLE songs_tmp RENAME TO songs");
+
+	db->exec("CREATE INDEX i_songs_uid ON songs (uid)");
+	db->exec("CREATE INDEX i_songs_name ON songs (name)");
+	db->exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
 }
