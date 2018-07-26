@@ -246,3 +246,16 @@ QString copySongChords(const QString &source, const QString &target)
 
 	return resultLines.join('\n');
 }
+
+ChordInSong chordAroundPos(const QString &song, int pos)
+{
+	int annotationStart = song.left(pos+1).lastIndexOf('[');
+	if(annotationStart == -1)
+		return ChordInSong();
+
+	auto m = songChordAnnotationRegex().match(song.mid(annotationStart));
+	if(!m.hasMatch() || m.capturedStart() != 0 || pos < m.capturedStart() || pos > annotationStart + m.capturedEnd())
+		return ChordInSong();
+
+	return ChordInSong{Chord(m.captured(2)), annotationStart, m.capturedLength()};
+}

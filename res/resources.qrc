@@ -212,5 +212,7 @@
         <file>icons/16/Last_16px.png</file>
         <file>icons/16/Indent_16px.png</file>
         <file>icons/16/Note_16px.png</file>
+        <file>icons/16/Left_16px.png</file>
+        <file>icons/16/Right_16px.png</file>
     </qresource>
 </RCC>

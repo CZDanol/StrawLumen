@@ -9,6 +9,18 @@ SongContentTextEdit::SongContentTextEdit(QWidget *parent) : QTextEdit(parent)
 
 void SongContentTextEdit::keyPressEvent(QKeyEvent *e)
 {
+	if(e->modifiers() == Qt::AltModifier && e->key() == Qt::Key_Left) {
+		emit sigAltlLeftPressed();
+		e->ignore();
+		return;
+	}
+
+	if(e->modifiers() == Qt::AltModifier && e->key() == Qt::Key_Right) {
+		emit sigAltRightPressed();
+		e->ignore();
+		return;
+	}
+
 	QTextEdit::keyPressEvent(e);
 
 	static QHash<QString,QString> autocompleteStrings {

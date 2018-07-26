@@ -12,7 +12,9 @@ namespace WordSplit {
 	};
 
 	/// Returns positions of word divisions (indexes of first letters in the division), also returns chords in the string
-	QVector<int> czech(QString str, ChordsInSong &chords, int options = 0);
+	QVector<int> czech(const QString &src, ChordsInSong &chords, int options = 0);
+
+	QString splitVisualization(const QString &str, const QVector<int> &splits);
 
 }
 

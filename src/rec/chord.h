@@ -51,6 +51,9 @@ const QRegularExpression &songChordAnnotationRegex();
 /// Returns all valid chords in the song
 ChordsInSong songChords(const QString &song);
 
+/// Returns chord that is around (its annotation includes pos) the specified position or invalid chord
+ChordInSong chordAroundPos(const QString &song, int pos);
+
 /// Removes all chord annotations from the song
 QString removeSongChords(const QString &song);
 

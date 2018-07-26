@@ -41,12 +41,13 @@ private:
 	void updateSongManipulationButtonsEnabled();
 	void updateCopyChordsMenu();
 	void updateTeContentMenu();
+	void updateMoveChordActionsEnabled();
 
 	void insertSongSection(const SongSection &section, bool positionCursorInMiddle = false);
 	void contentSelectionMorph(const std::function<QString(QString)> &callback);
 
 	/// Returns position and content of a song section around position pos
-	QPair<int,QString> songSectionAround(int pos);
+	QPair<int,QString> songSectionAroundPos(int pos);
 
 private slots:
 	void fillSongData();
@@ -80,6 +81,10 @@ private slots:
 	void on_btnCopyChords_pressed();
 	void on_actionDeleteChordsInSection_triggered();
 	void on_btnAutoFormat_clicked();
+	void on_actionMoveChordRight_triggered();
+	void on_teContent_cursorPositionChanged();
+
+	void on_actionMoveChordLeft_triggered();
 
 private:
 	Ui::MainWindow_SongsMode *ui;

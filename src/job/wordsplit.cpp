@@ -1,6 +1,7 @@
 #include "wordsplit.h"
 
 #include <QRegularExpression>
+#include <QDebug>
 
 namespace WordSplit {
 
@@ -11,7 +12,7 @@ namespace WordSplit {
 		for(int &item : result) {
 			item += correction;
 
-			if(i < chords.length() && item > chords[i].annotationPos) {
+			while(i < chords.length() && item >= chords[i].annotationPos) {
 				correction += chords[i].annotationLength;
 				item += chords[i].annotationLength;
 				i ++;
@@ -19,9 +20,9 @@ namespace WordSplit {
 		}
 	}
 
-	QVector<int> czech(QString str, ChordsInSong &chords, int options)
+	QVector<int> czech(const QString &src, ChordsInSong &chords, int options)
 	{
-		str = removeSongChords(str, chords);
+		QString str = removeSongChords(src, chords);
 
 		QVector<int> result;
 
@@ -117,6 +118,18 @@ namespace WordSplit {
 
 		correctResult(result, chords);
 		return result;
+	}
+
+	QString splitVisualization(const QString &str, const QVector<int> &splits)
+	{
+		QStringList list;
+		int prev = 0;
+		for(int split : splits) {
+			list += str.mid(prev, split-prev);
+			prev = split;
+		}
+		list += str.mid(prev);
+		return list.join('|');
 	}
 
 }

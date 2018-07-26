@@ -13,6 +13,10 @@ class SongContentTextEdit : public QTextEdit
 public:
 	explicit SongContentTextEdit(QWidget *parent = nullptr);
 
+signals:
+	void sigAltlLeftPressed();
+	void sigAltRightPressed();
+
 protected:
 	void keyPressEvent(QKeyEvent *e) override;
 
