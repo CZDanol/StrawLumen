@@ -126,6 +126,10 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	// Content text edit
 	{
 		connect(ui->teContent, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTeContentContextMenuRequested(QPoint)));
+
+		teContentMenu_.clear();
+		teContentMenu_.addAction(ui->actionDeleteChordsInSection);
+		teContentMenu_.addMenu(&copyChordsMenu_);
 	}
 
 	// Shortcuts
@@ -300,10 +304,6 @@ void MainWindow_SongsMode::updateCopyChordsMenu()
 void MainWindow_SongsMode::updateTeContentMenu()
 {
 	updateCopyChordsMenu();
-
-	teContentMenu_.clear();
-	teContentMenu_.addAction(ui->actionDeleteChordsInSection);
-	teContentMenu_.addMenu(&copyChordsMenu_);
 }
 
 void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool positionCursorInMiddle)
@@ -332,7 +332,10 @@ void MainWindow_SongsMode::contentSelectionMorph(const std::function<QString (QS
 	if(!hasSelection)
 		cursor.select(QTextCursor::Document);
 
-	QString data = callback(cursor.selectedText());
+	QString data = cursor.selectedText();
+	data.replace(0x2029, '\n');
+	data = callback(data);
+	data.replace('\n', 0x2029);
 	cursor.insertText(data);
 	cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, data.length());
 
@@ -668,7 +671,7 @@ void MainWindow_SongsMode::on_btnAutoFormat_clicked()
 		}
 
 		// Trim whitespaces
-		static const QRegularExpression rxTrim("^\\s+|\\s+$", QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption);
+		static const QRegularExpression rxTrim("^\\s+|\\s+$", QRegularExpression::MultilineOption);
 		content.remove(rxTrim);
 
 		// Compact spaces
@@ -676,8 +679,8 @@ void MainWindow_SongsMode::on_btnAutoFormat_clicked()
 		content.replace(rxCompactSpaces, " ");
 
 		// Newline after section annotation
-		static const QRegularExpression rxAnnotationNewline(QString("(%1)\\s+").arg(songSectionAnnotationRegex().pattern()));
-		replaceCallback(content, rxAnnotationNewline, [](const QRegularExpressionMatch &m){ return QString("%1\n").arg(m.captured(1)); });
+		static const QRegularExpression rxAnnotationNewline(QString("\\s*(%1)\\s*").arg(songSectionAnnotationRegex().pattern()), QRegularExpression::DotMatchesEverythingOption);
+		content.replace(rxAnnotationNewline, "\n\n\\1\n");
 
 		content = content.trimmed();
 

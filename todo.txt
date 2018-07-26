@@ -6,6 +6,7 @@
 - možnost posouvat akord v textu
 - tlačítko na standardizaci formátování
 - náhled zpěvníku
+- velikost písma zpěvníku
 ??? - načíst - program prázdný - nahlásit ???
 
 - možnost exportovat/importovat i celé programy (embed ppt prezentace?)

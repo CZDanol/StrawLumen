@@ -18,6 +18,9 @@
 				<div class="songName"></div>
 				<div class="songAuthor"></div>
 				<div class="songNotes"></div>
+				<div class="songContentWrapper songPerPage-lyricsColumnCount">
+					<div class="songContent"></div>
+				</div>
 			</div>
 			
 			<div class="section">
@@ -38,8 +41,8 @@
 			
 			<span class="text"></span>
 		</div>
-		
-		<div id="content">
+
+		<div id="content" class="fontSize">
 			<div class="tocContent"></div>
 			<div class="songsContentWrapper lyricsColumnCount">
 				<div class="songsContent"></div>
@@ -54,19 +57,26 @@
 			
 			#content {
 				font-family: "Source Sans", "Tahoma", sans-serif;
-				font-size: 12pt;
 				
 				counter-reset: tocSongId songId;
 				orphans: 8;
 				widows: 8;
 			}
 			
+			#content * {
+				font-size: inherit;
+			}
+			
 			.doNotBreakInsideSongs .song {
 				page-break-inside: avoid;
 			}
 			
-			.eachSongOnNewPage .song {
+			.eachSongOnNewColumn:not(.eachSongOnNewPage) .song {
 				page-break-before: always;
+			}
+			
+			.eachSongOnNewPage .song {
+				page-break-after: always;
 			}
 			
 			.toc {
@@ -74,7 +84,7 @@
 				margin-bottom: 10mm;
 			}
 			
-			.tocColumnCount, .lyricsColumnCount {
+			.tocColumnCount, .lyricsColumnCount, .songPerPage-lyricsColumnCount {
 				column-gap: 5mm;
 			}
 			
@@ -90,7 +100,7 @@
 				list-style-position: outside;
 			}
 			
-			.songsContent {				
+			#content:not(.eachSongOnNewPage) .songsContent {				
 				page-break-inside: avoid;
 			}
 			
@@ -115,12 +125,16 @@
 			
 			.songName, .tocTitle {
 				font-weight: bold;
-				font-size: 24pt;
+				font-size: 2em !important;
 				
 				border-bottom: 1px solid black;
 				margin-bottom: 5mm;
 			
 				page-break-after: avoid;
+			}
+			
+			.eachSongOnNewPage .songContent {
+				page-break-inside: avoid;
 			}
 			
 			.songNotes {
@@ -202,21 +216,6 @@
 			function generateDocument(data) {
 				var contentElem = document.body.querySelector("#content");
 
-				// Various settings
-				{
-					if(data.generateNumbering)
-						contentElem.classList.add("generateNumbering");
-						
-					if(data.pageBreakMode >= 1)
-						contentElem.classList.add("doNotBreakInsideSongs");
-						
-					if(data.pageBreakMode >= 2)
-						contentElem.classList.add("eachSongOnNewPage");
-						
-					document.body.querySelector(".tocColumnCount").style["column-count"] = data.tocColumnCount;
-					document.body.querySelector(".lyricsColumnCount").style["column-count"] = data.lyricsColumnCount;
-				}
-
 				// Table of contents
 				if(data.generateTableOfContents) {
 					var tocItemTemplate = document.body.querySelector("#templates .tocItem");				
@@ -252,6 +251,8 @@
 						var songElem = songTemplate.cloneNode(true);
 						songsContentElem.appendChild(songElem);
 						
+						var songContentElem = songElem.querySelector(".songContent");
+						
 						songElem.querySelector(".songName").textContent = song.name;
 						
 						if(song.author)
@@ -271,7 +272,7 @@
 						for(sectionI in song.sections) {
 							var section = song.sections[sectionI];
 							var sectionElem = sectionTemplate.cloneNode(true);
-							songElem.appendChild(sectionElem);
+							songContentElem.appendChild(sectionElem);
 							
 							var sectionContentElem = sectionElem.querySelector(".sectionContent");
 							
@@ -302,6 +303,33 @@
 							}
 						}
 					}
+				}
+				// Various settings
+				{
+					if(data.generateNumbering)
+						contentElem.classList.add("generateNumbering");
+						
+					if(data.pageBreakMode >= 1)
+						contentElem.classList.add("doNotBreakInsideSongs");
+						
+					if(data.pageBreakMode >= 2)
+						contentElem.classList.add("eachSongOnNewColumn");
+						
+					if(data.pageBreakMode >= 3) {
+						contentElem.classList.add("eachSongOnNewPage");
+						
+						var sel = document.body.querySelectorAll(".songPerPage-lyricsColumnCount");
+						for(i = 0; i < sel.length; i++) {
+							sel[i].style["column-count"] = data.lyricsColumnCount;
+						}
+							
+					} else {
+						document.body.querySelector(".lyricsColumnCount").style["column-count"] = data.lyricsColumnCount;
+					}
+					
+					document.body.querySelector(".tocColumnCount").style["column-count"] = data.tocColumnCount;
+					
+					document.body.querySelector(".fontSize").style["font-size"] = data.fontSize + "pt";
 				}
 			}
 		</script>

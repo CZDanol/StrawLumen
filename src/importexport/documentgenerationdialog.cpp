@@ -30,6 +30,7 @@
 	F("generateLyrics", gbLyrics) F("generateChords", cbGenerateChords) F("lyricsMode", cmbLyricsMode) F("lyricsColumns", sbLyricsColumns)\
 	F("landscapeOrientation", cbLandscapeOrientation) F("pageBreakMode", cmbPageBreakMode) F("pageSize", cmbPageSize) F("pageMargins", sbPageMargins)\
 	F("numberSongs", cbNumberSongs)\
+	F("fontSize", cbFontSize)\
 	F("openWhenDone", cbOpenWhenDone)
 
 enum LyricsMode {
@@ -109,6 +110,8 @@ void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)
 		json["tocColumnCount"] = ui->sbTocColumns->value();
 		json["lyricsColumnCount"] = ui->sbLyricsColumns->value();
 		json["pageBreakMode"] = ui->cmbPageBreakMode->currentIndex();
+
+		json["fontSize"] = ui->cbFontSize->value();
 
 		json["tocTitle"] = tr("Obsah");
 
