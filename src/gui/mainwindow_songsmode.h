@@ -39,14 +39,22 @@ private:
 	void setSongEditMode(bool set);
 
 	void updateSongManipulationButtonsEnabled();
+	void updateCopyChordsMenu();
+	void updateTeContentMenu();
+
 	void insertSongSection(const SongSection &section, bool positionCursorInMiddle = false);
+
+	/// Returns position and content of a song section around position pos
+	QPair<int,QString> songSectionAround(int pos);
+
+private slots:
+	void fillSongData();
 
 private slots:
 	void onCurrentSongChanged(qlonglong songId, int prevRowId);
 	void onSelectionChanged();
 	void onSongListContextMenuRequested(const QPoint &globalPos);
-
-	void fillSongData();
+	void onTeContentContextMenuRequested(const QPoint &pos);
 
 private slots:
 	void on_btnNew_clicked();
@@ -69,10 +77,12 @@ private slots:
 	void on_actionAddSongsToPlaylist_triggered();
 	void on_actionExportToOpenSong_triggered();
 	void on_btnCopyChords_pressed();
+	void on_actionDeleteChordsInSection_triggered();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
-	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_;
+	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_, teContentMenu_;
+	int teContentMenuCursorPos_;
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;

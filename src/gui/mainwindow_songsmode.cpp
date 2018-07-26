@@ -114,7 +114,15 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 	// Insert panel
 	{
+		copyChordsMenu_.setTitle(tr("Kopírovat akordy z..."));
+		copyChordsMenu_.setIcon(QPixmap(":/icons/16/Music Notation_16px.png"));
+
 		ui->btnCopyChords->setMenu(&copyChordsMenu_);
+	}
+
+	// Content text edit
+	{
+		connect(ui->teContent, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTeContentContextMenuRequested(QPoint)));
 	}
 
 	// Shortcuts
@@ -245,6 +253,56 @@ void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
 	ui->actionPresentSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 }
 
+void MainWindow_SongsMode::updateCopyChordsMenu()
+{
+	const auto sections = songSectionsWithContent(ui->teContent->toPlainText());
+
+	QList<SongSectionWithContent> relevantSections;
+	for(const SongSectionWithContent &sc : sections) {
+		QVector<ChordInSong> chords;
+		const QString sectionContentWithoutChords = removeSongChords(sc.content, chords).trimmed();
+
+		if(sectionContentWithoutChords.isEmpty() || chords.isEmpty())
+			continue;
+
+		relevantSections += sc;
+	}
+
+	copyChordsMenu_.clear();
+
+	for(const SongSectionWithContent &sc : relevantSections) {
+		const QString sourceSectionContent = sc.content;
+		copyChordsMenu_.addAction(sc.section.icon(), sc.section.userFriendlyName(), [this, sourceSectionContent]{
+			const QPair<int, QString> section = songSectionAround(teContentMenuCursorPos_);
+			QString content = section.second;
+
+			QVector<ChordInSong> chords;
+			content = removeSongChords(content, chords);
+
+			if(chords.size() && !standardConfirmDialog(tr("Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?")))
+				 return;
+
+			content = copySongChords(sourceSectionContent, content);
+
+			QTextCursor cursor = ui->teContent->textCursor();
+			cursor.setPosition(section.first);
+			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
+			cursor.insertText(content);
+		});
+	}
+
+	copyChordsMenu_.setEnabled(!relevantSections.isEmpty());
+}
+
+void MainWindow_SongsMode::updateTeContentMenu()
+{
+	updateCopyChordsMenu();
+
+	teContentMenu_.clear();
+	teContentMenu_.addAction(ui->actionDeleteChordsInSection);
+	teContentMenu_.addMenu(&copyChordsMenu_);
+}
+
 void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool positionCursorInMiddle)
 {
 	if(!isSongEditMode_)
@@ -261,6 +319,39 @@ void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool po
 		c.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1 + section.annotation().length()/2);
 		ui->teContent->setTextCursor(c);
 	}
+}
+
+QPair<int, QString> MainWindow_SongsMode::songSectionAround(int pos)
+{
+	for(const SongSectionWithContent &sc : songSectionsWithContent(ui->teContent->toPlainText())) {
+		if(pos >= sc.annotationPos && pos < sc.untrimmedContentEnd)
+			return QPair<int, QString>(sc.contentPos, sc.content);
+	}
+
+	return QPair<int, QString>(-1, QString());
+}
+
+void MainWindow_SongsMode::fillSongData()
+{
+	if(currentSongId_ == -1)
+		return;
+
+	QSqlRecord r = db->selectRow("SELECT * FROM songs WHERE id = ?", {currentSongId_});
+	ui->lnName->setText(r.value("name").toString());
+	ui->lnAuthor->setText(r.value("author").toString());
+	ui->lnSlideOrder->setText(r.value("slideOrder").toString());
+	ui->teContent->setText(r.value("content").toString());
+	ui->lnCopyright->setText(r.value("copyright").toString());
+
+	QString tags;
+	QSqlQuery q = db->selectQuery("SELECT tag FROM song_tags WHERE song = ? ORDER BY tag ASC", {currentSongId_});
+	while(q.next()) {
+		if(!tags.isEmpty())
+			tags.append(", ");
+
+		tags.append(q.value("tag").toString());
+	}
+	ui->lnTags->setText(tags);
 }
 
 void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
@@ -291,27 +382,12 @@ void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPo
 	songListContextMenu_.popup(globalPos);
 }
 
-void MainWindow_SongsMode::fillSongData()
+void MainWindow_SongsMode::onTeContentContextMenuRequested(const QPoint &pos)
 {
-	if(currentSongId_ == -1)
-		return;
+	teContentMenuCursorPos_ = ui->teContent->cursorForPosition(pos).position();
 
-	QSqlRecord r = db->selectRow("SELECT * FROM songs WHERE id = ?", {currentSongId_});
-	ui->lnName->setText(r.value("name").toString());
-	ui->lnAuthor->setText(r.value("author").toString());
-	ui->lnSlideOrder->setText(r.value("slideOrder").toString());
-	ui->teContent->setText(r.value("content").toString());
-	ui->lnCopyright->setText(r.value("copyright").toString());
-
-	QString tags;
-	QSqlQuery q = db->selectQuery("SELECT tag FROM song_tags WHERE song = ? ORDER BY tag ASC", {currentSongId_});
-	while(q.next()) {
-		if(!tags.isEmpty())
-			tags.append(", ");
-
-		tags.append(q.value("tag").toString());
-	}
-	ui->lnTags->setText(tags);
+	updateTeContentMenu();
+	teContentMenu_.popup(ui->teContent->viewport()->mapToGlobal(pos));
 }
 
 void MainWindow_SongsMode::on_btnNew_clicked()
@@ -522,57 +598,34 @@ void MainWindow_SongsMode::on_actionExportToOpenSong_triggered()
 
 void MainWindow_SongsMode::on_btnCopyChords_pressed()
 {
-	int cursorPos = ui->teContent->textCursor().position();
+	teContentMenuCursorPos_ = ui->teContent->textCursor().position();
+	const QPair<int, QString> section = songSectionAround(teContentMenuCursorPos_);
 
-	const auto sections = songSectionsWithContent(ui->teContent->toPlainText());
-
-	int cursorSectionContentPos = -1;
-	QString cursorSectionContent;
-	bool cursorSectionContainsChords;
-
-	QList<SongSectionWithContent> relevantSections;
-	for(const SongSectionWithContent &sc : sections) {
-		QVector<ChordInSong> chords;
-		const QString sectionContentWithoutChords = removeSongChords(sc.content, chords).trimmed();
-
-		if(cursorPos >= sc.annotationPos && cursorPos < sc.untrimmedContentEnd) {
-			cursorSectionContentPos = sc.contentPos;
-			cursorSectionContainsChords = !chords.isEmpty();
-			cursorSectionContent = sc.content;
-		}
-
-		if(sectionContentWithoutChords.isEmpty() || chords.isEmpty())
-			continue;
-
-		relevantSections += sc;
-	}
-
-	if(relevantSections.isEmpty())
-		return standardErrorDialog(tr("Píseň neobsahuje žádné sekce s textem i akordy."));
-
-	if(cursorSectionContentPos == -1)
+	if(section.first == -1)
 		return standardErrorDialog(tr("Nejprve najeďte kurzorem do sekce, kam chcete zkopírovat akordy."));
 
-	copyChordsMenu_.clear();
+	updateCopyChordsMenu();
 
-	for(const SongSectionWithContent &sc : relevantSections) {
-		const QString sourceSectionContent = sc.content;
-		copyChordsMenu_.addAction(sc.section.icon(), sc.section.userFriendlyName(), [this, sourceSectionContent, cursorSectionContainsChords, cursorSectionContent, cursorSectionContentPos]{
-			QString content = cursorSectionContent;
+	if(copyChordsMenu_.actions().isEmpty())
+		return standardErrorDialog(tr("Píseň neobsahuje žádné sekce s textem i akordy."));
+}
 
-			if(cursorSectionContainsChords) {
-				if(!standardConfirmDialog(tr("Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?")))
-					return;
+void MainWindow_SongsMode::on_actionDeleteChordsInSection_triggered()
+{
+	const QPair<int, QString> section = songSectionAround(teContentMenuCursorPos_);
 
-				content = removeSongChords(content);
-			}
+	if(section.first == -1)
+		return standardInfoDialog(tr("Vybraná pozice neobsahuje žádnou sekci"));
 
-			content = copySongChords(sourceSectionContent, content);
+	static const QRegularExpression rxTrim("^\\s+|\\s+$", QRegularExpression::MultilineOption);
 
-			QTextCursor cursor = ui->teContent->textCursor();
-			cursor.setPosition(cursorSectionContentPos);
-			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, cursorSectionContent.length());
-			cursor.insertText(content);
-		});
-	}
+	QString newContent = section.second;
+	newContent = removeSongChords(newContent);
+	newContent = newContent.trimmed();
+	newContent.remove(rxTrim);
+
+	QTextCursor cursor(ui->teContent->document());
+	cursor.setPosition(section.first);
+	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
+	cursor.insertText(newContent);
 }
