@@ -18,10 +18,13 @@ private:
 	QTextCharFormat chordFormat_, chordAnnotationSymbolFormat_;
 	QTextCharFormat sectionFormat_, sectionAnnotationSymbolFormat_;
 	QTextCharFormat slideSeparatorFormat_;
-	QTextCharFormat invalidWhitespaceFormat_;
+
+private:
+	QTextCharFormat syllableFormat_, syllableAltFormat_;
 
 private:
 	QTextCharFormat invalidAnnotationFormat_;
+	QTextCharFormat invalidWhitespaceFormat_;
 
 };
 

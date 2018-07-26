@@ -116,7 +116,8 @@ SOURCES += main.cpp \
     strawapi/simpleupdater.cpp \
     strawapi/strawapi.cpp \
     strawapi/feedbackdialog.cpp \
-    job/dbmigration.cpp
+    job/dbmigration.cpp \
+    job/wordsplit.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -231,7 +232,8 @@ HEADERS += \
     presentation/native/presentationpropertieswidget_customslide.h \
     strawapi/simpleupdater.h \
     strawapi/strawapi.h \
-    strawapi/feedbackdialog.h
+    strawapi/feedbackdialog.h \
+    job/wordsplit.h
 
 RESOURCES += \
     ../res/resources.qrc

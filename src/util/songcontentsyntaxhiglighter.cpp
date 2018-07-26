@@ -5,6 +5,7 @@
 
 #include "rec/chord.h"
 #include "rec/songsection.h"
+#include "job/wordsplit.h"
 
 SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
 {
@@ -34,8 +35,11 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 	}
 
 	{
-		invalidWhitespaceFormat_.setBackground(QColor("red"));
+		syllableFormat_.setBackground(QColor(0, 255, 0, 64));
+		syllableAltFormat_.setBackground(QColor(0, 0, 255, 64));
 	}
+
+	invalidWhitespaceFormat_.setBackground(QColor("red"));
 
 	invalidAnnotationFormat_.setForeground(Qt::red);
 }
@@ -46,6 +50,21 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 	auto size = document()->defaultFont().pointSize() * 1.3;
 	chordFormat_.setFontPointSize(size);
 	chordAnnotationSymbolFormat_.setFontPointSize(size);
+
+	// Sep syllables
+	if(false) {
+		bool alt = false;
+		int prev = 0;
+		QVector<int> splits = WordSplit::czech(text);
+
+		for(int split : splits) {
+			setFormat(prev, split, alt ? syllableAltFormat_ : syllableFormat_);
+			alt = !alt;
+			prev = split;
+		}
+
+		setFormat(prev, text.length(), alt ? syllableAltFormat_ : syllableFormat_);
+	}
 
 	QRegularExpressionMatchIterator it;
 
