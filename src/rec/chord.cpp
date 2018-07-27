@@ -129,7 +129,7 @@ QString Chord::toString(bool flatVariant) const
 	static const QString variantStrings[_cvCount] = {"", "m", "maj", "aug", "dim"};
 
 	static const QString noteNames[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B♭", "H"};
-	static const QString flatNoteNames[12] = {"C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "H"};
+	static const QString flatNoteNames[12] = {"C", "Des", "D", "Es", "E", "F", "Ges", "G", "As", "A", "B♭", "H"};
 
 	const auto &names = flatVariant ? flatNoteNames : noteNames;
 
@@ -178,7 +178,7 @@ void transposeSong(QString &song, int by, bool flatChords)
 
 const QRegularExpression &songChordAnnotationRegex()
 {
-	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭/]+)(\\])");
+	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭/+]+)(\\])");
 	return result;
 }
 
@@ -226,7 +226,7 @@ QString copySongChords(const QString &source, const QString &target)
 		int splitPos = 0;
 		int correction = 0;
 		for(const ChordInSong &chs : sourceChords) {
-			while(splitId < splitCount && chs.annotationPos >= sourceSplitPositions[splitId]) {
+			while(splitId < splitCount && chs.annotationPos + chs.annotationLength >= sourceSplitPositions[splitId]) {
 				splitPos = targetSplitPositions[splitId];
 				splitId ++;
 			}

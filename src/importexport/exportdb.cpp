@@ -3,8 +3,9 @@
 #include <QFile>
 
 #include "gui/mainwindow.h"
+#include "util/macroutils.h"
 
-#define CURRENT_EXPORT_DB_VERSION 1
+#define EXPORT_DB_MIGRATION_PROCEDURE(fromVersion, toVersion) void ExportDatabaseManager::migrateExportDbFrom_v ## fromVersion(DBManager *db)
 
 ExportDatabaseManager::ExportDatabaseManager(const QString &filename, bool overwrite)
 {
@@ -23,6 +24,18 @@ ExportDatabaseManager::ExportDatabaseManager(const QString &filename, bool overw
 		createDb();
 
 	int version = selectValue("SELECT value FROM keyValueAssoc WHERE key = 'database.version'").toInt();
+
+#define F(v)\
+	if(version == v) {\
+		beginTransaction();\
+		migrateExportDbFrom_v ## v(this);\
+		exec("UPDATE keyValueAssoc SET value = ? WHERE key = 'database.version'", {v+1});\
+		commitTransaction();\
+		version++;\
+	}
+	EXPORT_DB_VERSION_HISTORY_FACTORY(F)
+#undef F
+
 	if(version != CURRENT_EXPORT_DB_VERSION)
 		emit sigDatabaseError(DBManager::tr("Nepodporovaná verze databáze"));
 }
@@ -41,6 +54,7 @@ void ExportDatabaseManager::createDb()
 						 "author TEXT NOT NULL,"
 						 "copyright TEXT NOT NULL,"
 						 "content TEXT NOT NULL,"
+						 "notes TEXT NOT NULL,"
 						 "slideOrder TEXT NOT NULL,"
 						 "lastEdit INTEGER NOT NULL"
 						 ")");
@@ -67,6 +81,29 @@ void ExportDatabaseManager::createDb()
 
 		exec("INSERT INTO keyValueAssoc(key, value)"
 						 "VALUES"
-						 "('database.version', 1)");
+						 "('database.version', " STRINGIFY(CURRENT_EXPORT_DB_VERSION) ")");
 	}
+}
+
+EXPORT_DB_MIGRATION_PROCEDURE(1,2)
+{
+	db->exec("CREATE TABLE songs_tmp ("
+			 "id INTEGER PRIMARY KEY,"
+			 "uid TEXT NOT NULL,"
+			 "name TEXT NOT NULL,"
+			 "author TEXT NOT NULL,"
+			 "copyright TEXT NOT NULL,"
+			 "content TEXT NOT NULL,"
+			 "notes TEXT NOT NULL,"
+			 "slideOrder TEXT NOT NULL,"
+			 "lastEdit INTEGER NOT NULL"
+			 ")");
+
+	db->exec("INSERT INTO songs_tmp SELECT id, uid, name, author, copyright, content, '' AS notes, slideOrder, lastEdit FROM songs");
+	db->exec("DROP TABLE songs");
+	db->exec("ALTER TABLE songs_tmp RENAME TO songs");
+
+	db->exec("CREATE INDEX i_songs_uid ON songs (uid)");
+	db->exec("CREATE INDEX i_songs_name ON songs (name)");
+	db->exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
 }

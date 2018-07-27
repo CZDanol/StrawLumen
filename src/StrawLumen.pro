@@ -11,7 +11,7 @@ QT       += core gui printsupport widgets axcontainer sql xml webenginewidgets
 
 TEMPLATE = app
 
-VERSION = 0.9.3.0
+VERSION = 0.9.4.0
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"
@@ -24,7 +24,7 @@ win32|win64 {
 
 DEFINES += PRODUCT_IDSTR=\\\"lumen\\\"
 DEFINES += PROGRAM_VERSION=\\\"$$VERSION\\\"
-DEFINES += UPSTREAM_VERSION=\\\"0.9.2.0\\\" # If the updater gets this upstream version, it does not promote update
+DEFINES += UPSTREAM_VERSION=\\\"0.9.3.0\\\" # If the updater gets this upstream version, it does not promote update
 DEFINES += PLATFORM_ID=\\\"$${OS_STR}_$${QMAKE_TARGET.arch}\\\"
 
 TARGET = strawLumen
@@ -118,7 +118,8 @@ SOURCES += main.cpp \
     strawapi/feedbackdialog.cpp \
     job/dbmigration.cpp \
     job/wordsplit.cpp \
-    util/regex.cpp
+    util/regex.cpp \
+    util/macroutils.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -235,7 +236,8 @@ HEADERS += \
     strawapi/strawapi.h \
     strawapi/feedbackdialog.h \
     job/wordsplit.h \
-    util/regex.h
+    util/regex.h \
+    util/macroutils.h
 
 RESOURCES += \
     ../res/resources.qrc

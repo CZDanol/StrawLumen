@@ -135,6 +135,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		teContentMenu_.addAction(ui->actionMoveChordRight);
 		teContentMenu_.addSeparator();
 		teContentMenu_.addAction(ui->actionDeleteChordsInSection);
+		teContentMenu_.addAction(ui->actionOnlyChords);
 		teContentMenu_.addMenu(&copyChordsMenu_);
 	}
 
@@ -143,6 +144,8 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		new QShortcut(Qt::CTRL | Qt::Key_Return, ui->btnSaveChanges, SLOT(click()));
 		new QShortcut(Qt::CTRL | Qt::Key_S, ui->btnSaveChanges, SLOT(click()));
 		new QShortcut(Qt::CTRL | Qt::Key_N, ui->btnNew, SLOT(click()));
+		new QShortcut(Qt::CTRL | Qt::Key_P, ui->btnCreateSongbook, SLOT(click()));
+		new QShortcut(Qt::ALT | Qt::SHIFT | Qt::Key_F, ui->btnAutoFormat, SLOT(click()));
 		new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
 		new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
 
@@ -472,7 +475,7 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 		{"author", ui->lnAuthor->text()},
 		{"copyright", ui->lnCopyright->text()},
 		{"content", ui->teContent->toPlainText()},
-		{"slideOrder", ui->lnSlideOrder->text()},
+		{"slideOrder", ui->lnSlideOrder->text().simplified()},
 		{"notes", ui->teNotes->toPlainText()},
 		{"lastEdit", QDateTime::currentSecsSinceEpoch()}
 	};
@@ -690,12 +693,16 @@ void MainWindow_SongsMode::on_btnAutoFormat_clicked()
 		}
 
 		// Trim whitespaces
-		static const QRegularExpression rxTrim("^\\s+|\\s+$", QRegularExpression::MultilineOption);
+		static const QRegularExpression rxTrim("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
 		content.remove(rxTrim);
 
 		// Compact spaces
 		static const QRegularExpression rxCompactSpaces("[ \t]+");
 		content.replace(rxCompactSpaces, " ");
+
+		// Space after rxSpaceAfterInterpunction
+		static const QRegularExpression rxSpaceAfterInterpunction("([,.!?;:])(?=\\p{L})");
+		content.replace(rxSpaceAfterInterpunction, "\\1 ");
 
 		// Newline after section annotation
 		static const QRegularExpression rxAnnotationNewline(QString("\\s*(%1)\\s*").arg(songSectionAnnotationRegex().pattern()), QRegularExpression::DotMatchesEverythingOption);
@@ -721,7 +728,7 @@ void MainWindow_SongsMode::on_actionMoveChordRight_triggered()
 	QString chordStr = content.mid(chs.annotationPos, chs.annotationLength);
 
 	ChordsInSong chords;
-	QVector<int> splits = WordSplit::czech(content, chords);
+	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines);
 
 	int i = 0;
 	while(i < splits.length() && splits[i] <= chs.annotationPos + chs.annotationLength)
@@ -765,7 +772,7 @@ void MainWindow_SongsMode::on_actionMoveChordLeft_triggered()
 	QString chordStr = content.mid(chs.annotationPos, chs.annotationLength);
 
 	ChordsInSong chords;
-	QVector<int> splits = WordSplit::czech(content, chords);
+	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines);
 
 	int i = 0;
 	while(i < splits.length() && splits[i] <= chs.annotationPos + chs.annotationLength)
@@ -788,4 +795,29 @@ void MainWindow_SongsMode::on_actionMoveChordLeft_triggered()
 
 	cursor.setPosition(insertPoint);
 	ui->teContent->setTextCursor(cursor);
+}
+
+void MainWindow_SongsMode::on_actionOnlyChords_triggered()
+{
+	const QPair<int, QString> section = songSectionAroundPos(teContentMenuCursorPos_);
+
+	if(section.first == -1)
+		return standardInfoDialog(tr("Vybraná pozice neobsahuje žádnou sekci"));
+
+	const QString oldContent = section.second;
+
+	QString newContent;
+	int prev = 0;
+	for(const ChordInSong &chs : songChords(oldContent)) {
+		if(oldContent.mid(prev, chs.annotationPos-prev).contains('\n'))
+			newContent += '\n';
+
+		newContent += oldContent.mid(chs.annotationPos, chs.annotationLength);
+		prev = chs.annotationPos;
+	}
+
+	QTextCursor cursor(ui->teContent->document());
+	cursor.setPosition(section.first);
+	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
+	cursor.insertText(newContent);
 }

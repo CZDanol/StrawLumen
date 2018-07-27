@@ -3,6 +3,9 @@
 
 #include "job/dbmanager.h"
 
+#define EXPORT_DB_VERSION_HISTORY_FACTORY(F) F(1)
+#define CURRENT_EXPORT_DB_VERSION 2
+
 class ExportDatabaseManager : public DBManager
 {
 
@@ -11,6 +14,11 @@ public:
 
 private:
 	void createDb();
+
+private:
+#define F(version) void migrateExportDbFrom_v ## version(DBManager *db);
+EXPORT_DB_VERSION_HISTORY_FACTORY(F)
+#undef F
 
 };
 

@@ -33,7 +33,7 @@ namespace WordSplit {
 					"(?:"
 					"jsm|kr[km]|pl[nň]|srd|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
 					"|ch[cčlmrřv]"
-					"|[jkrvz]d|[jlmsvzž]h|[fsvz]j|[lsštz]k|[bcčdfhkmpsštvz]l|[čdhjkrřsštvz]m|[čdfghkmpsšvz]n|[fhkmpsšvz]ň|[cčlsšvz]p|[bcčdfghkmpsštvz]r|[bdhkmpttvz]ř|[jklmpv]s|[pvz]š|[cčrsšvz]t|[cš]ť|[cčdhkrřsštz]v|[dlmrsvz]ž"
+					"[dhksvz]b|[jkrvz]d|[jlmsvzž]h|[fsvz]j|[lsštz]k|[bcčdfhkmpsštvz]l|[čdhjkrřsštvz]m|[čdfghkmpsšvz]n|[fhkmpsšvz]ň|[cčlsšvz]p|[bcčdfghkmpsštvz]r|[bdhkmpttvz]ř|[jklmpv]s|[pvz]š|[cčrsšvz]t|[cš]ť|[cčdhkrřsštz]v|[dlmrsvz]ž"
 					")"
 					);
 
@@ -45,7 +45,7 @@ namespace WordSplit {
 					"%2[aeo][uiy](?!či)"
 					"|%2%1"
 					"|%3(?=%2)"
-					"|%1(?=%2)"
+					"|%1(?=%2|\\b)"
 					")"
 					).arg(rxsVowel, rxsStartConsonant, rxsOnlyStartConsonant);
 
@@ -84,7 +84,7 @@ namespace WordSplit {
 		qDebug().noquote() << QString("\\b(%1)(%2*)(%3?)\\b").arg(rxsStart, rxsMiddle, rxsEnd);*/
 
 		QRegularExpression rxWord(
-					QString("\\b(?:(%1)(%2*)(%3?)|\\p{L}+%4)\\b").arg(rxsStart, rxsMiddle, rxsEnd, options & IncludeNewlines ? "|$" : ""),
+					QString("\\b(%1)(%2*)(%3?)\\b|\\b\\p{L}+\\b%4").arg(rxsStart, rxsMiddle, rxsEnd, (options & IncludeNewlines) ? "|[ \t]*$" : ""),
 					QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption | QRegularExpression::MultilineOption);
 
 		static QRegularExpression rxMiddle(

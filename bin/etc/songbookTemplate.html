@@ -67,7 +67,7 @@
 				font-size: inherit;
 			}
 			
-			.doNotBreakInsideSongs .song {
+			.doNotBreakInsideSongs:not(.eachSongOnNewPage) .song {
 				page-break-inside: avoid;
 			}
 			
@@ -244,7 +244,8 @@
 					
 					// First capture group: what to put "under" the chord:
 					// Then either ~6-16 characters or spaces followed by a word end (this is to match more words when the first word is too short)
-					var chordTextRegex = /(\S[\S \t]{0,8}\S(?:[ \t]|$)|\S*)([\s\S]*)/u;
+					//var chordTextRegex = /(\S[\S \t]{0,8}\S(?:[ \t]|$)|\S*)([\s\S]*)/u;
+					var chordTextRegex = /([^ \t\n].{0,8}(?:[^ \t])*?|)(?=[ \t\n]|$)([\s\S]*)/u;
 					
 					for(songI in data.songs) {
 						var song = data.songs[songI];

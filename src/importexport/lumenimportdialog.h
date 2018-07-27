@@ -12,11 +12,12 @@ class LumenImportDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit LumenImportDialog(QWidget *parent = 0);
+	explicit LumenImportDialog(QWidget *parent = nullptr);
 	~LumenImportDialog();
 
 public:
 	void show();
+	void show(const QString &filename);
 
 private:
 	void updateUi();

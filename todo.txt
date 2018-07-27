@@ -1,16 +1,11 @@
 - text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
 - bug - když se přidá vlastní pořadí u položky -> crash  -- opreaveno?
-- možnost přeskakovat po akordech
 - když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - dávat jako první výsledky ty, které sedí názvem a autorem (potom teprv text)
-- možnost posouvat akord v textu
-- náhled zpěvníku
 ??? - načíst - program prázdný - nahlásit ???
 
 - možnost exportovat/importovat i celé programy (embed ppt prezentace?)
 - reentrant splashscreen
-
-- v song editu dát anotaci na to, aby se akord vzal z předchozí sloky (dle pořadí akordů v předchozí sloce)
 
 - refresh scroll u item viewů, když se refreshujou
 - možnost znovu načíst powerpoint prezentaci

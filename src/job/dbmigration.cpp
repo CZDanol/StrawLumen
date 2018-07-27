@@ -1,5 +1,6 @@
 #include "dbmigration.h"
 #include "db.h"
+#include "util/macroutils.h"
 
 #define DB_MIGRATION_PROCEDURE(fromVersion, toVersion) void migrateDbFrom_v ## fromVersion(DatabaseManager *db)
 
@@ -78,7 +79,7 @@ void createDb(DatabaseManager *db)
 
 		db->exec("INSERT INTO keyValueAssoc(key, value)"
 						 "VALUES"
-						 "('database.version', 2)");
+						 "('database.version', " STRINGIFY(CURRENT_DB_VERSION) ")");
 	}
 
 	// PLAYLISTS

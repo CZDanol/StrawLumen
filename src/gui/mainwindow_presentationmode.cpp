@@ -21,6 +21,7 @@
 #include "presentation/native/presentation_customslide.h"
 #include "presentation/native/presentation_song.h"
 #include "importexport/opensongimportdialog.h"
+#include "importexport/lumenimportdialog.h"
 #include "job/settings.h"
 #include "job/db.h"
 #include "util/standarddialogs.h"
@@ -211,6 +212,7 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 	// The exec is there so the explorer the file is dragged from is not frozen while loading
 	execOnMainThread([=]{
 		QStringList openSongFiles;
+		QString lumenFile;
 
 		for(QUrl url : urls) {
 			QString filePath = url.toLocalFile();
@@ -221,12 +223,20 @@ void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
 				continue;
 			}
 
+			if(fileInfo.suffix() == "strawLumen") {
+				lumenFile = filePath;
+				continue;
+			}
+
 			if(!Presentation_PowerPoint::isPowerpointFile(fileInfo))
 				return standardErrorDialog(tr("Soubor \"%1\" není podporován.").arg(filePath));
 
 			if(!playlist_->addItem(Presentation_PowerPoint::createFromFilename(filePath)))
 				return;
 		}
+
+		if(!lumenFile.isEmpty())
+			lumenImportDialog()->show(lumenFile);
 
 		if(!openSongFiles.isEmpty())
 			openSongImportDialog()->show(openSongFiles);

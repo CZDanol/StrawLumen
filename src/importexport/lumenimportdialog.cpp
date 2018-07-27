@@ -50,6 +50,13 @@ void LumenImportDialog::show()
 	QDialog::show();
 }
 
+void LumenImportDialog::show(const QString &filename)
+{
+	importFilename_ = filename;
+	updateUi();
+	QDialog::show();
+}
+
 void LumenImportDialog::updateUi()
 {
 	ui->btnSelectFile->setText(importFilename_.isEmpty() ? tr("Vybrat soubor...") : QFileInfo(importFilename_).fileName());

@@ -206,7 +206,7 @@ void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output
 				endFunc(chs.annotationPos);
 				chordSectionStart = chs.annotationPos + chs.annotationLength;
 
-				jsonChord["chordName"] = chs.chord.toString();
+				jsonChord["chordName"] = chs.chord.toString(chs.chord.isFlat());
 
 				contentWithoutChords.remove(chs.annotationPos+offsetCorrection, chs.annotationLength);
 				offsetCorrection -= chs.annotationLength;

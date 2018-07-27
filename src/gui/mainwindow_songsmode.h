@@ -83,8 +83,8 @@ private slots:
 	void on_btnAutoFormat_clicked();
 	void on_actionMoveChordRight_triggered();
 	void on_teContent_cursorPositionChanged();
-
 	void on_actionMoveChordLeft_triggered();
+	void on_actionOnlyChords_triggered();
 
 private:
 	Ui::MainWindow_SongsMode *ui;

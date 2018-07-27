@@ -147,7 +147,9 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
           <item>
            <widget class="QPushButton" name="btnAutoFormat">
             <property name="toolTip">
-             <string>Převede akordy do jednotného formátu, odstraní zbytečné mezery, apod.</string>
+             <string>Převede akordy do jednotného formátu, odstraní zbytečné mezery, apod.
+
+Zkratka: Alt+Shift+F</string>
             </property>
             <property name="text">
              <string>Formátovat</string>
@@ -327,6 +329,9 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
           </item>
           <item>
            <widget class="QPushButton" name="btnCreateSongbook">
+            <property name="toolTip">
+             <string>Zkratka: Ctrl+P</string>
+            </property>
             <property name="text">
              <string>Vytvořit zpěvník</string>
             </property>
@@ -834,6 +839,15 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
    </property>
    <property name="shortcutVisibleInContextMenu">
     <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionOnlyChords">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Eraser_16px.png</normaloff>:/icons/16/Eraser_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pouze akordy</string>
    </property>
   </action>
  </widget>
