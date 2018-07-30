@@ -3,17 +3,24 @@
 
 #include <QtConcurrent/QtConcurrent>
 #include <QJsonDocument>
+#include <QTextDocument>
 
 #include "gui/mainwindow.h"
 #include "util/execonmainthread.h"
 #include "util/standarddialogs.h"
 #include "strawapi/strawapi.h"
 
+#define MULTILINE(...) #__VA_ARGS__
+
 SimpleUpdater::SimpleUpdater(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::SimpleUpdater)
 {
 	ui->setupUi(this);
+
+	QFile styleSheet(":/changelogStylesheet.css");
+	styleSheet.open(QIODevice::ReadOnly);
+	ui->tbChangelog->document()->setDefaultStyleSheet(QString::fromUtf8(styleSheet.readAll()));
 }
 
 SimpleUpdater::~SimpleUpdater()
@@ -70,14 +77,7 @@ void SimpleUpdater::show(const QString &newVersion, const QString changeLog)
 {
 	Q_UNUSED(newVersion);
 
-	QTextDocument *doc = ui->tbChangelog->document();
-	QFile styleSheet(":/changelogStylesheet.css");
-	styleSheet.read(QIODevice::ReadOnly);
-
-	doc->setDefaultStyleSheet(QString::fromUtf8(styleSheet.readAll()));
-	doc->setHtml(changeLog);
-
-	ui->tbChangelog->setDocument(doc);
+	ui->tbChangelog->document()->setHtml(QString("<html><body>%1</body></html>").arg(changeLog));
 	ui->pbProgress->setValue(0);
 	ui->pbProgress->setEnabled(false);
 	ui->btnDownload->setEnabled(true);
@@ -107,8 +107,8 @@ void SimpleUpdater::onDownloadFinished()
 
 void SimpleUpdater::onDownloadProgress(qint64 received, qint64 total)
 {
-	double progress = double( received ) / total;
-	ui->pbProgress->setValue( progress * 1000.0 );
+	double progress = double(received) / total;
+	ui->pbProgress->setValue(int(progress * 1000.0));
 }
 
 void SimpleUpdater::onDownloadReadyRead()

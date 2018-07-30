@@ -29,8 +29,6 @@
 #include "job/wordsplit.h"
 #include "presentation/presentationmanager.h"
 
-#include <QDebug>
-
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
 	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags) F(teNotes)
@@ -498,6 +496,7 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 
 	updateSongManipulationButtonsEnabled();
 	emit db->sigSongChanged(currentSongId_);
+
 }
 
 void MainWindow_SongsMode::on_btnEdit_clicked()
@@ -728,11 +727,12 @@ void MainWindow_SongsMode::on_actionMoveChordRight_triggered()
 	QString chordStr = content.mid(chs.annotationPos, chs.annotationLength);
 
 	ChordsInSong chords;
-	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines);
+	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines | WordSplit::IncludeChords);
 
-	int i = 0;
-	while(i < splits.length() && splits[i] <= chs.annotationPos + chs.annotationLength)
-		i ++;
+	int i = splits.indexOf(chs.annotationPos) + 1;
+
+	if(splits[i] == chs.annotationPos + chs.annotationLength)
+		i++;
 
 	if(i >= splits.length())
 		return;
@@ -772,13 +772,9 @@ void MainWindow_SongsMode::on_actionMoveChordLeft_triggered()
 	QString chordStr = content.mid(chs.annotationPos, chs.annotationLength);
 
 	ChordsInSong chords;
-	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines);
+	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines | WordSplit::IncludeChords);
 
-	int i = 0;
-	while(i < splits.length() && splits[i] <= chs.annotationPos + chs.annotationLength)
-		i ++;
-
-	i -= 2;
+	int i = splits.indexOf(chs.annotationPos) - 1;
 	if(i < 0)
 		return;
 

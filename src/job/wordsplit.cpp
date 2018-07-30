@@ -5,18 +5,27 @@
 
 namespace WordSplit {
 
-	void correctResult(QVector<int> &result, const ChordsInSong &chords) {
-		int i = 0;
+	void correctResult(QVector<int> &result, const ChordsInSong &chords, int options) {
+		int chordI = 0;
 		int correction = 0;
 
-		for(int &item : result) {
-			item += correction;
+		for(int resultI = 0; resultI < result.length(); resultI++) {
+			result[resultI] += correction;
 
-			while(i < chords.length() && item >= chords[i].annotationPos) {
-				correction += chords[i].annotationLength;
-				item += chords[i].annotationLength;
-				i ++;
+			while(chordI < chords.length() && result[resultI] >= chords[chordI].annotationPos) {
+				const ChordInSong &chs = chords[chordI];
+				result[resultI] += chs.annotationLength;
+				correction += chs.annotationLength;
+				chordI ++;
+
+				if(result[resultI] != chs.annotationPos && (options & IncludeChords))
+					result.insert(resultI++, chs.annotationPos);
 			}
+		}
+
+		if(options & IncludeChords) {
+			while(chordI < chords.length())
+				result.append(chords[chordI++].annotationPos);
 		}
 	}
 
@@ -31,7 +40,7 @@ namespace WordSplit {
 
 		static const QString rxsOnlyStartConsonant = QString(
 					"(?:"
-					"jsm|kr[km]|pl[nň]|srd|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
+					"jsm|kr[km]|pl[nň]|srd|stn|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
 					"|ch[cčlmrřv]"
 					"[dhksvz]b|[jkrvz]d|[jlmsvzž]h|[fsvz]j|[lsštz]k|[bcčdfhkmpsštvz]l|[čdhjkrřsštvz]m|[čdfghkmpsšvz]n|[fhkmpsšvz]ň|[cčlsšvz]p|[bcčdfghkmpsštvz]r|[bdhkmpttvz]ř|[jklmpv]s|[pvz]š|[cčrsšvz]t|[cš]ť|[cčdhkrřsštz]v|[dlmrsvz]ž"
 					")"
@@ -116,7 +125,7 @@ namespace WordSplit {
 				result += m.capturedStart(3);
 		}
 
-		correctResult(result, chords);
+		correctResult(result, chords, options);
 		return result;
 	}
 

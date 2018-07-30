@@ -19,6 +19,7 @@ signals:
 
 protected:
 	void keyPressEvent(QKeyEvent *e) override;
+	bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
 	SongContentSyntaxHiglighter *contentSyntaxHiglighter_;

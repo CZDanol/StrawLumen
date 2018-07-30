@@ -3,12 +3,15 @@
 #include <QPainter>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QApplication>
 
 #include "job/jsonautomation.h"
 #include "job/db.h"
 
-PresentationStyle::PresentationStyle(QObject *parent) : QObject(parent)
+PresentationStyle::PresentationStyle()
 {
+	moveToThread(QApplication::instance()->thread());
+
 	connect(db, SIGNAL(sigStyleChanged(qlonglong)), this, SLOT(onDbStyleChanged(qlonglong)));
 	connect(this, &PresentationStyle::sigChanged, this, &PresentationStyle::sigNeedsRepaint);
 

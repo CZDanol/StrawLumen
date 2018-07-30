@@ -56,7 +56,7 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 		bool alt = false;
 		int prev = 0;
 		ChordsInSong chords;
-		QVector<int> splits = WordSplit::czech(text, chords);
+		QVector<int> splits = WordSplit::czech(text, chords, WordSplit::IncludeNewlines | WordSplit::IncludeChords);
 
 		for(int split : splits) {
 			setFormat(prev, split, alt ? syllableAltFormat_ : syllableFormat_);

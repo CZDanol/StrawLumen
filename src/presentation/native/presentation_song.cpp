@@ -7,6 +7,8 @@
 #include "gui/projectorwindow.h"
 #include "presentation/native/presentationpropertieswidget_song.h"
 
+#include <QDebug>
+
 QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong songId)
 {
 	QSharedPointer<Presentation_Song> result(new Presentation_Song());
@@ -70,7 +72,11 @@ QJsonObject Presentation_Song::toJSON() const
 
 void Presentation_Song::drawSlide(QPainter &p, int slideId, const QRect &rect)
 {
-	style_.drawSlide(p, rect, slides_[slideId].content_, name_);
+	// Empty slide name -> slide is empty, only draw background
+	if(slides_[slideId].name_.isEmpty())
+		style_.background().draw(p, rect);
+	else
+		style_.drawSlide(p, rect, slides_[slideId].content_, name_);
 }
 
 QString Presentation_Song::identification() const
@@ -116,7 +122,7 @@ QString Presentation_Song::classIdentifier() const
 
 Presentation_Song::Presentation_Song()
 {
-	connect(db, &DatabaseManager::sigSongChanged, this, &Presentation_Song::onDbManagerSongChanged);
+	connect(db, SIGNAL(sigSongChanged(qlonglong)), this, SLOT(onDbManagerSongChanged(qlonglong)));
 	connect(&style_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
 	connect(&style_, SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
@@ -230,6 +236,7 @@ void Presentation_Song::loadSlideOrder()
 
 void Presentation_Song::onDbManagerSongChanged(qlonglong songId)
 {
+	qDebug() << QString("Changed %1; me: %2 %3").arg(songId).arg(songId_).arg(name_);
 	if(songId != songId_)
 		return;
 

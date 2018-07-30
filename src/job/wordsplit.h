@@ -8,7 +8,8 @@
 namespace WordSplit {
 
 	enum Options : int {
-		IncludeNewlines = 0b1
+		IncludeNewlines = 0b1,
+		IncludeChords = 0b10
 	};
 
 	/// Returns positions of word divisions (indexes of first letters in the division), also returns chords in the string

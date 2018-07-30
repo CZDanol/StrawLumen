@@ -21,7 +21,7 @@ class PresentationStyle : public QObject
 	Q_OBJECT
 
 public:
-	explicit PresentationStyle(QObject *parent = nullptr);
+	PresentationStyle();
 
 signals:
 	void sigChanged();

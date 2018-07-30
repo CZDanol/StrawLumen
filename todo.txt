@@ -2,6 +2,14 @@
 - bug - když se přidá vlastní pořadí u položky -> crash  -- opreaveno?
 - když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - dávat jako první výsledky ty, které sedí názvem a autorem (potom teprv text)
+- dělit wordsplit i akordama (aby se dalo prohazovat pořadí akordů)
+- když se nesází akordy, tak trim mezery před/za akordama
+- [[komentář jenom při sázení akordů]]
+- hromadné přidávání/odebírání štítků
+- drag&drop do mainWindow
+
+] se vkládá i když readonly
+
 ??? - načíst - program prázdný - nahlásit ???
 
 - možnost exportovat/importovat i celé programy (embed ppt prezentace?)

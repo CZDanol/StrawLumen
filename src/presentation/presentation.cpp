@@ -1,5 +1,7 @@
 #include "presentation.h"
 
+#include <QApplication>
+
 QString Presentation::slideIdentification(int) const
 {
 	return QString();
@@ -43,6 +45,8 @@ QWidget *Presentation::createPropertiesWidget(QWidget *)
 
 Presentation::Presentation()
 {
+	moveToThread(QApplication::instance()->thread());
+
 	connect(this, SIGNAL(sigSlidesChanged()), this, SIGNAL(sigChanged()));
 	connect(this, SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigChanged()));
 }
