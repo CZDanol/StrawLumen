@@ -31,10 +31,6 @@ public:
 public:
 	QSharedPointer<Playlist> playlist();
 
-protected:
-	void dragEnterEvent(QDragEnterEvent *e) override;
-	void dropEvent(QDropEvent *e) override;
-
 private slots:
 	void updateControlsUIEnabled();
 	void disablePresentation();

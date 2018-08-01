@@ -139,7 +139,8 @@ void OpenSongImportDialog::on_btnImport_clicked()
 					{"name", denullifyString(root.firstChildElement("title").text())},
 					{"author", denullifyString(root.firstChildElement("author").text())},
 					{"copyright", denullifyString(root.firstChildElement("copyright").text())},
-					{"slideOrder", denullifyString(root.firstChildElement("presentation").text())}
+					{"slideOrder", denullifyString(root.firstChildElement("presentation").text())},
+					{"notes", ""}
 				};
 
 				QString content = root.firstChildElement("lyrics").text().trimmed();

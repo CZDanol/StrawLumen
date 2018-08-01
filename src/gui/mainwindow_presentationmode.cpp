@@ -1,8 +1,6 @@
 #include "mainwindow_presentationmode.h"
 #include "ui_mainwindow_presentationmode.h"
 
-#include <QDragEnterEvent>
-#include <QMimeData>
 #include <QFileInfo>
 #include <QStringList>
 #include <QDateTime>
@@ -20,12 +18,9 @@
 #include "presentation/native/presentation_blackscreen.h"
 #include "presentation/native/presentation_customslide.h"
 #include "presentation/native/presentation_song.h"
-#include "importexport/opensongimportdialog.h"
-#include "importexport/lumenimportdialog.h"
 #include "job/settings.h"
 #include "job/db.h"
 #include "util/standarddialogs.h"
-#include "util/execonmainthread.h"
 #include "util/guianimations.h"
 
 MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
@@ -190,57 +185,6 @@ bool MainWindow_PresentationMode::askSaveChanges()
 QSharedPointer<Playlist> MainWindow_PresentationMode::playlist()
 {
 	return playlist_;
-}
-
-void MainWindow_PresentationMode::dragEnterEvent(QDragEnterEvent *e)
-{
-	if(e->mimeData()->hasUrls()) {
-		for(QUrl url : e->mimeData()->urls()) {
-			if(!url.isLocalFile())
-				return;
-		}
-
-		e->setDropAction(Qt::LinkAction);
-		e->accept();
-	}
-}
-
-void MainWindow_PresentationMode::dropEvent(QDropEvent *e)
-{
-	auto urls = e->mimeData()->urls();
-
-	// The exec is there so the explorer the file is dragged from is not frozen while loading
-	execOnMainThread([=]{
-		QStringList openSongFiles;
-		QString lumenFile;
-
-		for(QUrl url : urls) {
-			QString filePath = url.toLocalFile();
-			QFileInfo fileInfo(filePath);
-
-			if(filePath.contains("opensong", Qt::CaseInsensitive)) {
-				openSongFiles << filePath;
-				continue;
-			}
-
-			if(fileInfo.suffix() == "strawLumen") {
-				lumenFile = filePath;
-				continue;
-			}
-
-			if(!Presentation_PowerPoint::isPowerpointFile(fileInfo))
-				return standardErrorDialog(tr("Soubor \"%1\" není podporován.").arg(filePath));
-
-			if(!playlist_->addItem(Presentation_PowerPoint::createFromFilename(filePath)))
-				return;
-		}
-
-		if(!lumenFile.isEmpty())
-			lumenImportDialog()->show(lumenFile);
-
-		if(!openSongFiles.isEmpty())
-			openSongImportDialog()->show(openSongFiles);
-	});
 }
 
 void MainWindow_PresentationMode::updateControlsUIEnabled()

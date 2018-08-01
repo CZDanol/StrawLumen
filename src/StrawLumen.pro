@@ -11,7 +11,7 @@ QT       += core gui printsupport widgets axcontainer sql xml webenginewidgets
 
 TEMPLATE = app
 
-VERSION = 0.9.4.1
+VERSION = 0.9.4.2
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"

@@ -35,6 +35,8 @@ public slots:
 
 protected:
 	void closeEvent(QCloseEvent *e) override;
+	void dragEnterEvent(QDragEnterEvent *e) override;
+	void dropEvent(QDropEvent *e) override;
 
 private slots:
 	void on_actionSettings_triggered();

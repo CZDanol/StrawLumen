@@ -10,6 +10,9 @@
     <height>582</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowIcon">
    <iconset resource="../../res/resources.qrc">
     <normaloff>:/logos/lumen_icon_16.png</normaloff>:/logos/lumen_icon_16.png</iconset>

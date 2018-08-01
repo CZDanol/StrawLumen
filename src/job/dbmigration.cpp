@@ -11,6 +11,13 @@ void createDb(DatabaseManager *db)
 
 	// SONGS
 	{
+		/*
+		 * Where to update when adding columns:
+		 * exportdb
+		 * opensongimportdialog
+		 * lumenexportdialog
+		 * lumenimportdialog
+		 * */
 		db->exec("CREATE TABLE songs ("
 				 "id INTEGER PRIMARY KEY,"
 				 "uid TEXT NOT NULL,"
