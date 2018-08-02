@@ -4,6 +4,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QJsonDocument>
 #include <QTextDocument>
+#include <QScrollBar>
 
 #include "gui/mainwindow.h"
 #include "util/execonmainthread.h"
@@ -78,11 +79,13 @@ void SimpleUpdater::show(const QString &newVersion, const QString changeLog)
 	Q_UNUSED(newVersion);
 
 	ui->tbChangelog->document()->setHtml(QString("<html><body>%1</body></html>").arg(changeLog));
+
 	ui->pbProgress->setValue(0);
 	ui->pbProgress->setEnabled(false);
 	ui->btnDownload->setEnabled(true);
 
 	QDialog::show();
+	ui->tbChangelog->verticalScrollBar()->setValue(ui->tbChangelog->verticalScrollBar()->minimum());
 }
 
 void SimpleUpdater::onDownloadFinished()

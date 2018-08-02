@@ -312,6 +312,11 @@ void Presentation_PowerPoint::deactivatePresentation()
 	activeXJobThread->executeNonblocking([this, selfPtr]{
 		auto &pe = *presentationEngine_PowerPoint;
 
+		if(!pe.axPresentation_) {
+			pe.axPresentation_ = nullptr;
+			return;
+		}
+
 		pe.axPresentation_->dynamicCall("Close()");
 		delete pe.axPresentation_;
 

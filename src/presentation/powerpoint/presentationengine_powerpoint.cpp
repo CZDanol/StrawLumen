@@ -45,9 +45,15 @@ void PresentationEngine_PowerPoint::deactivateEngine()
 
 void PresentationEngine_PowerPoint::setBlackScreen(bool set)
 {
+	auto currentPptPresentation = presentationManager->currentPresentation().dynamicCast<Presentation_PowerPoint>();
+	if(!currentPptPresentation.isNull() && currentPptPresentation->isSlideBlackScreen(presentationManager->currentLocalSlideId()))
+		set = true;
+
 	activeXJobThread->executeNonblocking([=]{
-		if(axPresentation_)
-			axSSView_->dynamicCall("SetState(int)", (set || presentationManager->currentPresentation().dynamicCast<Presentation_PowerPoint>()->isSlideBlackScreen(presentationManager->currentLocalSlideId())) ? (int) Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen : (int) Office::PowerPoint::PpSlideShowState::ppSlideShowRunning);
+		if(!axPresentation_)
+			return;
+
+		axSSView_->dynamicCall("SetState(int)", int(set ? Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen : Office::PowerPoint::PpSlideShowState::ppSlideShowRunning));
 	});
 }
 
@@ -65,16 +71,18 @@ void PresentationEngine_PowerPoint::setDisplay_axThread(const QRect &rect)
 
 	// Magical constant that makes everything work. Microsoft...
 	const double ratio = (3.0/4.0);
-	axPresentationWindow_->dynamicCall("SetLeft(double)", (double) rect.left() * ratio);
-	axPresentationWindow_->dynamicCall("SetTop(double)", (double) rect.top() * ratio);
-	axPresentationWindow_->dynamicCall("SetWidth(double)", (double) rect.width() * ratio);
-	axPresentationWindow_->dynamicCall("SetHeight(double)", (double) rect.height() * ratio);
+	axPresentationWindow_->dynamicCall("SetLeft(double)", double(rect.left() * ratio));
+	axPresentationWindow_->dynamicCall("SetTop(double)", double(rect.top() * ratio));
+	axPresentationWindow_->dynamicCall("SetWidth(double)", double(rect.width() * ratio));
+	axPresentationWindow_->dynamicCall("SetHeight(double)",double(rect.height() * ratio));
 }
 
 void PresentationEngine_PowerPoint::onActivateTimer()
 {
 	activeXJobThread->executeNonblocking([=]{
-		if(axPresentation_)
-			axPresentationWindow_->dynamicCall("Activate()");
+		if(!axPresentation_)
+			return;
+
+		axPresentationWindow_->dynamicCall("Activate()");
 	});
 }
