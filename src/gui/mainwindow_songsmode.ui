@@ -802,16 +802,19 @@ Zkratka: Alt+Shift+F</string>
     <string>OpenSong</string>
    </property>
   </action>
-  <action name="actionDeleteChordsInSection">
+  <action name="actionDeleteChords">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/16/Trash Can_16px.png</normaloff>:/icons/16/Trash Can_16px.png</iconset>
    </property>
    <property name="text">
-    <string>Vymazat akordy v sekci</string>
+    <string>Vymazat akordy</string>
+   </property>
+   <property name="toolTip">
+    <string>Vymaže akordy v sekci nebo ve výběru</string>
    </property>
   </action>
-  <action name="actionMoveChordRight">
+  <action name="actionMoveChordsRight">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/16/Right_16px.png</normaloff>:/icons/16/Right_16px.png</iconset>
@@ -826,7 +829,7 @@ Zkratka: Alt+Shift+F</string>
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionMoveChordLeft">
+  <action name="actionMoveChordsLeft">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/16/Left_16px.png</normaloff>:/icons/16/Left_16px.png</iconset>
@@ -848,6 +851,9 @@ Zkratka: Alt+Shift+F</string>
    </property>
    <property name="text">
     <string>Pouze akordy</string>
+   </property>
+   <property name="toolTip">
+    <string>Vymaže ve výběru/v sekci všechny slova a nechá pouze akordy</string>
    </property>
   </action>
  </widget>

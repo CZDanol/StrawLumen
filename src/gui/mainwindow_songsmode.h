@@ -7,7 +7,7 @@
 #include <QStringList>
 #include <QStringListModel>
 #include <QRegularExpressionValidator>
-#include <QSqlQueryModel>
+#include <QTextCursor>
 
 #include "rec/songsection.h"
 
@@ -45,6 +45,7 @@ private:
 
 	void insertSongSection(const SongSection &section, bool positionCursorInMiddle = false);
 	void contentSelectionMorph(const std::function<QString(QString)> &callback);
+	void moveChords(bool right);
 
 	/// Returns position and content of a song section around position pos
 	QPair<int,QString> songSectionAroundPos(int pos);
@@ -79,17 +80,17 @@ private slots:
 	void on_actionAddSongsToPlaylist_triggered();
 	void on_actionExportToOpenSong_triggered();
 	void on_btnCopyChords_pressed();
-	void on_actionDeleteChordsInSection_triggered();
+	void on_actionDeleteChords_triggered();
 	void on_btnAutoFormat_clicked();
-	void on_actionMoveChordRight_triggered();
+	void on_actionMoveChordsRight_triggered();
 	void on_teContent_cursorPositionChanged();
-	void on_actionMoveChordLeft_triggered();
+	void on_actionMoveChordsLeft_triggered();
 	void on_actionOnlyChords_triggered();
 
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_, teContentMenu_;
-	int teContentMenuCursorPos_;
+	QTextCursor textOperationsCursor_;
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;

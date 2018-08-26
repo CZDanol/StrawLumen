@@ -125,14 +125,14 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	// Content text edit
 	{
 		connect(ui->teContent, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTeContentContextMenuRequested(QPoint)));
-		connect(ui->teContent, &SongContentTextEdit::sigAltlLeftPressed, ui->actionMoveChordLeft, &QAction::trigger);
-		connect(ui->teContent, &SongContentTextEdit::sigAltRightPressed, ui->actionMoveChordRight, &QAction::trigger);
+		connect(ui->teContent, &SongContentTextEdit::sigAltlLeftPressed, ui->actionMoveChordsLeft, &QAction::trigger);
+		connect(ui->teContent, &SongContentTextEdit::sigAltRightPressed, ui->actionMoveChordsRight, &QAction::trigger);
 
 		teContentMenu_.clear();
-		teContentMenu_.addAction(ui->actionMoveChordLeft);
-		teContentMenu_.addAction(ui->actionMoveChordRight);
+		teContentMenu_.addAction(ui->actionMoveChordsLeft);
+		teContentMenu_.addAction(ui->actionMoveChordsRight);
 		teContentMenu_.addSeparator();
-		teContentMenu_.addAction(ui->actionDeleteChordsInSection);
+		teContentMenu_.addAction(ui->actionDeleteChords);
 		teContentMenu_.addAction(ui->actionOnlyChords);
 		teContentMenu_.addMenu(&copyChordsMenu_);
 	}
@@ -287,7 +287,7 @@ void MainWindow_SongsMode::updateCopyChordsMenu()
 	for(const SongSectionWithContent &sc : relevantSections) {
 		const QString sourceSectionContent = sc.content;
 		copyChordsMenu_.addAction(sc.section.icon(), sc.section.userFriendlyName(), [this, sourceSectionContent]{
-			const QPair<int, QString> section = songSectionAroundPos(teContentMenuCursorPos_);
+			const QPair<int, QString> section = songSectionAroundPos(textOperationsCursor_.position());
 			QString content = section.second;
 
 			QVector<ChordInSong> chords;
@@ -318,9 +318,9 @@ void MainWindow_SongsMode::updateTeContentMenu()
 
 void MainWindow_SongsMode::updateMoveChordActionsEnabled()
 {
-	const bool enabled =  isSongEditMode_ && chordAroundPos(ui->teContent->toPlainText(), teContentMenuCursorPos_).chord.isValid();
-	ui->actionMoveChordLeft->setEnabled(enabled);
-	ui->actionMoveChordRight->setEnabled(enabled);
+	const bool enabled =  isSongEditMode_ && !chordsInsideSelection(textOperationsCursor_).isEmpty();
+	ui->actionMoveChordsLeft->setEnabled(enabled);
+	ui->actionMoveChordsRight->setEnabled(enabled);
 }
 
 void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool positionCursorInMiddle)
@@ -358,6 +358,66 @@ void MainWindow_SongsMode::contentSelectionMorph(const std::function<QString (QS
 
 	if(hasSelection)
 		ui->teContent->setTextCursor(cursor);
+}
+
+void MainWindow_SongsMode::moveChords(bool right)
+{
+	if(!isSongEditMode_)
+		return;
+
+	QString content = ui->teContent->toPlainText();
+	ChordsInSong chords = chordsInsideSelection(textOperationsCursor_);
+
+	if(right)
+		std::reverse(chords.begin(), chords.end());
+
+	if(chords.isEmpty())
+		return;
+
+	ChordsInSong _;
+	QVector<int> splits = WordSplit::czech(content, _, WordSplit::IncludeNewlines | WordSplit::IncludeChords);
+	int start = content.length(), end = 0;
+
+	for(const ChordInSong &chs : chords) {
+		int i = splits.indexOf(chs.annotationPos);
+
+		if(right) {
+			i++;
+
+			if(splits[i] == chs.annotationPos + chs.annotationLength)
+				i++;
+		} else
+			i--;
+
+		if(i < 0 || i >= splits.length())
+			continue;
+
+		const QString chordAnnotation = content.mid(chs.annotationPos, chs.annotationLength);
+
+		if(right) {
+			content.insert(splits[i], chordAnnotation);
+			content.remove(chs.annotationPos, chs.annotationLength);
+
+			start = qMin(start, splits[i] - chs.annotationLength);
+			end = qMax(end, splits[i]);
+		} else {
+			content.remove(chs.annotationPos, chs.annotationLength);
+			content.insert(splits[i], chordAnnotation);
+
+			start = qMin(start, splits[i]);
+			end = qMax(end, splits[i] + chs.annotationLength);
+		}
+	}
+
+	// Keep the insertion point on minimum
+	QTextCursor cursor(ui->teContent->document());
+	cursor.setPosition(0);
+	cursor.setPosition(content.length(), QTextCursor::KeepAnchor);
+	cursor.insertText(content);
+
+	cursor.setPosition(start);
+	cursor.setPosition(end, QTextCursor::KeepAnchor);
+	ui->teContent->setTextCursor(cursor);
 }
 
 QPair<int, QString> MainWindow_SongsMode::songSectionAroundPos(int pos)
@@ -424,13 +484,17 @@ void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPo
 
 void MainWindow_SongsMode::onTeContentContextMenuRequested(const QPoint &pos)
 {
-	const auto prevPos = teContentMenuCursorPos_;
-	teContentMenuCursorPos_ = ui->teContent->cursorForPosition(pos).position();
+	const auto prevCursor = textOperationsCursor_;
+	const auto cursorForPosition = ui->teContent->cursorForPosition(pos);
+
+	// If we right-clicked inside the selection, we use the selection. Otherwise, we use just the position
+	if(cursorForPosition.position() < textOperationsCursor_.selectionStart() || cursorForPosition.position() >= textOperationsCursor_.selectionEnd())
+		textOperationsCursor_ = cursorForPosition;
 
 	updateTeContentMenu();
 	teContentMenu_.exec(ui->teContent->viewport()->mapToGlobal(pos));
 
-	teContentMenuCursorPos_= prevPos;
+	textOperationsCursor_= prevCursor;
 }
 
 void MainWindow_SongsMode::on_btnNew_clicked()
@@ -647,10 +711,10 @@ void MainWindow_SongsMode::on_actionExportToOpenSong_triggered()
 
 void MainWindow_SongsMode::on_btnCopyChords_pressed()
 {
-	teContentMenuCursorPos_ = ui->teContent->textCursor().position();
-	const QPair<int, QString> section = songSectionAroundPos(teContentMenuCursorPos_);
+	textOperationsCursor_ = ui->teContent->textCursor();
+	const QPair<int, QString> section = songSectionAroundPos(textOperationsCursor_.position());
 
-	if(section.first == -1)
+	if(section.first == -1 && textOperationsCursor_.selectionStart() == textOperationsCursor_.selectionEnd())
 		return standardErrorDialog(tr("Nejprve najeďte kurzorem do sekce, kam chcete zkopírovat akordy."));
 
 	updateCopyChordsMenu();
@@ -659,23 +723,27 @@ void MainWindow_SongsMode::on_btnCopyChords_pressed()
 		return standardErrorDialog(tr("Píseň neobsahuje žádné sekce s textem i akordy."));
 }
 
-void MainWindow_SongsMode::on_actionDeleteChordsInSection_triggered()
+void MainWindow_SongsMode::on_actionDeleteChords_triggered()
 {
-	const QPair<int, QString> section = songSectionAroundPos(teContentMenuCursorPos_);
+	auto cursor = textOperationsCursor_;
 
-	if(section.first == -1)
-		return standardInfoDialog(tr("Vybraná pozice neobsahuje žádnou sekci"));
+	if(cursor.selectionStart() == cursor.selectionEnd()) {
+		const QPair<int, QString> section = songSectionAroundPos(cursor.position());
 
-	static const QRegularExpression rxTrim("^\\s+|\\s+$", QRegularExpression::MultilineOption);
+		if(section.first == -1)
+			return standardInfoDialog(tr("Vybraná pozice neobsahuje žádnou sekci"));
 
-	QString newContent = section.second;
+		cursor.setPosition(section.first);
+		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
+	}
+
+	static const QRegularExpression rxTrim("\u2029\\s+|\\s+\u2029", QRegularExpression::MultilineOption);
+
+	QString newContent = cursor.selectedText();
 	newContent = removeSongChords(newContent);
 	newContent = newContent.trimmed();
 	newContent.remove(rxTrim);
 
-	QTextCursor cursor(ui->teContent->document());
-	cursor.setPosition(section.first);
-	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
 	cursor.insertText(newContent);
 }
 
@@ -713,107 +781,47 @@ void MainWindow_SongsMode::on_btnAutoFormat_clicked()
 	});
 }
 
-void MainWindow_SongsMode::on_actionMoveChordRight_triggered()
+void MainWindow_SongsMode::on_actionMoveChordsRight_triggered()
 {
-	if(!isSongEditMode_)
-		return;
-
-	QString content = ui->teContent->toPlainText();
-	ChordInSong chs = chordAroundPos(content, teContentMenuCursorPos_);
-
-	if(!chs.chord.isValid())
-		return;
-
-	QString chordStr = content.mid(chs.annotationPos, chs.annotationLength);
-
-	ChordsInSong chords;
-	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines | WordSplit::IncludeChords);
-
-	int i = splits.indexOf(chs.annotationPos) + 1;
-
-	if(splits[i] == chs.annotationPos + chs.annotationLength)
-		i++;
-
-	if(i >= splits.length())
-		return;
-
-	const int insertPoint = splits[i] - chs.annotationLength;
-
-	content.remove(chs.annotationPos, chs.annotationLength);
-	content.insert(insertPoint, chordStr);
-
-	// Keep the insertion point on minimum
-	QTextCursor cursor(ui->teContent->document());
-	cursor.setPosition(chs.annotationPos);
-	cursor.setPosition(insertPoint + chordStr.length(), QTextCursor::KeepAnchor);
-	cursor.insertText(content.mid(chs.annotationPos, insertPoint + chordStr.length() - chs.annotationPos));
-
-	cursor.setPosition(insertPoint);
-	ui->teContent->setTextCursor(cursor);
+	moveChords(true);
 }
 
 void MainWindow_SongsMode::on_teContent_cursorPositionChanged()
 {
-	teContentMenuCursorPos_ = ui->teContent->textCursor().position();
+	textOperationsCursor_ = ui->teContent->textCursor();
 	updateMoveChordActionsEnabled();
 }
 
-void MainWindow_SongsMode::on_actionMoveChordLeft_triggered()
+void MainWindow_SongsMode::on_actionMoveChordsLeft_triggered()
 {
-	if(!isSongEditMode_)
-		return;
-
-	QString content = ui->teContent->toPlainText();
-	ChordInSong chs = chordAroundPos(content, teContentMenuCursorPos_);
-
-	if(!chs.chord.isValid())
-		return;
-
-	QString chordStr = content.mid(chs.annotationPos, chs.annotationLength);
-
-	ChordsInSong chords;
-	QVector<int> splits = WordSplit::czech(content, chords, WordSplit::IncludeNewlines | WordSplit::IncludeChords);
-
-	int i = splits.indexOf(chs.annotationPos) - 1;
-	if(i < 0)
-		return;
-
-	const int insertPoint = splits[i];
-
-	content.remove(chs.annotationPos, chs.annotationLength);
-	content.insert(insertPoint, chordStr);
-
-	// Keep the insertion point on minimum
-	QTextCursor cursor(ui->teContent->document());
-	cursor.setPosition(insertPoint);
-	cursor.setPosition(chs.annotationPos + chs.annotationLength, QTextCursor::KeepAnchor);
-	cursor.insertText(content.mid(insertPoint, chs.annotationPos + chs.annotationLength - insertPoint));
-
-	cursor.setPosition(insertPoint);
-	ui->teContent->setTextCursor(cursor);
+	moveChords(false);
 }
 
 void MainWindow_SongsMode::on_actionOnlyChords_triggered()
 {
-	const QPair<int, QString> section = songSectionAroundPos(teContentMenuCursorPos_);
+	auto cursor = textOperationsCursor_;
 
-	if(section.first == -1)
-		return standardInfoDialog(tr("Vybraná pozice neobsahuje žádnou sekci"));
+	if(cursor.selectionStart() == cursor.selectionEnd()) {
+		const QPair<int, QString> section = songSectionAroundPos(cursor.position());
 
-	const QString oldContent = section.second;
+		if(section.first == -1)
+			return standardInfoDialog(tr("Vybraná pozice neobsahuje žádnou sekci"));
+
+		cursor.setPosition(section.first);
+		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
+	}
+
+	const QString oldContent = cursor.selectedText();
 
 	QString newContent;
 	int prev = 0;
 	for(const ChordInSong &chs : songChords(oldContent)) {
-		if(oldContent.mid(prev, chs.annotationPos-prev).contains('\n'))
-			newContent += '\n';
+			if(oldContent.mid(prev, chs.annotationPos-prev).contains(QChar(0x2029)))
+					newContent += QChar(0x2029);
 
-		newContent += oldContent.mid(chs.annotationPos, chs.annotationLength);
-		prev = chs.annotationPos;
+			newContent += oldContent.mid(chs.annotationPos, chs.annotationLength);
+			prev = chs.annotationPos;
 	}
 
-	QTextCursor cursor(ui->teContent->document());
-	cursor.setPosition(section.first);
-	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
 	cursor.insertText(newContent);
 }

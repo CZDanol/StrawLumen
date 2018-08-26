@@ -287,7 +287,7 @@ void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
 
 void MainWindow_PresentationMode::onPlaylistModelReset()
 {
-	onPresentationSelected(QModelIndex());
+	onPresentationSelected(ui->tvPlaylist->selectionModel()->currentIndex());
 }
 
 void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &point)

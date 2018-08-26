@@ -1,5 +1,7 @@
 #include "chord.h"
 
+#include <QTextDocument>
+
 #include "job/wordsplit.h"
 
 Chord::Chord()
@@ -258,4 +260,27 @@ ChordInSong chordAroundPos(const QString &song, int pos)
 		return ChordInSong();
 
 	return ChordInSong{Chord(m.captured(2)), annotationStart, m.capturedLength()};
+}
+
+QVector<ChordInSong> chordsInsideSelection(const QString &song, int selectionStart, int selectionEnd)
+{
+	auto chords = songChords(song);
+	ChordsInSong result;
+
+	for(const ChordInSong &chs : chords) {
+		if(chs.annotationPos + chs.annotationLength <= selectionStart)
+			continue;
+
+		if(chs.annotationPos >= selectionEnd)
+			break;
+
+		result += chs;
+	}
+
+	return result;
+}
+
+ChordsInSong chordsInsideSelection(const QTextCursor &textCursor)
+{
+	return chordsInsideSelection(textCursor.document()->toPlainText(), textCursor.selectionStart(), textCursor.selectionEnd());
 }

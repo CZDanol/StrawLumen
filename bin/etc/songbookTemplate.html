@@ -34,7 +34,7 @@
 						<td class="chordName"></td>
 					</tr>
 					<tr>
-						<td><span class="textFollowingChord"></span></td>
+						<td><span class="textFollowingChord"></span><span class="separator"><span>-</span></span></td>
 					</tr>
 				</table>
 			</span>
@@ -106,6 +106,10 @@
 			
 			.songsContentWrapper {
 				
+			}
+			
+			.songsContent, .chord {
+				white-space: nowrap;
 			}
 			
 			.generateNumbering .songName:before {
@@ -184,6 +188,8 @@
 			}
 			
 			.chord td {
+				position: relative;
+				overflow: hidden;
 				padding: 0;
 				height: 1em;
 			}
@@ -199,6 +205,27 @@
 			.textFollowingChord {
 				/* It weirdly collapses if I don't do this */
 				border-left: .01mm solid transparent;
+				display: block;
+				float: left;
+			}
+			
+			.chord:not(.withSeparator) .separator {
+				display: none;
+			}
+			
+			.withSeparator .separator {
+				display: block;
+				position: relative;
+				overflow: hidden;
+				height: 1em;
+			}
+			
+			.withSeparator .separator span {
+				position: absolute;
+				overflow: hidden;
+				text-align: center;
+				left: 2pt;
+				right: 2pt;
 			}
 			
 			.textFollowingChord, .text {
@@ -246,6 +273,8 @@
 					// Then either ~6-16 characters or spaces followed by a word end (this is to match more words when the first word is too short)
 					//var chordTextRegex = /(\S[\S \t]{0,8}\S(?:[ \t]|$)|\S*)([\s\S]*)/u;
 					var chordTextRegex = /([^ \t\n].{0,8}(?:[^ \t])*?|)(?=[ \t\n]|$)([\s\S]*)/u;
+					var startsWithLetterRegex = /^\p{L}/u;
+					var endsWithLetterRegex = /\p{L}$/u;
 					
 					for(songI in data.songs) {
 						var song = data.songs[songI];
@@ -279,27 +308,46 @@
 							
 							sectionElem.querySelector(".sectionName").textContent = section.shorthandName;
 							
+							var previousChordSectionElem = null;
+							var previousChordSectionMightNeedSep = false;
+							
 							for(var chordSectionI in section.content) {
 								var chordSection = section.content[chordSectionI];
-								
+									
+								if(previousChordSectionMightNeedSep && chordSection.textFollowing.match(startsWithLetterRegex))
+									previousChordSectionElem.classList.add("withSeparator");
+									
 								if(!chordSection.chordName || !data.generateChords) {
-									var elem = textTemplate.cloneNode(true);
-									elem.textContent = chordSection.textFollowing;
-									sectionContentElem.appendChild(elem);
+									var textElem = textTemplate.cloneNode(true);
+									textElem.textContent = chordSection.textFollowing;
+									sectionContentElem.appendChild(textElem);
+									
+									previousChordSectionMightNeedSep = false;
 									continue;
 								}
 								
 								var splitText = chordTextRegex.exec(chordSection.textFollowing);
 								
-								var chordElem = chordTemplate.cloneNode(true);
-								chordElem.querySelector(".chordName").textContent = chordSection.chordName;
-								chordElem.querySelector(".textFollowingChord").textContent = splitText[1];
-								sectionContentElem.appendChild(chordElem);
+								var elem = chordTemplate.cloneNode(true);								
+								elem.querySelector(".chordName").textContent = chordSection.chordName;
+								elem.querySelector(".textFollowingChord").textContent = splitText[1];
+								
+								sectionContentElem.appendChild(elem);
 							
 								if(splitText[2]) {
-									var elem = textTemplate.cloneNode(true);
-									elem.textContent = splitText[2];
-									sectionContentElem.appendChild(elem);
+									textElem = textTemplate.cloneNode(true);
+									textElem.textContent = splitText[2];
+									sectionContentElem.appendChild(textElem);
+									
+									previousChordSectionMightNeedSep = false;
+								} else {
+								
+									if(chordSection.textFollowing.match(endsWithLetterRegex)) {
+										previousChordSectionElem = elem;
+										previousChordSectionMightNeedSep = true;
+										
+									} else if(chordSection.textFollowing.trim() != "")
+										previousChordSectionMightNeedSep = false;
 								}
 							}
 						}
@@ -328,7 +376,10 @@
 						document.body.querySelector(".lyricsColumnCount").style["column-count"] = data.lyricsColumnCount;
 					}
 					
-					document.body.querySelector(".tocColumnCount").style["column-count"] = data.tocColumnCount;
+					var sel = document.body.querySelectorAll(".tocColumnCount");
+					for(i = 0; i < sel.length; i++) {
+						sel[i].style["column-count"] = data.tocColumnCount;
+					}
 					
 					document.body.querySelector(".fontSize").style["font-size"] = data.fontSize + "pt";
 				}

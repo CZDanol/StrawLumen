@@ -10,10 +10,10 @@
 #include "rec/presentationbackground.h"
 
 template<typename T>
-inline void loadFromJSON(T &subj, const QJsonValue &json) { Q_UNUSED(subj); Q_UNUSED(json); __ERROR__; }
+inline void loadFromJSON(T &subj, const QJsonValue &json) { Q_UNUSED(subj); Q_UNUSED(json); throw 0; }
 
 template<typename T>
-inline QJsonValue toJSON(const T &subj) { Q_UNUSED(subj); __ERROR__; }
+inline QJsonValue toJSON(const T &subj) { Q_UNUSED(subj); throw 0; }
 
 #define JSON_HEADERS(T) \
 	template<> void loadFromJSON<T>(T &subj, const QJsonValue &json);\

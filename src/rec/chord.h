@@ -4,6 +4,7 @@
 #include <QString>
 #include <QVector>
 #include <QRegularExpression>
+#include <QTextCursor>
 
 class Chord
 {
@@ -53,6 +54,10 @@ ChordsInSong songChords(const QString &song);
 
 /// Returns chord that is around (its annotation includes pos) the specified position or invalid chord
 ChordInSong chordAroundPos(const QString &song, int pos);
+
+/// Returns all chords that are inside the selection (at least partially)
+ChordsInSong chordsInsideSelection(const QString &song, int selectionStart, int selectionEnd);
+ChordsInSong chordsInsideSelection(const QTextCursor &textCursor);
 
 /// Removes all chord annotations from the song
 QString removeSongChords(const QString &song);

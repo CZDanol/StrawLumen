@@ -1,3 +1,11 @@
+- prezentace se nezapne na černou obrazovku při PPT (ale na klasika)
+- nový program - když se dá nový, tak se nevybere nově přidaný (upravovaný) v listboxu
+- vložit akordy ze schránky
+- akordy a posouvání akordů ať funguje i s výběrem
+- current change nefunguuej upe dobře v playlistu
+- danovi chybí dll
+
+- ukládání výběru písniček (import/export/zpěvníky)
 - text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
 - bug - když se přidá vlastní pořadí u položky -> crash  -- opreaveno?
 - když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
