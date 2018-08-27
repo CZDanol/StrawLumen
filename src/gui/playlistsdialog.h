@@ -15,11 +15,11 @@ class PlaylistsDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit PlaylistsDialog(QWidget *parent = 0);
+	explicit PlaylistsDialog(QWidget *parent = nullptr);
 	~PlaylistsDialog();
 
 public:
-	void show();
+	void show(bool save);
 
 public slots:
 	void saveWorkingPlaylist(qlonglong playlistId);

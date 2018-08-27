@@ -341,13 +341,13 @@ void MainWindow_PresentationMode::onSaveRequested()
 	const qlonglong lastTouchPlaylistId = playlistsDialog()->lastTouchPlaylistId();
 
 	if(lastTouchPlaylistId == -1) {
-		playlistsDialog()->show();
+		playlistsDialog()->show(true);
 		return;
 	}
 
 	QString name = db->selectValue("SELECT name, lastTouch FROM playlists WHERE id = ?", {lastTouchPlaylistId}).toString();
 	if(!standardConfirmDialog(tr("Uložit program jako \"%1\"?").arg(name))) {
-		playlistsDialog()->show();
+		playlistsDialog()->show(true);
 		return;
 	}
 
@@ -507,7 +507,7 @@ void MainWindow_PresentationMode::on_actionEditPresentation_triggered()
 
 void MainWindow_PresentationMode::on_actionClearPlaylist_triggered()
 {
-	if(!standardConfirmDialog(tr("Opravdu vymazat všechny položky programu?")))
+	if(!askSaveChanges())
 		return;
 
 	playlistsDialog()->clearLastTouchPlaylistId();
@@ -519,9 +519,9 @@ void MainWindow_PresentationMode::on_btnPlaylists_pressed()
 {
 	playlistsMenu_.clear();
 
+playlistsMenu_.addAction(ui->actionClearPlaylist);
 	playlistsMenu_.addAction(ui->actionSavePlaylist);
 	playlistsMenu_.addAction(ui->actionLoadPlaylist);
-	playlistsMenu_.addAction(ui->actionClearPlaylist);
 
 	static const QIcon saveIcon(":/icons/16/Save_16px.png");
 	static const QIcon loadIcon(":/icons/16/Open_16px.png");
@@ -550,10 +550,10 @@ void MainWindow_PresentationMode::on_btnPlaylists_pressed()
 
 void MainWindow_PresentationMode::on_actionSavePlaylist_triggered()
 {
-	playlistsDialog()->show();
+	playlistsDialog()->show(true);
 }
 
 void MainWindow_PresentationMode::on_actionLoadPlaylist_triggered()
 {
-	playlistsDialog()->show();
+	playlistsDialog()->show(false);
 }

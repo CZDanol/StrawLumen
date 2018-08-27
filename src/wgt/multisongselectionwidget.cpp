@@ -114,3 +114,8 @@ void MultiSongSelectionWidget::on_tvSelection_activated(const QModelIndex &index
 {
 	selectionModel_.deleteItem(selectionModel_.itemAt(index));
 }
+
+void MultiSongSelectionWidget::on_btnRemoveAll_clicked()
+{
+	selectionModel_.deleteItems(ui->wgtSongList->rowIds());
+}

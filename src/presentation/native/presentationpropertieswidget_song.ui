@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>363</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -283,12 +283,6 @@
    </slots>
   </customwidget>
   <customwidget>
-   <class>PresentationStylePreviewWidget</class>
-   <extends>QWidget</extends>
-   <header>wgt/presentationstylepreviewwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>PresentationBackgroundSelectionWidget</class>
    <extends>QWidget</extends>
    <header>wgt/presentationbackgroundselectionwidget.h</header>
@@ -296,6 +290,12 @@
    <slots>
     <signal>sigPresentationBackgroundChangedByUser(PresentationBackground)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>PresentationStylePreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/presentationstylepreviewwidget.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>WordCompletingLineEdit</class>
@@ -309,6 +309,12 @@
  <tabstops>
   <tabstop>lnSlideOrder</tabstop>
   <tabstop>btnAddSlideOrderItem</tabstop>
+  <tabstop>cbEmptySlideBefore</tabstop>
+  <tabstop>cbEmptySlideAfter</tabstop>
+  <tabstop>cbIgnoreEmptySlides</tabstop>
+  <tabstop>wgtStyle</tabstop>
+  <tabstop>wgtBackground</tabstop>
+  <tabstop>btnEditSong</tabstop>
  </tabstops>
  <resources>
   <include location="../../../res/resources.qrc"/>

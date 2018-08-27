@@ -42,7 +42,33 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="QPushButton" name="btnRemoveAll">
+        <property name="toolTip">
+         <string>Odebere všechny aktuálně vyfiltrované písně z výběru.</string>
+        </property>
+        <property name="text">
+         <string>Odebrat vše</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../res/resources.qrc">
+          <normaloff>:/icons/16/Back Arrow_16px.png</normaloff>:/icons/16/Back Arrow_16px.png</iconset>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnAddAll">
+        <property name="toolTip">
+         <string>Přidá všechny aktuálně vyfiltrované písně do výběru.</string>
+        </property>
         <property name="text">
          <string>Přidat vše</string>
         </property>
@@ -81,6 +107,9 @@
       </property>
       <item>
        <widget class="QPushButton" name="btnClear">
+        <property name="toolTip">
+         <string>Odebere všechny písně z výběru.</string>
+        </property>
         <property name="text">
          <string>Vyčistit</string>
         </property>

@@ -136,6 +136,7 @@
      <string>Program</string>
     </property>
     <addaction name="actionGenerateDocuments"/>
+    <addaction name="actionBulkEditSongs"/>
     <addaction name="separator"/>
     <addaction name="actionBackgrounds"/>
     <addaction name="actionStyles"/>
@@ -216,6 +217,15 @@
    </property>
    <property name="text">
     <string>Zpětná vazba</string>
+   </property>
+  </action>
+  <action name="actionBulkEditSongs">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Blockchain Technology_16px.png</normaloff>:/icons/16/Blockchain Technology_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Hromadná úprava písní</string>
    </property>
   </action>
  </widget>

@@ -12,6 +12,7 @@
 #include "gui/stylesdialog.h"
 #include "gui/mainwindow_songsmode.h"
 #include "gui/aboutdialog.h"
+#include "gui/bulkeditsongsdialog.h"
 #include "importexport/documentgenerationdialog.h"
 #include "importexport/lumenimportdialog.h"
 #include "importexport/opensongimportdialog.h"
@@ -204,4 +205,9 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionSendFeedback_triggered()
 {
 	feedbackDialog()->show();
+}
+
+void MainWindow::on_actionBulkEditSongs_triggered()
+{
+	bulkEditSongsDialog()->show();
 }

@@ -43,14 +43,11 @@ void PresentationEngine_PowerPoint::deactivateEngine()
 	activateTimer_.stop();
 }
 
-#include <QDebug>
 void PresentationEngine_PowerPoint::setBlackScreen(bool set)
 {
 	auto currentPptPresentation = presentationManager->currentPresentation().dynamicCast<Presentation_PowerPoint>();
 	if(!currentPptPresentation.isNull() && currentPptPresentation->isSlideBlackScreen(presentationManager->currentLocalSlideId()))
 		set = true;
-
-	qDebug() << set << currentPptPresentation.isNull() << presentationManager->currentPresentation().isNull();
 
 	activeXJobThread->executeNonblocking([=]{
 		if(!axPresentation_)

@@ -119,7 +119,8 @@ SOURCES += main.cpp \
     job/dbmigration.cpp \
     job/wordsplit.cpp \
     util/regex.cpp \
-    util/macroutils.cpp
+    util/macroutils.cpp \
+    gui/bulkeditsongsdialog.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -152,7 +153,8 @@ FORMS += \
     gui/playlistsdialog.ui \
     presentation/native/presentationpropertieswidget_customslide.ui \
     strawapi/simpleupdater.ui \
-    strawapi/feedbackdialog.ui
+    strawapi/feedbackdialog.ui \
+    gui/bulkeditsongsdialog.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -237,7 +239,8 @@ HEADERS += \
     strawapi/feedbackdialog.h \
     job/wordsplit.h \
     util/regex.h \
-    util/macroutils.h
+    util/macroutils.h \
+    gui/bulkeditsongsdialog.h
 
 RESOURCES += \
     ../res/resources.qrc

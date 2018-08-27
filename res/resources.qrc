@@ -215,5 +215,8 @@
         <file>icons/16/Left_16px.png</file>
         <file>icons/16/Right_16px.png</file>
         <file>icons/16/Paste_16px.png</file>
+        <file>icons/16/Blockchain Technology_16px.png</file>
+        <file>icons/16/Minus_16px.png</file>
+        <file>icons/16/Back Arrow_16px.png</file>
     </qresource>
 </RCC>

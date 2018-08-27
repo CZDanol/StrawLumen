@@ -28,8 +28,12 @@ PlaylistsDialog::~PlaylistsDialog()
 	delete ui;
 }
 
-void PlaylistsDialog::show()
+void PlaylistsDialog::show(bool save)
 {
+	ui->btnSave->setVisible(save);
+	ui->btnLoad->setVisible(!save);
+	ui->btnNew->setVisible(save);
+
 	requery();
 	updateUiEnabled();
 	QDialog::show();
@@ -85,6 +89,11 @@ void PlaylistsDialog::updateUiEnabled()
 	const QListWidgetItem *i = ui->lstPlaylists->currentItem();
 	const bool isEditableItem = i && (i->flags() & Qt::ItemIsEditable);
 
+	if(i) {
+		ui->btnSave->setText(tr("Uložit jako '%1'").arg(i->text()));
+		ui->btnLoad->setText(tr("Načíst '%1'").arg(i->text()));
+	}
+
 	ui->btnRename->setEnabled(isEditableItem);
 	ui->btnDelete->setEnabled(isEditableItem);
 	ui->btnLoad->setEnabled(isEditableItem);
@@ -97,12 +106,12 @@ void PlaylistsDialog::requery()
 
 	ui->lstPlaylists->clear();
 
-	/*{
+	{
 		QListWidgetItem *i = new QListWidgetItem();
 		i->setText(tr("(aktuální program)"));
 		i->setData(Qt::UserRole, -1);
 		ui->lstPlaylists->addItem(i);
-	}*/
+	}
 
 	QSqlQuery q = db->selectQuery("SELECT name, id FROM playlists ORDER BY name ASC");
 	while(q.next()) {
@@ -136,7 +145,9 @@ void PlaylistsDialog::on_btnNew_clicked()
 		i->setText(playlistName);
 		i->setData(Qt::UserRole, playlistId);
 		i->setFlags(i->flags() | Qt::ItemIsEditable);
+
 		ui->lstPlaylists->addItem(i);
+		ui->lstPlaylists->setCurrentItem(i);
 		ui->lstPlaylists->editItem(i);
 	}
 }
@@ -221,5 +232,8 @@ void PlaylistsDialog::on_btnDelete_clicked()
 
 void PlaylistsDialog::on_lstPlaylists_itemActivated(QListWidgetItem *)
 {
-	//ui->btnLoad->click();
+	if(ui->btnLoad->isVisible())
+		ui->btnLoad->click();
+	else
+		ui->btnSave->click();
 }

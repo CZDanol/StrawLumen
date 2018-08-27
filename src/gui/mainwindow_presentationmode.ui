@@ -693,10 +693,10 @@ PresentationPropertiesWidget
   <action name="actionClearPlaylist">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/16/Broom_16px.png</normaloff>:/icons/16/Broom_16px.png</iconset>
+     <normaloff>:/icons/16/File_16px.png</normaloff>:/icons/16/File_16px.png</iconset>
    </property>
    <property name="text">
-    <string>Vymazat program</string>
+    <string>Nový program</string>
    </property>
   </action>
   <action name="actionSavePlaylist">

@@ -39,6 +39,8 @@ private slots:
 
 	void on_tvSelection_activated(const QModelIndex &index);
 
+	void on_btnRemoveAll_clicked();
+
 private:
 	Ui::MultiSongSelectionWidget *ui;
 	SongRecordItemModel selectionModel_;

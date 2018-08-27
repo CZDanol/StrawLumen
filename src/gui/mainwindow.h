@@ -49,6 +49,8 @@ private slots:
 
 	void on_actionSendFeedback_triggered();
 
+	void on_actionBulkEditSongs_triggered();
+
 private:
 	Ui::MainWindow *ui;
 

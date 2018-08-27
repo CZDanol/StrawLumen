@@ -278,7 +278,7 @@
      <item>
       <widget class="QPushButton" name="btnSave">
        <property name="text">
-        <string>Uložit</string>
+        <string>Uložit jako</string>
        </property>
        <property name="icon">
         <iconset resource="../../res/resources.qrc">

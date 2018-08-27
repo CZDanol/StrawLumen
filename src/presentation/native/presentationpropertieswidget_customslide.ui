@@ -187,6 +187,12 @@
    </slots>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>wgtStyle</tabstop>
+  <tabstop>wgtBackground</tabstop>
+  <tabstop>lnTitle</tabstop>
+  <tabstop>teText</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../res/resources.qrc"/>
  </resources>

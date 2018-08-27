@@ -1,9 +1,9 @@
-- prezentace se nezapne na černou obrazovku při PPT (ale na klasika)
 - nový program - když se dá nový, tak se nevybere nově přidaný (upravovaný) v listboxu
 - dialog pro hromadné přidávání/odebírání štítků
-"- našeptávač při psaní názvu štítku - při jeho použití se dubluje psané slovo" (DM)
-- vložit akordy ze schránky
+- problém s našeptávačem, když má štítek víc slov
 - current change nefunguuej upe dobře v playlistu
+- systém ukládání programů není úplně ideální
+- nový program - tázací dialog, přidat možnost "uložit a nový"
 
 - ukládání výběru písniček (import/export/zpěvníky)
 - text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
@@ -16,7 +16,7 @@
 
 ??? - načíst - program prázdný - nahlásit ???
 
-- možnost exportovat/importovat i celé programy (embed ppt prezentace?)
+- možnost exportovat/importovat i celé programy (embed ppt prezentace, styly, atp)
 - reentrant splashscreen
 
 - refresh scroll u item viewů, když se refreshujou

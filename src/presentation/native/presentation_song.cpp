@@ -27,6 +27,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 	return result;
 }
 
+#include "util/standarddialogs.h"
 QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonObject &json)
 {
 	QSharedPointer<Presentation_Song> result(new Presentation_Song());
@@ -44,7 +45,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 
 	{
 		PresentationStyle style;
-		style.loadFromDb((qlonglong) json["styleId"].toDouble());
+		style.loadFromDb(qlonglong(json["styleId"].toDouble()));
 		if(!json["background"].isNull()) {
 			PresentationBackground background;
 			background.loadFromJSON(json["background"]);
@@ -142,6 +143,7 @@ bool Presentation_Song::loadFromDb(qlonglong songId)
 bool Presentation_Song::loadFromDb_Uid(const QString &uid)
 {
 	const QSqlRecord rec = db->selectRowDef("SELECT * FROM songs WHERE uid = ?", {uid});
+
 	if(rec.isEmpty())
 		return false;
 
