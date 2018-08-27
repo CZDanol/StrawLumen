@@ -1,18 +1,19 @@
-- nový program - když se dá nový, tak se nevybere nově přidaný (upravovaný) v listboxu
+Aktuálně
 - dialog pro hromadné přidávání/odebírání štítků
 - problém s našeptávačem, když má štítek víc slov
-- current change nefunguuej upe dobře v playlistu
-- systém ukládání programů není úplně ideální
-- nový program - tázací dialog, přidat možnost "uložit a nový"
-
-- ukládání výběru písniček (import/export/zpěvníky)
-- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
-- bug - když se přidá vlastní pořadí u položky -> crash  -- opreaveno?
-- když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - dávat jako první výsledky ty, které sedí názvem a autorem (potom teprv text)
+- položka: Obrázky
+- položka: Video
+
+Do budoucna
+- systém ukládání programů není úplně ideální
+- ukládání výběru písniček (import/export/zpěvníky)
+- nový program - tázací dialog, přidat možnost "uložit a nový"
+- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
+- když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - když se nesází akordy, tak trim mezery před/za akordama
 - [[komentář jenom při sázení akordů]]
-- hromadné přidávání/odebírání štítků
+- vzorník barev u color selectu
 
 ??? - načíst - program prázdný - nahlásit ???
 
@@ -24,7 +25,6 @@
 - možnost duplikovat položky playlistu?
 - associovat lumen exported file na otevření v lumenu
 
-- položka: Obrázky
 - průzkumník souborů
 - možnost uložit výběr u vytváření zpěvníku (aby se dalo přidávat)
 - podpora pro jeden monitor?
@@ -32,8 +32,6 @@
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
-
-- vzorník barev u color selectu
 
 Automatická powerpoint prezentace:
 - přejít na další prezentaci v takový a takový čas

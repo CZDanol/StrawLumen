@@ -86,7 +86,7 @@
            </widget>
           </item>
           <item row="0" column="3">
-           <widget class="SongTagsLineEdit" name="leAddTags"/>
+           <widget class="SongTagsLineEdit" name="lnAddTags"/>
           </item>
           <item row="1" column="2">
            <spacer name="horizontalSpacer_5">
@@ -128,7 +128,7 @@
            </spacer>
           </item>
           <item row="1" column="3">
-           <widget class="SongTagsLineEdit" name="leRemoveTags"/>
+           <widget class="SongTagsLineEdit" name="lnRemoveTags"/>
           </item>
           <item row="0" column="1">
            <widget class="QLabel" name="label_18">
@@ -219,15 +219,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>SongTagsLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>wgt/songtagslineedit.h</header>
+  </customwidget>
+  <customwidget>
    <class>MultiSongSelectionWidget</class>
    <extends>QWidget</extends>
    <header>wgt/multisongselectionwidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SongTagsLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>wgt/songtagslineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

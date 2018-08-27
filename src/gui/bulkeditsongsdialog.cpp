@@ -3,6 +3,7 @@
 
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
+#include "util/standarddialogs.h"
 #include "job/db.h"
 
 BulkEditSongsDialog::BulkEditSongsDialog(QWidget *parent) :
@@ -33,20 +34,45 @@ void BulkEditSongsDialog::on_btnGenerate_clicked()
 	splashscreen->asyncAction(tr("Provádění úprav"), false, [=](){
 		db->beginTransaction();
 
-		QString songIdList;
-		for(const qlonglong id : ui->wgtSongSelection->selectedSongs()) {
-			if(!songIdList.isEmpty())
-				songIdList += ",";
+		QSqlQuery q(db->database());
 
-			songIdList += QString::number(id);
+		// Remove tags
+		{
+			const auto tags = ui->lnRemoveTags->toTags();
+			q.prepare("DELETE FROM song_tags WHERE song = ? AND tag = ?");
+
+			for(const qlonglong song : ui->wgtSongSelection->selectedSongs()) {
+				q.bindValue(0, song);
+
+				for(const QString &tag : tags) {
+					q.bindValue(1, tag);
+					q.exec();
+				}
+			}
 		}
 
-		/*db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
-		for(QString tag : ui->lnTags->toTags())
-			db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
-	*/
+		// Add tags
+		{
+			const auto tags = ui->lnAddTags->toTags();
+			q.prepare("INSERT INTO song_tags(song, tag) VALUES(?, ?)");
+
+			for(const qlonglong song : ui->wgtSongSelection->selectedSongs()) {
+				q.bindValue(0, song);
+
+				for(const QString &tag : tags) {
+					q.bindValue(1, tag);
+					q.exec();
+				}
+			}
+		}
+
 		db->commitTransaction();
 	});
 
-	accept();
+	for(const qlonglong song : ui->wgtSongSelection->selectedSongs())
+		emit db->sigSongChanged(song);
+
+	emit db->sigSongListChanged();
+
+	standardSuccessDialog(tr("Úpravy byly provedeny."), this);
 }
