@@ -44,7 +44,7 @@ private:
 	void updateMoveChordActionsEnabled();
 
 	void insertSongSection(const SongSection &section, bool positionCursorInMiddle = false);
-	void contentSelectionMorph(const std::function<QString(QString)> &callback);
+	void contentSelectionMorph(const std::function<QString(QString)> &callback, bool onlySection);
 	void moveChords(bool right);
 
 	/// Returns position and content of a song section around position pos
@@ -90,7 +90,6 @@ private slots:
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_, teContentMenu_;
-	QTextCursor textOperationsCursor_;
 
 private:
 	QRegularExpressionValidator slideOrderValidator_;
