@@ -4,9 +4,20 @@
 #include <QAbstractItemView>
 #include <QScrollBar>
 
+int lastEndOf(const QRegularExpression &regExp, const QString &str) {
+	int result = str.lastIndexOf(regExp);
+
+	if(result == -1)
+		return 0;
+
+	result += regExp.match(str, result).capturedLength();
+	return result;
+}
+
 WordCompletingLineEdit::WordCompletingLineEdit(QWidget *parent) : ExtendedLineEdit(parent)
 {
-
+	static QRegularExpression defaultWordSeparator("\\W+", QRegularExpression::UseUnicodePropertiesOption);
+	wordSeparator_ = defaultWordSeparator;
 }
 
 void WordCompletingLineEdit::setCompleter(QCompleter *completer)
@@ -31,9 +42,14 @@ void WordCompletingLineEdit::setCompleterSuffix(const QString &suffix)
 	completerSuffix_ = suffix;
 }
 
+void WordCompletingLineEdit::setWordSeparator(const QRegularExpression &sep)
+{
+	wordSeparator_ = sep;
+}
+
 void WordCompletingLineEdit::keyPressEvent(QKeyEvent *e)
 {
-	QLineEdit::keyPressEvent(e);
+	ExtendedLineEdit::keyPressEvent(e);
 
 	if (!c_)
 		return;
@@ -57,14 +73,12 @@ void WordCompletingLineEdit::keyPressEvent(QKeyEvent *e)
 
 void WordCompletingLineEdit::onCompleterActivated(const QString &replacement)
 {
-	static const QRegularExpression nonwordRegexp("\\W", QRegularExpression::UseUnicodePropertiesOption);
-
 	QString text_ = text();
 	const int cursorPos = cursorPosition();
-	const int start = text_.left(cursorPos).lastIndexOf(nonwordRegexp) + 1;
+	const int start = lastEndOf(wordSeparator_, text_.left(cursorPos));
 
 	QString realReplacement = replacement;
-	int end = cursorPos + text_.mid(cursorPos).indexOf(nonwordRegexp);
+	int end = cursorPos + text_.mid(cursorPos).indexOf(wordSeparator_);
 	if(end < cursorPos) {
 		end = text_.length();
 		realReplacement += completerSuffix_;
@@ -78,13 +92,11 @@ void WordCompletingLineEdit::onCompleterActivated(const QString &replacement)
 
 void WordCompletingLineEdit::onCompleterHighlighted(const QString &replacement)
 {
-	static const QRegularExpression nonwordRegexp("\\W", QRegularExpression::UseUnicodePropertiesOption);
-
 	QString text_ = text();
 	const int cursorPos = cursorPosition();
-	const int start = text_.left(cursorPos).lastIndexOf(nonwordRegexp) + 1;
+	const int start = lastEndOf(wordSeparator_, text_.left(cursorPos));
 
-	int end = cursorPos + text_.mid(cursorPos).indexOf(nonwordRegexp);
+	int end = cursorPos + text_.mid(cursorPos).indexOf(wordSeparator_);
 	if(end < cursorPos)
 		end = text_.length();
 
@@ -97,11 +109,9 @@ void WordCompletingLineEdit::onCompleterHighlighted(const QString &replacement)
 
 QString WordCompletingLineEdit::wordPrefixAtCursor() const
 {
-	static const QRegularExpression nonwordRegexp("\\W", QRegularExpression::UseUnicodePropertiesOption);
-
 	const QString text_ = text();
 	const int cursorPos = cursorPosition();
-	const int start = text_.left(cursorPos).lastIndexOf(nonwordRegexp) + 1;
+	const int start = lastEndOf(wordSeparator_, text_.left(cursorPos));
 
 	return text_.mid(start, cursorPos - start);
 }

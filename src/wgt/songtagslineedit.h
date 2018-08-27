@@ -18,7 +18,10 @@ public:
 	QSet<QString> toTags() const;
 
 protected:
-	virtual void focusInEvent(QFocusEvent *e) override;
+	void showEvent(QShowEvent *e) override;
+
+private slots:
+	void updateTagList();
 
 private:
 	QCompleter completer_;

@@ -2,6 +2,7 @@
 #define WORDCOMPLETINGLINEEDIT_H
 
 #include <QCompleter>
+#include <QRegularExpression>
 
 #include "wgt/extendedlineedit.h"
 
@@ -17,6 +18,7 @@ public:
 	QCompleter *completer() const;
 
 	void setCompleterSuffix(const QString &suffix);
+	void setWordSeparator(const QRegularExpression &sep);
 
 protected:
 	void keyPressEvent(QKeyEvent *e);
@@ -30,6 +32,7 @@ private:
 
 private:
 	QCompleter *c_ = nullptr;
+	QRegularExpression wordSeparator_;
 	QString completerSuffix_;
 
 };

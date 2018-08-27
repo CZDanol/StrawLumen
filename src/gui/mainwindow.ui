@@ -136,6 +136,7 @@
      <string>Program</string>
     </property>
     <addaction name="actionGenerateDocuments"/>
+    <addaction name="separator"/>
     <addaction name="actionBulkEditSongs"/>
     <addaction name="separator"/>
     <addaction name="actionBackgrounds"/>
