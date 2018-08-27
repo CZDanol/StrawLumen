@@ -1,9 +1,9 @@
 - prezentace se nezapne na černou obrazovku při PPT (ale na klasika)
 - nový program - když se dá nový, tak se nevybere nově přidaný (upravovaný) v listboxu
+- dialog pro hromadné přidávání/odebírání štítků
+"- našeptávač při psaní názvu štítku - při jeho použití se dubluje psané slovo" (DM)
 - vložit akordy ze schránky
-- akordy a posouvání akordů ať funguje i s výběrem
 - current change nefunguuej upe dobře v playlistu
-- danovi chybí dll
 
 - ukládání výběru písniček (import/export/zpěvníky)
 - text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář

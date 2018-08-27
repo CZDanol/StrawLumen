@@ -9,6 +9,8 @@
 #include <QDateTime>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QClipboard>
+#include <QMimeData>
 
 #include "gui/splashscreen.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -284,6 +286,20 @@ void MainWindow_SongsMode::updateCopyChordsMenu()
 
 	copyChordsMenu_.clear();
 
+	if(QApplication::clipboard()->mimeData()->hasText()) {
+		copyChordsMenu_.addAction(QIcon(":/icons/16/Paste_16px.png"), tr("Schránka"), [this]{
+			contentSelectionMorph([](QString str){
+				QVector<ChordInSong> chords;
+				QString newStr = removeSongChords(str, chords);
+
+				if(chords.size() && !standardConfirmDialog(tr("Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?")))
+					 return str;
+
+				return copySongChords(QApplication::clipboard()->text(), newStr);
+			}, true);
+		});
+	}
+
 	for(const SongSectionWithContent &sc : relevantSections) {
 		const QString sourceContent = sc.content;
 		copyChordsMenu_.addAction(sc.section.icon(), sc.section.userFriendlyName(), [this, sourceContent]{
@@ -299,7 +315,7 @@ void MainWindow_SongsMode::updateCopyChordsMenu()
 		});
 	}
 
-	copyChordsMenu_.setEnabled(isSongEditMode_ && !relevantSections.isEmpty());
+	copyChordsMenu_.setEnabled(isSongEditMode_ && !copyChordsMenu_.actions().isEmpty());
 }
 
 void MainWindow_SongsMode::updateTeContentMenu()
