@@ -1,7 +1,6 @@
 #include "fusionproxystyle.h"
 
 #include <QStyleFactory>
-#include <QDebug>
 
 static const int iconOffset = 3;
 

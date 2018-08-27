@@ -36,7 +36,6 @@ StrawApi::RequestResult StrawApi::requestJson(const QJsonObject &request, QJsonO
 
 	if(jsonErr.error != QJsonParseError::NoError) {
 		qWarning() << "(api request) JSON error: " << jsonErr.errorString();
-		qDebug() << "receivedData: " << QString::fromUtf8(rawResponse);
 
 		return RequestResult::wrongResponse;
 	}

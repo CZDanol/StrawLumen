@@ -11,11 +11,16 @@
 #include "job/dbmigration.h"
 #include "rec/songsection.h"
 #include "rec/chord.h"
+#include "util/scopeexit.h"
 
 DatabaseManager *db = nullptr;
 
 DatabaseManager::DatabaseManager()
 {
+	auto db_ = db;
+	db = this;
+	SCOPE_EXIT(db = db_);
+
 	connect(this, SIGNAL(sigSongChanged(qlonglong)), this, SLOT(onSongChanged()));
 	connect(this, SIGNAL(sigStyleChanged(qlonglong)), this, SIGNAL(sigStyleListChanged()));
 
@@ -37,14 +42,14 @@ DatabaseManager::DatabaseManager()
 	});
 
 	if(!dbExists)
-		createDb(this);
+		createDb();
 
 	int version = selectValue("SELECT value FROM keyValueAssoc WHERE key = 'database.version'").toInt();
 
 #define F(v)\
 	if(version == v) {\
 		beginTransaction();\
-		migrateDbFrom_v ## v(this);\
+		migrateDbFrom_v ## v();\
 		exec("UPDATE keyValueAssoc SET value = ? WHERE key = 'database.version'", {v+1});\
 		commitTransaction();\
 		version++;\
@@ -94,11 +99,13 @@ void DatabaseManager::onSongChanged()
 
 QString collate(const QString &str)
 {
+	static QRegularExpression removeRegex("\\p{M}+", QRegularExpression::UseUnicodePropertiesOption);
 	static QRegularExpression clearRegex("[^a-zA-Z0-9 ]+");
 	static QRegularExpression compactSpacesRegex("\\s+");
 
 	QString result = str.normalized(QString::NormalizationForm_KD);
 
+	result.remove(removeRegex);
 	result.replace(clearRegex, " ");
 	result.replace(compactSpacesRegex, " ");
 
@@ -115,7 +122,7 @@ QString collateFulltextQuery(const QString &str)
 	if(result.isEmpty())
 		return result;
 
-	result.replace(' ', " *");
+	result.replace(' ', "* ");
 	result.append('*');
 
 	//result.replace(' ', " NEAR ");

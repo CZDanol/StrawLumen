@@ -1,7 +1,6 @@
 #include "wordsplit.h"
 
 #include <QRegularExpression>
-#include <QDebug>
 
 namespace WordSplit {
 
@@ -78,19 +77,6 @@ namespace WordSplit {
 																						"|%3\\b"
 																						"|%1"
 																						"))").arg(rxsVowel, rxsMiddle, rxsEnd, rxsConsonant);
-
-		/*qDebug() << "";
-		qDebug() << "";
-		qDebug() << "";
-		qDebug().noquote() << rxsStartConsonant;
-		qDebug() << "";
-		qDebug().noquote() << rxsStart;
-		qDebug() << "";
-		qDebug().noquote() << rxsMiddle;
-		qDebug() << "";
-		qDebug().noquote() << rxsEnd;
-		qDebug() << "";
-		qDebug().noquote() << QString("\\b(%1)(%2*)(%3?)\\b").arg(rxsStart, rxsMiddle, rxsEnd);*/
 
 		QRegularExpression rxWord(
 					QString("\\b(%1)(%2*)(%3?)\\b|\\b\\p{L}+\\b%4").arg(rxsStart, rxsMiddle, rxsEnd, (options & IncludeNewlines) ? "|[ \t]*$" : ""),

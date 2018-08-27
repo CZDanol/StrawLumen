@@ -24,7 +24,7 @@ void DBManager::openSQLITE(const QString &filename)
 {
 	QByteArray uniqIdBytes;
 	DBManager *thisPtr = this;
-	uniqIdBytes.append( (const char*) &thisPtr, sizeof(thisPtr) );
+	uniqIdBytes.append(reinterpret_cast<const char*>(&thisPtr), sizeof(thisPtr));
 	QString uniqId = QString::fromLatin1(uniqIdBytes.toHex());
 
 	db_ = QSqlDatabase::addDatabase("QSQLITE", uniqId);

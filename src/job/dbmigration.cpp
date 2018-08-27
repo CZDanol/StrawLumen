@@ -2,9 +2,9 @@
 #include "db.h"
 #include "util/macroutils.h"
 
-#define DB_MIGRATION_PROCEDURE(fromVersion, toVersion) void migrateDbFrom_v ## fromVersion(DatabaseManager *db)
+#define DB_MIGRATION_PROCEDURE(fromVersion, toVersion) void migrateDbFrom_v ## fromVersion()
 
-void createDb(DatabaseManager *db)
+void createDb()
 {
 	// #: SONGS_TABLE_FIELDS
 	// Columns are set to NOT NULL so it throws errors when someone forgets to set a column value
@@ -139,4 +139,15 @@ DB_MIGRATION_PROCEDURE(2, 3)
 	db->exec("CREATE INDEX i_songs_uid ON songs (uid)");
 	db->exec("CREATE INDEX i_songs_name ON songs (name)");
 	db->exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
+}
+
+DB_MIGRATION_PROCEDURE(3, 4)
+{
+	db->beginTransaction();
+
+	auto q = db->selectQuery("SELECT id FROM songs");
+	while(q.next())
+		db->updateSongFulltextIndex(q.value(0).toLongLong());
+
+	db->commitTransaction();
 }

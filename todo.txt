@@ -1,6 +1,4 @@
 Aktuálně
-- problém s našeptávačem, když má štítek víc slov
-- dávat jako první výsledky ty, které sedí názvem a autorem (potom teprv text)
 - položka: Obrázky
 - položka: Video
 

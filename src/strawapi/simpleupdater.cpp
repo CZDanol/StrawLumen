@@ -93,7 +93,6 @@ void SimpleUpdater::onDownloadFinished()
 	accept();
 
 	downloadFile_->reset();
-	qDebug() << downloadFile_->readAll();
 
 	if(networkReply_->error() != QNetworkReply::NoError)
 		return standardErrorDialog(tr("Při stahování aktualizace nastala chyba: %1").arg(networkReply_->errorString()));

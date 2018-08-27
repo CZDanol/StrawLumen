@@ -114,10 +114,38 @@ void SongListWidget::requery()
 		const QString filter = collateFulltextQuery(ui->lnSearch->text());
 		currentFilterText_ = ui->lnSearch->text();
 
+		QString query;
 		if(!filter.isEmpty()) {
-			joins += "INNER JOIN songs_fulltext ON songs.id = songs_fulltext.docid ";
-			filters += "(songs_fulltext MATCH ?)";
+			query =
+					"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
+					"FROM ("
+					"SELECT docid, MAX(headerMatch) AS headerMatch "
+					"FROM ("
+					"SELECT docid, 1 AS headerMatch "
+					"FROM songs_fulltext "
+					"WHERE songs_fulltext MATCH ? "
+					"UNION "
+					"SELECT docid, 0 AS headerMatch "
+					"FROM songs_fulltext "
+					"WHERE songs_fulltext MATCH ? "
+					")"
+					"GROUP BY docid "
+					") "
+					"INNER JOIN songs ON songs.id = docid "
+					"%3 "
+					"%4 "
+					"ORDER BY headerMatch DESC, songs.name ASC";
+
+			args += QString("(name: %1) OR (author: %1)").arg(filter);
 			args += filter;
+
+		} else {
+			query =
+					"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
+					"FROM songs "
+					"%3 "
+					"%4 "
+					"ORDER BY songs.name ASC ";
 		}
 
 		if(isTagFilter) {
@@ -125,13 +153,6 @@ void SongListWidget::requery()
 			filters += "(song_tags.tag = ?)";
 			args += tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag");
 		}
-
-		const QString query =
-				"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
-				"FROM songs "
-				"%3 "
-				"%4 "
-				"ORDER BY songs.name ASC ";
 
 		songsModel_.setQuery(db->selectQuery(query.arg(tr("Název"), tr("Autor"), joins, filters.size() ? "WHERE " + filters.join(" AND ") : QString()), args));
 

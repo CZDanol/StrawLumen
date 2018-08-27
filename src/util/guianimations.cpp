@@ -1,5 +1,7 @@
 #include "guianimations.h"
 
+#include <functional>
+
 #include <QTimer>
 #include <QPointer>
 #include <QPalette>
@@ -7,16 +9,10 @@
 #include <QDateTime>
 #include <QtMath>
 
-static const int blinkInterval = 0;
-static const int blinkDuration = 1000;
-static const int blinkCount = 1;
-
 static const QColor flashColor("#ffa632");
 
-#include <QDebug>
-
-QColor mixColors(const QColor &c1, const QColor &c2, float progress) {
-	const float progressInv = 0.99f - progress;
+QColor mixColors(const QColor &c1, const QColor &c2, qreal progress) {
+	const qreal progressInv = 0.99 - progress;
 	return QColor::fromRgbF(
 				c1.redF() * progressInv + c2.redF() * progress,
 				c1.greenF() * progressInv + c2.greenF() * progress,
@@ -31,7 +27,7 @@ auto flashAnimation(QWidget *wgt, std::function<void()> endFunc) {
 	QTimer *tim = new QTimer(wgt);
 	QObject::connect(tim, &QTimer::timeout, [animStart, wgt, originalPalette, tim, endFunc]{
 		const qint64 msecsElapsed = QDateTime::currentMSecsSinceEpoch() - animStart;
-		const float progress = abs(sin(msecsElapsed / 200.0f * M_PI_2));
+		const qreal progress = abs(sin(msecsElapsed / 200.0 * M_PI_2));
 		QPalette palette = originalPalette;
 		palette.setColor(QPalette::Window, mixColors(originalPalette.color(QPalette::Window), flashColor, progress));
 		palette.setColor(QPalette::Base, mixColors(originalPalette.color(QPalette::Base), flashColor, progress));
