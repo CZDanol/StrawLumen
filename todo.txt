@@ -1,6 +1,9 @@
 Aktuálně
+- obrázky - automatická prezentace (+ nastavení intervalu)
 - položka: Obrázky
 - položka: Video
+- preloading sousedících slidů
+- ukládání programů v podstatě stejně jako ve wordu atp
 
 Do budoucna
 - systém ukládání programů není úplně ideální

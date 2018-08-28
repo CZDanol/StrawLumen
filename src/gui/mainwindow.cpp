@@ -17,6 +17,7 @@
 #include "importexport/lumenimportdialog.h"
 #include "importexport/opensongimportdialog.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
+#include "presentation/native/presentation_images.h"
 #include "strawapi/feedbackdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -129,6 +130,7 @@ void MainWindow::dropEvent(QDropEvent *e)
 	// The exec is there so the explorer the file is dragged from is not frozen while loading
 	execOnMainThread([=]{
 		QStringList openSongFiles;
+		QStringList imageFiles;
 		QString lumenFile;
 
 		for(QUrl url : urls) {
@@ -140,7 +142,14 @@ void MainWindow::dropEvent(QDropEvent *e)
 				continue;
 			}
 
-			if(fileInfo.suffix() == "strawLumen") {
+			const QString suffix = fileInfo.suffix();
+
+			if(Presentation_Images::validExtensions().contains(suffix.toLower())) {
+				imageFiles += filePath;
+				continue;
+			}
+
+			if(suffix == "strawLumen") {
 				lumenFile = filePath;
 				continue;
 			}
@@ -153,6 +162,9 @@ void MainWindow::dropEvent(QDropEvent *e)
 
 			showPresentationMode();
 		}
+
+		if(!imageFiles.isEmpty())
+			presentationMode()->playlist()->addItem(Presentation_Images::create(imageFiles));
 
 		if(!lumenFile.isEmpty())
 			lumenImportDialog()->show(lumenFile);

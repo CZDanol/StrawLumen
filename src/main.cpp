@@ -20,6 +20,7 @@
 #include "job/db.h"
 #include "job/settings.h"
 #include "job/backgroundmanager.h"
+#include "job/asynccachemanager.h"
 #include "presentation/presentation.h"
 #include "presentation/powerpoint/presentationengine_powerpoint.h"
 #include "presentation/native/presentationengine_native.h"
@@ -77,6 +78,7 @@ void initApplication() {
 	settings = new SettingsManager();
 	db = new DatabaseManager();
 	backgroundManager = new BackgroundManager();
+	asyncCache = new AsyncCacheManager();
 
 	activeXJobThread = new ActiveXJobThread();
 	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
@@ -107,6 +109,7 @@ void uninitApplication() {
 	delete presentationEngine_PowerPoint;
 	delete activeXJobThread;
 
+	delete asyncCache;
 	delete backgroundManager;
 	delete db;
 	delete settings;

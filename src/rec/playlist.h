@@ -60,15 +60,23 @@ signals:
 	/// When ANYTHING has changed (for saving tracking purposes)
 	void sigChanged();
 
+	void sigSaved();
+	void sigNameChanged();
+
 public slots:
 	void emitItemsChanged();
 	void emitSlidesChanged();
+
+public:
+	qlonglong dbId;
+	QString dbName;
 
 private:
 	void updatePlaylistData();
 
 private slots:
 	void onChanged();
+	void onPlaylistRenamed(qlonglong id, const QString &newName);
 
 private:
 	QVector<QSharedPointer<Presentation> > items_;

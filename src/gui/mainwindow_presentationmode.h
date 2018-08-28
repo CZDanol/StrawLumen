@@ -31,6 +31,9 @@ public:
 public:
 	QSharedPointer<Playlist> playlist();
 
+public slots:
+	void updatePlaylistsMenu();
+
 private slots:
 	void updateControlsUIEnabled();
 	void disablePresentation();
@@ -50,7 +53,7 @@ private slots:
 	void onAddPresentationMenuAboutToShow();
 	void onAddPresentationBeforeMenuAboutToShow();
 	void onAddPresentationAfterMenuAboutToShow();
-	void onSaveRequested();
+	void onPlaylistManipulatedAnyhow();
 
 private slots:
 	void on_btnEnableProjection_clicked(bool checked);
@@ -71,11 +74,13 @@ private slots:
 	void on_btnPlaylists_pressed();
 	void on_actionSavePlaylist_triggered();
 	void on_actionLoadPlaylist_triggered();
+	void on_actionSavePlaylistAs_triggered();
+	void on_actionAddImagesPresentation_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;
 	QTimer currentTimeTimer_;
-	QMenu playlistContextMenu_, songListContextMenu_, playlistsMenu_;
+	QMenu playlistContextMenu_, songListContextMenu_, playlistsMenu_, playlistsRecentMenu_;
 	bool isTwLeftBottomHidden_ = false;
 
 	/// !=0 -> disabled; DO NOT SET THIS VALUE, ONLY INCREASE/DECREASE

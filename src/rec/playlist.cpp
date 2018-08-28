@@ -7,12 +7,17 @@
 #include "presentation/native/presentation_song.h"
 #include "presentation/native/presentation_blackscreen.h"
 #include "presentation/native/presentation_customslide.h"
+#include "presentation/native/presentation_images.h"
 #include "util/standarddialogs.h"
+#include "job/db.h"
 
 Playlist::Playlist()
 {
+	clear();
+
 	connect(this, SIGNAL(sigItemsChanged()), this, SIGNAL(sigChanged()));
 	connect(this, SIGNAL(sigChanged()), this, SLOT(onChanged()));
+	connect(db, &DatabaseManager::sigPlaylistRenamed, this, &Playlist::onPlaylistRenamed);
 }
 
 bool Playlist::addItem(const QSharedPointer<Presentation> &item)
@@ -144,6 +149,9 @@ void Playlist::clear()
 	itemOffsets_.clear();
 	slideCount_ = 0;
 
+	dbId = -1;
+	dbName = tr("Nový program");
+
 	emitItemsChanged();
 }
 
@@ -203,7 +211,8 @@ bool Playlist::loadFromJSON(const QJsonObject &json)
 
 		{"native.song", F(Presentation_Song::createFromJSON(json))},
 		{"native.blackScreen", F(Presentation_BlackScreen::create())},
-		{"native.customSlide", F(Presentation_CustomSlide::createFromJSON(json))}
+		{"native.customSlide", F(Presentation_CustomSlide::createFromJSON(json))},
+		{"native.images", F(Presentation_Images::createFromJSON(json))}
 	};
 #undef F
 
@@ -246,7 +255,7 @@ bool Playlist::loadFromJSON(const QJsonObject &json)
 QStringList Playlist::itemNamesFromJSON(const QJsonObject &json)
 {
 	QStringList result;
-	for(const auto &itemJson : json["items"].toArray())
+	for(const auto itemJson : json["items"].toArray())
 		result << itemJson.toObject()["identification"].toString();
 
 	return result;
@@ -260,6 +269,7 @@ bool Playlist::areChangesSaved() const
 void Playlist::assumeChangesSaved()
 {
 	areChangesSaved_ = true;
+	emit sigSaved();
 }
 
 void Playlist::emitItemsChanged()
@@ -297,4 +307,12 @@ void Playlist::updatePlaylistData()
 void Playlist::onChanged()
 {
 	areChangesSaved_ = false;
+}
+
+void Playlist::onPlaylistRenamed(qlonglong id, const QString &newName)
+{
+	if(id != -1 && dbId == id) {
+		dbName = newName;
+		emit sigNameChanged();
+	}
 }

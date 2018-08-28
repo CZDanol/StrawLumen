@@ -21,6 +21,7 @@ signals:
 	// Following signals automatically emit adequate sitXXXListChanged
 	void sigSongChanged(qlonglong songId);
 	void sigStyleChanged(qlonglong styleId);
+	void sigPlaylistRenamed(qlonglong playlistId, const QString &newName);
 
 public:
 	bool blockListChangedSignals(bool set);

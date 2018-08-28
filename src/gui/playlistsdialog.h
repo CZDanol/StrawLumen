@@ -25,11 +25,6 @@ public slots:
 	void saveWorkingPlaylist(qlonglong playlistId);
 	bool loadPlaylist(qlonglong playlistId);
 
-	/// Playlist that was last saved/loaded during this program run
-	/// Default -1; is also zeroed when the program is cleared
-	qlonglong lastTouchPlaylistId() const;
-	void clearLastTouchPlaylistId();
-
 private slots:
 	void updateUiEnabled();
 
@@ -48,7 +43,6 @@ private slots:
 private:
 	Ui::PlaylistsDialog *ui;
 	QStringListModel itemsModel_;
-	qlonglong lastTouchId_ = -1;
 
 };
 

@@ -133,7 +133,7 @@
    </property>
    <widget class="QMenu" name="menuProgram">
     <property name="title">
-     <string>Program</string>
+     <string>Aplikace</string>
     </property>
     <addaction name="actionGenerateDocuments"/>
     <addaction name="separator"/>

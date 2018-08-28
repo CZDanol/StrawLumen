@@ -79,9 +79,16 @@ void PresentationManager::previousPresentation()
 	if(currentGlobalSlideId() == 0)
 		return;
 
-	if(currentLocalSlideId_ == 0)
-		setSlide(currentPresentation_->playlist(), currentPresentation_->playlist()->items()[currentPresentation_->positionInPlaylist()-1]->globalSlideIdOffset());
-	else
+	if(currentLocalSlideId_ == 0) {
+		int i = currentPresentation_->positionInPlaylist()-1;
+		while(currentPresentation_->playlist()->items()[i]->slideCount() == 0)
+			i--;
+
+		if(i < 0)
+			return;
+
+		setSlide(currentPresentation_->playlist(), currentPresentation_->playlist()->items()[i]->globalSlideIdOffset());
+	} else
 		setSlide(currentPresentation_->playlist(), currentPresentation_->globalSlideIdOffset());
 }
 

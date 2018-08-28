@@ -1,0 +1,36 @@
+#ifndef PRESENTATIONPROPERTIESWIDGET_IMAGES_H
+#define PRESENTATIONPROPERTIESWIDGET_IMAGES_H
+
+#include <QWidget>
+#include <QModelIndexList>
+
+namespace Ui {
+	class PresentationPropertiesWidget_Images;
+}
+
+class Presentation_Images;
+
+class PresentationPropertiesWidget_Images : public QWidget
+{
+	Q_OBJECT
+
+public:
+	explicit PresentationPropertiesWidget_Images(const QSharedPointer<Presentation_Images> &presentation, QWidget *parent = nullptr);
+	virtual ~PresentationPropertiesWidget_Images() override;
+
+protected:
+	virtual bool eventFilter(QObject *obj, QEvent *ev) override;
+
+private slots:
+	void fillData();
+	void deleteSelection();
+
+private slots:
+	void on_btnAddItems_clicked();
+
+private:
+	Ui::PresentationPropertiesWidget_Images *ui;
+	QSharedPointer<Presentation_Images> presentation_;
+};
+
+#endif // PRESENTATIONPROPERTIESWIDGET_IMAGES_H

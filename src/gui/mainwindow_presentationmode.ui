@@ -333,13 +333,13 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="btnPlaylists">
-            <property name="text">
-             <string>Program</string>
+           <widget class="QPushButton" name="btnAddPresentation">
+            <property name="toolTip">
+             <string>Přidat do programu</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Menu Vertical_16px.png</normaloff>:/icons/16/Menu Vertical_16px.png</iconset>
+              <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -347,16 +347,13 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnAddPresentation">
-            <property name="toolTip">
-             <string>Přidat do programu</string>
-            </property>
+           <widget class="QPushButton" name="btnPlaylists">
             <property name="text">
-             <string>Přidat</string>
+             <string>Program</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
+              <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -380,7 +377,7 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tabPlaylist">
           <attribute name="icon">
            <iconset resource="../../res/resources.qrc">
             <normaloff>:/icons/16/Timeline_16px.png</normaloff>:/icons/16/Timeline_16px.png</iconset>
@@ -531,7 +528,7 @@
 #saPresentationPropertiesContent,
 PresentationPropertiesWidget
 {
-	background: transparent;
+  background: transparent;
 }</string>
              </property>
              <property name="frameShape">
@@ -696,7 +693,7 @@ PresentationPropertiesWidget
      <normaloff>:/icons/16/File_16px.png</normaloff>:/icons/16/File_16px.png</iconset>
    </property>
    <property name="text">
-    <string>Nový program</string>
+    <string>Nový</string>
    </property>
   </action>
   <action name="actionSavePlaylist">
@@ -705,7 +702,10 @@ PresentationPropertiesWidget
      <normaloff>:/icons/16/Save_16px.png</normaloff>:/icons/16/Save_16px.png</iconset>
    </property>
    <property name="text">
-    <string>Uložit jako</string>
+    <string>Uložit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionLoadPlaylist">
@@ -715,6 +715,27 @@ PresentationPropertiesWidget
    </property>
    <property name="text">
     <string>Načíst</string>
+   </property>
+  </action>
+  <action name="actionSavePlaylistAs">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Save as_16px.png</normaloff>:/icons/16/Save as_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Uložit jako</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionAddImagesPresentation">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Photo Gallery_16px.png</normaloff>:/icons/16/Photo Gallery_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Obrázky</string>
    </property>
   </action>
  </widget>
@@ -740,7 +761,6 @@ PresentationPropertiesWidget
   <tabstop>btnBlackScreen</tabstop>
   <tabstop>twPlaylist</tabstop>
   <tabstop>btnAddPresentation</tabstop>
-  <tabstop>btnPlaylists</tabstop>
   <tabstop>twPlaylistCorner</tabstop>
   <tabstop>tvPlaylist</tabstop>
   <tabstop>twLeftBottom</tabstop>

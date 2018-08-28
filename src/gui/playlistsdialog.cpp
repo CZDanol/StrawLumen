@@ -41,6 +41,10 @@ void PlaylistsDialog::show(bool save)
 
 void PlaylistsDialog::saveWorkingPlaylist(qlonglong playlistId)
 {
+	QVariant playlistName = db->selectValueDef("SELECT name FROM playlists WHERE id = ?", {playlistId});
+	if(playlistName.isNull())
+		return standardErrorDialog(tr("Program se nepodařilo uložit, protože byl v databázi smazán."));
+
 	auto playlist = mainWindow->presentationMode()->playlist();
 	db->exec(
 				"UPDATE playlists SET data = ?, lastTouch = ? WHERE id = ?",
@@ -50,38 +54,35 @@ void PlaylistsDialog::saveWorkingPlaylist(qlonglong playlistId)
 					playlistId
 				});
 
-	lastTouchId_ = playlistId;
+	playlist->dbId = playlistId;
+	playlist->dbName = playlistName.toString();
+
 	playlist->assumeChangesSaved();
-	standardSuccessDialog(tr("Program uložen."));
+	//standardSuccessDialog(tr("Program uložen."));
 }
 
 bool PlaylistsDialog::loadPlaylist(qlonglong playlistId)
 {
 	auto playlist = mainWindow->presentationMode()->playlist();
-	if(!playlist->items().isEmpty() && !standardConfirmDialog(tr("Aktuální program aplikace není prázdný. Načtením položky přepíšete. Opravdu chcete pokračovat?")))
+	if(!mainWindow->presentationMode()->askSaveChanges())
 		return false;
 
 	db->exec("UPDATE playlists SET lastTouch = ? WHERE id = ?", {QDateTime::currentSecsSinceEpoch(), playlistId});
-	const QJsonObject json = QJsonDocument::fromJson(db->selectValue("SELECT data FROM playlists WHERE id = ?", {playlistId}).toByteArray()).object();
+
+	const QSqlRecord r = db->selectRow("SELECT name, data FROM playlists WHERE id = ?", {playlistId});
+	const QJsonObject json = QJsonDocument::fromJson(r.value("data").toByteArray()).object();
 	const bool success = playlist->loadFromJSON(json);
 
-	if(success)
-		standardSuccessDialog(tr("Program načten."));
+	/*if(success)
+		standardSuccessDialog(tr("Program načten."));*/
 
-	lastTouchId_ = playlistId;
+	playlist->dbName = r.value("name").toString();
+	playlist->dbId = playlistId;
 	playlist->assumeChangesSaved();
 
+	emit playlist->sigNameChanged();
+
 	return success;
-}
-
-qlonglong PlaylistsDialog::lastTouchPlaylistId() const
-{
-	return lastTouchId_;
-}
-
-void PlaylistsDialog::clearLastTouchPlaylistId()
-{
-	lastTouchId_ = -1;
 }
 
 void PlaylistsDialog::updateUiEnabled()
@@ -89,10 +90,10 @@ void PlaylistsDialog::updateUiEnabled()
 	const QListWidgetItem *i = ui->lstPlaylists->currentItem();
 	const bool isEditableItem = i && (i->flags() & Qt::ItemIsEditable);
 
-	if(i) {
+	/*if(i) {
 		ui->btnSave->setText(tr("Uložit jako '%1'").arg(i->text()));
 		ui->btnLoad->setText(tr("Načíst '%1'").arg(i->text()));
-	}
+	}*/
 
 	ui->btnRename->setEnabled(isEditableItem);
 	ui->btnDelete->setEnabled(isEditableItem);
@@ -106,7 +107,7 @@ void PlaylistsDialog::requery()
 
 	ui->lstPlaylists->clear();
 
-	{
+	if(false) {
 		QListWidgetItem *i = new QListWidgetItem();
 		i->setText(tr("-- aktuální program --"));
 		i->setData(Qt::UserRole, -1);
@@ -161,7 +162,11 @@ void PlaylistsDialog::on_btnNew_clicked()
 
 void PlaylistsDialog::on_lstPlaylists_itemChanged(QListWidgetItem *item)
 {
-	db->exec("UPDATE playlists SET name = ? WHERE id = ?", {item->data(Qt::DisplayRole), item->data(Qt::UserRole)});
+	const QString newName = item->data(Qt::DisplayRole).toString();
+	const qlonglong id = item->data(Qt::UserRole).toLongLong();
+
+	db->exec("UPDATE playlists SET name = ? WHERE id = ?", {newName, id});
+	emit db->sigPlaylistRenamed(id, newName);
 }
 
 void PlaylistsDialog::on_btnRename_clicked()

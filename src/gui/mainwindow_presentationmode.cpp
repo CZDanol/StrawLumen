@@ -18,6 +18,7 @@
 #include "presentation/native/presentation_blackscreen.h"
 #include "presentation/native/presentation_customslide.h"
 #include "presentation/native/presentation_song.h"
+#include "presentation/native/presentation_images.h"
 #include "job/settings.h"
 #include "job/db.h"
 #include "util/standarddialogs.h"
@@ -32,8 +33,6 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 	playlist_.reset(new Playlist());
 	connect(playlist_.data(), SIGNAL(sigSlidesChanged()), this, SLOT(updateControlsUIEnabled()));
-
-	new QShortcut(Qt::CTRL + Qt::Key_S, this, SLOT(onSaveRequested()));
 
 	// Playlist tab
 	{
@@ -52,12 +51,19 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
 			connect(&playlistItemModel_, SIGNAL(modelReset()), this, SLOT(onPlaylistModelReset()));
 			connect(ui->tvPlaylist->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onPresentationSelected(QModelIndex)));
+			connect(playlist_.data(), &Playlist::sigNameChanged, this, &MainWindow_PresentationMode::onPlaylistManipulatedAnyhow);
+			connect(playlist_.data(), &Playlist::sigChanged, this, &MainWindow_PresentationMode::onPlaylistManipulatedAnyhow);
+			connect(playlist_.data(), &Playlist::sigSaved, this, &MainWindow_PresentationMode::onPlaylistManipulatedAnyhow);
+
+			onPlaylistManipulatedAnyhow();
 		}
 
 		// Menu & controls
 		{
 			addPresentationMenu_.addAction(ui->actionAddSong);
 			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
+			addPresentationMenu_.addAction(ui->actionAddImagesPresentation);
+			addPresentationMenu_.addSeparator();
 			addPresentationMenu_.addAction(ui->actionAddCustomSlidePresentation);
 			addPresentationMenu_.addAction(ui->actionAddBlackScreen);
 
@@ -81,6 +87,18 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			connect(ui->tvPlaylist, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onPlaylistContextMenuRequested(QPoint)));
 
 			ui->btnPlaylists->setMenu(&playlistsMenu_);
+
+			playlistsMenu_.setTitle(tr("Program"));
+			playlistsMenu_.addAction(ui->actionClearPlaylist);
+			playlistsMenu_.addSeparator();
+			playlistsMenu_.addAction(ui->actionLoadPlaylist);
+			playlistsMenu_.addMenu(&playlistsRecentMenu_);
+			playlistsMenu_.addSeparator();
+			playlistsMenu_.addAction(ui->actionSavePlaylist);
+			playlistsMenu_.addAction(ui->actionSavePlaylistAs);
+
+			playlistsRecentMenu_.setTitle(tr("Načíst nedávné"));
+			playlistsRecentMenu_.setIcon(QIcon(":/icons/16/Open_16px.png"));
 		}
 	}
 
@@ -185,6 +203,21 @@ bool MainWindow_PresentationMode::askSaveChanges()
 QSharedPointer<Playlist> MainWindow_PresentationMode::playlist()
 {
 	return playlist_;
+}
+
+void MainWindow_PresentationMode::updatePlaylistsMenu()
+{
+	playlistsRecentMenu_.clear();
+
+	QSqlQuery q = db->selectQuery("SELECT id, name, lastTouch FROM playlists ORDER BY lastTouch DESC LIMIT 5");
+	while(q.next()) {
+		const qlonglong id = q.value("id").toLongLong();
+		playlistsRecentMenu_.addAction(q.value("name").toString(), [id]{
+			playlistsDialog()->loadPlaylist(id);
+		});
+	}
+
+	playlistsRecentMenu_.setEnabled(!playlistsRecentMenu_.actions().isEmpty());
 }
 
 void MainWindow_PresentationMode::updateControlsUIEnabled()
@@ -315,6 +348,7 @@ void MainWindow_PresentationMode::onAddPresentationMenuAboutToShow()
 {
 	addPresentationsAction_ = [this](const QVector<QSharedPointer<Presentation > > &presentations) {
 		playlist_->addItems(presentations);
+		ui->tvPlaylist->setCurrentIndex(playlistItemModel_.index(playlistItemModel_.rowCount(QModelIndex()) - 1, 0));
 	};
 }
 
@@ -336,22 +370,11 @@ void MainWindow_PresentationMode::onAddPresentationAfterMenuAboutToShow()
 	};
 }
 
-void MainWindow_PresentationMode::onSaveRequested()
+void MainWindow_PresentationMode::onPlaylistManipulatedAnyhow()
 {
-	const qlonglong lastTouchPlaylistId = playlistsDialog()->lastTouchPlaylistId();
+	ui->twPlaylist->setTabText(0, playlist_->areChangesSaved() ? playlist_->dbName : tr("%1*").arg(playlist_->dbName));
 
-	if(lastTouchPlaylistId == -1) {
-		playlistsDialog()->show(true);
-		return;
-	}
-
-	QString name = db->selectValue("SELECT name, lastTouch FROM playlists WHERE id = ?", {lastTouchPlaylistId}).toString();
-	if(!standardConfirmDialog(tr("Uložit program jako \"%1\"?").arg(name))) {
-		playlistsDialog()->show(true);
-		return;
-	}
-
-	playlistsDialog()->saveWorkingPlaylist(lastTouchPlaylistId);
+	ui->actionSavePlaylist->setEnabled(!playlist_->areChangesSaved());
 }
 
 void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)
@@ -510,50 +533,34 @@ void MainWindow_PresentationMode::on_actionClearPlaylist_triggered()
 	if(!askSaveChanges())
 		return;
 
-	playlistsDialog()->clearLastTouchPlaylistId();
 	playlist_->clear();
 	playlist_->assumeChangesSaved();
 }
 
 void MainWindow_PresentationMode::on_btnPlaylists_pressed()
 {
-	playlistsMenu_.clear();
-
-playlistsMenu_.addAction(ui->actionClearPlaylist);
-	playlistsMenu_.addAction(ui->actionSavePlaylist);
-	playlistsMenu_.addAction(ui->actionLoadPlaylist);
-
-	static const QIcon saveIcon(":/icons/16/Save_16px.png");
-	static const QIcon loadIcon(":/icons/16/Open_16px.png");
-
-	if(playlistsDialog()->lastTouchPlaylistId() != -1) {
-		playlistsMenu_.addSeparator();
-
-		QSqlRecord r = db->selectRow("SELECT id, name, lastTouch FROM playlists WHERE id = ?", {playlistsDialog()->lastTouchPlaylistId()});
-		const qlonglong id = r.value("id").toLongLong();
-
-		playlistsMenu_.addAction(saveIcon, tr("Uložit jako \"%1\"").arg(r.value("name").toString()), [id]{
-			playlistsDialog()->saveWorkingPlaylist(id);
-		});
-	}
-
-	playlistsMenu_.addSeparator();
-
-	QSqlQuery q = db->selectQuery("SELECT id, name, lastTouch FROM playlists ORDER BY lastTouch DESC LIMIT 5");
-	while(q.next()) {
-		const qlonglong id = q.value("id").toLongLong();
-		playlistsMenu_.addAction(loadIcon, tr("Načíst \"%1\"").arg(q.value("name").toString()), [id]{
-			playlistsDialog()->loadPlaylist(id);
-		});
-	}
+	updatePlaylistsMenu();
 }
 
 void MainWindow_PresentationMode::on_actionSavePlaylist_triggered()
 {
-	playlistsDialog()->show(true);
+	if(playlist_->dbId != -1)
+		playlistsDialog()->saveWorkingPlaylist(playlist_->dbId);
+	else
+		playlistsDialog()->show(true);
 }
 
 void MainWindow_PresentationMode::on_actionLoadPlaylist_triggered()
 {
 	playlistsDialog()->show(false);
+}
+
+void MainWindow_PresentationMode::on_actionSavePlaylistAs_triggered()
+{
+	playlistsDialog()->show(true);
+}
+
+void MainWindow_PresentationMode::on_actionAddImagesPresentation_triggered()
+{
+	addPresentationsAction_({Presentation_Images::create()});
 }

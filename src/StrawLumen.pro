@@ -120,7 +120,10 @@ SOURCES += main.cpp \
     job/wordsplit.cpp \
     util/regex.cpp \
     util/macroutils.cpp \
-    gui/bulkeditsongsdialog.cpp
+    gui/bulkeditsongsdialog.cpp \
+    presentation/native/presentation_images.cpp \
+    presentation/native/presentationpropertieswidget_images.cpp \
+    job/asynccachemanager.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -154,7 +157,8 @@ FORMS += \
     presentation/native/presentationpropertieswidget_customslide.ui \
     strawapi/simpleupdater.ui \
     strawapi/feedbackdialog.ui \
-    gui/bulkeditsongsdialog.ui
+    gui/bulkeditsongsdialog.ui \
+    presentation/native/presentationpropertieswidget_images.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -240,7 +244,10 @@ HEADERS += \
     job/wordsplit.h \
     util/regex.h \
     util/macroutils.h \
-    gui/bulkeditsongsdialog.h
+    gui/bulkeditsongsdialog.h \
+    presentation/native/presentation_images.h \
+    presentation/native/presentationpropertieswidget_images.h \
+    job/asynccachemanager.h
 
 RESOURCES += \
     ../res/resources.qrc

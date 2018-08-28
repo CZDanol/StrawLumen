@@ -46,9 +46,7 @@ private slots:
 	void on_actionStyles_triggered();
 	void on_actionGenerateDocuments_triggered();
 	void on_actionAbout_triggered();
-
 	void on_actionSendFeedback_triggered();
-
 	void on_actionBulkEditSongs_triggered();
 
 private:
