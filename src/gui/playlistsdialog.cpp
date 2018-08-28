@@ -108,8 +108,15 @@ void PlaylistsDialog::requery()
 
 	{
 		QListWidgetItem *i = new QListWidgetItem();
-		i->setText(tr("(aktuální program)"));
+		i->setText(tr("-- aktuální program --"));
 		i->setData(Qt::UserRole, -1);
+
+		i->setForeground(Qt::gray);
+
+		QFont font = i->font();
+		font.setItalic(true);
+		i->setFont(font);
+
 		ui->lstPlaylists->addItem(i);
 	}
 

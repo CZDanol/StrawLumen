@@ -143,6 +143,8 @@ DB_MIGRATION_PROCEDURE(2, 3)
 
 DB_MIGRATION_PROCEDURE(3, 4)
 {
+	db->exec("UPDATE songs SET uid = CAST(uid AS TEXT)");
+
 	db->beginTransaction();
 
 	auto q = db->selectQuery("SELECT id FROM songs");

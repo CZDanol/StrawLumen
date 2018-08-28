@@ -107,3 +107,9 @@ EXPORT_DB_MIGRATION_PROCEDURE(1,2)
 	db->exec("CREATE INDEX i_songs_name ON songs (name)");
 	db->exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
 }
+
+
+EXPORT_DB_MIGRATION_PROCEDURE(2,3)
+{
+	db->exec("UPDATE songs SET uid = CAST(uid AS TEXT)");
+}

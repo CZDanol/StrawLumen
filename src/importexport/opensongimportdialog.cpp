@@ -101,11 +101,11 @@ void OpenSongImportDialog::on_btnImport_clicked()
 
 			const qlonglong lastEdit = QFileInfo(filename).lastModified().toSecsSinceEpoch();
 
-			QByteArray uid;
+			QString uid;
 			{
 				QCryptographicHash hash(QCryptographicHash::Sha3_224);
 				hash.addData(f.readAll());
-				uid = hash.result().toBase64();
+				uid = QString::fromUtf8(hash.result().toBase64());
 				f.reset();
 			}
 

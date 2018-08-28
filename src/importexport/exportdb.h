@@ -3,8 +3,8 @@
 
 #include "job/dbmanager.h"
 
-#define EXPORT_DB_VERSION_HISTORY_FACTORY(F) F(1)
-#define CURRENT_EXPORT_DB_VERSION 2
+#define EXPORT_DB_VERSION_HISTORY_FACTORY(F) F(1) F(2)
+#define CURRENT_EXPORT_DB_VERSION 3
 
 class ExportDatabaseManager : public DBManager
 {
