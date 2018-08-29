@@ -46,6 +46,8 @@ bool PresentationPropertiesWidget_Images::eventFilter(QObject *obj, QEvent *ev)
 void PresentationPropertiesWidget_Images::fillData()
 {
 	ui->lstImages->setModel(&presentation_->images_);
+	ui->cbAutoPresentation->setChecked(presentation_->isAutoPresentation_);
+	ui->sbAutoInterval->setValue(presentation_->autoInterval_);
 }
 
 void PresentationPropertiesWidget_Images::deleteSelection()
@@ -77,4 +79,19 @@ void PresentationPropertiesWidget_Images::on_btnAddItems_clicked()
 
 	settings->setValue("imagesDirectory", dlg.directory().absolutePath());
 	presentation_->addImages(dlg.selectedFiles());
+}
+
+void PresentationPropertiesWidget_Images::on_cbAutoPresentation_clicked(bool checked)
+{
+	presentation_->isAutoPresentation_ = checked;
+	presentation_->updateTiming();
+
+	emit presentation_->sigSlidesChanged();
+	emit presentation_->sigItemChanged(presentation_.data());
+}
+
+void PresentationPropertiesWidget_Images::on_sbAutoInterval_valueChanged(int arg1)
+{
+	presentation_->autoInterval_ = arg1;
+	presentation_->updateTiming();
 }

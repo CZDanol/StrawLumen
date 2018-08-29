@@ -21,8 +21,8 @@ public:
 
 	PresentationEngine *engine() const override;
 
-	void activatePresentation(int startingSlide) override;
-	void deactivatePresentation() override;
+	virtual void activatePresentation(int startingSlide) override;
+	virtual void deactivatePresentation() override;
 	void setSlide(int localSlideId, bool force = false) override;
 
 protected:

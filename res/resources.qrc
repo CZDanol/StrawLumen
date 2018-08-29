@@ -220,5 +220,6 @@
         <file>icons/16/Back Arrow_16px.png</file>
         <file>icons/16/Save as_16px.png</file>
         <file>icons/16/Photo Gallery_16px.png</file>
+        <file>icons/16/Time_16px.png</file>
     </qresource>
 </RCC>

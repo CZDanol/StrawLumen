@@ -127,7 +127,24 @@ void PresentationManager::setSlide(const QSharedPointer<Presentation> &presentat
 		currentLocalSlideId_ = localSlideId;
 	}
 
-	emit sigCurrentSlideChanged(presentation->globalSlideIdOffset() + localSlideId);
+	const int globalSlideId = presentation->globalSlideIdOffset() + localSlideId;
+
+	emit sigCurrentSlideChanged(globalSlideId);
+
+	// Preload neighbor slides
+	/*auto playlist = presentation->playlist();
+
+	if(localSlideId > 0)
+		presentation->preloadSlide(localSlideId - 1);
+	else if(playlist && globalSlideId > 0) {
+		auto pres = playlist->presentationOfSlide(globalSlideId-1);
+		pres->preloadSlide(pres->slideCount()-1);
+	}
+
+	if(localSlideId < presentation->slideCount()-1)
+		presentation->preloadSlide(localSlideId+1);
+	else if(playlist && globalSlideId < playlist->slideCount()-1)
+		playlist->presentationOfSlide(globalSlideId-1)->preloadSlide(0);*/
 }
 
 void PresentationManager::setActive(bool set)

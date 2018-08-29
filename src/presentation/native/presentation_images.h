@@ -3,6 +3,7 @@
 
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QTimer>
 
 #include "presentation_nativepresentation.h"
 
@@ -27,11 +28,13 @@ public:
 public:
 	QString identification() const override;
 	QPixmap icon() const override;
+	QPixmap specialIcon() const override;
 
 	QWidget *createPropertiesWidget(QWidget *parent) override;
 
 	int slideCount() const override;
 	QString slideIdentification(int i) const override;
+	QPixmap slideIdentificationIcon(int i) const override;
 	QString slideDescription(int i) const override;
 
 public:
@@ -40,11 +43,26 @@ public:
 private:
 	Presentation_Images();
 
+protected:
+	virtual void activatePresentation(int startingSlide) override;
+	virtual void deactivatePresentation() override;
+
 private:
+	QImage getImage(int slideId, const QSize size);
 	void addImages(const QStringList &images);
+	void updateTiming();
+
+private slots:
+	void onAutoTimerTimeout();
 
 private:
 	QStandardItemModel images_;
+	bool isAutoPresentation_ = true;
+	int autoInterval_ = 2;
+
+private:
+	QTimer autoTimer_;
+	int autoSlide_ = 0;
 
 };
 
