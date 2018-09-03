@@ -1,22 +1,22 @@
 Aktuálně
-- položka: Video
-- translation tag, pro překlady pod textem (menším písmem?)
-- Možnost přesunout vybrané písně v programu pod nový štítek, nebo rovnou do vytvoření zpěvníku.
+- translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
+- zvýrazňování výsledků vyhledávání
 
 Do budoucna
 - Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.
-- zvýrazňování výsledků vyhledávání?
-- vyhledávání - přepínat, jestli vyhledávat i v textech nebo ne
-- systém ukládání programů není úplně ideální
 - ukládání výběru písniček (import/export/zpěvníky)
 - nový program - tázací dialog, přidat možnost "uložit a nový"
 - text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
 - když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - když se nesází akordy, tak trim mezery před/za akordama
-- [[komentář jenom při sázení akordů]]
 - vzorník barev u color selectu
+- ovládací tlačítka pro video
+- nový typ prezentace: webovky?
 
-??? - načíst - program prázdný - nahlásit ???
+- systém nastavování automatických přechodů prezentací:
+	- přejít na další snímek/prezentaci v takový a takový čas
+	- přejít na další snímek/prezentaci po (čas)
+	- automaticky přejít na další prezentaci po dohrání videa/celém cyklu procházení snímků
 
 - možnost exportovat/importovat i celé programy (embed ppt prezentace, styly, atp)
 - reentrant splashscreen
@@ -33,10 +33,6 @@ Do budoucna
 - typ slidu, kde není na projektoru zapnuto vůbec nic
 
 - 1,5 px to point nestačí (pro jiné DPI displeje)
-
-Automatická powerpoint prezentace:
-- přejít na další prezentaci v takový a takový čas
-- přejít na další prezentaci po (čas)
 
 - playlistitemmodel, slidesitemmodel -> playlist udělat signál sigItems/slides abouttochange
 

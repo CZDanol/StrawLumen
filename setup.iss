@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Straw Lumen"
-#define MyAppVersion "0.9.4.4"
+#define MyAppVersion "0.10.0.0"
 #define MyAppPublisher "Straw Solutions"
 #define MyAppCopyright "(c) 2018 Straw Solutions, Daniel Èejchan"
 #define MyAppURL "http://straw-solutions.cz"
@@ -42,16 +42,20 @@ ArchitecturesInstallIn64BitMode=x64
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "installDeps\*"; DestDir: {tmp}; AfterInstall: InstallDeps; Flags: deleteafterinstall
+Source: "installDeps\VC_redist.x64.exe"; DestDir: {tmp}; AfterInstall: InstallMSVC; Flags: deleteafterinstall
+Source: "installDeps\klcp_basic_unattended.ini"; DestDir: {tmp}; Flags: deleteafterinstall
+Source: "installDeps\K_lite.exe"; DestDir: {tmp}; AfterInstall: InstallKLite; Flags: deleteafterinstall
+
 Source: "bin\bin_{#PlatformId}\strawLumen.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion sign
 Source: "bin\bin_{#PlatformId}\QtWebEngineProcess.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\bin_{#PlatformId}\*.dll"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\bin_{#PlatformId}\*.pak"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\bin_{#PlatformId}\*.dat"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
+
 Source: "bin\backgrounds\*"; DestDir: "{app}\backgrounds"; Flags: ignoreversion
 Source: "bin\etc\*"; DestDir: "{app}\etc"; Flags: ignoreversion recursesubdirs
 Source: "bin\changelog.html"; DestDir: "{app}\changelog.html"; Flags: ignoreversion recursesubdirs
@@ -79,7 +83,7 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-procedure InstallDeps;
+procedure InstallMSVC;
 var
   StatusText: string;
   ResultCode: integer;
@@ -95,12 +99,18 @@ begin
     WizardForm.StatusLabel.Caption := StatusText;
     WizardForm.ProgressGauge.Style := npbstNormal;
   end;
+end;
 
+procedure InstallKLite;
+var
+  StatusText: string;
+  ResultCode: integer;
+begin
   StatusText := WizardForm.StatusLabel.Caption;
   WizardForm.StatusLabel.Caption := 'Instaluji K-Lite codec pack...';
   WizardForm.ProgressGauge.Style := npbstMarquee;
   try
-    if not Exec(ExpandConstant('{tmp}\K_lite.exe'), '/install /passive /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
+    if not Exec(ExpandConstant('{tmp}\K_lite.exe'), ExpandConstant('/verysilent /norestart /LoadInf="{tmp}/klcp_basic_unattended.ini"'), '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
     then
       MsgBox('Nepodaøilo se spustit instalátor K-Lite. Bez tìchto kodekù nemusí fungovat funkce pøehrávaèe videí.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
   finally

@@ -29,6 +29,8 @@ public:
 	void showSongsMode();
 	MainWindow_SongsMode *songsMode();
 
+	QVector<qlonglong> selectedSongIds();
+
 signals:
 	void sigClosed();
 

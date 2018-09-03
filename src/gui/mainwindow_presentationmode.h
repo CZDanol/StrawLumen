@@ -30,6 +30,7 @@ public:
 
 public:
 	QSharedPointer<Playlist> playlist();
+	QVector<qlonglong> selectedSongIds();
 
 public slots:
 	void updatePlaylistsMenu();

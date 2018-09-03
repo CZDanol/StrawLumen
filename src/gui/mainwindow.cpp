@@ -85,6 +85,11 @@ MainWindow_SongsMode *MainWindow::songsMode()
 	return ui->wgtSongsMode;
 }
 
+QVector<qlonglong> MainWindow::selectedSongIds()
+{
+	return presentationMode()->isVisible() ? presentationMode()->selectedSongIds() : songsMode()->selectedSongIds();
+}
+
 void MainWindow::onDbQueryError(const QString &query, const QString &error)
 {
 	standardErrorDialog(tr("Chyba databáze: %1\n\n%2").arg(error, query));
@@ -230,4 +235,5 @@ void MainWindow::on_actionSendFeedback_triggered()
 void MainWindow::on_actionBulkEditSongs_triggered()
 {
 	bulkEditSongsDialog()->show();
+	documentGenerationDialog()->setSelectedSongs(selectedSongIds());
 }

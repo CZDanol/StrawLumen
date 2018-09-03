@@ -65,6 +65,8 @@ private slots:
 	void on_lvTags_activated(const QModelIndex &index);
 	void on_btnClearTagFilter_clicked();
 
+	void on_btnSearchInText_clicked();
+
 private:
 	Ui::SongListWidget *ui;
 	SongsItemModel songsModel_;

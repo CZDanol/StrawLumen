@@ -111,33 +111,27 @@ void SongListWidget::requery()
 		QStringList filters;
 		DBManager::Args args;
 
-		const QString filter = collateFulltextQuery(ui->lnSearch->text());
+		const QString searchFilter = collateFulltextQuery(ui->lnSearch->text());
 		currentFilterText_ = ui->lnSearch->text();
 
 		QString query;
-		if(!filter.isEmpty()) {
+		if(!searchFilter.isEmpty()) {
 			query =
 					"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
-					"FROM ("
-					"SELECT docid, MAX(headerMatch) AS headerMatch "
-					"FROM ("
-					"SELECT docid, 1 AS headerMatch "
 					"FROM songs_fulltext "
-					"WHERE songs_fulltext MATCH ? "
-					"UNION "
-					"SELECT docid, 0 AS headerMatch "
-					"FROM songs_fulltext "
-					"WHERE songs_fulltext MATCH ? "
-					")"
-					"GROUP BY docid "
-					") "
 					"INNER JOIN songs ON songs.id = docid "
 					"%3 "
 					"%4 "
-					"ORDER BY headerMatch DESC, songs.name ASC";
+					"ORDER BY songs.name ASC"
+					;
 
-			args += QString("(name: %1) OR (author: %1)").arg(filter);
-			args += filter;
+
+			filters += "songs_fulltext MATCH ?";
+
+			if(ui->btnSearchInText->isChecked())
+				args += searchFilter;
+			else
+				args += QString("(name: %1) OR (author: %1)").arg(searchFilter);
 
 		} else {
 			query =
@@ -301,4 +295,9 @@ void SongListWidget::on_lvTags_activated(const QModelIndex &index)
 void SongListWidget::on_btnClearTagFilter_clicked()
 {
 	ui->lvTags->setCurrentIndex(tagsModel_.index(0,0));
+}
+
+void SongListWidget::on_btnSearchInText_clicked()
+{
+	requery();
 }

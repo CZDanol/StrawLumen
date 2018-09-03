@@ -230,6 +230,11 @@ bool MainWindow_SongsMode::askFinishEditMode()
 	return true;
 }
 
+QVector<qlonglong> MainWindow_SongsMode::selectedSongIds()
+{
+	return ui->wgtSongList->selectedRowIds();
+}
+
 void MainWindow_SongsMode::setSongEditMode(bool set)
 {
 	if(isSongEditMode_ == set) {
@@ -683,7 +688,7 @@ void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
 void MainWindow_SongsMode::on_btnCreateSongbook_clicked()
 {
 	documentGenerationDialog()->show();
-	documentGenerationDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
+	documentGenerationDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }
 
 void MainWindow_SongsMode::on_actionCreateSongbookFromSelection_triggered()
@@ -695,7 +700,7 @@ void MainWindow_SongsMode::on_actionCreateSongbookFromSelection_triggered()
 void MainWindow_SongsMode::on_actionExportToLumen_triggered()
 {
 	lumenExportDialog()->show();
-	lumenExportDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
+	lumenExportDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }
 
 void MainWindow_SongsMode::on_actionImportFromLumen_triggered()
@@ -742,7 +747,7 @@ void MainWindow_SongsMode::on_actionAddSongsToPlaylist_triggered()
 void MainWindow_SongsMode::on_actionExportToOpenSong_triggered()
 {
 	openSongExportDialog()->show();
-	openSongExportDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
+	openSongExportDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }
 
 void MainWindow_SongsMode::on_btnCopyChords_pressed()

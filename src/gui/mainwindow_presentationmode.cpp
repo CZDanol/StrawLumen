@@ -207,6 +207,11 @@ QSharedPointer<Playlist> MainWindow_PresentationMode::playlist()
 	return playlist_;
 }
 
+QVector<qlonglong> MainWindow_PresentationMode::selectedSongIds()
+{
+	return ui->wgtSongList->selectedRowIds();
+}
+
 void MainWindow_PresentationMode::updatePlaylistsMenu()
 {
 	playlistsRecentMenu_.clear();

@@ -72,6 +72,8 @@ int Presentation_Video::slideCount() const
 
 QPixmap Presentation_Video::slideIdentificationIcon(int i) const
 {
+	Q_UNUSED(i);
+
 	static QPixmap icon(":/icons/16/Play Button_16px.png");
 	return icon;
 }

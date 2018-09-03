@@ -35,6 +35,8 @@ public slots:
 	/// Returns false if the user does not wish do close the edit mode
 	bool askFinishEditMode();
 
+	QVector<qlonglong> selectedSongIds();
+
 private:
 	void setSongEditMode(bool set);
 
