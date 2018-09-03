@@ -11,7 +11,7 @@ class Presentation_NativePresentation : public Presentation
 	Q_OBJECT
 
 public:
-	virtual ~Presentation_NativePresentation();
+	virtual ~Presentation_NativePresentation() override;
 
 public:
 	virtual void drawSlide(QPainter &p, int slideId, const QRect &rect) = 0;

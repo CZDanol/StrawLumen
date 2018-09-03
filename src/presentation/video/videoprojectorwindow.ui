@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProjectorWindow</class>
- <widget class="QMainWindow" name="ProjectorWindow">
+ <class>VideoProjectorWindow</class>
+ <widget class="QMainWindow" name="VideoProjectorWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,13 +14,13 @@
    <string>Lumen | Projektor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../res/resources.qrc">
+   <iconset resource="../../../res/resources.qrc">
     <normaloff>:/icons/16/Presentation_16px.png</normaloff>:/icons/16/Presentation_16px.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget"/>
  </widget>
  <resources>
-  <include location="../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

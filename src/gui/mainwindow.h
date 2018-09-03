@@ -29,6 +29,9 @@ public:
 	void showSongsMode();
 	MainWindow_SongsMode *songsMode();
 
+signals:
+	void sigClosed();
+
 public slots:
 	void onDbQueryError(const QString &query, const QString &error);
 	void onDbDatabaseError(const QString &error);

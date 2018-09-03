@@ -1,11 +1,12 @@
 Aktuálně
-- obrázky - automatická prezentace (+ nastavení intervalu)
-- položka: Obrázky
 - položka: Video
-- preloading sousedících slidů
-- ukládání programů v podstatě stejně jako ve wordu atp
+- translation tag, pro překlady pod textem (menším písmem?)
+- Možnost přesunout vybrané písně v programu pod nový štítek, nebo rovnou do vytvoření zpěvníku.
 
 Do budoucna
+- Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.
+- zvýrazňování výsledků vyhledávání?
+- vyhledávání - přepínat, jestli vyhledávat i v textech nebo ne
 - systém ukládání programů není úplně ideální
 - ukládání výběru písniček (import/export/zpěvníky)
 - nový program - tázací dialog, přidat možnost "uložit a nový"

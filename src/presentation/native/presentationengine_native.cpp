@@ -1,6 +1,6 @@
 #include "presentationengine_native.h"
 
-#include "gui/projectorwindow.h"
+#include "presentation/native/nativeprojectorwindow.h"
 #include "job/settings.h"
 
 PresentationEngine_Native *presentationEngine_Native = nullptr;
@@ -21,7 +21,7 @@ void PresentationEngine_Native::setPresentation(const QSharedPointer<Presentatio
 		return;
 
 	currentPresentation_ = presentation;
-	projectorWindow->update();
+	nativeProjectorWindow->update();
 }
 
 void PresentationEngine_Native::setSlide(int localSlideId, bool force)
@@ -30,7 +30,7 @@ void PresentationEngine_Native::setSlide(int localSlideId, bool force)
 		return;
 
 	currentSlide_ = localSlideId;
-	projectorWindow->update();
+	nativeProjectorWindow->update();
 }
 
 const QSharedPointer<Presentation_NativePresentation> &PresentationEngine_Native::currentPresentation() const
@@ -50,13 +50,13 @@ bool PresentationEngine_Native::isBlackScreen() const
 
 void PresentationEngine_Native::activateEngine()
 {
-	projectorWindow->setGeometry(settings->projectionDisplayGeometry());
-	projectorWindow->show();
+	nativeProjectorWindow->setGeometry(settings->projectionDisplayGeometry());
+	nativeProjectorWindow->show();
 }
 
 void PresentationEngine_Native::deactivateEngine()
 {
-	projectorWindow->close();
+	nativeProjectorWindow->close();
 }
 
 void PresentationEngine_Native::setBlackScreen(bool set)
@@ -65,10 +65,10 @@ void PresentationEngine_Native::setBlackScreen(bool set)
 		return;
 
 	isBlackScreen_ = set;
-	projectorWindow->update();
+	nativeProjectorWindow->update();
 }
 
 void PresentationEngine_Native::setDisplay(const QRect &rect)
 {
-	projectorWindow->setGeometry(rect);
+	nativeProjectorWindow->setGeometry(rect);
 }

@@ -7,7 +7,7 @@
 #include <QFileInfo>
 
 #include "gui/settingsdialog.h"
-#include "gui/projectorwindow.h"
+#include "presentation/native/nativeprojectorwindow.h"
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
 #include "gui/mainwindow_songsmode.h"
@@ -18,6 +18,7 @@
 #include "importexport/opensongimportdialog.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/native/presentation_images.h"
+#include "presentation/video/presentation_video.h"
 #include "strawapi/feedbackdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -106,8 +107,8 @@ void MainWindow::closeEvent(QCloseEvent *e)
 		return;
 	}
 
-	projectorWindow->close();
 	QMainWindow::closeEvent(e);
+	emit sigClosed();
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *e)
@@ -129,8 +130,7 @@ void MainWindow::dropEvent(QDropEvent *e)
 
 	// The exec is there so the explorer the file is dragged from is not frozen while loading
 	execOnMainThread([=]{
-		QStringList openSongFiles;
-		QStringList imageFiles;
+		QStringList openSongFiles, imageFiles, videoFiles;
 		QString lumenFile;
 
 		for(QUrl url : urls) {
@@ -146,6 +146,11 @@ void MainWindow::dropEvent(QDropEvent *e)
 
 			if(Presentation_Images::validExtensions().contains(suffix.toLower())) {
 				imageFiles += filePath;
+				continue;
+			}
+
+			if(Presentation_Video::validExtensions().contains(suffix.toLower())) {
+				videoFiles += filePath;
 				continue;
 			}
 
@@ -165,6 +170,9 @@ void MainWindow::dropEvent(QDropEvent *e)
 
 		if(!imageFiles.isEmpty())
 			presentationMode()->playlist()->addItem(Presentation_Images::create(imageFiles));
+
+		for(const QString &filename : videoFiles)
+			presentationMode()->playlist()->addItem(Presentation_Video::createFromFilename(filename));
 
 		if(!lumenFile.isEmpty())
 			lumenImportDialog()->show(lumenFile);

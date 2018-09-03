@@ -6,7 +6,7 @@
 
 #include "presentationpropertieswidget_images.h"
 #include "job/asynccachemanager.h"
-#include "gui/projectorwindow.h"
+#include "presentation/native/nativeprojectorwindow.h"
 
 QStringList Presentation_Images::validExtensions()
 {
@@ -186,7 +186,7 @@ QImage Presentation_Images::getImage(int slideId, const QSize size)
 		return true;
 	};
 
-	return asyncCache->request(cacheKey, produceFunction, projectorWindow, []{projectorWindow->update();}).value<QImage>();
+	return asyncCache->request(cacheKey, produceFunction, nativeProjectorWindow, []{nativeProjectorWindow->update();}).value<QImage>();
 }
 
 void Presentation_Images::addImages(const QStringList &images)
@@ -216,5 +216,5 @@ void Presentation_Images::updateTiming()
 void Presentation_Images::onAutoTimerTimeout()
 {
 	autoSlide_++;
-	projectorWindow->update();
+	nativeProjectorWindow->update();
 }

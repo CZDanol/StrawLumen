@@ -46,7 +46,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "installDeps\VC_redist.x64.exe"; DestDir: {tmp}; AfterInstall: InstallVcRedist; Flags: deleteafterinstall
+Source: "installDeps\*"; DestDir: {tmp}; AfterInstall: InstallDeps; Flags: deleteafterinstall
 Source: "bin\bin_{#PlatformId}\strawLumen.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion sign
 Source: "bin\bin_{#PlatformId}\QtWebEngineProcess.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\bin_{#PlatformId}\*.dll"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
@@ -79,7 +79,7 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 Filename: "{app}\bin_{#PlatformId}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-procedure InstallVcRedist;
+procedure InstallDeps;
 var
   StatusText: string;
   ResultCode: integer;
@@ -91,6 +91,18 @@ begin
     if not Exec(ExpandConstant('{tmp}\VC_redist.x64.exe'), '/install /passive /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
     then
       MsgBox('Nepodaøilo se spustit instalátor MSVC Redist. Aplikace bez této knihovny nemusí fungovat.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
+  finally
+    WizardForm.StatusLabel.Caption := StatusText;
+    WizardForm.ProgressGauge.Style := npbstNormal;
+  end;
+
+  StatusText := WizardForm.StatusLabel.Caption;
+  WizardForm.StatusLabel.Caption := 'Instaluji K-Lite codec pack...';
+  WizardForm.ProgressGauge.Style := npbstMarquee;
+  try
+    if not Exec(ExpandConstant('{tmp}\K_lite.exe'), '/install /passive /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
+    then
+      MsgBox('Nepodaøilo se spustit instalátor K-Lite. Bez tìchto kodekù nemusí fungovat funkce pøehrávaèe videí.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
   finally
     WizardForm.StatusLabel.Caption := StatusText;
     WizardForm.ProgressGauge.Style := npbstNormal;

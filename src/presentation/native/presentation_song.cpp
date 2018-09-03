@@ -4,7 +4,7 @@
 #include "job/backgroundmanager.h"
 #include "job/settings.h"
 #include "rec/chord.h"
-#include "gui/projectorwindow.h"
+#include "presentation/native/nativeprojectorwindow.h"
 #include "presentation/native/presentationpropertieswidget_song.h"
 
 QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong songId)
@@ -242,7 +242,7 @@ void Presentation_Song::onDbManagerSongChanged(qlonglong songId)
 	loadFromDb(songId);
 
 	if(isActive())
-		projectorWindow->update();
+		nativeProjectorWindow->update();
 }
 
 void Presentation_Song::onStyleChanged()
@@ -251,7 +251,7 @@ void Presentation_Song::onStyleChanged()
 		return;
 
 	if(isActive())
-		projectorWindow->update();
+		nativeProjectorWindow->update();
 }
 
 void Presentation_Song::onStyleBackgroundChanged()
@@ -265,5 +265,5 @@ void Presentation_Song::onStyleNeedsRepaint()
 		return;
 
 	if(isActive())
-		projectorWindow->update();
+		nativeProjectorWindow->update();
 }

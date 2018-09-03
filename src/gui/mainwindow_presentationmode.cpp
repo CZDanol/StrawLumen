@@ -19,6 +19,7 @@
 #include "presentation/native/presentation_customslide.h"
 #include "presentation/native/presentation_song.h"
 #include "presentation/native/presentation_images.h"
+#include "presentation/video/presentation_video.h"
 #include "job/settings.h"
 #include "job/db.h"
 #include "util/standarddialogs.h"
@@ -63,6 +64,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			addPresentationMenu_.addAction(ui->actionAddSong);
 			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
 			addPresentationMenu_.addAction(ui->actionAddImagesPresentation);
+			addPresentationMenu_.addAction(ui->actionAddVideoPresentation);
 			addPresentationMenu_.addSeparator();
 			addPresentationMenu_.addAction(ui->actionAddCustomSlidePresentation);
 			addPresentationMenu_.addAction(ui->actionAddBlackScreen);
@@ -91,11 +93,11 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			playlistsMenu_.setTitle(tr("Program"));
 			playlistsMenu_.addAction(ui->actionClearPlaylist);
 			playlistsMenu_.addSeparator();
-			playlistsMenu_.addAction(ui->actionLoadPlaylist);
-			playlistsMenu_.addMenu(&playlistsRecentMenu_);
-			playlistsMenu_.addSeparator();
 			playlistsMenu_.addAction(ui->actionSavePlaylist);
 			playlistsMenu_.addAction(ui->actionSavePlaylistAs);
+			playlistsMenu_.addSeparator();
+			playlistsMenu_.addAction(ui->actionLoadPlaylist);
+			playlistsMenu_.addMenu(&playlistsRecentMenu_);
 
 			playlistsRecentMenu_.setTitle(tr("Načíst nedávné"));
 			playlistsRecentMenu_.setIcon(QIcon(":/icons/16/Open_16px.png"));
@@ -562,5 +564,48 @@ void MainWindow_PresentationMode::on_actionSavePlaylistAs_triggered()
 
 void MainWindow_PresentationMode::on_actionAddImagesPresentation_triggered()
 {
-	addPresentationsAction_({Presentation_Images::create()});
+	static const QIcon icon(":/icons/16/Add_16px.png");
+
+	QFileDialog dlg(this);
+	dlg.setFileMode(QFileDialog::ExistingFiles);
+	dlg.setAcceptMode(QFileDialog::AcceptOpen);
+	dlg.setNameFilter(tr("Soubory obrázků (%1)").arg("*." + Presentation_Images::validExtensions().join(" *.")));
+	dlg.setWindowIcon(icon);
+	dlg.setWindowTitle(tr("Přidání obrázků"));
+	dlg.setDirectory(settings->value("imagesDirectory", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString());
+
+	if(!dlg.exec())
+		return;
+
+	settings->setValue("imagesDirectory", dlg.directory().absolutePath());
+
+	addPresentationsAction_({Presentation_Images::create(dlg.selectedFiles())});
+}
+
+void MainWindow_PresentationMode::on_actionAddVideoPresentation_triggered()
+{
+	static const QIcon icon(":/icons/16/Play Button_16px.png");
+
+	QFileDialog dlg(this);
+	dlg.setFileMode(QFileDialog::ExistingFiles);
+	dlg.setAcceptMode(QFileDialog::AcceptOpen);
+	dlg.setNameFilter(tr("Soubory videa (%1)").arg("*." + Presentation_Video::validExtensions().join(" *.")));
+	dlg.setWindowIcon(icon);
+	dlg.setWindowTitle(tr("Import videa"));
+	dlg.setDirectory(settings->value("dialog.addVideoPresentation.directory", QStandardPaths::writableLocation(QStandardPaths::MoviesLocation)).toString());
+
+	if(!dlg.exec())
+		return;
+
+	settings->setValue("dialog.addVideoPresentation.directory", dlg.directory().absolutePath());
+
+	QVector<QSharedPointer<Presentation> > presentations;
+	for(auto &filename : dlg.selectedFiles()) {
+		QSharedPointer<Presentation> presentation = Presentation_Video::createFromFilename(filename);
+		if(!presentation)
+			break;
+
+		presentations << presentation;
+	}
+	addPresentationsAction_(presentations);
 }

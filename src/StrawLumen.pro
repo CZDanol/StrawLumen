@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport widgets axcontainer sql xml webenginewidgets network
+QT       += core gui printsupport multimedia multimediawidgets widgets axcontainer sql xml webenginewidgets network
 
 # For debugging purposes
 #CONFIG += console
@@ -58,7 +58,6 @@ SOURCES += main.cpp \
     gui/activexdebugdialog.cpp \
     presentation/presentationpropertieswidget.cpp \
     presentation/powerpoint/presentationpropertieswidget_powerpoint.cpp \
-    gui/projectorwindow.cpp \
     gui/settingsdialog.cpp \
     wgt/displayselectionwidget.cpp \
     presentation/native/presentationengine_native.cpp \
@@ -123,7 +122,12 @@ SOURCES += main.cpp \
     gui/bulkeditsongsdialog.cpp \
     presentation/native/presentation_images.cpp \
     presentation/native/presentationpropertieswidget_images.cpp \
-    job/asynccachemanager.cpp
+    job/asynccachemanager.cpp \
+    presentation/native/nativeprojectorwindow.cpp \
+    presentation/video/videoprojectorwindow.cpp \
+    presentation/video/presentationengine_video.cpp \
+    presentation/video/presentation_video.cpp \
+    presentation/video/presentationpropertieswidget_video.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -132,7 +136,7 @@ FORMS += \
     gui/activexdebugdialog.ui \
     presentation/presentationpropertieswidget.ui \
     presentation/powerpoint/presentationpropertieswidget_powerpoint.ui \
-    gui/projectorwindow.ui \
+    presentation/native/nativeprojectorwindow.ui \
     gui/settingsdialog.ui \
     wgt/displayselectionwidget.ui \
     gui/mainwindow_songsmode.ui \
@@ -158,7 +162,9 @@ FORMS += \
     strawapi/simpleupdater.ui \
     strawapi/feedbackdialog.ui \
     gui/bulkeditsongsdialog.ui \
-    presentation/native/presentationpropertieswidget_images.ui
+    presentation/native/presentationpropertieswidget_images.ui \
+    presentation/video/videoprojectorwindow.ui \
+    presentation/video/presentationpropertieswidget_video.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -181,7 +187,6 @@ HEADERS += \
     gui/activexdebugdialog.h \
     presentation/presentationpropertieswidget.h \
     presentation/powerpoint/presentationpropertieswidget_powerpoint.h \
-    gui/projectorwindow.h \
     gui/settingsdialog.h \
     wgt/displayselectionwidget.h \
     presentation/native/presentationengine_native.h \
@@ -247,7 +252,12 @@ HEADERS += \
     gui/bulkeditsongsdialog.h \
     presentation/native/presentation_images.h \
     presentation/native/presentationpropertieswidget_images.h \
-    job/asynccachemanager.h
+    job/asynccachemanager.h \
+    presentation/native/nativeprojectorwindow.h \
+    presentation/video/videoprojectorwindow.h \
+    presentation/video/presentationengine_video.h \
+    presentation/video/presentation_video.h \
+    presentation/video/presentationpropertieswidget_video.h
 
 RESOURCES += \
     ../res/resources.qrc

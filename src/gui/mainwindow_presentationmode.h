@@ -76,6 +76,7 @@ private slots:
 	void on_actionLoadPlaylist_triggered();
 	void on_actionSavePlaylistAs_triggered();
 	void on_actionAddImagesPresentation_triggered();
+	void on_actionAddVideoPresentation_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;

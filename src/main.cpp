@@ -10,7 +10,6 @@
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
 #include "gui/settingsdialog.h"
-#include "gui/projectorwindow.h"
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
 #include "gui/startupsplashscreen.h"
@@ -24,6 +23,9 @@
 #include "presentation/presentation.h"
 #include "presentation/powerpoint/presentationengine_powerpoint.h"
 #include "presentation/native/presentationengine_native.h"
+#include "presentation/native/nativeprojectorwindow.h"
+#include "presentation/video/presentationengine_video.h"
+#include "presentation/video/videoprojectorwindow.h"
 #include "presentation/presentationmanager.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
@@ -83,12 +85,14 @@ void initApplication() {
 	activeXJobThread = new ActiveXJobThread();
 	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
 	presentationEngine_Native = new PresentationEngine_Native();
+	presentationEngine_Video = new PresentationEngine_Video();
 	presentationManager = new PresentationManager();
 
 	qApp->processEvents();
 
 	mainWindow = new MainWindow();
-	projectorWindow = new ProjectorWindow();
+	nativeProjectorWindow = new NativeProjectorWindow();
+	videoProjectorWindow = new VideoProjectorWindow();
 
 	qApp->processEvents();
 
@@ -102,11 +106,13 @@ void uninitApplication() {
 	presentationManager->setActive(false);
 
 	delete mainWindow;
-	delete projectorWindow;
+	delete nativeProjectorWindow;
+	delete videoProjectorWindow;
 
 	delete presentationManager;
 	delete presentationEngine_Native;
 	delete presentationEngine_PowerPoint;
+	delete presentationEngine_Video;
 	delete activeXJobThread;
 
 	delete asyncCache;

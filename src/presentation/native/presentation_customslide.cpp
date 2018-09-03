@@ -1,6 +1,6 @@
 #include "presentation_customslide.h"
 
-#include "gui/projectorwindow.h"
+#include "presentation/native/nativeprojectorwindow.h"
 #include "presentation/native/presentationpropertieswidget_customslide.h"
 #include "job/settings.h"
 #include "job/backgroundmanager.h"
@@ -116,7 +116,7 @@ void Presentation_CustomSlide::onStyleChanged()
 		return;
 
 	if(isActive())
-		projectorWindow->update();
+		nativeProjectorWindow->update();
 }
 
 void Presentation_CustomSlide::onStyleBackgroundChanged()
@@ -130,5 +130,5 @@ void Presentation_CustomSlide::onStyleNeedsRepaint()
 		return;
 
 	if(isActive())
-		projectorWindow->update();
+		nativeProjectorWindow->update();
 }
