@@ -39,11 +39,11 @@ namespace WordSplit {
 
 		static const QString rxsOnlyStartConsonant = QString(
 					"(?:"
-					"jsm|kr[km]|srd|stn|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
+					"jsm|kr[km]|srd(?!%1)|stn|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
 					"|ch[cčlmrřv]"
 					"[dhksvz]b|[jkrvz]d|[jlmsvzž]h|[fsvz]j|[lsštz]k|[bcčdfhkmpsštvz]l|[čdhjkrřsštvz]m|[čdfghkmpsšvz]n|[fhkmpsšvz]ň|[cčlsšvz]p|[bcčdfghkmpsštvz]r|[bdhkmpttvz]ř|[jklmpv]s|[pvz]š|[cčrsšvz]t|[cš]ť|[cčdhkrřsštz]v|[dlmrsvz]ž"
 					")"
-					);
+					).arg(rxsVowel);
 
 		static const QString rxsStartConsonant = QString("(?:%1|%2)").arg(rxsOnlyStartConsonant, rxsConsonant);
 

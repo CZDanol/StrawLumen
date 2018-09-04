@@ -44,6 +44,20 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 	invalidAnnotationFormat_.setForeground(Qt::red);
 }
 
+void SongContentSyntaxHiglighter::setSepSyllables(bool set)
+{
+	if(sepSyllables_ == set)
+		return;
+
+	sepSyllables_ = set;
+	rehighlight();
+}
+
+bool SongContentSyntaxHiglighter::sepSyllables() const
+{
+	return sepSyllables_;
+}
+
 void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 {
 	// Default font changes, we must update
@@ -52,7 +66,7 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 	chordAnnotationSymbolFormat_.setFontPointSize(size);
 
 	// Sep syllables
-	if(false) {
+	if(sepSyllables_) {
 		bool alt = false;
 		int prev = 0;
 		ChordsInSong chords;

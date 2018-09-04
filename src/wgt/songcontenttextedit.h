@@ -13,6 +13,9 @@ class SongContentTextEdit : public QTextEdit
 public:
 	explicit SongContentTextEdit(QWidget *parent = nullptr);
 
+public:
+	SongContentSyntaxHiglighter *syntaxHiglighter();
+
 signals:
 	void sigAltlLeftPressed();
 	void sigAltRightPressed();

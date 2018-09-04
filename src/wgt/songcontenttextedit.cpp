@@ -9,6 +9,11 @@ SongContentTextEdit::SongContentTextEdit(QWidget *parent) : QTextEdit(parent)
 	viewport()->installEventFilter(this);
 }
 
+SongContentSyntaxHiglighter *SongContentTextEdit::syntaxHiglighter()
+{
+	return contentSyntaxHiglighter_;
+}
+
 void SongContentTextEdit::keyPressEvent(QKeyEvent *e)
 {
 	if(e->modifiers() == Qt::AltModifier && e->key() == Qt::Key_Left) {

@@ -11,6 +11,10 @@ class SongContentSyntaxHiglighter : public QSyntaxHighlighter
 public:
 	SongContentSyntaxHiglighter(QTextDocument *parent = nullptr);
 
+public:
+	void setSepSyllables(bool set);
+	bool sepSyllables() const;
+
 protected:
 	void highlightBlock(const QString &text) override;
 
@@ -25,6 +29,9 @@ private:
 private:
 	QTextCharFormat invalidAnnotationFormat_;
 	QTextCharFormat invalidWhitespaceFormat_;
+
+private:
+	bool sepSyllables_ = false;
 
 };
 

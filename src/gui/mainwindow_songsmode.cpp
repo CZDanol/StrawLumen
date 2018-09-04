@@ -24,6 +24,7 @@
 #include "util/scopeexit.h"
 #include "util/execonmainthread.h"
 #include "util/regex.h"
+#include "util/songcontentsyntaxhiglighter.h"
 #include "rec/chord.h"
 #include "rec/playlist.h"
 #include "job/db.h"
@@ -148,6 +149,10 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		new QShortcut(Qt::ALT | Qt::SHIFT | Qt::Key_F, ui->btnAutoFormat, SLOT(click()));
 		new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
 		new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
+
+		connect(new QShortcut(Qt::CTRL | Qt::ALT | Qt::Key_F12, ui->teContent), &QShortcut::activated, this, [this](){
+			ui->teContent->syntaxHiglighter()->setSepSyllables(!ui->teContent->syntaxHiglighter()->sepSyllables());
+		});
 
 		connect(new QShortcut(Qt::Key_Delete, this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut), SIGNAL(activated()), ui->actionDeleteSongs, SLOT(trigger()));
 	}
