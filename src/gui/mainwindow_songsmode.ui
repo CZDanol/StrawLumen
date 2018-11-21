@@ -389,6 +389,20 @@ Zkratka: Alt+Shift+F</string>
            <number>0</number>
           </property>
           <item>
+           <widget class="QPushButton" name="btnBulkEdit">
+            <property name="text">
+             <string>Hromadná úprava</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Blockchain Technology_16px.png</normaloff>:/icons/16/Blockchain Technology_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btnNew">
             <property name="text">
              <string>Nová píseň</string>

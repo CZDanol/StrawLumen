@@ -204,9 +204,12 @@
 			
 			.textFollowingChord {
 				/* It weirdly collapses if I don't do this */
-				border-left: .01mm solid transparent;
 				display: block;
 				float: left;
+			}
+			
+			.textFollowingChord::before {
+				content: "\200c";
 			}
 			
 			.chord:not(.withSeparator) .separator {
@@ -334,6 +337,7 @@
 								
 								sectionContentElem.appendChild(elem);
 							
+								// If there's more text not put exactly under the chord, add it
 								if(splitText[2]) {
 									textElem = textTemplate.cloneNode(true);
 									textElem.textContent = splitText[2];

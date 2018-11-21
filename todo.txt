@@ -1,16 +1,25 @@
 Aktuálně
+- detekovat natočení fotky z metadat
+- neukládá se časování fotek
+- nedetkuje se změna při úpravě časování/automatické prezentace fotek
+- nedetekuje se změna při úpravě pořadí slok (pro uložení programu)
+- možnost dát vlastní název prezentaci obrázků
+- option v menu, aby se náhodně nastavovaly pozadí u písní v programu
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
-- zvýrazňování výsledků vyhledávání
+	- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
+- zvýrazňování výsledků vyhledávání (asi ne?)
+- černá obrazovka u videí
+- ovládací tlačítka pro video
+- blbne vertikálně akord, když je prázdnej text pod ním
+- option na přidat logo lumenu do PDFka?
 
 Do budoucna
 - Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.
 - ukládání výběru písniček (import/export/zpěvníky)
 - nový program - tázací dialog, přidat možnost "uložit a nový"
-- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
 - když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - když se nesází akordy, tak trim mezery před/za akordama
 - vzorník barev u color selectu
-- ovládací tlačítka pro video
 - nový typ prezentace: webovky?
 
 - systém nastavování automatických přechodů prezentací:

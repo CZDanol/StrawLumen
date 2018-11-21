@@ -14,6 +14,7 @@
 
 #include "gui/splashscreen.h"
 #include "gui/mainwindow_presentationmode.h"
+#include "gui/bulkeditsongsdialog.h"
 #include "presentation/native/presentation_song.h"
 #include "importexport/documentgenerationdialog.h"
 #include "importexport/lumenexportdialog.h"
@@ -150,7 +151,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
 		new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
 
-		connect(new QShortcut(Qt::CTRL | Qt::ALT | Qt::Key_F12, ui->teContent), &QShortcut::activated, this, [this](){
+		connect(new QShortcut(Qt::CTRL | Qt::Key_F12, ui->teContent), &QShortcut::activated, this, [this](){
 			ui->teContent->syntaxHiglighter()->setSepSyllables(!ui->teContent->syntaxHiglighter()->sepSyllables());
 		});
 
@@ -839,4 +840,10 @@ void MainWindow_SongsMode::on_actionOnlyChords_triggered()
 
 		return newContent;
 	}, true);
+}
+
+void MainWindow_SongsMode::on_btnBulkEdit_clicked()
+{
+	bulkEditSongsDialog()->show();
+	bulkEditSongsDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }

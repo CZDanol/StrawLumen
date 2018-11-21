@@ -15,9 +15,11 @@ public:
 	explicit BulkEditSongsDialog(QWidget *parent = nullptr);
 	~BulkEditSongsDialog();
 
+public:
+	void setSelectedSongs(const QVector<qlonglong> &songIds);
+
 private slots:
 	void on_btnStorno_clicked();
-
 	void on_btnGenerate_clicked();
 
 private:

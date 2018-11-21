@@ -18,6 +18,11 @@ BulkEditSongsDialog::~BulkEditSongsDialog()
 	delete ui;
 }
 
+void BulkEditSongsDialog::setSelectedSongs(const QVector<qlonglong> &songIds)
+{
+	ui->wgtSongSelection->setSelectedSongs(songIds);
+}
+
 BulkEditSongsDialog *bulkEditSongsDialog()
 {
 	static BulkEditSongsDialog *result = new BulkEditSongsDialog(mainWindow);

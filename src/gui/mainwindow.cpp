@@ -235,5 +235,5 @@ void MainWindow::on_actionSendFeedback_triggered()
 void MainWindow::on_actionBulkEditSongs_triggered()
 {
 	bulkEditSongsDialog()->show();
-	documentGenerationDialog()->setSelectedSongs(selectedSongIds());
+	bulkEditSongsDialog()->setSelectedSongs(selectedSongIds());
 }

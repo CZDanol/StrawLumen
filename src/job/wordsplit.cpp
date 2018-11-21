@@ -35,13 +35,13 @@ namespace WordSplit {
 		QVector<int> result;
 
 		static const QString rxsVowel = "(?:[aeiouyáéíóúýůě])";
-		static const QString rxsConsonant = "(?:ch|kl|[bdfghjklmnpqrstvwxzčďňřšťž]|c(?!h))";
+		static const QString rxsConsonant = "(?:ch|kl|nn|mm|[bdfghjklmnpqrstvwxzčďňřšťž]|c(?!h))";
 
 		static const QString rxsOnlyStartConsonant = QString(
 					"(?:"
-					"jsm|kr[km]|srd(?!%1)|stn|[sz][htk][lrř]|v[zž]d|vkl|z[dv][rl]"
+					"js[mt]|kr[km]|srd(?!%1)|stn|[sz][htk][lrř]|v[zž]d|vkl|vst|z[dv][rl]"
 					"|ch[cčlmrřv]"
-					"[dhksvz]b|[jkrvz]d|[jlmsvzž]h|[fsvz]j|[lsštz]k|[bcčdfhkmpsštvz]l|[čdhjkrřsštvz]m|[čdfghkmpsšvz]n|[fhkmpsšvz]ň|[cčlsšvz]p|[bcčdfghkmpsštvz]r|[bdhkmpttvz]ř|[jklmpv]s|[pvz]š|[cčrsšvz]t|[cš]ť|[cčdhkrřsštz]v|[dlmrsvz]ž"
+					"[dhksvz]b|[jkrvz]d|[jlmsvzž]h|[fsvz]j|[clsštz]k|[bcčdfhkmpsštvz]l|[čdhjkrřsštvz]m|[čdfghkmpsšvz]n|[fhkmpsšvz]ň|[cčlsšvz]p|[bcčdfghkmpsštvz]r|[bdhkmpttvz]ř|[jklmpv]s|[pvz]š|[cčrsšvz]t|[cš]ť|[cčdhkrřsštz]v|[dlmrsvz]ž"
 					")"
 					).arg(rxsVowel);
 
@@ -79,7 +79,10 @@ namespace WordSplit {
 																						"))").arg(rxsVowel, rxsMiddle, rxsEnd, rxsConsonant);
 
 		QRegularExpression rxWord(
-					QString("\\b(%1)(%2*)(%3?)\\b|\\b\\p{L}+\\b%4").arg(rxsStart, rxsMiddle, rxsEnd, (options & IncludeNewlines) ? "|[ \t]*$" : ""),
+					QString(
+						"\\b(%1)(%2*)(%3?)\\b"
+						"|\\b\\p{L}+\\b%4"
+						).arg(rxsStart, rxsMiddle, rxsEnd, (options & IncludeNewlines) ? "|[ \t]*$" : ""),
 					QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption | QRegularExpression::MultilineOption);
 
 		static QRegularExpression rxMiddle(

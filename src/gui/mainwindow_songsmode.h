@@ -89,6 +89,8 @@ private slots:
 	void on_actionMoveChordsLeft_triggered();
 	void on_actionOnlyChords_triggered();
 
+	void on_btnBulkEdit_clicked();
+
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_, teContentMenu_;
