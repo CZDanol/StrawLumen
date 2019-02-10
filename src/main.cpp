@@ -55,8 +55,6 @@ int main(int argc, char *argv[]) {
 		mainWindow->show();
 		simpleUpdater()->checkForUpdates();
 		startupSplashscreen.close();
-
-		standardInfoDialog(MainWindow::tr("Toto je záběhová verze programu Straw Lumen. Pokud narazíte na nějaké chyby, prosím, nahlašte je. Budeme rádi i za připomínky a podněty.\n\nZpětnou vazbu můžete odesílat buď prostřednictvím dialogu \"Zpětná vazba\" v menu programu nebo na e-mail danol@straw-solutions.cz."));
 	});
 
 	int result = app.exec();

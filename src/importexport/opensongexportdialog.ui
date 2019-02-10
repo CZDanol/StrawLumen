@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>793</width>
-    <height>542</height>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,6 +36,20 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="pixmap">
+        <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="cbFoldersByTags">
+       <property name="text">
+        <string>Exportovat do složek dle štítků</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">

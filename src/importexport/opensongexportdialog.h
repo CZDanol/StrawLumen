@@ -2,6 +2,7 @@
 #define OPENSONGEXPORTDIALOG_H
 
 #include <QDialog>
+#include <QDir>
 
 namespace Ui {
 	class OpenSongExportDialog;
@@ -17,6 +18,9 @@ public:
 
 public:
 	void setSelectedSongs(const QVector<qlonglong> &songIds);
+
+private:
+	bool exportSong(const qlonglong songId, const QDir &outputDir);
 
 private slots:
 	void on_btnClose_clicked();

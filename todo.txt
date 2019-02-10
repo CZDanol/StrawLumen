@@ -1,4 +1,6 @@
 Aktuálně
+- ctrl+a jde až napodruhé při vytváření zpěvníku
+- hromadný export písní (může formátem zadat export PDF do samostatných složek, lumenovských databází do samostatných složek)
 - detekovat natočení fotky z metadat
 - neukládá se časování fotek
 - nedetkuje se změna při úpravě časování/automatické prezentace fotek
@@ -12,8 +14,18 @@ Aktuálně
 - ovládací tlačítka pro video
 - blbne vertikálně akord, když je prázdnej text pod ním
 - option na přidat logo lumenu do PDFka?
+- promítání webové stránky
+- promítání hodin
+
+- možnost smazat štítek z menu deletem
+
+- systém pro verše z bible
+
+https://sourceforge.net/projects/zefania-sharp/files/Bibles/CZE/
+
 
 Do budoucna
+- promítání odpočtu
 - Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.
 - ukládání výběru písniček (import/export/zpěvníky)
 - nový program - tázací dialog, přidat možnost "uložit a nový"
@@ -21,6 +33,7 @@ Do budoucna
 - když se nesází akordy, tak trim mezery před/za akordama
 - vzorník barev u color selectu
 - nový typ prezentace: webovky?
+- štítky pro pozadí
 
 - systém nastavování automatických přechodů prezentací:
 	- přejít na další snímek/prezentaci v takový a takový čas
