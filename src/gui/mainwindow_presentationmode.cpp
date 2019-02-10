@@ -19,6 +19,7 @@
 #include "presentation/native/presentation_customslide.h"
 #include "presentation/native/presentation_song.h"
 #include "presentation/native/presentation_images.h"
+#include "presentation/native/presentation_bibleverse.h"
 #include "presentation/video/presentation_video.h"
 #include "job/settings.h"
 #include "job/db.h"
@@ -63,6 +64,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		{
 			addPresentationMenu_.addAction(ui->actionAddSong);
 			addPresentationMenu_.addAction(ui->actionAddPowerpointPresentation);
+			addPresentationMenu_.addAction(ui->actionAddBibleVerse);
 			addPresentationMenu_.addAction(ui->actionAddImagesPresentation);
 			addPresentationMenu_.addAction(ui->actionAddVideoPresentation);
 			addPresentationMenu_.addSeparator();
@@ -613,4 +615,9 @@ void MainWindow_PresentationMode::on_actionAddVideoPresentation_triggered()
 		presentations << presentation;
 	}
 	addPresentationsAction_(presentations);
+}
+
+void MainWindow_PresentationMode::on_actionAddBibleVerse_triggered()
+{
+	addPresentationsAction_({Presentation_BibleVerse::create()});
 }

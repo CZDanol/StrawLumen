@@ -222,5 +222,17 @@
         <file>icons/16/Photo Gallery_16px.png</file>
         <file>icons/16/Time_16px.png</file>
         <file>icons/16/Play Button_16px.png</file>
+        <file>icons/16/Holy Bible_16px.png</file>
+        <file>icons/16/Binder_16px.png</file>
+        <file>icons/16/Class_16px.png</file>
+        <file>icons/16/Bookmark_16px.png</file>
+        <file>icons/16/Books_16px.png</file>
+        <file>icons/16/Google Translate_16px.png</file>
+        <file>icons/16/Literature_16px.png</file>
+        <file>icons/16/Study_16px.png</file>
+        <file>icons/16/Paper_16px.png</file>
+        <file>icons/16/Book_16px.png</file>
+        <file>icons/16/Scroll_16px.png</file>
+        <file>icons/16/Torah_16px.png</file>
     </qresource>
 </RCC>

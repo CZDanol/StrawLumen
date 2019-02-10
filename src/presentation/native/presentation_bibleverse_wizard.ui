@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Presentation_BibleVerse_Wizard</class>
+ <widget class="QDialog" name="Presentation_BibleVerse_Wizard">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1122</width>
+    <height>604</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Přidání verše</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../res/resources.qrc">
+    <normaloff>:/icons/16/Holy Bible_16px.png</normaloff>:/icons/16/Holy Bible_16px.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="BibleVerseSelectionWidget" name="widget" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BibleVerseSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/bibleverseselectionwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../../res/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

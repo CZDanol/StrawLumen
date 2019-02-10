@@ -1,0 +1,75 @@
+1,Gen,Genesis,gn,gen,1m,im,1moj,imoj,1mojzisova,1mojz,imojz,imojzisova
+2,Ex,Exodus,ex,exo,2m,iim,2moj,iimoj,exod,2mojzisova,2mojz,iimojzisova,iimojz
+3,Lev,Leviticus,lv,lev,3m,iiim,3moj,iiimoj,3mojzisova,3mojz,iiimojzisova,iiimojz
+4,Num,Numeri,nu,num,4m,ivm,4moj,ivmoj,numer,4mojzisova,4mojz,ivmojzisova,ivmojz
+5,Dtn,Deuteronomium,dt,dtn,deut,5m,vm,5moj,vmoj,deuter,deuteron,5mojzisova,5mojz,vmojzisova,vmojz
+6,Joz,Jozue,jozue,joz,jz
+7,Sd,Soudců,sd,sdc,soud,soudc,soudcu
+8,Rt,Rút,rút,rt,rut
+9,1Sam,1. Samuelova,1s,1s,is,1sam,isam,1samuelova,isamuelova,1sm,ism,1samuel,isamuel
+10,2Sam,2. Samuelova,2s,iis,2sam,iisam,iisamuelova,2samuelova,2sm,iism,2samuel,iisamuel
+11,1Kr,1. Královská,1kr,ikr,1kral,ikral,ikral,1kralovska,ikralovska
+12,2Kr,2. Královská,2kr,iikr,2kral,iikral,iikral,2kralovska,iikralovska
+13,1Pa,1. Paralipomenon,1pa,ipa,1par,ipar,1paralipomenon,iparalipomenon,1paral,iparal,1kron
+14,2Pa,2. Paralipomenon,2pa,iipa,2par,iipar,2paralipomenon,iiparalipomenon,2paral,iiparal,2kron
+15,Ezd,Ezdráš,ezd,ezdr,ezdras
+16,Neh,Nehemjáš,neh,ne,nehemjas,nehemias,nehemijas
+17,Est,Ester,ester,est,es
+18,Job,Jób,jb,job
+19,Ž,Žalmy,z,zalm,zalmy,zl,zlm
+20,Př,Přísloví,pr,prisl,pri,prislov,prislovi
+21,Kaz,Kazatel,kaz,ka,kz,kazat,kazatel
+22,Pís,Píseň písní,pispis,pis,pisen,pisenpisni,psn
+23,Iz,Izajáš,iz,iza,izaj,izaias,izajas,izaijas
+24,Jer,Jeremjáš,jr,jer,jerem,jeremias,jeremjas,jeremijas
+25,Pl,Pláč,pl,plac
+26,Ez,Ezechiel,ez,ezech,ezechiel
+27,Dan,Daniel,daniel,dn,da,dan
+28,Oz,Ozeáš,oz,oze,ozeas
+29,Jl,Jóel,jl,jo,joel
+30,Am,Ámos,am,amos
+31,Abd,Abdijáš,abd,abdijas,abdias
+32,Jon,Jonáš,jon,jona,jonas
+33,Mi,Micheáš,mi,mich,miche,micheas
+34,Na,Nahum,na,nah,nahum
+35,Aba,Abakuk,ab,abk,abak,hab,hbk,habak,abakuk,habakuk
+36,Sf,Sofonjáš,sf,sof,sofo,sofon,sofonjas,sofonias,sofonijas
+37,Ag,Ageus,ag,age,ageus,hag,hageus,hg,hage
+38,Za,Zacharjáš,za,zach,zachar,zacharjas,zacharias,zacharijas,zch
+39,Mal,Malachjáš,mal,ma,malach,malachjas,malachias,malachijas
+1001,Tób,Tóbit,tob,tobit,tb
+1002,Júd,Júdit,jud,judit,jdt
+1003,PDa,Přídavky k Danielovi,pda
+1004,PEst,Přídavky k Ester,pest,pes
+1005,Mdr,Kniha moudrosti,mdr,moud,moudr,moudrost
+1006,Sír,Sírachovec,sir,eccl,ecc,sirach,sirachovec
+1007,Bár,Báruk,bar,baruk,baruch
+1008,1Mak,2. Makabejská,1mak,imak,1makab,imakab,1makabejska,imakabejska,1makabejskych,imakabejskych,1mk
+1009,2Mak,1. Makabejská,2mak,iimak,2makab,iimakab,2makabejska,iimakabejska,2makabejskych,iimakabejskych,2mk
+40,Mt,Matouš,mtmat,matous
+41,Mk,Marek,mk,marek,mar
+42,Luk,Lukáš,l,lk,luk,lukas
+43,Jan,Jan,j,jan
+44,Sk,Skutky apoštolů,sk,skut,skutk,akt
+45,Řím,Římanům,r,rim,riman,rimanum
+46,1Kor,1. Korintským,1kor,1k,ik,ikor,1korint,ikorint,1korintskym,ikorintskym
+47,2Kor,2. Korintským,2kor,2k,iik,iikor,2korint,iikorint,2korintskym,iikorintskym
+48,Ga,Galatským,ga,gal,galat,galatskym,gl
+49,Ef,Efezským,ef,efes,efez,efezskym,efezkym,efeskym
+50,Fil,Filipským,fp,f,filip,filipskym,flp,fil
+51,Kol,Koloským,ko,kol,kolos,koloskym,kolosskym,kl
+52,1Te,1. Tesalonickým,1te,ite,1t,it,1tes,ites,1tesal,itesal,1tesalon,itesalon,1tesalonickym,itesalonickym,1sol
+53,2Te,2. Tesalonickým,2te,iite,2t,iit,2tes,iites,2tesal,iitesal,2tesalon,iitesalon,2tesalonickym,iitesalonickym,2sol
+54,1Tim,1. Timoteovi,1tm,itm,1tim,itim,1timot,itimot,1timoteovi,itimoteovi,1timoteova,itimoteova
+55,2Tim,2. Timoteovi,2tm,iitm,2tim,iitim,2timot,iitimot,2timoteovi,iitimoteovi,2timoteova,iitimoteova
+56,Tit,Titovi,tt,tit,titova,titovi,tito
+57,Fm,Filemonovi,fm,filem,filemon,filemonova,file
+58,Žd,Židům,zd,zid,zidum,heb
+59,Jk,List Jakubův,jk,jak,jakub,jakubova,jkb,jakubuv
+60,1Pe,1. list Petrův,1pt,ipt,1p,ip,1petr,ipetr,1petrova,ipetrova
+61,2Pe,2. list Petrův,2pt,iipt,2p,iip,2petr,iipetr,2petrova,iipetrova
+62,1Jan,1. list Janův,1j,ij,1jan,ijan,1janova,ijanova
+63,2Jan,2. list Janův,2j,iij,2jan,iijan,2janova,iijanova
+64,3Jan,3. list Janův,3j,iiij,3jan,iiijan,3janova,iiijanova
+65,Jud,List Judův,ju,juda,jd
+66,Zj,Zjevení Janovo,zj,zjev,apok,zjv,zjeveni

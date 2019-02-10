@@ -30,6 +30,8 @@ private slots:
 	void on_cbAutoPresentation_clicked(bool checked);
 	void on_sbAutoInterval_valueChanged(int arg1);
 
+	void on_lnName_editingFinished();
+
 private:
 	Ui::PresentationPropertiesWidget_Images *ui;
 	QSharedPointer<Presentation_Images> presentation_;

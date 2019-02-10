@@ -28,7 +28,7 @@ public:
 
 	int slideCount() const override;
 	QString slideDescription(int i) const override;
-	QPixmap slideIdentificationIcon(int i) const;
+	QPixmap slideIdentificationIcon(int i) const override;
 
 public:
 	QString classIdentifier() const override;

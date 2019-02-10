@@ -20,6 +20,7 @@
 #include "job/settings.h"
 #include "job/backgroundmanager.h"
 #include "job/asynccachemanager.h"
+#include "job/parsebible.h"
 #include "presentation/presentation.h"
 #include "presentation/powerpoint/presentationengine_powerpoint.h"
 #include "presentation/native/presentationengine_native.h"
@@ -55,6 +56,8 @@ int main(int argc, char *argv[]) {
 		mainWindow->show();
 		simpleUpdater()->checkForUpdates();
 		startupSplashscreen.close();
+
+		checkBibleImport();
 	});
 
 	int result = app.exec();

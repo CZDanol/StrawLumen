@@ -46,6 +46,10 @@ DatabaseManager::DatabaseManager()
 
 	int version = selectValue("SELECT value FROM keyValueAssoc WHERE key = 'database.version'").toInt();
 
+	if(version != CURRENT_DB_VERSION) {
+		QFile(dbFilepath).copy(QString("%1.bkp.v%2").arg(dbFilepath).arg(version));
+	}
+
 #define F(v)\
 	if(version == v) {\
 		beginTransaction();\

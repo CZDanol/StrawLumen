@@ -5,6 +5,8 @@
 #include <QMimeData>
 #include <QDragEnterEvent>
 #include <QFileInfo>
+#include <QFileDialog>
+#include <QShortcut>
 
 #include "gui/settingsdialog.h"
 #include "presentation/native/nativeprojectorwindow.h"
@@ -22,6 +24,7 @@
 #include "strawapi/feedbackdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
+#include "job/parsebible.h"
 #include "rec/playlist.h"
 #include "util/guianimations.h"
 #include "util/execonmainthread.h"

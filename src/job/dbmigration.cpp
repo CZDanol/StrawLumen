@@ -100,6 +100,37 @@ void createDb()
 
 		db->exec("CREATE INDEX i_playlists_name ON playlists(name)");
 	}
+
+	// BIBLE TRANSLATIONS/VERSES
+	{
+		db->exec("CREATE TABLE bible_translations ("
+				 "translation_id TEXT PRIMARY KEY,"
+				 "name TEXT NOT NULL"
+				 ")");
+
+		db->exec("CREATE TABLE bible_translation_books ("
+				 "translation_id TEXT NOT NULL,"
+				 "book_id INTEGER NOT NULL,"
+				 "name TEXT NOT NULL,"
+				 "max_chapter INTEGER NOT NULL"
+				 ")");
+
+		db->exec("CREATE TABLE bible_translation_verses ("
+				"id INTEGER PRIMARY KEY,"
+				"translation_id TEXT NOT NULL,"
+				"book_id INTEGER NOT NULL,"
+				"chapter INTEGER NOT NULL,"
+				"verse INTEGER NOT NULL,"
+				"text TEXT"
+				")");
+
+		db->exec("CREATE VIRTUAL TABLE bible_verses_fulltext USING fts4 ("
+				 "text TEXT NOT NULL"
+				 ")");
+
+		db->exec("CREATE INDEX i_bible_translation_books ON bible_translation_books (translation_id,book_id)");
+		db->exec("CREATE INDEX i_bible_translation_verses ON bible_translation_verses (translation_id,book_id,chapter,verse)");
+	}
 }
 
 DB_MIGRATION_PROCEDURE(1, 2)
@@ -152,4 +183,35 @@ DB_MIGRATION_PROCEDURE(3, 4)
 		db->updateSongFulltextIndex(q.value(0).toLongLong());
 
 	db->commitTransaction();
+}
+
+DB_MIGRATION_PROCEDURE(4, 5)
+{
+	db->exec("CREATE TABLE bible_translations ("
+			 "translation_id TEXT PRIMARY KEY,"
+			 "name TEXT NOT NULL"
+			 ")");
+
+	db->exec("CREATE TABLE bible_translation_books ("
+			 "translation_id TEXT NOT NULL,"
+			 "book_id INTEGER NOT NULL,"
+			 "name TEXT NOT NULL,"
+			 "max_chapter INTEGER NOT NULL"
+			 ")");
+
+	db->exec("CREATE TABLE bible_translation_verses ("
+			"id INTEGER PRIMARY KEY,"
+			"translation_id TEXT NOT NULL,"
+			"book_id INTEGER NOT NULL,"
+			"chapter INTEGER NOT NULL,"
+			"verse INTEGER NOT NULL,"
+			"text TEXT"
+			")");
+
+	db->exec("CREATE VIRTUAL TABLE bible_verses_fulltext USING fts4 ("
+			 "text TEXT NOT NULL"
+			 ")");
+
+	db->exec("CREATE INDEX i_bible_translation_books ON bible_translation_books (translation_id,book_id)");
+	db->exec("CREATE INDEX i_bible_translation_verses ON bible_translation_verses (translation_id,book_id,chapter,verse)");
 }

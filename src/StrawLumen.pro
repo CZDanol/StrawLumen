@@ -127,7 +127,13 @@ SOURCES += main.cpp \
     presentation/video/videoprojectorwindow.cpp \
     presentation/video/presentationengine_video.cpp \
     presentation/video/presentation_video.cpp \
-    presentation/video/presentationpropertieswidget_video.cpp
+    presentation/video/presentationpropertieswidget_video.cpp \
+    rec/biblebook.cpp \
+    job/parsebible.cpp \
+    presentation/native/presentation_bibleverse.cpp \
+    presentation/native/presentationpropertieswidget_bibleverse.cpp \
+    wgt/bibleverseselectionwidget.cpp \
+    presentation/native/presentation_bibleverse_wizard.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -164,7 +170,10 @@ FORMS += \
     gui/bulkeditsongsdialog.ui \
     presentation/native/presentationpropertieswidget_images.ui \
     presentation/video/videoprojectorwindow.ui \
-    presentation/video/presentationpropertieswidget_video.ui
+    presentation/video/presentationpropertieswidget_video.ui \
+    presentation/native/presentationpropertieswidget_bibleverse.ui \
+    wgt/bibleverseselectionwidget.ui \
+    presentation/native/presentation_bibleverse_wizard.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -257,7 +266,13 @@ HEADERS += \
     presentation/video/videoprojectorwindow.h \
     presentation/video/presentationengine_video.h \
     presentation/video/presentation_video.h \
-    presentation/video/presentationpropertieswidget_video.h
+    presentation/video/presentationpropertieswidget_video.h \
+    rec/biblebook.h \
+    job/parsebible.h \
+    presentation/native/presentation_bibleverse.h \
+    presentation/native/presentationpropertieswidget_bibleverse.h \
+    wgt/bibleverseselectionwidget.h \
+    presentation/native/presentation_bibleverse_wizard.h
 
 RESOURCES += \
     ../res/resources.qrc

@@ -18,7 +18,7 @@ class PresentationPropertiesWidget_CustomSlide : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PresentationPropertiesWidget_CustomSlide(const QSharedPointer<Presentation_CustomSlide> &presentation, QWidget *parent = 0);
+	explicit PresentationPropertiesWidget_CustomSlide(const QSharedPointer<Presentation_CustomSlide> &presentation, QWidget *parent = nullptr);
 	~PresentationPropertiesWidget_CustomSlide();
 
 private slots:

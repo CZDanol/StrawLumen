@@ -56,6 +56,7 @@ private slots:
 	void onAutoTimerTimeout();
 
 private:
+	QString name_;
 	QStandardItemModel images_;
 	bool isAutoPresentation_ = true;
 	int autoInterval_ = 2;

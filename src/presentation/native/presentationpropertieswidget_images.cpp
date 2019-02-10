@@ -48,6 +48,7 @@ void PresentationPropertiesWidget_Images::fillData()
 	ui->lstImages->setModel(&presentation_->images_);
 	ui->cbAutoPresentation->setChecked(presentation_->isAutoPresentation_);
 	ui->sbAutoInterval->setValue(presentation_->autoInterval_);
+	ui->lnName->setText(presentation_->name_);
 }
 
 void PresentationPropertiesWidget_Images::deleteSelection()
@@ -96,4 +97,12 @@ void PresentationPropertiesWidget_Images::on_sbAutoInterval_valueChanged(int arg
 	presentation_->updateTiming();
 
 	emit presentation_->sigChanged();
+}
+
+void PresentationPropertiesWidget_Images::on_lnName_editingFinished()
+{
+	presentation_->name_ = ui->lnName->text();
+
+	emit presentation_->sigSlidesChanged();
+	emit presentation_->sigItemChanged(presentation_.data());
 }

@@ -39,6 +39,7 @@ QSharedPointer<Presentation_Images> Presentation_Images::createFromJSON(const QJ
 		images += image.toString();
 	result->addImages(images);
 
+	result->name_ = json["name"].toString(result->name_);
 	result->isAutoPresentation_ = json["autoPresentation"].toBool(result->isAutoPresentation_);
 	result->autoInterval_ = json["autoInterval"].toInt(result->autoInterval_);
 
@@ -50,6 +51,7 @@ QJsonObject Presentation_Images::toJSON() const
 	QJsonObject json;
 	json["autoPresentation"] = isAutoPresentation_;
 	json["autoInterval"] = autoInterval_;
+	json["name"] = name_;
 
 	{
 		QJsonArray images;
@@ -87,7 +89,7 @@ void Presentation_Images::drawSlide(QPainter &p, int slideId, const QRect &rect)
 
 QString Presentation_Images::identification() const
 {
-	return tr("Obrázky");
+	return name_;
 }
 
 QPixmap Presentation_Images::icon() const
@@ -154,6 +156,8 @@ QString Presentation_Images::classIdentifier() const
 
 Presentation_Images::Presentation_Images()
 {
+	name_ = tr("Obrázky");
+
 	connect(&autoTimer_, &QTimer::timeout, this, &Presentation_Images::onAutoTimerTimeout);
 }
 

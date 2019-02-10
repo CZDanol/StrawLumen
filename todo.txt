@@ -8,7 +8,6 @@ Aktuálně
 - zvýrazňování výsledků vyhledávání (asi ne?)
 - černá obrazovka u videí
 - ovládací tlačítka pro video
-- blbne vertikálně akord, když je prázdnej text pod ním
 - option na přidat logo lumenu do PDFka?
 - promítání webové stránky
 - promítání hodin
