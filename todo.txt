@@ -1,10 +1,6 @@
 Aktuálně
 - ctrl+a jde až napodruhé při vytváření zpěvníku
 - hromadný export písní (může formátem zadat export PDF do samostatných složek, lumenovských databází do samostatných složek)
-- detekovat natočení fotky z metadat
-- neukládá se časování fotek
-- nedetkuje se změna při úpravě časování/automatické prezentace fotek
-- nedetekuje se změna při úpravě pořadí slok (pro uložení programu)
 - možnost dát vlastní název prezentaci obrázků
 - option v menu, aby se náhodně nastavovaly pozadí u písní v programu
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
@@ -25,6 +21,7 @@ https://sourceforge.net/projects/zefania-sharp/files/Bibles/CZE/
 
 
 Do budoucna
+- detekovat natočení fotky z metadat
 - promítání odpočtu
 - Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.
 - ukládání výběru písniček (import/export/zpěvníky)

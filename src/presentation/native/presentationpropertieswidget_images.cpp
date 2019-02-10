@@ -94,4 +94,6 @@ void PresentationPropertiesWidget_Images::on_sbAutoInterval_valueChanged(int arg
 {
 	presentation_->autoInterval_ = arg1;
 	presentation_->updateTiming();
+
+	emit presentation_->sigChanged();
 }

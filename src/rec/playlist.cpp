@@ -55,6 +55,7 @@ void Playlist::addItems(const QVector<QSharedPointer<Presentation> > &items)
 		items_.append(item);
 		connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
 		connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
+		connect(item.data(), SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
 	}
 
 	emitItemsChanged();

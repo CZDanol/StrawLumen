@@ -48,6 +48,8 @@ QSharedPointer<Presentation_Images> Presentation_Images::createFromJSON(const QJ
 QJsonObject Presentation_Images::toJSON() const
 {
 	QJsonObject json;
+	json["autoPresentation"] = isAutoPresentation_;
+	json["autoInterval"] = autoInterval_;
 
 	{
 		QJsonArray images;

@@ -97,8 +97,8 @@ QString Presentation_CustomSlide::classIdentifier() const
 Presentation_CustomSlide::Presentation_CustomSlide()
 {
 	connect(&style_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
-	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
 	connect(&style_, SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
+	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
 	connect(&style_, &PresentationStyle::sigNeedsRepaint, this, &Presentation_CustomSlide::onStyleNeedsRepaint);
 }
 
