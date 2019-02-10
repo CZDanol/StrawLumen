@@ -133,7 +133,8 @@ SOURCES += main.cpp \
     presentation/native/presentation_bibleverse.cpp \
     presentation/native/presentationpropertieswidget_bibleverse.cpp \
     wgt/bibleverseselectionwidget.cpp \
-    presentation/native/presentation_bibleverse_wizard.cpp
+    presentation/native/presentation_bibleverse_wizard.cpp \
+    rec/bibleref.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -272,7 +273,8 @@ HEADERS += \
     presentation/native/presentation_bibleverse.h \
     presentation/native/presentationpropertieswidget_bibleverse.h \
     wgt/bibleverseselectionwidget.h \
-    presentation/native/presentation_bibleverse_wizard.h
+    presentation/native/presentation_bibleverse_wizard.h \
+    rec/bibleref.h
 
 RESOURCES += \
     ../res/resources.qrc

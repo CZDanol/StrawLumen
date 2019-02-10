@@ -216,9 +216,6 @@
            <property name="headerHidden">
             <bool>true</bool>
            </property>
-           <attribute name="headerStretchLastSection">
-            <bool>false</bool>
-           </attribute>
            <column>
             <property name="text">
              <string>L</string>
