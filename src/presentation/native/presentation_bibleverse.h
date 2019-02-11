@@ -7,6 +7,8 @@
 
 class Presentation_BibleVerse : public Presentation_NativePresentation
 {
+	Q_OBJECT
+
 	friend class PresentationPropertiesWidget_BibleVerse;
 
 public:
@@ -25,6 +27,7 @@ public:
 	QWidget *createPropertiesWidget(QWidget *parent) override;
 
 	int slideCount() const override;
+	QString slideIdentification(int i) const override;
 	QString slideDescription(int i) const override;
 
 public:
@@ -33,6 +36,9 @@ public:
 private:
 	Presentation_BibleVerse();
 
+private:
+	void updateVerses();
+
 private slots:
 	void onStyleChanged();
 	void onStyleBackgroundChanged();
@@ -40,6 +46,8 @@ private slots:
 
 private:
 	PresentationStyle style_;
+	QString versesStr_;
+	QStringList slides_, slideDescriptions_, slideNames_;
 
 };
 

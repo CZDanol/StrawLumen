@@ -12,8 +12,12 @@ PresentationPropertiesWidget_BibleVerse::PresentationPropertiesWidget_BibleVerse
 	ui->setupUi(this);
 
 	connect(presentation.data(), SIGNAL(sigItemChanged(Presentation*)), this, SLOT(fillData()));
+	connect(&textUpdateTimer_, SIGNAL(timeout()), this, SLOT(onTextUpdateTimerTimeout()));
 
 	fillData();
+
+	textUpdateTimer_.setSingleShot(true);
+	textUpdateTimer_.setInterval(1000);
 }
 
 PresentationPropertiesWidget_BibleVerse::~PresentationPropertiesWidget_BibleVerse()
@@ -25,6 +29,15 @@ void PresentationPropertiesWidget_BibleVerse::fillData()
 {
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
+	ui->verses->setPlainText(presentation_->versesStr_);
+}
+
+void PresentationPropertiesWidget_BibleVerse::onTextUpdateTimerTimeout()
+{
+	presentation_->versesStr_ = ui->verses->toPlainText();
+	presentation_->updateVerses();
+
+	emit presentation_->sigSlidesChanged();
 }
 
 void PresentationPropertiesWidget_BibleVerse::on_wgtStyle_sigPresentationStyleChangedByUser()
@@ -42,4 +55,9 @@ void PresentationPropertiesWidget_BibleVerse::on_wgtBackground_sigPresentationBa
 void PresentationPropertiesWidget_BibleVerse::on_btnWizard_clicked()
 {
 	presentation_BibleVerse_wizard()->show();
+}
+
+void PresentationPropertiesWidget_BibleVerse::on_verses_textChanged()
+{
+	textUpdateTimer_.start();
 }

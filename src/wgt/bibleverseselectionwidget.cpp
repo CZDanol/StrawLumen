@@ -30,7 +30,7 @@ BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 	{
 		translationsModel_.setQuery(db->selectQuery("SELECT translation_id || ' | ' || name, translation_id FROM bible_translations ORDER BY translation_id"));
 		ui->cmbTranslation->setModel(&translationsModel_);
-		ui->cmbTranslation->setCurrentText("ČEP");
+		ui->cmbTranslation->setCurrentText("ČEP | Český ekumenický překlad");
 
 		ui->lstBooks->setModel(&booksModel_);
 		ui->lstChapters->setModel(&chaptersModel_);

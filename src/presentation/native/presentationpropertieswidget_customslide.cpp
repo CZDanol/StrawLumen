@@ -20,6 +20,11 @@ PresentationPropertiesWidget_CustomSlide::PresentationPropertiesWidget_CustomSli
 
 PresentationPropertiesWidget_CustomSlide::~PresentationPropertiesWidget_CustomSlide()
 {
+	if(textUpdateTimer_.isActive()) {
+		onUpdateTimerTimeout();
+		textUpdateTimer_.stop();
+	}
+
 	delete ui;
 }
 

@@ -10,6 +10,7 @@ class BibleRef
 public:
 	BibleRef(QString translationId, int bookId, int chapter, int verse);
 	BibleRef(QString translationId, int bookId, int chapter, const QVector<int> &verses);
+	BibleRef(const QString &str);
 
 public:
 	QString translationId;
@@ -19,11 +20,16 @@ public:
 	const QVector<int> &verses() const;
 
 public:
+	bool isValid() const;
+
 	QString versesString() const;
 	QString toString() const;
 
+	QString contentString() const;
+
 private:
 	QVector<int> verses_;
+	bool isValid_;
 
 };
 

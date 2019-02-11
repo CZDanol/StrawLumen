@@ -2,6 +2,7 @@
 #define PRESENTATIONPROPERTIESWIDGET_BIBLEVERSE_H
 
 #include <QWidget>
+#include <QTimer>
 
 #include "rec/presentationbackground.h"
 
@@ -23,14 +24,18 @@ private slots:
 	void fillData();
 
 private slots:
+	void onTextUpdateTimerTimeout();
+
+private slots:
 	void on_wgtStyle_sigPresentationStyleChangedByUser();
 	void on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &);
-
 	void on_btnWizard_clicked();
+	void on_verses_textChanged();
 
 private:
 	Ui::PresentationPropertiesWidget_BibleVerse *ui;
 	QSharedPointer<Presentation_BibleVerse> presentation_;
+	QTimer textUpdateTimer_;
 
 };
 

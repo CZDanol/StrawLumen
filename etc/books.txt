@@ -46,7 +46,7 @@
 1007,Bár,Báruk,bar,baruk,baruch
 1008,1Mak,2. Makabejská,1mak,imak,1makab,imakab,1makabejska,imakabejska,1makabejskych,imakabejskych,1mk
 1009,2Mak,1. Makabejská,2mak,iimak,2makab,iimakab,2makabejska,iimakabejska,2makabejskych,iimakabejskych,2mk
-40,Mt,Matouš,mtmat,matous
+40,Mt,Matouš,mt,mat,matous
 41,Mk,Marek,mk,marek,mar
 42,Luk,Lukáš,l,lk,luk,lukas
 43,Jan,Jan,j,jan

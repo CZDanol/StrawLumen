@@ -16,5 +16,6 @@ public:
 };
 
 BibleBook getBibleBook(int numId);
+QList<BibleBook> bibleBookList();
 
 #endif // BIBLEBOOK_H

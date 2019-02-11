@@ -134,7 +134,8 @@ SOURCES += main.cpp \
     presentation/native/presentationpropertieswidget_bibleverse.cpp \
     wgt/bibleverseselectionwidget.cpp \
     presentation/native/presentation_bibleverse_wizard.cpp \
-    rec/bibleref.cpp
+    rec/bibleref.cpp \
+    wgt/verselistplaintextedit.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -274,7 +275,8 @@ HEADERS += \
     presentation/native/presentationpropertieswidget_bibleverse.h \
     wgt/bibleverseselectionwidget.h \
     presentation/native/presentation_bibleverse_wizard.h \
-    rec/bibleref.h
+    rec/bibleref.h \
+    wgt/verselistplaintextedit.h
 
 RESOURCES += \
     ../res/resources.qrc
