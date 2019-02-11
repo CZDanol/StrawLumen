@@ -38,6 +38,11 @@ QRect SettingsManager::projectionDisplayGeometry() const
 	return settingsDialog->ui->dsDisplay->selectedScreen()->geometry();
 }
 
+QString SettingsManager::defaultBibleTranslation() const
+{
+	return "ČEP";
+}
+
 SETTING_SAVE(QComboBox)
 {
 	settings->setValue(name, widget->currentIndex());

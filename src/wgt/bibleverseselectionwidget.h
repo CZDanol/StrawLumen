@@ -28,13 +28,12 @@ private:
 private slots:
 	void onBooksModelCurrentIndexChanged();
 	void onChaptersModelCurrentIndexChanged();
-	void onVersesModelCurrentIndexChanged();
+	void onVersesSelectionChanged();
 
 private slots:
 	void on_cmbTranslation_currentIndexChanged(int index);
 	void on_lnSearch_editingFinished();
 	void on_lstVerses_customContextMenuRequested(const QPoint &pos);
-
 	void on_actionGoToChapter_triggered();
 
 private:
@@ -45,11 +44,13 @@ private:
 	QSqlQueryModel translationsModel_;
 	QStringListModel booksModel_, chaptersModel_;
 	QStringList booksList_, chaptersList_;
-	QVector<int> bookIds_, chapterIds_;
+	QVector<int> bookIds_, chapterUIDs_;
 
 private:
 	QString currentTranslationId_;
-	int currentBookId_ = -1, currentChapterId_ = -1, currentVerseUID_ = -1;
+	int currentBookId_ = -1, currentChapterUID_ = -1;
+	bool isCurrentChapterSelected_ = false;
+	QSet<int> selectedVerseUIDs_;
 	size_t blockSelectionChangeEvents_ = 0;
 
 private:

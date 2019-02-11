@@ -8,6 +8,18 @@
 #include "rec/biblebook.h"
 #include "rec/bibleref.h"
 
+int chapterUID(int bookId, int chapterId) {
+	return bookId * 1000 + chapterId;
+}
+
+int chapterUID_getChapterID(int chapterUID) {
+	return chapterUID % 1000;
+}
+
+int verseUID(int bookId, int chapterId, int verseId) {
+	return chapterUID(bookId, chapterId) * 1000 + verseId;
+}
+
 BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::BibleVerseSelectionWidget)
@@ -18,6 +30,7 @@ BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 	{
 		translationsModel_.setQuery(db->selectQuery("SELECT translation_id || ' | ' || name, translation_id FROM bible_translations ORDER BY translation_id"));
 		ui->cmbTranslation->setModel(&translationsModel_);
+		ui->cmbTranslation->setCurrentText("ČEP");
 
 		ui->lstBooks->setModel(&booksModel_);
 		ui->lstChapters->setModel(&chaptersModel_);
@@ -26,7 +39,7 @@ BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 
 		connect(ui->lstBooks->selectionModel(), &QItemSelectionModel::currentChanged, this, &BibleVerseSelectionWidget::onBooksModelCurrentIndexChanged);
 		connect(ui->lstChapters->selectionModel(), &QItemSelectionModel::currentChanged, this, &BibleVerseSelectionWidget::onChaptersModelCurrentIndexChanged);
-		connect(ui->lstVerses->selectionModel(), &QItemSelectionModel::currentChanged, this, &BibleVerseSelectionWidget::onVersesModelCurrentIndexChanged);
+		connect(ui->lstVerses->selectionModel(), &QItemSelectionModel::selectionChanged, this, &BibleVerseSelectionWidget::onVersesSelectionChanged);
 	}
 
 	// Shortcuts
@@ -80,11 +93,8 @@ void BibleVerseSelectionWidget::requeryBooks()
 		bookIds_.append(bookId);
 	}
 
-	if(!found) {
+	if(!found)
 		currentBookId_ = -1;
-		currentChapterId_ = -1;
-		currentVerseUID_ = -1;
-	}
 
 	blockSelectionChangeEvents_++;
 	booksModel_.setStringList(booksList_);
@@ -97,12 +107,12 @@ void BibleVerseSelectionWidget::requeryBooks()
 void BibleVerseSelectionWidget::requeryChapters()
 {
 	chaptersList_.clear();
-	chapterIds_.clear();
+	chapterUIDs_.clear();
 
 	// No book selected -> no chapters
 	if(currentBookId_ == -1) {
-		currentChapterId_ = -1;
 		chaptersModel_.setStringList(chaptersList_);
+		isCurrentChapterSelected_ = false;
 
 		if(isSearch_)
 			ui->lstChapters->setCurrentIndex(chaptersModel_.index(0));
@@ -115,9 +125,9 @@ void BibleVerseSelectionWidget::requeryChapters()
 
 	if(isSearch_) {
 		chaptersList_ += tr("(vše)");
-		chapterIds_ += -1;
+		chapterUIDs_ += -1;
 
-		bool found = false;
+		isCurrentChapterSelected_ = false;
 
 		QSqlQuery chaptersQuery = db->selectQuery(
 			"SELECT chapter FROM bible_verses_fulltext"
@@ -129,35 +139,32 @@ void BibleVerseSelectionWidget::requeryChapters()
 
 		while(chaptersQuery.next()) {
 			const int chapterId = chaptersQuery.value(0).toInt();
+			const int chapterUid = chapterUID(currentBookId_, chapterId);
 
-			if(chapterId == currentChapterId_) {
+			if(chapterUid == currentChapterUID_) {
 				currentChapterRow = chaptersList_.size();
-				found = true;
+				isCurrentChapterSelected_ = true;
 			}
 
-			chaptersList_.append(QString::number(chapterId));
-			chapterIds_.append(chapterId);
-		}
-
-		if(!found) {
-			currentChapterId_ = -1;
-			currentVerseUID_ = -1;
+			chaptersList_ += QString::number(chapterId);
+			chapterUIDs_ += chapterUid;
 		}
 
 	} else {
 		const int maxChapter = db->selectValue("SELECT max_chapter FROM bible_translation_books WHERE translation_id = ? AND book_id = ?", {currentTranslationId_, currentBookId_}).toInt();
 
-		for(int i = 1; i < maxChapter; i++) {
+		for(int i = 1; i <= maxChapter; i++) {
 			chaptersList_ += QString::number(i);
-			chapterIds_ += i;
+			chapterUIDs_ += chapterUID(currentBookId_, i);
 		}
 
-		if(currentChapterId_ > 0 && currentChapterId_ <= maxChapter)
-			currentChapterRow = currentChapterId_ - 1;
+		if(currentChapterUID_ >= chapterUID(currentBookId_, 1)  && currentChapterUID_ < chapterUID(currentBookId_, maxChapter+1)) {
+			currentChapterRow = chapterUID_getChapterID(currentChapterUID_) - 1;
+			isCurrentChapterSelected_ = true;
+		}
 		else {
 			currentChapterRow = -1;
-			currentChapterId_ = -1;
-			currentVerseUID_ = -1;
+			isCurrentChapterSelected_ = false;
 		}
 	}
 
@@ -175,13 +182,12 @@ void BibleVerseSelectionWidget::requeryVerses()
 	ui->lstVerses->clear();
 	blockSelectionChangeEvents_--;
 
-	QTreeWidgetItem *currentVerseItem = nullptr;
-
 	// No search and no chapter selected -> no results
-	if(!isSearch_ && currentChapterId_ == -1)
+	if(!isSearch_ && !isCurrentChapterSelected_)
 		return;
 
 	QList<QTreeWidgetItem*> items;
+	QList<int> selectedItemRows;
 
 	QSqlQuery versesQuery;
 	if(isSearch_) {
@@ -190,7 +196,7 @@ void BibleVerseSelectionWidget::requeryVerses()
 				" INNER JOIN bible_translation_verses ON bible_verses_fulltext.docid = bible_translation_verses.id"
 				" WHERE (bible_verses_fulltext MATCH ?) AND (+translation_id = ?)%1"
 				" ORDER BY book_id ASC, chapter ASC, verse ASC"
-				" LIMIT 100";
+				" LIMIT 201";
 
 		QString filters;
 		QVariantList args {searchQuery_, currentTranslationId_};
@@ -200,9 +206,9 @@ void BibleVerseSelectionWidget::requeryVerses()
 			args += currentBookId_;
 		}
 
-		if(currentChapterId_ != -1) {
+		if(isCurrentChapterSelected_) {
 			filters += " AND (+chapter = ?)";
-			args += currentChapterId_;
+			args += chapterUID_getChapterID(currentChapterUID_);
 		}
 
 		versesQuery = db->selectQuery(queryStr.arg(filters),args);
@@ -213,38 +219,53 @@ void BibleVerseSelectionWidget::requeryVerses()
 					" FROM bible_translation_verses"
 					" WHERE (translation_id = ?) AND (book_id = ?) AND (chapter = ?)"
 					" ORDER BY verse ASC",
-					{currentTranslationId_, currentBookId_, currentChapterId_}
+					{currentTranslationId_, currentBookId_, chapterUID_getChapterID(currentChapterUID_)}
 					);
 
+	size_t i = 0;
 	while(versesQuery.next()) {
 		const int verseId = versesQuery.value(2).toInt();
 		const int bookId = versesQuery.value(0).toInt();
 		const int chapterId = versesQuery.value(1).toInt();
-		const int verseUID = verseId + chapterId * 1000 + bookId * 1000000;
+		const int verseUid = verseUID(bookId, chapterId, verseId);
 
 		QTreeWidgetItem *it = new QTreeWidgetItem();
 
-		if(verseUID == currentVerseUID_)
-			currentVerseItem = it;
+		if(isSearch_ && i == 200) {
+			it->setText(1, tr("(a další; výsledky omezeny na 200 veršů)"));
+			it->setFlags(Qt::ItemNeverHasChildren);
 
-		if(currentChapterId_ == -1)
-			it->setText(0, QString("%1 %2:%3").arg(getBibleBook(versesQuery.value(0).toInt()).id, versesQuery.value(1).toString(), versesQuery.value(2).toString()));
-		else
-			it->setText(0, versesQuery.value(2).toString());
+		}
+		else {
+			if(selectedVerseUIDs_.contains(verseUid))
+				selectedItemRows += items.size();
 
-		it->setText(1, versesQuery.value(3).toString());
+			if(!isCurrentChapterSelected_)
+				it->setText(0, QString("%1 %2:%3").arg(getBibleBook(versesQuery.value(0).toInt()).id, versesQuery.value(1).toString(), versesQuery.value(2).toString()));
+			else
+				it->setText(0, versesQuery.value(2).toString());
 
-		it->setData(0, Qt::UserRole, verseUID);
-		it->setData(0, Qt::UserRole+1, bookId);
-		it->setData(0, Qt::UserRole+2, chapterId);
-		it->setData(0, Qt::UserRole+3, verseId);
+			it->setText(1, versesQuery.value(3).toString());
+
+			it->setData(0, Qt::UserRole, verseUid);
+			it->setData(0, Qt::UserRole+1, bookId);
+			it->setData(0, Qt::UserRole+2, chapterId);
+			it->setData(0, Qt::UserRole+3, verseId);
+		}
 
 		items.append(it);
+		i++;
 	}
 
 	blockSelectionChangeEvents_++;
+
 	ui->lstVerses->addTopLevelItems(items);
-	ui->lstVerses->setCurrentItem(currentVerseItem);
+	ui->lstVerses->setSelectionMode(!isCurrentChapterSelected_ ? QAbstractItemView::SingleSelection : QAbstractItemView::ExtendedSelection);
+	ui->lstVerses->selectionModel()->clear();
+
+	for(int ix : selectedItemRows)
+		ui->lstVerses->selectionModel()->select(ui->lstVerses->model()->index(ix, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+
 	blockSelectionChangeEvents_--;
 }
 
@@ -255,8 +276,6 @@ void BibleVerseSelectionWidget::onBooksModelCurrentIndexChanged()
 
 	const int currentRow = ui->lstBooks->currentIndex().row();
 	currentBookId_ = currentRow == -1 ? -1 : bookIds_[currentRow];
-	currentChapterId_ = -1;
-	currentVerseUID_ = -1;
 	requeryChapters();
 }
 
@@ -266,23 +285,31 @@ void BibleVerseSelectionWidget::onChaptersModelCurrentIndexChanged()
 		return;
 
 	const int currentRow = ui->lstChapters->currentIndex().row();
-	currentChapterId_ = currentRow == -1 ? -1 : chapterIds_[currentRow];
-	currentVerseUID_ = -1;
+	currentChapterUID_ = currentRow == -1 ? -1 : chapterUIDs_[currentRow];
+	isCurrentChapterSelected_ = true;
 	requeryVerses();
 }
 
-void BibleVerseSelectionWidget::onVersesModelCurrentIndexChanged()
+void BibleVerseSelectionWidget::onVersesSelectionChanged()
 {
 	if(blockSelectionChangeEvents_)
 		return;
 
-	const QTreeWidgetItem *it = ui->lstVerses->currentItem();
-	currentVerseUID_ = it ? it->data(0, Qt::UserRole).toInt() : -1;
-
-	if(!it)
+	auto items = ui->lstVerses->selectedItems();
+	if(items.isEmpty())
 		return;
 
-	ui->lnCode->setText(BibleRef(currentTranslationId_, it->data(0, Qt::UserRole+1).toInt(), it->data(0, Qt::UserRole+2).toInt(), it->data(0, Qt::UserRole+3).toInt()).toString());
+	auto it = items.front();
+
+	QVector<int> verseIds;
+	selectedVerseUIDs_.clear();
+
+	for(QTreeWidgetItem *i : items) {
+		verseIds += i->data(0, Qt::UserRole+3).toInt();
+		selectedVerseUIDs_ += i->data(0, Qt::UserRole).toInt();
+	}
+
+	ui->lnCode->setText(BibleRef(currentTranslationId_, it->data(0, Qt::UserRole+1).toInt(), it->data(0, Qt::UserRole+2).toInt(), verseIds).toString());
 }
 
 void BibleVerseSelectionWidget::on_cmbTranslation_currentIndexChanged(int)
@@ -326,7 +353,8 @@ void BibleVerseSelectionWidget::on_actionGoToChapter_triggered()
 		return;
 
 	currentBookId_ = item->data(0, Qt::UserRole+1).toInt();
-	currentChapterId_ = item->data(0, Qt::UserRole+2).toInt();
+	currentChapterUID_ = chapterUID(currentBookId_, item->data(0, Qt::UserRole+2).toInt());
+
 	ui->lnSearch->clear();
 	searchQuery_.clear();
 	isSearch_ = false;

@@ -29,6 +29,7 @@ public:
 
 public:
 	QRect projectionDisplayGeometry() const;
+	QString defaultBibleTranslation() const;
 
 private:
 	QSettings settings_;
