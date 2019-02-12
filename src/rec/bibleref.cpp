@@ -6,6 +6,11 @@
 #include "job/settings.h"
 #include "job/db.h"
 
+BibleRef::BibleRef()
+{
+	isValid_ = false;
+}
+
 BibleRef::BibleRef(QString translationId, int bookId, int chapter, int verse)
 {
 	this->translationId = translationId;
@@ -40,6 +45,7 @@ BibleRef::BibleRef(const QString &str)
 					"(?:[0-9]+(?:\\s*-\\s*[0-9]+)?)" // verse/verse range
 					"(?:\\s*,\\s*[0-9]+(?:\\s*-\\s*[0-9]+)?)*" // more verse ranges
 				")"
+				",?"
 				"\\s*"
 				"(\\p{L}+)?" // translation
 				"\\s*$",
@@ -149,16 +155,48 @@ QString BibleRef::contentString() const
 		versesStr += QString::number(v);
 	}
 
+	static const QRegularExpression startsWithSmallLetterRegex("^\\s*\\p{Ll}");
+	static const QRegularExpression endsWithSentenceEndRegex(".*[.!?][^.!?,;:\\-–]*?$");
+	static const QRegularExpression endsWithMarkRegex(".*[,;:\\-–]$");
+
+	int previousVerse = -1;
+	QString previousVerseStr;
+
 	QSqlQuery q = db->selectQuery(
-				QString("SELECT text FROM bible_translation_verses WHERE (translation_id = ?) AND (book_id = ?) AND (chapter = ?) AND (verse IN (%1))").arg(versesStr),
+				QString("SELECT text, verse FROM bible_translation_verses WHERE (translation_id = ?) AND (book_id = ?) AND (chapter = ?) AND (verse IN (%1))").arg(versesStr),
 				{translationId, bookId, chapter}
 				);
 	while(q.next()) {
+		const int verse = q.value(1).toInt();
+		const QString verseStr = q.value(0).toString();
+
+		// Previous verse is not connected and does not end with . -> sentence,...
+		if(previousVerse != -1 && previousVerse != verse - 1 && !previousVerseStr.contains(endsWithSentenceEndRegex)) {
+			if(previousVerseStr.contains(endsWithMarkRegex))
+				result += ' ';
+
+			result += "…";
+		}
+
 		if(!result.isEmpty())
 			result += ' ';
 
-		result += q.value(0).toString();
+		// Previous verse is not connected
+		if(previousVerse != -1 && previousVerse != verse - 1)
+			result += "(…) ";
+
+		// Verses are not connected and this verse does not start with a capital letter -> ...text
+		if(previousVerse != verse - 1 && verseStr.contains(startsWithSmallLetterRegex))
+			result += "…";
+
+		result += verseStr;
+		previousVerse = verse;
+		previousVerseStr = verseStr;
 	}
+
+	// Last verse does not end with . -> add ...
+	if(!previousVerseStr.contains(endsWithSentenceEndRegex))
+		result += "…";
 
 	return result;
 }

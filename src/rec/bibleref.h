@@ -8,6 +8,7 @@ class BibleRef
 {
 
 public:
+	BibleRef();
 	BibleRef(QString translationId, int bookId, int chapter, int verse);
 	BibleRef(QString translationId, int bookId, int chapter, const QVector<int> &verses);
 	BibleRef(const QString &str);

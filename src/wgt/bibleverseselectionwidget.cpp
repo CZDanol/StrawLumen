@@ -6,7 +6,7 @@
 
 #include "job/db.h"
 #include "rec/biblebook.h"
-#include "rec/bibleref.h"
+#include "job/settings.h"
 
 int chapterUID(int bookId, int chapterId) {
 	return bookId * 1000 + chapterId;
@@ -26,14 +26,14 @@ BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	connect(db, &DatabaseManager::sigBibleTranslationsChanged, this, &BibleVerseSelectionWidget::requeryTranslations);
+
 	// Models setup
 	{
-		translationsModel_.setQuery(db->selectQuery("SELECT translation_id || ' | ' || name, translation_id FROM bible_translations ORDER BY translation_id"));
 		ui->cmbTranslation->setModel(&translationsModel_);
-		ui->cmbTranslation->setCurrentText("ČEP | Český ekumenický překlad");
-
 		ui->lstBooks->setModel(&booksModel_);
 		ui->lstChapters->setModel(&chaptersModel_);
+
 		ui->lstVerses->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 		ui->lstVerses->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 
@@ -46,11 +46,70 @@ BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 	{
 		new QShortcut(Qt::CTRL | Qt::Key_F, ui->lnSearch, SLOT(setFocus()));
 	}
+
+	currentTranslationId_ = settings->defaultBibleTranslation();
+	requeryTranslations();
 }
 
 BibleVerseSelectionWidget::~BibleVerseSelectionWidget()
 {
 	delete ui;
+}
+
+const BibleRef &BibleVerseSelectionWidget::bibleRef() const
+{
+	return bibleRef_;
+}
+
+void BibleVerseSelectionWidget::setBibleRef(const BibleRef &set, bool updateInputs)
+{
+	bibleRef_ = set;
+
+	if(updateInputs)
+		ui->lnCode->setText(bibleRef_.toString());
+
+	if(blockSelectionChangeEvents_ || !bibleRef_.isValid()) {
+		emit sigSelectionChanged();
+		return;
+	}
+
+	currentTranslationId_ = set.translationId;
+	currentBookId_ = set.bookId;
+	currentChapterUID_ = chapterUID(currentBookId_, set.chapter);
+
+	selectedVerseUIDs_.clear();
+	for(int verse : set.verses())
+		selectedVerseUIDs_ += verseUID(currentBookId_, set.chapter, verse);
+
+	requeryTranslations();
+	emit sigSelectionChanged();
+}
+
+void BibleVerseSelectionWidget::requeryTranslations()
+{
+	translationIds_.clear();
+	translationRows_.clear();
+	translationList_.clear();
+
+	QSqlQuery q = db->selectQuery("SELECT translation_id || ' | ' || name, translation_id FROM bible_translations ORDER BY translation_id");
+	while(q.next()) {
+		const QString translationId = q.value(1).toString();
+		translationRows_[translationId] = translationIds_.size();
+		translationIds_ += translationId;
+		translationList_ += q.value(0).toString();
+	}
+
+	blockSelectionChangeEvents_++;
+	translationsModel_.setStringList(translationList_);
+
+	if(translationRows_.contains(currentTranslationId_))
+		 ui->cmbTranslation->setCurrentIndex(translationRows_[currentTranslationId_]);
+	else
+		ui->cmbTranslation->setCurrentIndex(translationRows_.value(settings->defaultBibleTranslation(), 0));
+
+	requeryBooks();
+
+	blockSelectionChangeEvents_--;
 }
 
 void BibleVerseSelectionWidget::requeryBooks()
@@ -309,16 +368,21 @@ void BibleVerseSelectionWidget::onVersesSelectionChanged()
 		selectedVerseUIDs_ += i->data(0, Qt::UserRole).toInt();
 	}
 
-	ui->lnCode->setText(BibleRef(currentTranslationId_, it->data(0, Qt::UserRole+1).toInt(), it->data(0, Qt::UserRole+2).toInt(), verseIds).toString());
+	blockSelectionChangeEvents_++;
+	setBibleRef(BibleRef(currentTranslationId_, it->data(0, Qt::UserRole+1).toInt(), it->data(0, Qt::UserRole+2).toInt(), verseIds));
+	blockSelectionChangeEvents_--;
 }
 
 void BibleVerseSelectionWidget::on_cmbTranslation_currentIndexChanged(int)
 {
+	if(blockSelectionChangeEvents_)
+		return;
+
 	const int row = ui->cmbTranslation->currentIndex();
 	if(row == -1)
 		return;
 
-	currentTranslationId_ = translationsModel_.record(row).value(1).toString();
+	currentTranslationId_ = translationIds_[row];
 	blockSelectionChangeEvents_++;
 	requeryBooks();
 	blockSelectionChangeEvents_--;
@@ -361,4 +425,9 @@ void BibleVerseSelectionWidget::on_actionGoToChapter_triggered()
 	blockSelectionChangeEvents_ ++;
 	requeryBooks();
 	blockSelectionChangeEvents_ --;
+}
+
+void BibleVerseSelectionWidget::on_lnCode_textChanged(const QString &arg1)
+{
+	setBibleRef(BibleRef(arg1), false);
 }

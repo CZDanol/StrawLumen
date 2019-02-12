@@ -17,6 +17,7 @@ public:
 signals:
 	void sigSongListChanged();
 	void sigStyleListChanged();
+	void sigBibleTranslationsChanged();
 
 	// Following signals automatically emit adequate sitXXXListChanged
 	void sigSongChanged(qlonglong songId);

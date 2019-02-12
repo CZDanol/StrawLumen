@@ -54,7 +54,9 @@ void PresentationPropertiesWidget_BibleVerse::on_wgtBackground_sigPresentationBa
 
 void PresentationPropertiesWidget_BibleVerse::on_btnWizard_clicked()
 {
-	presentation_BibleVerse_wizard()->show();
+	presentation_BibleVerse_wizard()->exec([&](const BibleRef &ref){
+		ui->verses->appendPlainText(ref.toString());
+	});
 }
 
 void PresentationPropertiesWidget_BibleVerse::on_verses_textChanged()

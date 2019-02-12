@@ -8,6 +8,8 @@
 #include <QCompleter>
 #include <QTreeWidgetItem>
 
+#include "rec/bibleref.h"
+
 namespace Ui {
 	class BibleVerseSelectionWidget;
 }
@@ -20,7 +22,15 @@ public:
 	explicit BibleVerseSelectionWidget(QWidget *parent = nullptr);
 	~BibleVerseSelectionWidget();
 
-private:
+public:
+	const BibleRef &bibleRef() const;
+	void setBibleRef(const BibleRef &set, bool updateInputs = true);
+
+signals:
+	void sigSelectionChanged();
+
+private slots:
+	void requeryTranslations();
 	void requeryBooks();
 	void requeryChapters();
 	void requeryVerses();
@@ -35,16 +45,21 @@ private slots:
 	void on_lnSearch_editingFinished();
 	void on_lstVerses_customContextMenuRequested(const QPoint &pos);
 	void on_actionGoToChapter_triggered();
+	void on_lnCode_textChanged(const QString &arg1);
+
+private:
+	BibleRef bibleRef_;
 
 private:
 	QString searchQuery_;
 	bool isSearch_ = false;
 
 private:
-	QSqlQueryModel translationsModel_;
-	QStringListModel booksModel_, chaptersModel_;
-	QStringList booksList_, chaptersList_;
+	QStringListModel translationsModel_, booksModel_, chaptersModel_;
+	QStringList translationList_, booksList_, chaptersList_;
+	QStringList translationIds_;
 	QVector<int> bookIds_, chapterUIDs_;
+	QHash<QString,int> translationRows_;
 
 private:
 	QString currentTranslationId_;

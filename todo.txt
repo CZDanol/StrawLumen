@@ -5,7 +5,6 @@ Aktuálně
 - option v menu, aby se náhodně nastavovaly pozadí u písní v programu
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
 	- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
-- zvýrazňování výsledků vyhledávání (asi ne?)
 - černá obrazovka u videí
 - ovládací tlačítka pro video
 - option na přidat logo lumenu do PDFka?
@@ -15,6 +14,7 @@ Aktuálně
 - možnost smazat štítek z menu deletem
 
 - systém pro verše z bible
+- autocomplete pro verše
 
 https://sourceforge.net/projects/zefania-sharp/files/Bibles/CZE/
 

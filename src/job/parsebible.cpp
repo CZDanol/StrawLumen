@@ -77,6 +77,7 @@ void parseBible(const QString &filename)
 	db->insert("INSERT INTO bible_translations(translation_id, name) VALUES(?, ?)", {translationId, translationName});
 
 	db->commitTransaction();
+	emit db->sigBibleTranslationsChanged();
 }
 
 void checkBibleImport()
