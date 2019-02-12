@@ -92,6 +92,11 @@ QVector<qlonglong> SongListWidget::rowIds() const
 	return result;
 }
 
+void SongListWidget::focusSongList()
+{
+	ui->tvSongs->setFocus();
+}
+
 void SongListWidget::unselect()
 {
 	ui->tvSongs->selectionModel()->clear();
@@ -227,6 +232,14 @@ void SongListWidget::showEvent(QShowEvent *e)
 		requery();
 		requeryTags();
 	}
+}
+
+void SongListWidget::keyPressEvent(QKeyEvent *e)
+{
+	if(e->key() == Qt::Key_Return)
+		e->accept();
+	else
+		QWidget::keyPressEvent(e);
 }
 
 void SongListWidget::onCurrentSongChanged(const QModelIndex &index, const QModelIndex &prevIndex)

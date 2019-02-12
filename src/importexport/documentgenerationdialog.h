@@ -18,6 +18,8 @@ public:
 	~DocumentGenerationDialog();
 
 public:
+	void show();
+
 	void setSelectedSongs(const QVector<qlonglong> &songIds);
 
 private:

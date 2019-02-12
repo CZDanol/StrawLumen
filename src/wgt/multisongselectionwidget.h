@@ -24,6 +24,7 @@ public:
 	QVector<qlonglong> selectedSongs() const;
 
 public slots:
+	void focusSongList();
 	void clearSelection();
 
 private slots:
@@ -36,9 +37,7 @@ private slots:
 	void on_btnAddAll_clicked();
 	void on_btnClear_clicked();
 	void on_wgtSongList_sigItemActivated(const qlonglong songId);
-
 	void on_tvSelection_activated(const QModelIndex &index);
-
 	void on_btnRemoveAll_clicked();
 
 private:

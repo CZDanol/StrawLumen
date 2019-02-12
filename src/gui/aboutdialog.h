@@ -15,6 +15,11 @@ public:
 	explicit AboutDialog(QWidget *parent = 0);
 	~AboutDialog();
 
+private slots:
+	void on_btnFacebookPage_clicked();
+
+	void on_btnWeb_clicked();
+
 private:
 	Ui::AboutDialog *ui;
 

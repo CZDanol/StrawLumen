@@ -2,6 +2,8 @@
 #include "ui_feedbackdialog.h"
 
 #include <QShortcut>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "strawapi/strawapi.h"
 #include "gui/mainwindow.h"
@@ -73,4 +75,9 @@ void FeedbackDialog::on_btnSend_clicked()
 		standardSuccessDialog(tr("Zpětná vazba byla odeslána. Děkujeme!"));
 
 	accept();
+}
+
+void FeedbackDialog::on_btnFacebook_clicked()
+{
+	QDesktopServices::openUrl(QUrl("https://www.facebook.com/strawLumen"));
 }

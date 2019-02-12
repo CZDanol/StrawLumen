@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Straw Lumen"
-#define MyAppVersion "0.10.0.0"
+#define MyAppVersion "1.1.0.0"
 #define MyAppPublisher "Straw Solutions"
 #define MyAppCopyright "(c) 2018 Straw Solutions, Daniel Èejchan"
 #define MyAppURL "http://straw-solutions.cz"
@@ -57,6 +57,7 @@ Source: "bin\bin_{#PlatformId}\*.pak"; DestDir: "{app}\bin_{#PlatformId}"; Flags
 Source: "bin\bin_{#PlatformId}\*.dat"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 
 Source: "bin\backgrounds\*"; DestDir: "{app}\backgrounds"; Flags: ignoreversion
+Source: "bin\bible\*"; DestDir: "{app}\bible"; Flags: ignoreversion
 Source: "bin\etc\*"; DestDir: "{app}\etc"; Flags: ignoreversion recursesubdirs
 Source: "bin\changelog.html"; DestDir: "{app}\changelog.html"; Flags: ignoreversion recursesubdirs
 Source: "fonts\SourceSansPro-*.ttf"; DestDir: "{fonts}"; FontInstall: "Source Sans Pro"; Flags: onlyifdoesntexist uninsneveruninstall

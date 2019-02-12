@@ -234,5 +234,10 @@
         <file>icons/16/Book_16px.png</file>
         <file>icons/16/Scroll_16px.png</file>
         <file>icons/16/Torah_16px.png</file>
+        <file>icons/32/Holy Bible_32px.png</file>
+        <file>icons/16/Facebook_16px.png</file>
+        <file>icons/32/Facebook_32px.png</file>
+        <file>icons/24/Facebook_24px.png</file>
+        <file>icons/16/Website_16px.png</file>
     </qresource>
 </RCC>

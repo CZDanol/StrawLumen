@@ -4,6 +4,8 @@
 #include <QDate>
 #include <QTime>
 #include <QLocale>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "gui/mainwindow.h"
 
@@ -30,4 +32,14 @@ AboutDialog *aboutDialog()
 		dlg = new AboutDialog(mainWindow);
 
 	return dlg;
+}
+
+void AboutDialog::on_btnFacebookPage_clicked()
+{
+	QDesktopServices::openUrl(QUrl("https://www.facebook.com/strawLumen"));
+}
+
+void AboutDialog::on_btnWeb_clicked()
+{
+	QDesktopServices::openUrl(QUrl("https://straw-solutions.cz/?/portfolio/lumen"));
 }

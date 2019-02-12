@@ -72,6 +72,12 @@ DocumentGenerationDialog::~DocumentGenerationDialog()
 	delete ui;
 }
 
+void DocumentGenerationDialog::show()
+{
+	QDialog::show();
+	ui->wgtSongSelection->focusSongList();
+}
+
 void DocumentGenerationDialog::setSelectedSongs(const QVector<qlonglong> &songIds)
 {
 	ui->wgtSongSelection->setSelectedSongs(songIds);

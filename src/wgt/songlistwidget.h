@@ -38,6 +38,8 @@ public:
 	QVector<qlonglong> rowIds() const;
 
 public slots:
+	void focusSongList();
+
 	void unselect();
 	void requery();
 	void requeryTags();
@@ -51,6 +53,7 @@ public slots:
 
 protected:
 	void showEvent(QShowEvent *e) override;
+	void keyPressEvent(QKeyEvent *e) override;
 
 private slots:
 	void onCurrentSongChanged(const QModelIndex &index, const QModelIndex &prevIndex);

@@ -1,7 +1,5 @@
 Aktuálně
-- ctrl+a jde až napodruhé při vytváření zpěvníku
 - hromadný export písní (může formátem zadat export PDF do samostatných složek, lumenovských databází do samostatných složek)
-- možnost dát vlastní název prezentaci obrázků
 - option v menu, aby se náhodně nastavovaly pozadí u písní v programu
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
 	- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
@@ -13,7 +11,6 @@ Aktuálně
 
 - možnost smazat štítek z menu deletem
 
-- systém pro verše z bible
 - autocomplete pro verše
 
 https://sourceforge.net/projects/zefania-sharp/files/Bibles/CZE/

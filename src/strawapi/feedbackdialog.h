@@ -22,6 +22,8 @@ private slots:
 	void on_btnCancel_clicked();
 	void on_btnSend_clicked();
 
+	void on_btnFacebook_clicked();
+
 private:
 	Ui::FeedbackDialog *ui;
 

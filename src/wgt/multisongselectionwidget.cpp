@@ -73,6 +73,11 @@ QVector<qlonglong> MultiSongSelectionWidget::selectedSongs() const
 	return selectionModel_.items();
 }
 
+void MultiSongSelectionWidget::focusSongList()
+{
+	ui->wgtSongList->focusSongList();
+}
+
 void MultiSongSelectionWidget::clearSelection()
 {
 	selectionModel_.clear();

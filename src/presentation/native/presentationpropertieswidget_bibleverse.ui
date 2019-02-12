@@ -231,6 +231,12 @@
    </slots>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>wgtStyle</tabstop>
+  <tabstop>wgtBackground</tabstop>
+  <tabstop>verses</tabstop>
+  <tabstop>btnWizard</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../res/resources.qrc"/>
  </resources>
