@@ -20,6 +20,6 @@ public:
 
 };
 
-extern PresentationEngine_Video *presentationEngine_Video;
+extern PresentationEngine_Video *presentationEngine_video;
 
 #endif // PRESENTATIONENGINE_VIDEO_H

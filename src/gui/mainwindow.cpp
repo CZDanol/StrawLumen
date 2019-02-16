@@ -21,6 +21,7 @@
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/native/presentation_images.h"
 #include "presentation/video/presentation_video.h"
+#include "presentation/web/presentation_web.h"
 #include "strawapi/feedbackdialog.h"
 #include "job/db.h"
 #include "job/settings.h"
@@ -138,7 +139,7 @@ void MainWindow::dropEvent(QDropEvent *e)
 
 	// The exec is there so the explorer the file is dragged from is not frozen while loading
 	execOnMainThread([=]{
-		QStringList openSongFiles, imageFiles, videoFiles;
+		QStringList openSongFiles, imageFiles, videoFiles, webFiles;
 		QString lumenFile;
 
 		for(QUrl url : urls) {
@@ -162,6 +163,11 @@ void MainWindow::dropEvent(QDropEvent *e)
 				continue;
 			}
 
+			if(Presentation_Web::validExtensions().contains(suffix.toLower())) {
+				webFiles += filePath;
+				continue;
+			}
+
 			if(suffix == "strawLumen") {
 				lumenFile = filePath;
 				continue;
@@ -181,6 +187,9 @@ void MainWindow::dropEvent(QDropEvent *e)
 
 		for(const QString &filename : videoFiles)
 			presentationMode()->playlist()->addItem(Presentation_Video::createFromFilename(filename));
+
+		for(const QString &filename : webFiles)
+			presentationMode()->playlist()->addItem(Presentation_Web::createFromUrl(QUrl::fromLocalFile(filename)));
 
 		if(!lumenFile.isEmpty())
 			lumenImportDialog()->show(lumenFile);

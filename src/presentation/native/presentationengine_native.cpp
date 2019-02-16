@@ -3,7 +3,7 @@
 #include "presentation/native/nativeprojectorwindow.h"
 #include "job/settings.h"
 
-PresentationEngine_Native *presentationEngine_Native = nullptr;
+PresentationEngine_Native *presentationEngine_native = nullptr;
 
 PresentationEngine_Native::PresentationEngine_Native(QObject *parent) : PresentationEngine(parent)
 {

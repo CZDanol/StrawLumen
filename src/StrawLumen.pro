@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport multimedia multimediawidgets widgets axcontainer sql xml webenginewidgets network
+QT       += core gui printsupport multimedia multimediawidgets widgets axcontainer sql xml webenginewidgets network webengine
 
 # For debugging purposes
 #CONFIG += console
@@ -136,7 +136,11 @@ SOURCES += main.cpp \
     presentation/native/presentation_bibleverse_wizard.cpp \
     rec/bibleref.cpp \
     wgt/verselistplaintextedit.cpp \
-    wgt/videocontroltabwidget.cpp
+    wgt/videocontroltabwidget.cpp \
+    presentation/web/presentation_web.cpp \
+    presentation/web/presentationengine_web.cpp \
+    presentation/web/webprojectorwindow.cpp \
+    presentation/web/presentationpropertieswidget_web.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -177,7 +181,9 @@ FORMS += \
     presentation/native/presentationpropertieswidget_bibleverse.ui \
     wgt/bibleverseselectionwidget.ui \
     presentation/native/presentation_bibleverse_wizard.ui \
-    wgt/videocontroltabwidget.ui
+    wgt/videocontroltabwidget.ui \
+    presentation/web/webprojectorwindow.ui \
+    presentation/web/presentationpropertieswidget_web.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -279,7 +285,11 @@ HEADERS += \
     presentation/native/presentation_bibleverse_wizard.h \
     rec/bibleref.h \
     wgt/verselistplaintextedit.h \
-    wgt/videocontroltabwidget.h
+    wgt/videocontroltabwidget.h \
+    presentation/web/presentation_web.h \
+    presentation/web/presentationengine_web.h \
+    presentation/web/webprojectorwindow.h \
+    presentation/web/presentationpropertieswidget_web.h
 
 RESOURCES += \
     ../res/resources.qrc

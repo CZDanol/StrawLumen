@@ -759,6 +759,15 @@ PresentationPropertiesWidget
     <string>Biblický verš</string>
    </property>
   </action>
+  <action name="actionAddWebPresentation">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Internet Explorer_16px.png</normaloff>:/icons/16/Internet Explorer_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Webová stránka</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

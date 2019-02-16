@@ -36,6 +36,6 @@ private:
 
 };
 
-extern PresentationEngine_Native *presentationEngine_Native;
+extern PresentationEngine_Native *presentationEngine_native;
 
 #endif // PRESENTATIONENGINE_NATIVE_H

@@ -259,7 +259,7 @@ QString Presentation_PowerPoint::slideDescription(int i) const
 
 PresentationEngine *Presentation_PowerPoint::engine() const
 {
-	return presentationEngine_PowerPoint;
+	return presentationEngine_powerPoint;
 }
 
 QString Presentation_PowerPoint::classIdentifier() const
@@ -276,7 +276,7 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
 	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide, rect, pptSlideI]{
-		auto &pe = *presentationEngine_PowerPoint;
+		auto &pe = *presentationEngine_powerPoint;
 
 		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
 		if(!pe.axPresentation_)
@@ -302,7 +302,7 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
 
 		setSlide_axThread(pptSlideI);
-		presentationEngine_PowerPoint->setDisplay_axThread(rect);
+		presentationEngine_powerPoint->setDisplay_axThread(rect);
 	});
 }
 
@@ -310,7 +310,7 @@ void Presentation_PowerPoint::deactivatePresentation()
 {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 	activeXJobThread->executeNonblocking([this, selfPtr]{
-		auto &pe = *presentationEngine_PowerPoint;
+		auto &pe = *presentationEngine_powerPoint;
 
 		if(!pe.axPresentation_) {
 			pe.axPresentation_ = nullptr;
@@ -333,7 +333,7 @@ void Presentation_PowerPoint::setSlide(int localSlideId, bool force)
 	const int pptSlideI = getPptSlideI(localSlideId);
 
 	activeXJobThread->executeNonblocking([this, selfPtr, pptSlideI]{
-		auto &pe = *presentationEngine_PowerPoint;
+		auto &pe = *presentationEngine_powerPoint;
 
 		if(!pe.axPresentation_)
 			return;
@@ -354,7 +354,7 @@ Presentation_PowerPoint::Presentation_PowerPoint()
 
 void Presentation_PowerPoint::setSlide_axThread(int pptSlideI)
 {
-	auto &pe = *presentationEngine_PowerPoint;
+	auto &pe = *presentationEngine_powerPoint;
 
 	if(pptSlideI == -2)
 		return;

@@ -3,11 +3,10 @@ Aktuálně
 - option v menu, aby se náhodně nastavovaly pozadí u písní v programu
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
 	- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
-- černá obrazovka u videí
 - option na přidat logo lumenu do PDFka?
-- promítání webové stránky
 - promítání hodin
 - playlist u videí?
+- výběry písniček (něco jako tagy, ale seřazeně)
 
 - možnost smazat štítek z menu deletem
 
@@ -25,7 +24,6 @@ Do budoucna
 - když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - když se nesází akordy, tak trim mezery před/za akordama
 - vzorník barev u color selectu
-- nový typ prezentace: webovky?
 - štítky pro pozadí
 
 - systém nastavování automatických přechodů prezentací:
@@ -42,7 +40,6 @@ Do budoucna
 - associovat lumen exported file na otevření v lumenu
 
 - průzkumník souborů
-- možnost uložit výběr u vytváření zpěvníku (aby se dalo přidávat)
 - podpora pro jeden monitor?
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic

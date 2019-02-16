@@ -81,6 +81,7 @@ private slots:
 	void on_actionAddImagesPresentation_triggered();
 	void on_actionAddVideoPresentation_triggered();
 	void on_actionAddBibleVerse_triggered();
+	void on_actionAddWebPresentation_triggered();
 
 private:
 	Ui::MainWindow_PresentationMode *ui;

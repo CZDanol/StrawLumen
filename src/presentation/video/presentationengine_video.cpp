@@ -5,7 +5,7 @@
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
 
-PresentationEngine_Video *presentationEngine_Video = nullptr;
+PresentationEngine_Video *presentationEngine_video = nullptr;
 
 PresentationEngine_Video::PresentationEngine_Video(QObject *parent) : PresentationEngine(parent)
 {

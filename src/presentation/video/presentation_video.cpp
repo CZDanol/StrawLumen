@@ -89,7 +89,7 @@ QPixmap Presentation_Video::slideIdentificationIcon(int i) const
 
 PresentationEngine *Presentation_Video::engine() const
 {
-	return presentationEngine_Video;
+	return presentationEngine_video;
 }
 
 QString Presentation_Video::classIdentifier() const
@@ -109,17 +109,13 @@ void Presentation_Video::activatePresentation(int startingSlide)
 	videoProjectorWindow->setRepeat(repeat_);
 }
 
-void Presentation_Video::deactivatePresentation()
-{
-
-}
-
 void Presentation_Video::setSlide(int localSlideId, bool force)
 {
 	Q_UNUSED(localSlideId);
 	Q_UNUSED(force);
 
-	// TODO force
+	if(force)
+		activatePresentation(0);
 }
 
 Presentation_Video::Presentation_Video()

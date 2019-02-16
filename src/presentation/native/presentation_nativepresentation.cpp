@@ -19,13 +19,13 @@ bool Presentation_NativePresentation::isActive() const
 
 PresentationEngine *Presentation_NativePresentation::engine() const
 {
-	return presentationEngine_Native;
+	return presentationEngine_native;
 }
 
 void Presentation_NativePresentation::activatePresentation(int startingSlide)
 {
-	presentationEngine_Native->setPresentation(weakPtr_);
-	presentationEngine_Native->setSlide(startingSlide);
+	presentationEngine_native->setPresentation(weakPtr_);
+	presentationEngine_native->setSlide(startingSlide);
 
 	isActive_ = true;
 }
@@ -37,5 +37,5 @@ void Presentation_NativePresentation::deactivatePresentation()
 
 void Presentation_NativePresentation::setSlide(int localSlideId, bool force)
 {
-	presentationEngine_Native->setSlide(localSlideId, force);
+	presentationEngine_native->setSlide(localSlideId, force);
 }

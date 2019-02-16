@@ -5,7 +5,7 @@
 #include "presentation/presentationmanager.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
 
-PresentationEngine_PowerPoint *presentationEngine_PowerPoint = nullptr;
+PresentationEngine_PowerPoint *presentationEngine_powerPoint = nullptr;
 
 PresentationEngine_PowerPoint::PresentationEngine_PowerPoint(QObject *parent) : PresentationEngine(parent)
 {

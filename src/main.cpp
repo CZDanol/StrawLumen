@@ -6,6 +6,7 @@
 #include <QStandardPaths>
 #include <QLibraryInfo>
 #include <QTranslator>
+#include <QtWebEngine/QtWebEngine>
 
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
@@ -27,6 +28,8 @@
 #include "presentation/native/nativeprojectorwindow.h"
 #include "presentation/video/presentationengine_video.h"
 #include "presentation/video/videoprojectorwindow.h"
+#include "presentation/web/presentationengine_web.h"
+#include "presentation/web/webprojectorwindow.h"
 #include "presentation/presentationmanager.h"
 #include "util/standarddialogs.h"
 #include "util/execonmainthread.h"
@@ -84,9 +87,10 @@ void initApplication() {
 	asyncCache = new AsyncCacheManager();
 
 	activeXJobThread = new ActiveXJobThread();
-	presentationEngine_PowerPoint = new PresentationEngine_PowerPoint();
-	presentationEngine_Native = new PresentationEngine_Native();
-	presentationEngine_Video = new PresentationEngine_Video();
+	presentationEngine_powerPoint = new PresentationEngine_PowerPoint();
+	presentationEngine_native = new PresentationEngine_Native();
+	presentationEngine_video = new PresentationEngine_Video();
+	presentationEngine_web = new PresentationEngine_Web();
 	presentationManager = new PresentationManager();
 
 	qApp->processEvents();
@@ -94,6 +98,7 @@ void initApplication() {
 	mainWindow = new MainWindow();
 	nativeProjectorWindow = new NativeProjectorWindow();
 	videoProjectorWindow = new VideoProjectorWindow();
+	webProjectorWindow = new WebProjectorWindow();
 
 	qApp->processEvents();
 
@@ -101,19 +106,25 @@ void initApplication() {
 	splashscreen = new Splashscreen(mainWindow);
 	backgroundDialog = new BackgroundDialog(mainWindow);
 	stylesDialog = new StylesDialog(mainWindow);
+
+	qApp->processEvents();
+
+	QtWebEngine::initialize();
 }
 
 void uninitApplication() {
 	presentationManager->setActive(false);
 
-	delete mainWindow;
-	delete nativeProjectorWindow;
+	delete webProjectorWindow;
 	delete videoProjectorWindow;
+	delete nativeProjectorWindow;
+	delete mainWindow;
 
 	delete presentationManager;
-	delete presentationEngine_Native;
-	delete presentationEngine_PowerPoint;
-	delete presentationEngine_Video;
+	delete presentationEngine_native;
+	delete presentationEngine_powerPoint;
+	delete presentationEngine_video;
+	delete presentationEngine_web;
 	delete activeXJobThread;
 
 	delete asyncCache;

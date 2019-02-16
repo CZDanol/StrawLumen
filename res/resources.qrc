@@ -247,5 +247,6 @@
         <file>icons/16/Video Call_16px.png</file>
         <file>icons/16/Voice_16px.png</file>
         <file>icons/16/Mute_16px.png</file>
+        <file>icons/16/Internet Explorer_16px.png</file>
     </qresource>
 </RCC>

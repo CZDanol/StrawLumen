@@ -10,6 +10,7 @@
 #include "presentation/native/presentation_bibleverse.h"
 #include "presentation/native/presentation_images.h"
 #include "presentation/video/presentation_video.h"
+#include "presentation/web/presentation_web.h"
 #include "util/standarddialogs.h"
 #include "job/db.h"
 
@@ -218,7 +219,9 @@ bool Playlist::loadFromJSON(const QJsonObject &json)
 		{"native.customSlide", F(Presentation_CustomSlide::createFromJSON(json))},
 		{"native.images", F(Presentation_Images::createFromJSON(json))},
 
-		{"video.video", F(Presentation_Video::createFromJSON(json))}
+		{"video.video", F(Presentation_Video::createFromJSON(json))},
+
+		{"web.web", F(Presentation_Web::createFromJSON(json))},
 	};
 #undef F
 

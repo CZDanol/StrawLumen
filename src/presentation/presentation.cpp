@@ -43,10 +43,22 @@ QWidget *Presentation::createPropertiesWidget(QWidget *)
 	return nullptr;
 }
 
+void Presentation::deactivatePresentation()
+{
+
+}
+
+void Presentation::setSlide(int localSlideId, bool force)
+{
+	Q_UNUSED(localSlideId);
+	Q_UNUSED(force);
+}
+
 Presentation::Presentation()
 {
 	moveToThread(QApplication::instance()->thread());
 
 	connect(this, SIGNAL(sigSlidesChanged()), this, SIGNAL(sigChanged()));
 	connect(this, SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigChanged()));
+	connect(this, SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigSlidesChanged()));
 }

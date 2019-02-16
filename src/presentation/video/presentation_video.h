@@ -33,7 +33,6 @@ public:
 	QString classIdentifier() const override;
 
 	void activatePresentation(int startingSlide) override;
-	void deactivatePresentation() override;
 	void setSlide(int localSlideId, bool force = false) override;
 
 protected:

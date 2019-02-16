@@ -38,6 +38,6 @@ private:
 
 };
 
-extern PresentationEngine_PowerPoint *presentationEngine_PowerPoint;
+extern PresentationEngine_PowerPoint *presentationEngine_powerPoint;
 
 #endif // PRESENTATIONENGINE_POWERPOINT_H
