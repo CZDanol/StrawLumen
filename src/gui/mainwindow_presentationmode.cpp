@@ -36,6 +36,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	playlist_.reset(new Playlist());
 	connect(playlist_.data(), SIGNAL(sigSlidesChanged()), this, SLOT(updateControlsUIEnabled()));
 
+	ui->wgtVideoControl->hide();
+
 	// Playlist tab
 	{
 		ui->twPlaylist->setCornerWidget(ui->twPlaylistCorner);
@@ -191,6 +193,11 @@ MainWindow_PresentationMode::~MainWindow_PresentationMode()
 QWidget *MainWindow_PresentationMode::menuWidget()
 {
 	return ui->wgtMenu;
+}
+
+VideoControlTabWidget *MainWindow_PresentationMode::videoControlWidget()
+{
+	return ui->wgtVideoControl;
 }
 
 bool MainWindow_PresentationMode::askSaveChanges()

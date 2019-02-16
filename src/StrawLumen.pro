@@ -135,7 +135,8 @@ SOURCES += main.cpp \
     wgt/bibleverseselectionwidget.cpp \
     presentation/native/presentation_bibleverse_wizard.cpp \
     rec/bibleref.cpp \
-    wgt/verselistplaintextedit.cpp
+    wgt/verselistplaintextedit.cpp \
+    wgt/videocontroltabwidget.cpp
 
 FORMS += \
     gui/mainwindow.ui \
@@ -175,7 +176,8 @@ FORMS += \
     presentation/video/presentationpropertieswidget_video.ui \
     presentation/native/presentationpropertieswidget_bibleverse.ui \
     wgt/bibleverseselectionwidget.ui \
-    presentation/native/presentation_bibleverse_wizard.ui
+    presentation/native/presentation_bibleverse_wizard.ui \
+    wgt/videocontroltabwidget.ui
 
 HEADERS += \
     gui/mainwindow.h \
@@ -276,7 +278,8 @@ HEADERS += \
     wgt/bibleverseselectionwidget.h \
     presentation/native/presentation_bibleverse_wizard.h \
     rec/bibleref.h \
-    wgt/verselistplaintextedit.h
+    wgt/verselistplaintextedit.h \
+    wgt/videocontroltabwidget.h
 
 RESOURCES += \
     ../res/resources.qrc

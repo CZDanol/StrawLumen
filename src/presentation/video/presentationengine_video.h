@@ -18,9 +18,6 @@ public:
 	void setBlackScreen(bool set) override;
 	void setDisplay(const QRect &rect) override;
 
-private:
-	bool isBlackScreen_ = false;
-
 };
 
 extern PresentationEngine_Video *presentationEngine_Video;

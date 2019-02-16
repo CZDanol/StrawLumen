@@ -239,5 +239,13 @@
         <file>icons/32/Facebook_32px.png</file>
         <file>icons/24/Facebook_24px.png</file>
         <file>icons/16/Website_16px.png</file>
+        <file>icons/16/Circled Play_16px.png</file>
+        <file>icons/16/Pause Button_16px.png</file>
+        <file>icons/16/Pause_16px.png</file>
+        <file>icons/16/Play_16px.png</file>
+        <file>icons/16/Stop_16px.png</file>
+        <file>icons/16/Video Call_16px.png</file>
+        <file>icons/16/Voice_16px.png</file>
+        <file>icons/16/Mute_16px.png</file>
     </qresource>
 </RCC>

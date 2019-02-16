@@ -5,6 +5,9 @@
 
 class Presentation_Video : public Presentation
 {
+	Q_OBJECT
+
+	friend class PresentationPropertiesWidget_Video;
 
 public:
 	static QStringList validExtensions();
@@ -19,6 +22,7 @@ public:
 public:
 	QString identification() const override;
 	QPixmap icon() const override;
+	QPixmap specialIcon() const override;
 
 	QWidget *createPropertiesWidget(QWidget *parent) override;
 
@@ -40,6 +44,7 @@ protected:
 
 private:
 	QString filename_, identification_;
+	bool autoPlay_ = true, repeat_ = false;
 
 };
 

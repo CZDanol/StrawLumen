@@ -101,6 +101,9 @@
        </widget>
       </item>
       <item>
+       <widget class="VideoControlTabWidget" name="wgtVideoControl" native="true"/>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -766,6 +769,12 @@ PresentationPropertiesWidget
    <slots>
     <signal>sigItemActivated(qlonglong)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>VideoControlTabWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/videocontroltabwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

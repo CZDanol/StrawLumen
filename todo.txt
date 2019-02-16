@@ -4,12 +4,10 @@ Aktuálně
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
 	- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
 - černá obrazovka u videí
-- ovládací tlačítka pro video
 - option na přidat logo lumenu do PDFka?
 - promítání webové stránky
 - promítání hodin
-
-- dělení řádků u vykreslování textu?
+- playlist u videí?
 
 - možnost smazat štítek z menu deletem
 

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVideoWidget>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 namespace Ui {
 	class VideoProjectorWindow;
@@ -19,15 +20,32 @@ public:
 
 public:
 	void playVideo(const QString &filename);
+	void setVideo(const QString &filename);
+
+	void setRepeat(bool set);
+	void setPaused(bool set);
+	void setVolume(int volume);
+	void setPosition(int position);
+	void stop();
+
+	bool isMuted();
+	void setMuted(bool set);
+
 	void close();
+	void setBlackScreen(bool set);
 
 protected:
 	void changeEvent(QEvent *) override;
 
+private slots:
+	void updateControlPanel();
+
 private:
 	Ui::VideoProjectorWindow *ui;
+	bool isBlackScreen_ = false;
 	QVideoWidget *videoWgt_;
 	QMediaPlayer *mediaPlayer_;
+	QMediaPlaylist *playlist_;
 
 };
 

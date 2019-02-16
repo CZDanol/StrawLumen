@@ -4,6 +4,7 @@
 
 #include "presentationengine_video.h"
 #include "videoprojectorwindow.h"
+#include "presentationpropertieswidget_video.h"
 
 QStringList Presentation_Video::validExtensions()
 {
@@ -32,13 +33,17 @@ QSharedPointer<Presentation_Video> Presentation_Video::createFromJSON(const QJso
 	result->weakPtr_ = result;
 	result->filename_ = filename;
 	result->identification_ = QFileInfo(filename).completeBaseName();
+	result->autoPlay_ = json["autoPlay"].toBool(result->autoPlay_);
+	result->repeat_ = json["repeat"].toBool(result->repeat_);
 	return result;
 }
 
 QJsonObject Presentation_Video::toJSON() const
 {
 	return QJsonObject {
-		{"filename", filename_}
+		{"filename", filename_},
+		{"autoPlay", autoPlay_},
+		{"repeat", repeat_}
 	};
 }
 
@@ -58,11 +63,15 @@ QPixmap Presentation_Video::icon() const
 	return icon;
 }
 
+QPixmap Presentation_Video::specialIcon() const
+{
+	static QPixmap autoSlidePixmap(":/icons/16/Repeat_16px.png");
+	return repeat_ ? autoSlidePixmap : QPixmap();
+}
+
 QWidget *Presentation_Video::createPropertiesWidget(QWidget *parent)
 {
-	Q_UNUSED(parent);
-
-	return nullptr;
+	return new PresentationPropertiesWidget_Video(weakPtr_.toStrongRef(), parent);
 }
 
 int Presentation_Video::slideCount() const
@@ -92,7 +101,12 @@ void Presentation_Video::activatePresentation(int startingSlide)
 {
 	Q_UNUSED(startingSlide);
 
-	videoProjectorWindow->playVideo(filename_);
+	if(autoPlay_)
+		videoProjectorWindow->playVideo(filename_);
+	else
+		videoProjectorWindow->setVideo(filename_);
+
+	videoProjectorWindow->setRepeat(repeat_);
 }
 
 void Presentation_Video::deactivatePresentation()

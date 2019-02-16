@@ -8,6 +8,7 @@
 #include "modelview/playlistitemmodel.h"
 #include "modelview/slidesitemmodel.h"
 #include "modelview/slidesitemdelegate.h"
+#include "wgt/videocontroltabwidget.h"
 
 namespace Ui {
 	class MainWindow_PresentationMode;
@@ -25,6 +26,7 @@ public:
 
 public:
 	QWidget *menuWidget();
+	VideoControlTabWidget *videoControlWidget();
 
 	bool askSaveChanges();
 
