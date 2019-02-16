@@ -23,7 +23,8 @@ struct TextStyle {
 
 public:
 	enum Flags : int {
-		fScaleDownToFitRect = 0b1
+		fScaleDownToFitRect = 0b1,
+		fWordWrap = 0b10,
 	};
 
 public:

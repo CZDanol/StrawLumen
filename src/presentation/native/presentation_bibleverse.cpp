@@ -51,7 +51,7 @@ QJsonObject Presentation_BibleVerse::toJSON() const
 
 void Presentation_BibleVerse::drawSlide(QPainter &p, int slideId, const QRect &rect)
 {
-	style_.drawSlide(p, rect, slides_[slideId], slideNames_[slideId]);
+	style_.drawSlide(p, rect, slides_[slideId], slideNames_[slideId], PresentationStyle::fWordWrapContent);
 }
 
 QString Presentation_BibleVerse::identification() const
@@ -136,15 +136,15 @@ void Presentation_BibleVerse::updateVerses()
 	for(QString &slide : slides_) {
 		QString slideDesc = slide.left(400);
 		slideDesc.remove('\n');
-
 		slideDescriptions_ += slideDesc;
 
+		/*
 		static const QRegularExpression wrapRegex(
 					"("
 					".{100}.*?" // Wrap on the end of the next word after 100 characters
 					"(?:\\b[a-z] \\w+\\s+|\\s+)" // If the last word is one symbol, take the next word too
 					")", QRegularExpression::UseUnicodePropertiesOption | QRegularExpression::CaseInsensitiveOption);
-		slide.replace(wrapRegex, "\\1\n");
+		slide.replace(wrapRegex, "\\1\n");*/
 	}
 }
 

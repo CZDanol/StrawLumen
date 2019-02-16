@@ -9,6 +9,8 @@ Aktuálně
 - promítání webové stránky
 - promítání hodin
 
+- dělení řádků u vykreslování textu?
+
 - možnost smazat štítek z menu deletem
 
 - autocomplete pro verše

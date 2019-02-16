@@ -97,7 +97,7 @@ bool PresentationStyle::operator==(const PresentationStyle &other) const
 	return true;
 }
 
-void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const
+void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title, int flags) const
 {
 	const auto marg = [&](qreal l, qreal t, qreal r, qreal b) {
 		return QMargins(l * rect.width() * 0.01, t * rect.height() * 0.01, r * rect.width() * 0.01, b * rect.height() * 0.01);
@@ -107,7 +107,11 @@ void PresentationStyle::drawSlide(QPainter &p, const QRect &rect, const QString 
 
 	titleTextStyle_.drawText(p, QRect(rect.bottomLeft(), rect.bottomRight()).marginsRemoved(marg(leftPadding(), -titleTextPadding()-bottomPadding(), rightPadding(), bottomPadding())), title, QTextOption(Qt::AlignHCenter | Qt::AlignBottom));
 
-	mainTextStyle_.drawText(p, rect.marginsRemoved(marg(leftPadding(), topPadding(), rightPadding(), titleTextPadding()+bottomPadding())), text);
+	int mainTextFlags = TextStyle::fScaleDownToFitRect;
+	if(flags & fWordWrapContent)
+		mainTextFlags |= TextStyle::fWordWrap;
+
+	mainTextStyle_.drawText(p, rect.marginsRemoved(marg(leftPadding(), topPadding(), rightPadding(), titleTextPadding()+bottomPadding())), text, QTextOption(Qt::AlignCenter), mainTextFlags);
 }
 
 void PresentationStyle::operator=(const PresentationStyle &other)

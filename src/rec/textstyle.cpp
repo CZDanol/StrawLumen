@@ -4,6 +4,7 @@
 #include <QPainterPath>
 #include <QFontMetrics>
 #include <QJsonObject>
+#include <QRegularExpression>
 
 #include "job/jsonautomation.h"
 
@@ -38,32 +39,71 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 			vAlignConst = 0;
 	}
 
+	QSizeF availableSize = rect.size();
+	if(outlineEnabled)
+		availableSize -= QSizeF(outlineWidth*2,outlineWidth*2);
+
 	QPainterPath path;
 	QSize size;
 
+	QStringRef remainingText(&str);
+	QVector<int> wrapPoints;
+
+	// Initial scale factor estimation
+	const int approxLineCount = str.count('\n') + 1;
+	qreal scaleFactor = qMin(1.0, static_cast<qreal>(availableSize.width()) / (metrics.height() * approxLineCount + metrics.leading() * (approxLineCount-1)));
+	const int approxAvailableWidth = static_cast<int>(availableSize.width() / scaleFactor);
+
 	// Lay out lines
-	for(const QString &line : str.split('\n')) {
+	while(!remainingText.isEmpty()) {
+		int ix = remainingText.indexOf('\n');
+		QString line = remainingText.left(ix).trimmed().toString();
+
 		if(size.height())
 			size.setHeight(size.height() + metrics.leading());
 
-		const int lineWidth = metrics.horizontalAdvance(line);
+		int lineWidth = metrics.horizontalAdvance(line);
+		if(lineWidth > approxAvailableWidth && (flags & fWordWrap)) {
+			// Calculate wrap points
+			wrapPoints.clear();
+			static const QRegularExpression wrapPointsRegex("\\b(\\w )?\\w+\\p{P}*(?: …\\p{P}*)?", QRegularExpression::UseUnicodePropertiesOption);
+			QRegularExpressionMatchIterator it = wrapPointsRegex.globalMatch(line);
+			while(it.hasNext())
+				wrapPoints += it.next().capturedEnd();
+
+			// Binary search in the wrap points
+			int start = 0, end = wrapPoints.size();
+			while(start + 1 < end) {
+				const int mid = (start + end) / 2;
+				lineWidth = metrics.horizontalAdvance(line.left(wrapPoints[mid]));
+
+				if(lineWidth > approxAvailableWidth)
+					end = mid;
+				else
+					start = mid;
+			}
+
+			line = line.left(wrapPoints[start]);
+			lineWidth = metrics.horizontalAdvance(line);
+			ix = line.length();
+		}
+
 		if(lineWidth > size.width())
 			size.setWidth(lineWidth);
 
 		size.setHeight(size.height() + metrics.ascent());
 		path.addText(-lineWidth*hAlignConst, size.height(), font, line);
 		size.setHeight(size.height() + metrics.descent());
+
+		remainingText = ix == -1 ? nullptr : remainingText.mid(ix+1);
 	}
 	QRectF pathBoundingRect = path.boundingRect();
 
-	QSizeF availableSize = rect.size();
-	if(outlineEnabled)
-		availableSize -= QSizeF(outlineWidth*2,outlineWidth*2);
-
-	qreal scaleFactor = 1;
 	if((flags & fScaleDownToFitRect) && (pathBoundingRect.width() > availableSize.width() || pathBoundingRect.height() > availableSize.height())) {
 		scaleFactor = qMin(availableSize.width()/pathBoundingRect.width(), availableSize.height()/pathBoundingRect.height());
 	}
+	else
+		scaleFactor = 1;
 
 	p.save();
 	p.translate(rect.left(), rect.top());

@@ -21,6 +21,11 @@ class PresentationStyle : public QObject
 	Q_OBJECT
 
 public:
+	enum Flag {
+		fWordWrapContent = 0b1
+	};
+
+public:
 	PresentationStyle();
 
 signals:
@@ -28,7 +33,7 @@ signals:
 	void sigNeedsRepaint();
 
 public:
-	void drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title) const;
+	void drawSlide(QPainter &p, const QRect &rect, const QString &text, const QString &title, int flags = 0) const;
 
 public:
 	void loadFromJSON(const QJsonValue &val);
