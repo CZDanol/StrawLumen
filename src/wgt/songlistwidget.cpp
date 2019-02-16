@@ -3,8 +3,10 @@
 
 #include <QShortcut>
 #include <QShowEvent>
+#include <QMenu>
 
 #include "job/db.h"
+#include "util/standarddialogs.h"
 
 SongListWidget::SongListWidget(QWidget *parent) :
 	QWidget(parent),
@@ -41,6 +43,10 @@ SongListWidget::SongListWidget(QWidget *parent) :
 		auto sc = new QShortcut(Qt::CTRL | Qt::Key_F, ui->lnSearch);
 		connect(sc, SIGNAL(activated()), ui->lnSearch, SLOT(setFocus()));
 		connect(sc, SIGNAL(activated()), ui->lnSearch, SLOT(selectAll()));
+	}
+	{
+		auto sc = new QShortcut(Qt::Key_Delete, ui->lvTags, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+		connect(sc, SIGNAL(activated()), ui->actionDeleteTag, SLOT(trigger()));
 	}
 }
 
@@ -313,4 +319,27 @@ void SongListWidget::on_btnClearTagFilter_clicked()
 void SongListWidget::on_btnSearchInText_clicked()
 {
 	requery();
+}
+
+void SongListWidget::on_lvTags_customContextMenuRequested(const QPoint &pos)
+{
+	if(ui->lvTags->currentIndex().row() <= 0)
+		return;
+
+	QMenu menu;
+	menu.addAction(ui->actionDeleteTag);
+	menu.exec(ui->lvTags->viewport()->mapToGlobal(pos));
+}
+
+void SongListWidget::on_actionDeleteTag_triggered()
+{
+	if(ui->lvTags->currentIndex().row() <= 0)
+		return;
+
+	const QString tag = tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag").toString();
+	if(!standardConfirmDialog(tr("Opravdu smazat štítek '%1'?").arg(tag)))
+		return;
+
+	db->exec("DELETE FROM song_tags WHERE tag = ?", {tag});
+	emit db->sigSongListChanged();
 }

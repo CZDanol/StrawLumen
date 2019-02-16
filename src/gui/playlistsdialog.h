@@ -27,9 +27,9 @@ public slots:
 
 private slots:
 	void updateUiEnabled();
+	void requery();
 
 private slots:
-	void requery();
 	void on_btnNew_clicked();
 	void on_lstPlaylists_itemChanged(QListWidgetItem *item);
 	void on_btnRename_clicked();

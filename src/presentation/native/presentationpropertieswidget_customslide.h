@@ -31,7 +31,7 @@ private slots:
 	void on_wgtStyle_sigPresentationStyleChangedByUser();
 	void on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &);
 	void on_lnTitle_editingFinished();
-	void on_teText_textEdited();
+	void on_teText_textChanged();
 
 private:
 	Ui::PresentationPropertiesWidget_CustomSlide *ui;

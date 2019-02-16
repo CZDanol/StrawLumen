@@ -4,7 +4,7 @@ Aktuálně
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
 	- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
 - option na přidat logo lumenu do PDFka?
-- promítání hodin
+- promítání hodin a odpočtů
 - playlist u videí?
 - výběry písniček (něco jako tagy, ale seřazeně)
 
@@ -12,10 +12,9 @@ Aktuálně
 
 - autocomplete pro verše
 
-https://sourceforge.net/projects/zefania-sharp/files/Bibles/CZE/
-
 
 Do budoucna
+- audiovizualizace jako styl pozadí
 - detekovat natočení fotky z metadat
 - promítání odpočtu
 - Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.

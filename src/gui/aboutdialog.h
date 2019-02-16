@@ -20,6 +20,8 @@ private slots:
 
 	void on_btnWeb_clicked();
 
+	void on_btnChangelog_clicked();
+
 private:
 	Ui::AboutDialog *ui;
 

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Straw Lumen"
-#define MyAppVersion "1.1.0.0"
+#define MyAppVersion "1.2.0.0"
 #define MyAppPublisher "Straw Solutions"
 #define MyAppCopyright "(c) 2018 Straw Solutions, Daniel Èejchan"
 #define MyAppURL "http://straw-solutions.cz"

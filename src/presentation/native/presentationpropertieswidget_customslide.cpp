@@ -62,7 +62,7 @@ void PresentationPropertiesWidget_CustomSlide::on_lnTitle_editingFinished()
 	emit presentation_->sigItemChanged(presentation_.data());
 }
 
-void PresentationPropertiesWidget_CustomSlide::on_teText_textEdited()
+void PresentationPropertiesWidget_CustomSlide::on_teText_textChanged()
 {
 	textUpdateTimer_.start();
 }

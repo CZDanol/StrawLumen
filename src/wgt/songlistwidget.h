@@ -68,6 +68,8 @@ private slots:
 	void on_lvTags_activated(const QModelIndex &index);
 	void on_btnClearTagFilter_clicked();
 	void on_btnSearchInText_clicked();
+	void on_lvTags_customContextMenuRequested(const QPoint &pos);
+	void on_actionDeleteTag_triggered();
 
 private:
 	Ui::SongListWidget *ui;
