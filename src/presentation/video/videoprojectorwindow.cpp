@@ -18,7 +18,7 @@ VideoProjectorWindow::VideoProjectorWindow(QWidget *parent) :
 	connect(mainWindow, &MainWindow::sigClosed, this, &VideoProjectorWindow::close);
 
 	videoWgt_ = new QVideoWidget(this);
-	setCentralWidget(videoWgt_);
+	ui->wgtStack->addWidget(videoWgt_);
 
 	playlist_ = new QMediaPlaylist(this);
 
@@ -39,18 +39,17 @@ VideoProjectorWindow::~VideoProjectorWindow()
 void VideoProjectorWindow::playVideo(const QString &filename)
 {
 	setVideo(filename);
-	videoWgt_->setVisible(!isBlackScreen_);
+	updateBlackScreen();
 	mediaPlayer_->play();
 }
 
 void VideoProjectorWindow::setVideo(const QString &filename)
 {
-	videoWgt_->hide();
 	playlist_->clear();
 	playlist_->addMedia(QUrl::fromLocalFile(filename));
 
+	updateBlackScreen();
 	updateControlPanel();
-	repaint();
 }
 
 void VideoProjectorWindow::setRepeat(bool set)
@@ -60,7 +59,7 @@ void VideoProjectorWindow::setRepeat(bool set)
 
 void VideoProjectorWindow::setPaused(bool set)
 {
-	videoWgt_->setVisible(!isBlackScreen_);
+	updateBlackScreen();
 
 	if(set)
 		mediaPlayer_->pause();
@@ -94,6 +93,12 @@ void VideoProjectorWindow::setMuted(bool set)
 	mediaPlayer_->setMuted(set);
 }
 
+void VideoProjectorWindow::show()
+{
+	QMainWindow::show();
+	updateBlackScreen();
+}
+
 void VideoProjectorWindow::close()
 {
 	mediaPlayer_->stop();
@@ -102,8 +107,8 @@ void VideoProjectorWindow::close()
 
 void VideoProjectorWindow::setBlackScreen(bool set)
 {
-	videoWgt_->setVisible(!set);
 	isBlackScreen_ = set;
+	updateBlackScreen();
 }
 
 void VideoProjectorWindow::changeEvent(QEvent *e)
@@ -122,4 +127,10 @@ void VideoProjectorWindow::updateControlPanel()
 				static_cast<int>(mediaPlayer_->duration() / 1000),
 				mediaPlayer_->volume(),
 				mediaPlayer_->isMuted());
+}
+
+void VideoProjectorWindow::updateBlackScreen()
+{
+	ui->wgtStack->setCurrentIndex(isBlackScreen_ || mediaPlayer_->state() == QMediaPlayer::StoppedState ? 0 : 1);
+	repaint();
 }

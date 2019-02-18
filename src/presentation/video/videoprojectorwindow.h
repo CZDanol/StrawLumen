@@ -31,6 +31,7 @@ public:
 	bool isMuted();
 	void setMuted(bool set);
 
+	void show();
 	void close();
 	void setBlackScreen(bool set);
 
@@ -39,6 +40,7 @@ protected:
 
 private slots:
 	void updateControlPanel();
+	void updateBlackScreen();
 
 private:
 	Ui::VideoProjectorWindow *ui;

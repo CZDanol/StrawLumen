@@ -131,7 +131,7 @@
             </font>
            </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Budeme raději, když zpětnou vazbu napíšete na zeď naší &lt;a href=&quot;https://www.facebook.com/strawLumen&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;facebookové stránky&lt;/span&gt;&lt;/a&gt;, kde se k němu mohou vyjádřit i další lidé a může se vést diskuze.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Budeme raději, když zpětnou vazbu napíšete na zeď naší &lt;a href=&quot;https://www.facebook.com/strawLumen&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;facebookové stránky&lt;/span&gt;&lt;/a&gt;, kde se k ní mohou vyjádřit i další lidé a může se vést diskuze.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
