@@ -6,6 +6,7 @@
 /// Checks if there are no bibles in the database and if there are bibles available for import
 void checkBibleImport();
 
-void parseBible(const QString &filename);
+bool parseBible(const QString &filename);
+void deleteBible(const QString &translationId);
 
 #endif // PARSEBIBLE_H

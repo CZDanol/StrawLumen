@@ -10,20 +10,26 @@
 #include "job/db.h"
 #include "gui/splashscreen.h"
 
-void parseBible(const QString &filename)
+bool parseBible(const QString &filename)
 {
 	QFile f(filename);
-	if(!f.open(QIODevice::ReadOnly))
-		return standardErrorDialog(QObject::tr("Nepodařilo se otevřít soubor překladu bible '%1'").arg(filename));
+	if(!f.open(QIODevice::ReadOnly)) {
+		standardErrorDialog(QObject::tr("Nepodařilo se otevřít soubor překladu Bible '%1'").arg(filename));
+		return false;
+	}
 
 	QXmlStreamReader xml(&f);
 
-	if(!xml.readNextStartElement() || xml.name() != "XMLBIBLE")
-		return standardErrorDialog(QObject::tr("Soubor '%1' není validní soubor překladu Bible (E00)").arg(filename));
+	if(!xml.readNextStartElement() || xml.name() != "XMLBIBLE") {
+		standardErrorDialog(QObject::tr("Soubor '%1' není validní soubor překladu Bible (E00)").arg(filename));
+		return false;
+	}
 
 	QString translationName, translationId;
+	QString defaultName = xml.attributes().value("biblename").toString();
 
 	db->beginTransaction();
+	bool isError = false;
 
 	while(xml.readNextStartElement()) {
 		// Parse the header
@@ -31,14 +37,44 @@ void parseBible(const QString &filename)
 			while(xml.readNextStartElement()) {
 				if(xml.name() == "title")
 					translationName = xml.readElementText();
-				else if(xml.name() == "identifier")
+
+				else if(xml.name() == "identifier") {
+					if(!translationId.isEmpty()) {
+						standardErrorDialog(QObject::tr("Neplatný formát souboru Bible '%1' (TRNEM)").arg(filename));
+						isError = true;
+						break;
+					}
+
 					translationId = xml.readElementText();
-				else
+					if(translationId.isEmpty()) {
+						standardErrorDialog(QObject::tr("Neplatný formát souboru Bible '%1' (TREM)").arg(filename));
+						isError = true;
+						break;
+					}
+
+					deleteBible(translationId);
+
+				} else
 					xml.skipCurrentElement();
 			}
 		}
+
 		// Parse the contents
 		else if(xml.name() == "BIBLEBOOK" || xml.name() == "biblebook") {
+			// There might not be the "INFORMATION" header
+			if(translationId.isEmpty()) {
+				translationId = defaultName;
+				translationName = defaultName;
+
+				deleteBible(translationId);
+
+				if(translationId.isEmpty()) {
+					standardErrorDialog(QObject::tr("Neplatný formát souboru Bible '%1' (TREMND)").arg(filename));
+					isError = true;
+					break;
+				}
+			}
+
 			const auto bookAttrs = xml.attributes();
 			const int bookNumId = bookAttrs.value("bnumber").toInt();
 			const QString bookName = bookAttrs.hasAttribute("bname") ? bookAttrs.value("bname").toString() : getBibleBook(bookNumId).name;
@@ -74,10 +110,13 @@ void parseBible(const QString &filename)
 			xml.skipCurrentElement();
 	}
 
-	db->insert("INSERT INTO bible_translations(translation_id, name) VALUES(?, ?)", {translationId, translationName});
+	if(!translationId.isEmpty())
+		db->insert("INSERT INTO bible_translations(translation_id, name) VALUES(?, ?)", {translationId, translationName});
 
 	db->commitTransaction();
 	emit db->sigBibleTranslationsChanged();
+
+	return !isError;
 }
 
 void checkBibleImport()
@@ -96,4 +135,12 @@ void checkBibleImport()
 			parseBible(dir.absoluteFilePath(importableBibles[i]));
 		}
 	});
+}
+
+void deleteBible(const QString &translationId)
+{
+	db->exec("DELETE FROM bible_verses_fulltext WHERE docid IN (SELECT rowid FROM bible_translation_verses WHERE translation_id = ?)", {translationId});
+	db->exec("DELETE FROM bible_translation_verses WHERE translation_id = ?", {translationId});
+	db->exec("DELETE FROM bible_translation_books WHERE translation_id = ?", {translationId});
+	db->exec("DELETE FROM bible_translations WHERE translation_id = ?", {translationId});
 }

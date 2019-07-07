@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Straw Lumen"
-#define MyAppVersion "1.2.0.0"
+#define MyAppVersion "1.2.0.3"
 #define MyAppPublisher "Straw Solutions"
 #define MyAppCopyright "(c) 2018 Straw Solutions, Daniel Èejchan"
 #define MyAppURL "http://straw-solutions.cz"
@@ -37,6 +37,7 @@ UninstallDisplayIcon="{app}\bin_{#PlatformId}\{#MyAppExeName}"
 SignTool=ComodoSign
 SignedUninstaller=yes
 ArchitecturesInstallIn64BitMode=x64
+DisableDirPage=no
 
 [Languages]
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"

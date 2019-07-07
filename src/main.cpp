@@ -82,9 +82,16 @@ void initApplication() {
 		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));
 
 	settings = new SettingsManager();
+	qApp->processEvents();
+
 	db = new DatabaseManager();
+	qApp->processEvents();
+
 	backgroundManager = new BackgroundManager();
+	qApp->processEvents();
+
 	asyncCache = new AsyncCacheManager();
+	qApp->processEvents();
 
 	activeXJobThread = new ActiveXJobThread();
 	presentationEngine_powerPoint = new PresentationEngine_PowerPoint();
@@ -110,6 +117,8 @@ void initApplication() {
 	qApp->processEvents();
 
 	QtWebEngine::initialize();
+
+	qApp->processEvents();
 }
 
 void uninitApplication() {

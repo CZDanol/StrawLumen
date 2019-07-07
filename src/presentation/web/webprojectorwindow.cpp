@@ -38,3 +38,11 @@ void WebProjectorWindow::setBlackScreen(bool set)
 {
 	webView_->setVisible(!set);
 }
+
+void WebProjectorWindow::changeEvent(QEvent *e)
+{
+	if(this->isActiveWindow())
+		mainWindow->activateWindow();
+
+	QMainWindow::changeEvent(e);
+}

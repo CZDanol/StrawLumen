@@ -103,8 +103,13 @@ void DatabaseManager::onSongChanged()
 
 QString collate(const QString &str)
 {
+	// \P{M} -- a character intended to be combined with another character (e.g. accents, umlauts, enclosing boxes, etc.)
 	static QRegularExpression removeRegex("\\p{M}+", QRegularExpression::UseUnicodePropertiesOption);
+
+	// Replace everything except letters and numbers with space
 	static QRegularExpression clearRegex("[^a-zA-Z0-9 ]+");
+
+	// Compact spaces
 	static QRegularExpression compactSpacesRegex("\\s+");
 
 	QString result = str.normalized(QString::NormalizationForm_KD);

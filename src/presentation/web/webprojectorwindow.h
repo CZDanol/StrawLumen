@@ -15,11 +15,14 @@ class WebProjectorWindow : public QMainWindow
 
 public:
 	explicit WebProjectorWindow(QWidget *parent = nullptr);
-	~WebProjectorWindow();
+	~WebProjectorWindow() override;
 
 public:
 	void setUrl(const QUrl &url);
 	void setBlackScreen(bool set);
+
+protected:
+	virtual void changeEvent(QEvent *e) override;
 
 private:
 	Ui::WebProjectorWindow *ui;

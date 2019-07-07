@@ -44,20 +44,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="btnInsert">
-       <property name="text">
-        <string>Vložit</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../res/resources.qrc">
-         <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="btnDone">
        <property name="text">
         <string>Hotovo</string>
@@ -68,6 +54,20 @@
        </property>
        <property name="autoDefault">
         <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnInsert">
+       <property name="text">
+        <string>Vložit</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../res/resources.qrc">
+         <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -83,9 +83,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>btnDone</tabstop>
- </tabstops>
  <resources>
   <include location="../../../res/resources.qrc"/>
  </resources>

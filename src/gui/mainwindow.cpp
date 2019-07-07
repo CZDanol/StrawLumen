@@ -7,8 +7,10 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QShortcut>
+#include <QMessageBox>
 
 #include "gui/settingsdialog.h"
+#include "gui/splashscreen.h"
 #include "presentation/native/nativeprojectorwindow.h"
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
@@ -248,4 +250,24 @@ void MainWindow::on_actionBulkEditSongs_triggered()
 {
 	bulkEditSongsDialog()->show();
 	bulkEditSongsDialog()->setSelectedSongs(selectedSongIds());
+}
+
+void MainWindow::on_actionImportBible_triggered()
+{
+	static const QIcon icon(":/icons/16/Holy Bible_16px.png");
+
+	QFileDialog dlg(this);
+	dlg.setFileMode(QFileDialog::ExistingFiles);
+	dlg.setAcceptMode(QFileDialog::AcceptOpen);
+	dlg.setNameFilter(tr("Zefania XML Bible (*.xml)"));
+	dlg.setWindowIcon(icon);
+	dlg.setWindowTitle(tr("Import překladu Bible"));
+
+	if(!dlg.exec())
+		return;
+
+	splashscreen->asyncAction(QObject::tr("Import překladu Bible"), false, [&]{
+		if(parseBible(dlg.selectedFiles().first()))
+			standardInfoDialog(tr("Překlad úspěšně importován."));
+	});
 }

@@ -37,13 +37,13 @@ BibleRef::BibleRef(const QString &str)
 {
 	static const QRegularExpression generalRegex(
 				"^\\s*"
-				"((?:\\p{L}|[0-9.])+ *)" // book
+				"((?:[0-9])*\\s*\\.?\\s*(?:\\p{L}|[ ])*)" // book
 				"\\s+"
 				"([0-9]+)" // chapter
 				"\\s*[:;,]\\s*" //separator
 				"("
 					"(?:[0-9]+(?:\\s*-\\s*[0-9]+)?)" // verse/verse range
-					"(?:\\s*,\\s*[0-9]+(?:\\s*-\\s*[0-9]+)?)*" // more verse ranges
+					"(?:\\s*,\\s*[0-9]+(?:\\s*[-–]\\s*[0-9]+)?)*" // more verse ranges
 				")"
 				",?"
 				"\\s*"
@@ -63,6 +63,8 @@ BibleRef::BibleRef(const QString &str)
 
 	bookId = -1;
 	QString bookName = collate(m.captured(1));
+	// Remove all spaces
+	bookName.remove(' ');
 
 	for(const BibleBook &book : bibleBookList()) {
 		if(book.ids.contains(bookName)) {

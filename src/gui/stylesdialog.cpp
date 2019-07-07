@@ -207,6 +207,7 @@ void StylesDialog::updateManipulationButtonsEnabled()
 {
 	const bool enabled = currentStyleId_ != -1 && !currentStyleIsInternal_ && !isEditMode_;
 
+	ui->wgtInternalStyleWarning->setVisible(currentStyleIsInternal_);
 	ui->btnEdit->setEnabled(enabled);
 	ui->actionDeleteStyle->setEnabled(enabled);
 }

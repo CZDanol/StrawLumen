@@ -59,7 +59,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextBrowser" name="tbChangelog"/>
+        <widget class="QTextBrowser" name="tbChangelog">
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QProgressBar" name="pbProgress">

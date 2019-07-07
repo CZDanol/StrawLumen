@@ -1,19 +1,44 @@
 Aktuálně
+- preview aktuálního a následujícího snímku
+- multi-screen vlastní snímek
+- mít program jako standalone soubor, který obsahuje všechny resourcy
+- při Ctrl+Z v editaci písně to skáče dolů
+- možnost převést OpenSong akordy to chordpro přímo v editoru
+- temný mód
+- možnost doformátovat text z bible a vlastní text
+- slide preview on hover (+ complete text)
+- nastavit styl jako výchozí z dialogu stylů (a zvýraznit výchozí styl)
 - hromadný export písní (může formátem zadat export PDF do samostatných složek, lumenovských databází do samostatných složek)
 - option v menu, aby se náhodně nastavovaly pozadí u písní v programu
 - translation tag, pro překlady pod textem (menším písmem?), další tagy pro další sémantické věci
 	- text, který se bude zobrazovat jen ve zpěvníku/v prezentaci/jako komentář
 - option na přidat logo lumenu do PDFka?
 - promítání hodin a odpočtů
-- playlist u videí?
 - výběry písniček (něco jako tagy, ale seřazeně)
+- komentáře přímo do textu
+- typ prezentace, kterej nic nepromítá
+- možnost měnit velikost tabů program/píseň
+- black in-out u prezentací - aby to mělo ikonu černé obrazovky
+- opensong export/import - písně bez tagů v kořenové složce
+- u webovky blbne zadávání adresy (občas se to neaktualizuje)
+- průvodce u veršů - při otevření nastavit na vybraný řádek
+- možnost přejmenovat štítek z menu
+- správa a import překladů bible
+- slovenské bible (lze najít např. na https://www.ph4.org/b4_mobi.php?q=zefania)
+- web interface pro ovládání
+- výchozí styly pro různé typy prezentací
+- upravit píseň do kontext menu v programu
+- možnost náhodných pozadí
+- větší minimální výška tabu programu
+- možnost zakázat postup snímků (ctrl + click?) - změní se jenom náhled
+- asistent pro převod písní z PowerPointu
+- video na pozadí
 
 - možnost smazat štítek z menu deletem
 
-- autocomplete pro verše
+- autocomplete + highlighter pro verše
 
 
-Do budoucna
 - audiovizualizace jako styl pozadí
 - detekovat natočení fotky z metadat
 - promítání odpočtu

@@ -133,18 +133,15 @@ void SimpleUpdater::on_btnDownload_clicked()
 	if(!downloadFile_->open())
 		return standardErrorDialog(tr("Nepodařilo se připravit místo pro stahování."));
 
-	const QJsonObject request {
-		{"action", "downloadSoftware"},
-		{"productKey", PRODUCT_IDSTR},
-		{"platform", PLATFORM_ID}
-	};
+	QUrl url = StrawApi::apiUrl;
+	url.setQuery(QString("action=downloadSoftware&productKey=%1&platform=%2").arg(PRODUCT_IDSTR, PLATFORM_ID));
 
-	QNetworkRequest req(StrawApi::apiUrl);
+	QNetworkRequest req(url);
 	req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	req.setHeader(QNetworkRequest::UserAgentHeader, "StrawSolutionsAPI/1.0");
 
-	networkReply_.reset(networkAccessManager_.post(req, QJsonDocument(request).toJson(QJsonDocument::Compact)));
+	networkReply_.reset(networkAccessManager_.get(req));
 	connect(networkReply_.data(),SIGNAL(finished()),this,SLOT(onDownloadFinished()));
 	connect(networkReply_.data(),SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(onDownloadProgress(qint64,qint64)));
 	connect(networkReply_.data(),SIGNAL(readyRead()),this,SLOT(onDownloadReadyRead()));

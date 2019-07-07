@@ -199,7 +199,7 @@
         <string>Hledat i v textech písní</string>
        </property>
        <property name="text">
-        <string>V textech</string>
+        <string>I v textech</string>
        </property>
        <property name="icon">
         <iconset resource="../../res/resources.qrc">
