@@ -40,6 +40,10 @@ QWidget[quickEditStyle="true"] QDateEdit[readOnly="true"] {
 	background: transparent;
 }
 
+QMenu::separator {
+  background: palette(mid);
+}
+
 QListView QLineEdit {
   border: none;
 	margin: 0;

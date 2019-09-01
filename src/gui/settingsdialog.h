@@ -8,6 +8,7 @@
 // settingName, uiControl
 #define SETTINGS_FACTORY(F)\
 	F(darkMode, cbDarkMode) \
+	F(defaultBibleTranslation, cmbDefaultBibleTranslation) \
 	\
 	F(display, dsDisplay) \
 	\
@@ -32,6 +33,9 @@ class SettingsDialog : public QDialog
 public:
 	explicit SettingsDialog(QWidget *parent = nullptr);
 	~SettingsDialog();
+
+private slots:
+	void updateBibleTranslationList();
 
 private slots:
 	void onDisplayChanged(QScreen *current);

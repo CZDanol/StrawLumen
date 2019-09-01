@@ -40,16 +40,26 @@ QRect SettingsManager::projectionDisplayGeometry() const
 
 QString SettingsManager::defaultBibleTranslation() const
 {
-	return "ČEP";
+	return setting_defaultBibleTranslation().toString();
 }
 
 SETTING_SAVE(QComboBox)
 {
-	settings->setValue(name, widget->currentIndex());
+	settings->setValue(name, widget->currentData());
 }
 SETTING_LOAD(QComboBox)
 {
-	widget->setCurrentIndex(settings->value(name, widget->currentIndex()).toInt());
+	const QVariant data = settings->value(name, widget->currentIndex());
+	int ix = widget->currentIndex();
+
+	for(int i = 0; i < widget->count(); i++) {
+		if(widget->itemData(i) == data) {
+			ix = i;
+			break;
+		}
+	}
+
+	widget->setCurrentIndex(ix);
 }
 
 SETTING_SAVE(QSpinBox)

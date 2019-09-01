@@ -1,8 +1,8 @@
 #ifndef DBMIGRATION_H
 #define DBMIGRATION_H
 
-#define DB_VERSION_HISTORY_FACTORY(F) F(1) F(2) F(3) F(4)
-#define CURRENT_DB_VERSION 5
+#define DB_VERSION_HISTORY_FACTORY(F) F(1) F(2) F(3) F(4) F(5)
+#define CURRENT_DB_VERSION 6
 
 class DatabaseManager;
 

@@ -155,6 +155,7 @@ void setupStylesheet(bool darkMode) {
 		p.setColor(QPalette::ButtonText, Qt::white);
 		p.setColor(QPalette::BrightText, Qt::red);
 		p.setColor(QPalette::Link, themeCl);
+		p.setColor(QPalette::LinkVisited, themeCl);
 
 		p.setColor(QPalette::Highlight, QColor("#f5734c"));
 		p.setColor(QPalette::HighlightedText, Qt::black);

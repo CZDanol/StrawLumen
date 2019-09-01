@@ -53,8 +53,7 @@ private slots:
 	void on_actionAbout_triggered();
 	void on_actionSendFeedback_triggered();
 	void on_actionBulkEditSongs_triggered();
-
-	void on_actionImportBible_triggered();
+	void on_actionBibleMgmt_triggered();
 
 private:
 	Ui::MainWindow *ui;

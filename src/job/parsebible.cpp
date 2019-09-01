@@ -10,6 +10,8 @@
 #include "job/db.h"
 #include "gui/splashscreen.h"
 
+static QStringList bibleImportList;
+
 bool parseBible(const QString &filename)
 {
 	QFile f(filename);
@@ -121,18 +123,18 @@ bool parseBible(const QString &filename)
 
 void checkBibleImport()
 {
-	if(db->selectValue("SELECT COUNT(*) FROM bible_translations").toInt() > 0)
-		return;
-
 	const QDir dir = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../bible");
-	QStringList importableBibles = dir.entryList({"*.xml"}, QDir::Files);
-	if(importableBibles.empty())
+
+	if(db->selectValue("SELECT COUNT(*) FROM bible_translations").toInt() == 0)
+		bibleImportList = dir.entryList({"*.xml"}, QDir::Files);
+
+	if(bibleImportList.empty())
 		return;
 
 	splashscreen->asyncAction(QObject::tr("Import překladů Bible"), false, [&]{
-		for(int i = 0; i < importableBibles.size(); i++) {
-			splashscreen->setProgress(i,importableBibles.size());
-			parseBible(dir.absoluteFilePath(importableBibles[i]));
+		for(int i = 0; i < bibleImportList.size(); i++) {
+			splashscreen->setProgress(i,bibleImportList.size());
+			parseBible(dir.absoluteFilePath(bibleImportList[i]));
 		}
 	});
 }
@@ -143,4 +145,9 @@ void deleteBible(const QString &translationId)
 	db->exec("DELETE FROM bible_translation_verses WHERE translation_id = ?", {translationId});
 	db->exec("DELETE FROM bible_translation_books WHERE translation_id = ?", {translationId});
 	db->exec("DELETE FROM bible_translations WHERE translation_id = ?", {translationId});
+}
+
+void forceImportBibles(const QStringList &filenames)
+{
+	bibleImportList += filenames;
 }

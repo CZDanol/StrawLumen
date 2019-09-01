@@ -3,6 +3,7 @@
 
 #include <QLineEdit>
 #include <QCheckBox>
+#include <QComboBox>
 
 #include "wgt/displayselectionwidget.h"
 #include "wgt/styleselectionwidget.h"
@@ -15,6 +16,7 @@ inline decltype(auto) getWidgetValue(const Widget *wgt) { Q_UNUSED(wgt); throw 0
 
 WIDGET_VALUE_GETTER(QLineEdit, text)
 WIDGET_VALUE_GETTER(QCheckBox, isChecked)
+WIDGET_VALUE_GETTER(QComboBox, currentData)
 
 WIDGET_VALUE_GETTER(DisplaySelectionWidget, selectedScreen)
 WIDGET_VALUE_GETTER(StyleSelectionWidget, presentationStyle)

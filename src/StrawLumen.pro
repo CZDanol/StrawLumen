@@ -48,6 +48,7 @@ DISTFILES += \
     ../res/stylesheet_dark.css
 
 SOURCES += main.cpp \
+    gui/bibletranslationmgmtdialog.cpp \
     gui/mainwindow.cpp \
     presentation/presentation.cpp \
     util/jobthread.cpp \
@@ -69,6 +70,7 @@ SOURCES += main.cpp \
     presentation/presentationpropertieswidget.cpp \
     presentation/powerpoint/presentationpropertieswidget_powerpoint.cpp \
     gui/settingsdialog.cpp \
+    util/updatesdisabler.cpp \
     wgt/displayselectionwidget.cpp \
     presentation/native/presentationengine_native.cpp \
     presentation/native/presentation_blackscreen.cpp \
@@ -153,6 +155,7 @@ SOURCES += main.cpp \
     presentation/web/presentationpropertieswidget_web.cpp
 
 FORMS += \
+    gui/bibletranslationmgmtdialog.ui \
     gui/mainwindow.ui \
     gui/splashscreen.ui \
     gui/mainwindow_presentationmode.ui \
@@ -196,6 +199,7 @@ FORMS += \
     presentation/web/presentationpropertieswidget_web.ui
 
 HEADERS += \
+    gui/bibletranslationmgmtdialog.h \
     gui/mainwindow.h \
     presentation/presentation.h \
     util/jobthread.h \
@@ -217,6 +221,7 @@ HEADERS += \
     presentation/presentationpropertieswidget.h \
     presentation/powerpoint/presentationpropertieswidget_powerpoint.h \
     gui/settingsdialog.h \
+    util/updatesdisabler.h \
     wgt/displayselectionwidget.h \
     presentation/native/presentationengine_native.h \
     presentation/native/presentation_blackscreen.h \

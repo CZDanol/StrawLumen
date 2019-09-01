@@ -1,6 +1,8 @@
 #include "dbmigration.h"
 #include "db.h"
 #include "util/macroutils.h"
+#include "gui/splashscreen.h"
+#include "job/parsebible.h"
 
 #define DB_MIGRATION_PROCEDURE(fromVersion, toVersion) void migrateDbFrom_v ## fromVersion()
 
@@ -214,4 +216,9 @@ DB_MIGRATION_PROCEDURE(4, 5)
 
 	db->exec("CREATE INDEX i_bible_translation_books ON bible_translation_books (translation_id,book_id)");
 	db->exec("CREATE INDEX i_bible_translation_verses ON bible_translation_verses (translation_id,book_id,chapter,verse)");
+}
+
+DB_MIGRATION_PROCEDURE(5, 6)
+{
+	forceImportBibles({"SK_RSB.xml", "ENG_KJV2000.xml"});
 }

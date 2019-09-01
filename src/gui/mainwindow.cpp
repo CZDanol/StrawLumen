@@ -17,6 +17,7 @@
 #include "gui/mainwindow_songsmode.h"
 #include "gui/aboutdialog.h"
 #include "gui/bulkeditsongsdialog.h"
+#include "gui/bibletranslationmgmtdialog.h"
 #include "importexport/documentgenerationdialog.h"
 #include "importexport/lumenimportdialog.h"
 #include "importexport/opensongimportdialog.h"
@@ -252,22 +253,7 @@ void MainWindow::on_actionBulkEditSongs_triggered()
 	bulkEditSongsDialog()->setSelectedSongs(selectedSongIds());
 }
 
-void MainWindow::on_actionImportBible_triggered()
+void MainWindow::on_actionBibleMgmt_triggered()
 {
-	static const QIcon icon(":/icons/16/Holy Bible_16px.png");
-
-	QFileDialog dlg(this);
-	dlg.setFileMode(QFileDialog::ExistingFiles);
-	dlg.setAcceptMode(QFileDialog::AcceptOpen);
-	dlg.setNameFilter(tr("Zefania XML Bible (*.xml)"));
-	dlg.setWindowIcon(icon);
-	dlg.setWindowTitle(tr("Import překladu Bible"));
-
-	if(!dlg.exec())
-		return;
-
-	splashscreen->asyncAction(QObject::tr("Import překladu Bible"), false, [&]{
-		if(parseBible(dlg.selectedFiles().first()))
-			standardInfoDialog(tr("Překlad úspěšně importován."));
-	});
+	bibleTranslationMgmtDialog()->show();
 }

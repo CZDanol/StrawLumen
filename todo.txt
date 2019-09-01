@@ -1,11 +1,9 @@
 Aktuálně
 - escape zavře druhé okno (zkratky do okna promítání) + šipka vlevo/vpravo/presenter
 - preview aktuálního a následujícího snímku
-- multi-screen vlastní snímek
 - mít program jako standalone soubor, který obsahuje všechny resourcy
 - při Ctrl+Z v editaci písně to skáče dolů
 - možnost převést OpenSong akordy to chordpro přímo v editoru
-- možnost doformátovat text z bible a vlastní text
 - slide preview on hover (+ complete text)
 - nastavit styl jako výchozí z dialogu stylů (a zvýraznit výchozí styl)
 - hromadný export písní (může formátem zadat export PDF do samostatných složek, lumenovských databází do samostatných složek)
@@ -29,7 +27,6 @@ Aktuálně
 - výchozí styly pro různé typy prezentací
 - upravit píseň do kontext menu v programu
 - možnost náhodných pozadí
-- větší minimální výška tabu programu
 - možnost zakázat postup snímků (ctrl + click?) - změní se jenom náhled
 - asistent pro převod písní z PowerPointu
 - video na pozadí

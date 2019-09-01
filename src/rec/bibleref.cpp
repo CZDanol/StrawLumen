@@ -30,7 +30,7 @@ BibleRef::BibleRef(QString translationId, int bookId, int chapter, const QVector
 
 	verses_.append(verses);
 	isValid_ = !verses_.isEmpty();
-	qSort(verses_);
+	std::sort(verses_.begin(), verses_.end());
 }
 
 BibleRef::BibleRef(const QString &str)
