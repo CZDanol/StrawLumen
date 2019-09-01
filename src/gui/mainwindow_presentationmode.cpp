@@ -344,10 +344,10 @@ void MainWindow_PresentationMode::onPlaylistModelReset()
 
 void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &point)
 {
-	if(!ui->tvPlaylist->selectionModel()->selectedRows().count())
-		return;
-
-	playlistContextMenu_.popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
+	if(ui->tvPlaylist->selectionModel()->selectedRows().count())
+		playlistContextMenu_.popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
+	else
+		addPresentationMenu_.popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
 }
 
 void MainWindow_PresentationMode::onSongListContextMenuRequested(const QPoint &point)

@@ -142,7 +142,7 @@ void setupStylesheet(bool darkMode) {
 		const QColor themeCl("#CA3406");
 		const QColor midCl("#333333");
 		const QColor darkCl("#151515");
-		const QColor veryDarkCl("#050505");
+		const QColor veryDarkCl("#080808");
 
 		p.setColor(QPalette::Window, darkCl);
 		p.setColor(QPalette::WindowText, Qt::white);
@@ -156,8 +156,8 @@ void setupStylesheet(bool darkMode) {
 		p.setColor(QPalette::BrightText, Qt::red);
 		p.setColor(QPalette::Link, themeCl);
 
-		p.setColor(QPalette::Highlight, themeCl);
-		p.setColor(QPalette::HighlightedText, Qt::white);
+		p.setColor(QPalette::Highlight, QColor("#f5734c"));
+		p.setColor(QPalette::HighlightedText, Qt::black);
 
 		p.setColor(QPalette::Dark, veryDarkCl);
 		p.setColor(QPalette::Mid, darkCl);
@@ -165,11 +165,14 @@ void setupStylesheet(bool darkMode) {
 		p.setColor(QPalette::Light, midCl);
 	}
 	else {
-		p.setColor(QPalette::Light, QColor("#ddd") );
+		p.setColor(QPalette::Highlight, QColor("#90dff9"));
+		p.setColor(QPalette::HighlightedText, Qt::black);
+
+		p.setColor(QPalette::Light, QColor("#ddd"));
 	}
 	qApp->setPalette(p);
 
-	QFile f( ":/stylesheet.css" );
+	QFile f(":/stylesheet.css");
 	f.open( QFile::ReadOnly );
 	qApp->setStyleSheet(QString(f.readAll()));
 }

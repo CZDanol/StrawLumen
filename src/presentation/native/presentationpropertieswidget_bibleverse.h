@@ -32,6 +32,8 @@ private slots:
 	void on_btnWizard_clicked();
 	void on_verses_textChanged();
 
+	void on_btnMorphIntoCustomSlide_clicked();
+
 private:
 	Ui::PresentationPropertiesWidget_BibleVerse *ui;
 	QSharedPointer<Presentation_BibleVerse> presentation_;

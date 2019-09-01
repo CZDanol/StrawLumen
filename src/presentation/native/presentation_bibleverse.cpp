@@ -4,6 +4,7 @@
 #include "job/backgroundmanager.h"
 #include "rec/bibleref.h"
 #include "presentation/native/nativeprojectorwindow.h"
+#include "presentation/native/presentation_customslide.h"
 #include "presentationpropertieswidget_bibleverse.h"
 
 QSharedPointer<Presentation_BibleVerse> Presentation_BibleVerse::create()
@@ -88,6 +89,18 @@ QString Presentation_BibleVerse::slideDescription(int i) const
 QString Presentation_BibleVerse::classIdentifier() const
 {
 	return "native.bibleVerse";
+}
+
+QSharedPointer<Presentation_CustomSlide> Presentation_BibleVerse::toCustomSlide() const
+{
+	QSharedPointer<Presentation_CustomSlide> result = Presentation_CustomSlide::create();
+
+	QString text;
+	for(int i = 0; i < slideCount(); i++)
+		text += QString("{%1}\n%2\n\n").arg(slideNames_[i], slides_[i]);
+
+	result->setText(text);
+	return result;
 }
 
 Presentation_BibleVerse::Presentation_BibleVerse()

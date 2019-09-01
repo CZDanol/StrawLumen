@@ -17,6 +17,11 @@ QTextEdit[readOnly="true"], QPlainTextEdit[readOnly="true"] {
   color: gray;
 }*/
 
+QPushButton:checked {
+background: palette(highlight);
+color: palette(highlighted-text)
+}
+
 QTextEdit, QPlainTextEdit, QDateEdit, QLineEdit {
   padding: 3px;
 	background: palette(base);

@@ -77,6 +77,7 @@ private:
 private slots:
 	void onChanged();
 	void onPlaylistRenamed(qlonglong id, const QString &newName);
+	void onPresentationMorphedInto(const QSharedPointer<Presentation> &from, const QSharedPointer<Presentation> &to);
 
 private:
 	QVector<QSharedPointer<Presentation> > items_;

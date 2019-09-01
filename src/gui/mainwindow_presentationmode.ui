@@ -546,7 +546,7 @@ PresentationPropertiesWidget
                 <x>0</x>
                 <y>0</y>
                 <width>302</width>
-                <height>89</height>
+                <height>84</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9"/>
@@ -679,6 +679,9 @@ PresentationPropertiesWidget
    </property>
    <property name="text">
     <string>Vlastní snímek</string>
+   </property>
+   <property name="toolTip">
+    <string>Vlastní text</string>
    </property>
   </action>
   <action name="actionEditPresentation">

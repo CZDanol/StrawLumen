@@ -5,7 +5,6 @@ Aktuálně
 - mít program jako standalone soubor, který obsahuje všechny resourcy
 - při Ctrl+Z v editaci písně to skáče dolů
 - možnost převést OpenSong akordy to chordpro přímo v editoru
-- temný mód
 - možnost doformátovat text z bible a vlastní text
 - slide preview on hover (+ complete text)
 - nastavit styl jako výchozí z dialogu stylů (a zvýraznit výchozí styl)

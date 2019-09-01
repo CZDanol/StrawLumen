@@ -27,17 +27,20 @@ public:
 	QWidget *createPropertiesWidget(QWidget *parent) override;
 
 	int slideCount() const override;
-	QString slideDescription(int i) const override;
-	QPixmap slideIdentificationIcon(int i) const override;
+	QString slideDescription(int slideId) const override;
+	QString slideIdentification(int slideId) const override;
 
 public:
 	QString classIdentifier() const override;
+
+public:
+	void setText(const QString &set);
 
 private:
 	Presentation_CustomSlide();
 
 private slots:
-	void updateDescription();
+	void updateSlides();
 
 private slots:
 	void onStyleChanged();
@@ -46,8 +49,9 @@ private slots:
 
 private:
 	PresentationStyle style_;
-	QString title_, text_;
-	QString description_;
+	QString text_;
+	QStringList slides_, titles_, descriptions_;
+	bool wordWrap_ = true;
 
 };
 

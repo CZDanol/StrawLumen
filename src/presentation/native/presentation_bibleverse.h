@@ -5,6 +5,8 @@
 
 #include "rec/presentationstyle.h"
 
+class Presentation_CustomSlide;
+
 class Presentation_BibleVerse : public Presentation_NativePresentation
 {
 	Q_OBJECT
@@ -32,6 +34,9 @@ public:
 
 public:
 	QString classIdentifier() const override;
+
+public:
+	QSharedPointer<Presentation_CustomSlide> toCustomSlide() const;
 
 private:
 	Presentation_BibleVerse();

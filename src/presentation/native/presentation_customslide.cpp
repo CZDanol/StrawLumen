@@ -10,6 +10,8 @@ QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::create()
 	QSharedPointer<Presentation_CustomSlide> result(new Presentation_CustomSlide);
 
 	result->style_ = settings->setting_song_defaultStyle();
+	result->text_ = tr("{Snímek 1}\nText\n\n{Snímek 2}\nText");
+	result->updateSlides();
 
 	result->weakPtr_ = result;
 	return result;
@@ -22,7 +24,7 @@ QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::createFromJSO
 
 	{
 		PresentationStyle style;
-		style.loadFromDb((qlonglong) json["styleId"].toDouble());
+		style.loadFromDb(static_cast<qlonglong>(json["styleId"].toDouble()));
 		if(!json["background"].isNull()) {
 			PresentationBackground background;
 			background.loadFromJSON(json["background"]);
@@ -32,9 +34,9 @@ QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::createFromJSO
 		result->style_ = style;
 	}
 
-	result->text_ = json["text"].toString();
-	result->title_ = json["title"].toString();
-	result->updateDescription();
+	result->text_ = json["text"].toString();	
+	result->wordWrap_ = json["wordWrap"].toBool();
+	result->updateSlides();
 
 	result->weakPtr_ = result;
 	return result;
@@ -45,8 +47,8 @@ QJsonObject Presentation_CustomSlide::toJSON() const
 	return QJsonObject{
 		{"styleId", style_.styleId()},
 		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()},
-		{"title", title_},
-		{"text", text_}
+		{"text", text_},
+		{"wordWrap", wordWrap_}
 	};
 }
 
@@ -54,12 +56,12 @@ void Presentation_CustomSlide::drawSlide(QPainter &p, int slideId, const QRect &
 {
 	Q_UNUSED(slideId);
 
-	style_.drawSlide(p, rect, text_, title_);
+	style_.drawSlide(p, rect, slides_[slideId], titles_[slideId], wordWrap_ ? PresentationStyle::fWordWrapContent : 0);
 }
 
 QString Presentation_CustomSlide::identification() const
 {
-	return title_.isEmpty() ? tr("Vlastní snímek") : title_;
+	return tr("Vlastní text");
 }
 
 QPixmap Presentation_CustomSlide::icon() const
@@ -75,23 +77,29 @@ QWidget *Presentation_CustomSlide::createPropertiesWidget(QWidget *parent)
 
 int Presentation_CustomSlide::slideCount() const
 {
-	return 1;
+	return slides_.length();
 }
 
-QString Presentation_CustomSlide::slideDescription(int) const
+QString Presentation_CustomSlide::slideDescription(int slideId) const
 {
-	return description_;
+	return descriptions_[slideId];
 }
 
-QPixmap Presentation_CustomSlide::slideIdentificationIcon(int) const
+QString Presentation_CustomSlide::slideIdentification(int slideId) const
 {
-	static QPixmap icon(":/icons/16/Text Box_16px.png");
-	return icon;
+	return titles_[slideId];
 }
 
 QString Presentation_CustomSlide::classIdentifier() const
 {
 	return "native.customSlide";
+}
+
+void Presentation_CustomSlide::setText(const QString &set)
+{
+	text_ = set;
+	updateSlides();
+	emit sigItemChanged(this);
 }
 
 Presentation_CustomSlide::Presentation_CustomSlide()
@@ -102,12 +110,41 @@ Presentation_CustomSlide::Presentation_CustomSlide()
 	connect(&style_, &PresentationStyle::sigNeedsRepaint, this, &Presentation_CustomSlide::onStyleNeedsRepaint);
 }
 
-void Presentation_CustomSlide::updateDescription()
+void Presentation_CustomSlide::updateSlides()
 {
 	static const QRegularExpression descRegex("\\s+");
+	static const QRegularExpression sectionRegex("^\\{\\s*(.*?)\\s*\\}\\s*$", QRegularExpression::MultilineOption);
 
-	description_ = text_;
-	description_.replace(descRegex, " ");
+	slides_.clear();
+	descriptions_.clear();
+	titles_.clear();
+
+	titles_ += nullptr;
+
+	int lastPos = 0;
+	auto f = [&] (int pos) {
+		QString text = text_.mid(lastPos, pos - lastPos).trimmed();
+		slides_ += text;
+
+		text.replace(descRegex, " ");
+		descriptions_ += text;
+	};
+
+	auto i = sectionRegex.globalMatch(text_);
+	while(i.hasNext()) {
+		const auto m = i.next();
+		f(m.capturedStart(0));
+		titles_ += m.captured(1);
+		lastPos = m.capturedEnd(0);
+	}
+
+	f(text_.length());
+
+	if(slides_.first().isEmpty() && titles_.first().isEmpty()) {
+		slides_.removeFirst();
+		titles_.removeFirst();
+		descriptions_.removeFirst();
+	}
 }
 
 void Presentation_CustomSlide::onStyleChanged()

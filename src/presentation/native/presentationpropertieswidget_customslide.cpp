@@ -33,14 +33,13 @@ void PresentationPropertiesWidget_CustomSlide::fillData()
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
 
-	ui->lnTitle->setText(presentation_->title_);
 	ui->teText->setPlainText(presentation_->text_);
 }
 
 void PresentationPropertiesWidget_CustomSlide::onUpdateTimerTimeout()
 {
 	presentation_->text_ = ui->teText->toPlainText().trimmed();
-	presentation_->updateDescription();
+	presentation_->updateSlides();
 	emit presentation_->sigSlidesChanged();
 }
 
@@ -54,12 +53,6 @@ void PresentationPropertiesWidget_CustomSlide::on_wgtStyle_sigPresentationStyleC
 void PresentationPropertiesWidget_CustomSlide::on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &background)
 {
 	presentation_->style_.setBackground(background);
-}
-
-void PresentationPropertiesWidget_CustomSlide::on_lnTitle_editingFinished()
-{
-	presentation_->title_ = ui->lnTitle->text().trimmed();
-	emit presentation_->sigItemChanged(presentation_.data());
 }
 
 void PresentationPropertiesWidget_CustomSlide::on_teText_textChanged()

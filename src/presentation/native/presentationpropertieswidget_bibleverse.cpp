@@ -3,6 +3,7 @@
 
 #include "presentation_bibleverse.h"
 #include "presentation_bibleverse_wizard.h"
+#include "presentation/native/presentation_customslide.h"
 
 PresentationPropertiesWidget_BibleVerse::PresentationPropertiesWidget_BibleVerse(const QSharedPointer<Presentation_BibleVerse> &presentation, QWidget *parent) :
 	QWidget(parent),
@@ -62,4 +63,9 @@ void PresentationPropertiesWidget_BibleVerse::on_btnWizard_clicked()
 void PresentationPropertiesWidget_BibleVerse::on_verses_textChanged()
 {
 	textUpdateTimer_.start();
+}
+
+void PresentationPropertiesWidget_BibleVerse::on_btnMorphIntoCustomSlide_clicked()
+{
+	emit presentation_->sigMorphedInto(presentation_, presentation_->toCustomSlide());
 }

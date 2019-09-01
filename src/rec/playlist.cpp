@@ -36,6 +36,7 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
 	connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
 	connect(item.data(), SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
+	connect(item.data(), &Presentation::sigMorphedInto, this, &Playlist::onPresentationMorphedInto);
 
 	emitItemsChanged();
 	emit sigItemsAdded();
@@ -58,6 +59,7 @@ void Playlist::addItems(const QVector<QSharedPointer<Presentation> > &items)
 		connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
 		connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
 		connect(item.data(), SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
+		connect(item.data(), &Presentation::sigMorphedInto, this, &Playlist::onPresentationMorphedInto);
 	}
 
 	emitItemsChanged();
@@ -324,4 +326,14 @@ void Playlist::onPlaylistRenamed(qlonglong id, const QString &newName)
 		dbName = newName;
 		emit sigNameChanged();
 	}
+}
+
+void Playlist::onPresentationMorphedInto(const QSharedPointer<Presentation> &from, const QSharedPointer<Presentation> &to)
+{
+	int ix = items_.indexOf(from);
+	if(ix == -1)
+		return;
+
+	items_[ix] = to;
+	emitItemsChanged();
 }

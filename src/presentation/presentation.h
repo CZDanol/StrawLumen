@@ -31,12 +31,14 @@ signals:
 	/// Is emitted whenever ANYTHING about the presentation is changed (for saving tracking purposes)
 	void sigChanged();
 
+	void sigMorphedInto(const QSharedPointer<Presentation> &from, const QSharedPointer<Presentation> &to);
+
 public:
 	virtual int slideCount() const = 0;
 
-	virtual QString slideIdentification(int) const;
-	virtual QPixmap slideIdentificationIcon(int) const;
-	virtual QString slideDescription(int) const;
+	virtual QString slideIdentification(int slideId) const;
+	virtual QPixmap slideIdentificationIcon(int slideId) const;
+	virtual QString slideDescription(int slideId) const;
 
 	Playlist *playlist() const;
 	int positionInPlaylist() const;
