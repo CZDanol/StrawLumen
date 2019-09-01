@@ -7,6 +7,7 @@
 #include <QStandardItemModel>
 #include <QCompleter>
 #include <QTreeWidgetItem>
+#include <QTimer>
 
 #include "rec/bibleref.h"
 
@@ -34,6 +35,7 @@ private slots:
 	void requeryBooks();
 	void requeryChapters();
 	void requeryVerses();
+	void updateSearch();
 
 private slots:
 	void onBooksModelCurrentIndexChanged();
@@ -42,7 +44,6 @@ private slots:
 
 private slots:
 	void on_cmbTranslation_currentIndexChanged(int index);
-	void on_lnSearch_editingFinished();
 	void on_lstVerses_customContextMenuRequested(const QPoint &pos);
 	void on_actionGoToChapter_triggered();
 	void on_lnCode_textChanged(const QString &arg1);
@@ -62,6 +63,7 @@ private:
 	QHash<QString,int> translationRows_;
 
 private:
+	QTimer searchTimer_;
 	QString currentTranslationId_;
 	int currentBookId_ = -1, currentChapterUID_ = -1;
 	bool isCurrentChapterSelected_ = false;

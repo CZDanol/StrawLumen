@@ -26,7 +26,13 @@ BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	searchTimer_.setSingleShot(true);
+	searchTimer_.setInterval(2000);
+
 	connect(db, &DatabaseManager::sigBibleTranslationsChanged, this, &BibleVerseSelectionWidget::requeryTranslations);
+	connect(ui->lnSearch, &QLineEdit::editingFinished, this, &BibleVerseSelectionWidget::updateSearch);
+	connect(ui->lnSearch, &QLineEdit::textChanged, &searchTimer_, QOverload<>::of(&QTimer::start));
+	connect(&searchTimer_, &QTimer::timeout, this, &BibleVerseSelectionWidget::updateSearch);
 
 	// Models setup
 	{
@@ -328,6 +334,18 @@ void BibleVerseSelectionWidget::requeryVerses()
 	blockSelectionChangeEvents_--;
 }
 
+void BibleVerseSelectionWidget::updateSearch()
+{
+	const QString prevSearchQuery = searchQuery_;
+	searchQuery_ = collateFulltextQuery(ui->lnSearch->text());
+	if(searchQuery_ == prevSearchQuery)
+		return;
+
+	isSearch_ = !searchQuery_.isEmpty();
+	requeryBooks();
+	searchTimer_.stop();
+}
+
 void BibleVerseSelectionWidget::onBooksModelCurrentIndexChanged()
 {
 	if(blockSelectionChangeEvents_)
@@ -386,17 +404,6 @@ void BibleVerseSelectionWidget::on_cmbTranslation_currentIndexChanged(int)
 	blockSelectionChangeEvents_++;
 	requeryBooks();
 	blockSelectionChangeEvents_--;
-}
-
-void BibleVerseSelectionWidget::on_lnSearch_editingFinished()
-{
-	const QString prevSearchQuery = searchQuery_;
-	searchQuery_ = collateFulltextQuery(ui->lnSearch->text());
-	if(searchQuery_ == prevSearchQuery)
-		return;
-
-	isSearch_ = !searchQuery_.isEmpty();
-	requeryBooks();
 }
 
 void BibleVerseSelectionWidget::on_lstVerses_customContextMenuRequested(const QPoint &pos)
