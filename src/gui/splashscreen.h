@@ -17,8 +17,8 @@ class Splashscreen : public QDialog
 	Q_OBJECT
 
 public:
-	explicit Splashscreen(QWidget *parent = 0);
-	~Splashscreen();
+	explicit Splashscreen(QWidget *parent = nullptr);
+	virtual ~Splashscreen() override;
 
 public:
 	void show(const QString &splashMessage, bool enableStorno);

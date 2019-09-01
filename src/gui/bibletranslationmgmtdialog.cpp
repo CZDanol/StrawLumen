@@ -96,4 +96,11 @@ void BibleTranslationMgmtDialog::on_btnImport_clicked()
 
 		standardInfoDialog(tr("Překlady úspěšně importovány."));
 	});
+
+	emit db->sigBibleTranslationsChanged();
+}
+
+void BibleTranslationMgmtDialog::on_btnClose_clicked()
+{
+	close();
 }

@@ -7,11 +7,11 @@
 QT       += core gui printsupport multimedia multimediawidgets widgets axcontainer sql xml webenginewidgets network webengine
 
 # For debugging purposes
-#CONFIG += console
+# CONFIG += console
 
 TEMPLATE = app
 
-VERSION = 1.2.0.3
+VERSION = 1.3.0.0
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"

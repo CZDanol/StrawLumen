@@ -220,5 +220,5 @@ DB_MIGRATION_PROCEDURE(4, 5)
 
 DB_MIGRATION_PROCEDURE(5, 6)
 {
-	forceImportBibles({"SK_RSB.xml", "ENG_KJV2000.xml"});
+	forceImportBibles({"SK_RSB.xml", "ENG_KJ2K.xml"});
 }

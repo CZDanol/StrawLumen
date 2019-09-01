@@ -150,6 +150,40 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <widget class="QLabel" name="label">
+       <property name="pixmap">
+        <pixmap resource="../../res/resources.qrc">:/icons/16/Info_16px.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Program pracuje s překlady ve formátu Zefania XML, které lze stáhnout například &lt;a href=&quot;https://sourceforge.net/projects/zefania-sharp/files/Bibles/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;zde&lt;/span&gt;&lt;/a&gt; nebo &lt;a href=&quot;https://www.ph4.org/b4_mobi.php?q=zefania&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;zde&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+       <property name="textInteractionFlags">
+        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

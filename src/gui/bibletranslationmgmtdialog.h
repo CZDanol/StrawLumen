@@ -25,6 +25,8 @@ private slots:
 
 	void on_btnImport_clicked();
 
+	void on_btnClose_clicked();
+
 private:
 	Ui::BibleTranslationMgmtDialog *ui;
 
