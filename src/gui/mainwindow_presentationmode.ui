@@ -687,7 +687,7 @@ PresentationPropertiesWidget
      <normaloff>:/icons/16/Edit_16px.png</normaloff>:/icons/16/Edit_16px.png</iconset>
    </property>
    <property name="text">
-    <string>Upravit</string>
+    <string>Upravit položku</string>
    </property>
   </action>
   <action name="actionClearPlaylist">

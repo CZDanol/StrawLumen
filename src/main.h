@@ -9,7 +9,7 @@ extern QDir appDataDirectory;
 void initApplication();
 void uninitApplication();
 
-void setupStylesheet();
+void setupStylesheet(bool darkMode);
 
 void criticalBootError(const QString &message);
 

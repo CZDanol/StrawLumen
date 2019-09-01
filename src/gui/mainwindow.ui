@@ -250,7 +250,7 @@
   <customwidget>
    <class>MainWindow_SongsMode</class>
    <extends>QWidget</extends>
-   <header>mainwindow_songsmode.h</header>
+	 <header>gui/mainwindow_songsmode.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

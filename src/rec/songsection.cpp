@@ -75,8 +75,8 @@ QString SongSection::shorthandName() const
 	static QHash<QString,QString> shorthandNames {
 		{"C", tr("Ref. %1")},
 		{"V", tr("%1.")},
-		{"I", tr("In. %1")},
-		{"O", tr("Out. %1")},
+		{"I", tr("Intro %1")},
+		{"O", tr("Outro %1")},
 		{"B", tr("Bridge %1")},
 		{"M", tr("Mezihra %1")},
 	};

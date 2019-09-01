@@ -46,8 +46,6 @@ int main(int argc, char *argv[]) {
 
 	app.setAttribute(Qt::AA_DisableWindowContextHelpButton);
 
-	setupStylesheet();
-
 	StartupSplashscreen startupSplashscreen;
 	startupSplashscreen.show();
 
@@ -71,6 +69,7 @@ int main(int argc, char *argv[]) {
 }
 
 void initApplication() {
+#define PROC qApp->processEvents();
 	qRegisterMetaType<QSharedPointer<Presentation>>();
 
 	if(QFile::exists(QDir(qApp->applicationDirPath()).absoluteFilePath("../portableMode")))
@@ -81,44 +80,35 @@ void initApplication() {
 	if( !appDataDirectory.mkpath(".") )
 		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));
 
-	settings = new SettingsManager();
-	qApp->processEvents();
+	PROC settings = new SettingsManager();
+	PROC setupStylesheet(settings->value("darkMode", true).toBool());
 
-	db = new DatabaseManager();
-	qApp->processEvents();
+	PROC db = new DatabaseManager();
+	PROC backgroundManager = new BackgroundManager();
+	PROC asyncCache = new AsyncCacheManager();
 
-	backgroundManager = new BackgroundManager();
-	qApp->processEvents();
+	PROC activeXJobThread = new ActiveXJobThread();
+	PROC presentationEngine_powerPoint = new PresentationEngine_PowerPoint();
+	PROC presentationEngine_native = new PresentationEngine_Native();
+	PROC presentationEngine_video = new PresentationEngine_Video();
+	PROC presentationEngine_web = new PresentationEngine_Web();
+	PROC presentationManager = new PresentationManager();
 
-	asyncCache = new AsyncCacheManager();
-	qApp->processEvents();
+	PROC mainWindow = new MainWindow();
+	PROC settingsDialog = new SettingsDialog(mainWindow);
 
-	activeXJobThread = new ActiveXJobThread();
-	presentationEngine_powerPoint = new PresentationEngine_PowerPoint();
-	presentationEngine_native = new PresentationEngine_Native();
-	presentationEngine_video = new PresentationEngine_Video();
-	presentationEngine_web = new PresentationEngine_Web();
-	presentationManager = new PresentationManager();
+	PROC nativeProjectorWindow = new NativeProjectorWindow();
+	PROC videoProjectorWindow = new VideoProjectorWindow();
+	PROC webProjectorWindow = new WebProjectorWindow();
 
-	qApp->processEvents();
+	PROC splashscreen = new Splashscreen(mainWindow);
+	PROC backgroundDialog = new BackgroundDialog(mainWindow);
+	PROC stylesDialog = new StylesDialog(mainWindow);
 
-	mainWindow = new MainWindow();
-	nativeProjectorWindow = new NativeProjectorWindow();
-	videoProjectorWindow = new VideoProjectorWindow();
-	webProjectorWindow = new WebProjectorWindow();
+	PROC QtWebEngine::initialize();
 
-	qApp->processEvents();
-
-	settingsDialog = new SettingsDialog(mainWindow);
-	splashscreen = new Splashscreen(mainWindow);
-	backgroundDialog = new BackgroundDialog(mainWindow);
-	stylesDialog = new StylesDialog(mainWindow);
-
-	qApp->processEvents();
-
-	QtWebEngine::initialize();
-
-	qApp->processEvents();
+	PROC
+#undef PROC
 }
 
 void uninitApplication() {
@@ -142,16 +132,46 @@ void uninitApplication() {
 	delete settings;
 }
 
-void setupStylesheet() {
-	qApp->setStyle(new FusionProxyStyle());
+void setupStylesheet(bool darkMode) {
+	static auto style = new FusionProxyStyle();
+	qApp->setStyle(style);
 
-	QPalette p = qApp->palette();
-	p.setColor(QPalette::Light, QColor("#ddd") );
+	static auto defaultPalette = qApp->palette();
+	QPalette p = defaultPalette;
+	if(darkMode) {
+		const QColor themeCl("#CA3406");
+		const QColor midCl("#333333");
+		const QColor darkCl("#151515");
+		const QColor veryDarkCl("#050505");
+
+		p.setColor(QPalette::Window, darkCl);
+		p.setColor(QPalette::WindowText, Qt::white);
+		p.setColor(QPalette::Base, veryDarkCl);
+		p.setColor(QPalette::AlternateBase, darkCl);
+		p.setColor(QPalette::ToolTipBase, Qt::white);
+		p.setColor(QPalette::ToolTipText, Qt::white);
+		p.setColor(QPalette::Text, Qt::white);
+		p.setColor(QPalette::Button, darkCl);
+		p.setColor(QPalette::ButtonText, Qt::white);
+		p.setColor(QPalette::BrightText, Qt::red);
+		p.setColor(QPalette::Link, themeCl);
+
+		p.setColor(QPalette::Highlight, themeCl);
+		p.setColor(QPalette::HighlightedText, Qt::white);
+
+		p.setColor(QPalette::Dark, veryDarkCl);
+		p.setColor(QPalette::Mid, darkCl);
+		p.setColor(QPalette::Midlight, "#222");
+		p.setColor(QPalette::Light, midCl);
+	}
+	else {
+		p.setColor(QPalette::Light, QColor("#ddd") );
+	}
 	qApp->setPalette(p);
 
 	QFile f( ":/stylesheet.css" );
 	f.open( QFile::ReadOnly );
-	qApp->setStyleSheet( QString( f.readAll() ) );
+	qApp->setStyleSheet(QString(f.readAll()));
 }
 
 void criticalBootError(const QString &message) {

@@ -37,6 +37,16 @@ QMAKE_LFLAGS = /LARGEADDRESSAWARE
 Debug:RELEASE_STR = _dbg
 Release:RELEASE_STR =
 
+INCLUDEPATH += $$PWD/../include
+DEPENDPATH += $$PWD/../include
+
+LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}/
+LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}_common/
+DESTDIR = $$PWD/../bin/bin_$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}
+
+DISTFILES += \
+    ../res/stylesheet_dark.css
+
 SOURCES += main.cpp \
     gui/mainwindow.cpp \
     presentation/presentation.cpp \
@@ -293,11 +303,3 @@ HEADERS += \
 
 RESOURCES += \
     ../res/resources.qrc
-
-INCLUDEPATH += $$PWD/../include
-DEPENDPATH += $$PWD/../include
-
-LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}/
-DESTDIR = $$PWD/../bin/bin_$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}
-
-DISTFILES +=

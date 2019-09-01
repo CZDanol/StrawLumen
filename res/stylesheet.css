@@ -3,13 +3,13 @@ QTabWidget::right-corner {
 	bottom: 5px;
 }
 
-QAbstractItemView::item:selected {
-  background-color: #90dff9;
-	color: black;
+QAbstractItemView::item:selected, QAbstractItemView::item:selected QLineEdit {
+  background-color: palette(higlight);
+	color: palette(text);
 }
 
 QTextEdit[readOnly="true"], QPlainTextEdit[readOnly="true"] {
-  border: 1px solid #eee;
+  border: 1px solid palette(light);
 	background: transparent;
 }
 
@@ -19,19 +19,19 @@ QTextEdit[readOnly="true"], QPlainTextEdit[readOnly="true"] {
 
 QTextEdit, QPlainTextEdit, QDateEdit, QLineEdit {
   padding: 3px;
-	background: white;
-	border: 1px solid #ccc;
+	background: palette(base);
+	border: 1px solid palette(mid);
 	border-radius: 2px;
 }
 
 QTextEdit:focus[readOnly="false"], QPlainTextEdit:focus[readOnly="false"], QDateEdit:focus[readOnly="false"], QLineEdit:focus[readOnly="false"] {
-  border-color: #6dace8;
+  border-color: palette(highlight);
 }
 
 QWidget[quickEditStyle="true"] QLineEdit[readOnly="true"],
 QWidget[quickEditStyle="true"] QDateEdit[readOnly="true"] {
   border: none;
-	border-bottom: 1px dotted gray;
+	border-bottom: 1px dotted palette(dark);
 	background: transparent;
 }
 
@@ -39,9 +39,5 @@ QListView QLineEdit {
   border: none;
 	margin: 0;
 	padding: 0;
-	background: white;
-}
-
-QAbstractItemView::item:selected QLineEdit {
-  background-color: #90dff9;
+	background: palette(base);
 }

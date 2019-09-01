@@ -8,8 +8,6 @@
 #define MyAppURL "http://straw-solutions.cz"
 #define MyAppExeName "strawLumen.exe"
 
-#define PlatformId "win_x86_64"
-
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -47,9 +45,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "installDeps\VC_redist.x64.exe"; DestDir: {tmp}; AfterInstall: InstallMSVC; Flags: deleteafterinstall
+Source: "installDeps\vc_redist.x64.exe"; DestDir: {tmp}; AfterInstall: InstallMSVC; Flags: deleteafterinstall
 Source: "installDeps\klcp_basic_unattended.ini"; DestDir: {tmp}; Flags: deleteafterinstall
-Source: "installDeps\K_lite.exe"; DestDir: {tmp}; AfterInstall: InstallKLite; Flags: deleteafterinstall
+Source: "installDeps\k_lite.exe"; DestDir: {tmp}; AfterInstall: InstallKLite; Flags: deleteafterinstall
 
 Source: "bin\bin_{#PlatformId}\strawLumen.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion sign
 Source: "bin\bin_{#PlatformId}\QtWebEngineProcess.exe"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
@@ -94,7 +92,7 @@ begin
   WizardForm.StatusLabel.Caption := 'Instaluji Microsoft Visual Studio Redistributable...';
   WizardForm.ProgressGauge.Style := npbstMarquee;
   try
-    if not Exec(ExpandConstant('{tmp}\VC_redist.x64.exe'), '/install /passive /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
+    if not Exec(ExpandConstant('{tmp}\vc_redist.{#PlatformId}.exe'), '/install /passive /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
     then
       MsgBox('Nepodaøilo se spustit instalátor MSVC Redist. Aplikace bez této knihovny nemusí fungovat.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
   finally
@@ -112,7 +110,7 @@ begin
   WizardForm.StatusLabel.Caption := 'Instaluji K-Lite codec pack...';
   WizardForm.ProgressGauge.Style := npbstMarquee;
   try
-    if not Exec(ExpandConstant('{tmp}\K_lite.exe'), ExpandConstant('/verysilent /norestart /LoadInf="{tmp}/klcp_basic_unattended.ini"'), '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
+    if not Exec(ExpandConstant('{tmp}\k_lite.exe'), ExpandConstant('/verysilent /norestart /LoadInf="{tmp}/klcp_basic_unattended.ini"'), '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode)
     then
       MsgBox('Nepodaøilo se spustit instalátor K-Lite. Bez tìchto kodekù nemusí fungovat funkce pøehrávaèe videí.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
   finally

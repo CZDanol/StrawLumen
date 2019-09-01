@@ -4,6 +4,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "main.h"
 #include "job/settings.h"
 #include "job/db.h"
 #include "presentation/presentationengine.h"
@@ -44,4 +45,9 @@ void SettingsDialog::onDisplayChanged(QScreen *current)
 void SettingsDialog::on_btnClose_clicked()
 {
 	accept();
+}
+
+void SettingsDialog::on_cbDarkMode_clicked(bool checked)
+{
+	setupStylesheet(checked);
 }

@@ -1,4 +1,5 @@
 Aktuálně
+- escape zavře druhé okno (zkratky do okna promítání) + šipka vlevo/vpravo/presenter
 - preview aktuálního a následujícího snímku
 - multi-screen vlastní snímek
 - mít program jako standalone soubor, který obsahuje všechny resourcy
@@ -37,6 +38,8 @@ Aktuálně
 - možnost smazat štítek z menu deletem
 
 - autocomplete + highlighter pro verše
+
+K přebrání
 
 
 - audiovizualizace jako styl pozadí

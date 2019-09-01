@@ -5,11 +5,19 @@
 
 #include "job/widgetvalues.h"
 
-// F(settingName, uiControl)
+// settingName, uiControl
 #define SETTINGS_FACTORY(F)\
-	F(display, dsDisplay)\
-	F(song_defaultStyle, wgtDefaultPresentationStyle) F(song_emptySlideBefore, cbEmptySlideBeforeSong) F(song_emptySlideAfter, cbEmptySlideAfterSong) F(song_ignoreEmptySlides, cbIgnoreEmptySongSlides)\
-	F(ppt_blackSlideBefore, cbBlackSlideBeforePPT) F(ppt_blackSlideAfter, cbBlackSlideAfterPPT)
+	F(darkMode, cbDarkMode) \
+	\
+	F(display, dsDisplay) \
+	\
+	F(song_defaultStyle, wgtDefaultPresentationStyle) \
+	F(song_emptySlideBefore, cbEmptySlideBeforeSong) \
+	F(song_emptySlideAfter, cbEmptySlideAfterSong) \
+	F(song_ignoreEmptySlides, cbIgnoreEmptySongSlides) \
+	\
+	F(ppt_blackSlideBefore, cbBlackSlideBeforePPT) \
+	F(ppt_blackSlideAfter, cbBlackSlideAfterPPT) \
 
 namespace Ui {
 	class SettingsDialog;
@@ -22,7 +30,7 @@ class SettingsDialog : public QDialog
 	friend class SettingsManager;
 
 public:
-	explicit SettingsDialog(QWidget *parent = 0);
+	explicit SettingsDialog(QWidget *parent = nullptr);
 	~SettingsDialog();
 
 private slots:
@@ -30,6 +38,7 @@ private slots:
 
 private slots:
 	void on_btnClose_clicked();
+	void on_cbDarkMode_clicked(bool checked);
 
 private:
 	Ui::SettingsDialog *ui;
