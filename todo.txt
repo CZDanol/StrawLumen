@@ -1,4 +1,5 @@
 Aktuálně
+- když se aktualizuje portable verze, poslat instalátoru správné nastavení
 - escape zavře druhé okno (zkratky do okna promítání) + šipka vlevo/vpravo/presenter
 - preview aktuálního a následujícího snímku
 - mít program jako standalone soubor, který obsahuje všechny resourcy

@@ -27,10 +27,12 @@ BibleVerseSelectionWidget::BibleVerseSelectionWidget(QWidget *parent) :
 	ui->setupUi(this);
 
 	searchTimer_.setSingleShot(true);
-	searchTimer_.setInterval(2000);
+	searchTimer_.setInterval(1000);
 
 	connect(db, &DatabaseManager::sigBibleTranslationsChanged, this, &BibleVerseSelectionWidget::requeryTranslations);
+	connect(ui->lnCode, &QLineEdit::textEdited, ui->lnSearch, &QLineEdit::clear);
 	connect(ui->lnSearch, &QLineEdit::editingFinished, this, &BibleVerseSelectionWidget::updateSearch);
+	connect(ui->lnSearch, &QLineEdit::returnPressed, this, &BibleVerseSelectionWidget::updateSearch);
 	connect(ui->lnSearch, &QLineEdit::textChanged, &searchTimer_, QOverload<>::of(&QTimer::start));
 	connect(&searchTimer_, &QTimer::timeout, this, &BibleVerseSelectionWidget::updateSearch);
 

@@ -5,6 +5,7 @@
 #include <QFontMetrics>
 #include <QJsonObject>
 #include <QRegularExpression>
+#include <QDebug>
 
 #include "job/jsonautomation.h"
 
@@ -50,8 +51,13 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	QVector<int> wrapPoints;
 
 	// Initial scale factor estimation
-	const int approxLineCount = str.count('\n') + 1;
-	qreal scaleFactor = qMin(1.0, static_cast<qreal>(availableSize.width()) / (metrics.height() * approxLineCount + metrics.leading() * (approxLineCount-1)));
+	//qreal scaleFactor = qMin(1.0, static_cast<qreal>(availableSize.width()) / (metrics.height() * approxLineCount + metrics.leading() * (approxLineCount-1)));
+	//qreal scaleFactor = qMin(1.0, sqrt(qreal(metrics.height()) * qreal(metrics.horizontalAdvance(str)) / (availableSize.width() * availableSize.height())));
+	qreal scaleFactor = qMin(1.0, sqrt(
+					(availableSize.width() * availableSize.height())
+					/ (qreal(metrics.height()) * qreal(metrics.horizontalAdvance(str)))
+					));
+
 	const int approxAvailableWidth = static_cast<int>(availableSize.width() / scaleFactor);
 
 	// Lay out lines
