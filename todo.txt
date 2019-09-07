@@ -1,5 +1,4 @@
 Aktuálně
-- když se aktualizuje portable verze, poslat instalátoru správné nastavení
 - escape zavře druhé okno (zkratky do okna promítání) + šipka vlevo/vpravo/presenter
 - preview aktuálního a následujícího snímku
 - mít program jako standalone soubor, který obsahuje všechny resourcy
@@ -22,8 +21,6 @@ Aktuálně
 - u webovky blbne zadávání adresy (občas se to neaktualizuje)
 - průvodce u veršů - při otevření nastavit na vybraný řádek
 - možnost přejmenovat štítek z menu
-- správa a import překladů bible
-- slovenské bible (lze najít např. na https://www.ph4.org/b4_mobi.php?q=zefania)
 - web interface pro ovládání
 - výchozí styly pro různé typy prezentací
 - upravit píseň do kontext menu v programu
@@ -40,7 +37,6 @@ K přebrání
 
 
 - audiovizualizace jako styl pozadí
-- detekovat natočení fotky z metadat
 - promítání odpočtu
 - Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.
 - ukládání výběru písniček (import/export/zpěvníky)

@@ -20,6 +20,8 @@ PresentationPropertiesWidget_Web::PresentationPropertiesWidget_Web(const QShared
 
 PresentationPropertiesWidget_Web::~PresentationPropertiesWidget_Web()
 {
+	on_lnUrl_editingFinished();
+
 	delete ui;
 }
 

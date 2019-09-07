@@ -3,6 +3,7 @@
 #include <QFileInfo>
 #include <QImage>
 #include <QJsonArray>
+#include <QImageReader>
 
 #include "presentationpropertieswidget_images.h"
 #include "job/asynccachemanager.h"
@@ -179,7 +180,10 @@ QImage Presentation_Images::getImage(int slideId, const QSize size)
 
 	QString cacheKey = QString("image:%1#res:%2x%3").arg(fileName).arg(size.width()).arg(size.height());
 	auto produceFunction = [fileName, size](QVariant &result, int &price, AsyncCacheManager::CheckStornoFunction storno){
-		QImage img(fileName);
+		QImageReader reader(fileName);
+		reader.setAutoTransform(true);
+
+		QImage img = reader.read();
 
 		if(storno())
 			return false;

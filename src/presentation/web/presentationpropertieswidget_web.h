@@ -20,7 +20,6 @@ public:
 private slots:
 	void fillData();
 	void on_lnUrl_editingFinished();
-
 	void on_btnLocalFile_clicked();
 
 private:
