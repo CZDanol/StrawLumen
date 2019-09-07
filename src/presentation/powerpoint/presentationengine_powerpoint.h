@@ -35,6 +35,7 @@ private:
 	QAxObject *axPresentations_, *axPresentation_ = nullptr, *axPresentationWindow_, *axSlides_, *axSSSettings_, *axSSView_;
 	bool isInitialized_ = false;
 	QTimer activateTimer_;
+	QPointF dotsPerPoint_;
 
 };
 

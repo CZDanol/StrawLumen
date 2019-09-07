@@ -31,7 +31,6 @@ private slots:
 	void on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &);
 	void on_btnWizard_clicked();
 	void on_verses_textChanged();
-
 	void on_btnMorphIntoCustomSlide_clicked();
 
 private:

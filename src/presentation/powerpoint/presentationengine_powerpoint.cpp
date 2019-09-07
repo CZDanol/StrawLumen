@@ -1,9 +1,15 @@
 #include "presentationengine_powerpoint.h"
 
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QDebug>
+
 #include "util/standarddialogs.h"
 #include "job/activexjobthread.h"
 #include "presentation/presentationmanager.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
+
+#include "gui/activexdebugdialog.h"
 
 PresentationEngine_PowerPoint *presentationEngine_powerPoint = nullptr;
 
@@ -30,6 +36,7 @@ void PresentationEngine_PowerPoint::activateEngine()
 		return;
 
 	isInitialized_ = true;
+	dotsPerPoint_ = QPointF(QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY()) / 72;
 
 	activeXJobThread->executeNonblocking([&]{
 		auto axApplication = activeXJobThread->axPowerPointApplication;
@@ -69,12 +76,10 @@ void PresentationEngine_PowerPoint::setDisplay_axThread(const QRect &rect)
 	if(!axPresentation_)
 		return;
 
-	// Magical constant that makes everything work. Microsoft...
-	const double ratio = (3.0/4.0);
-	axPresentationWindow_->dynamicCall("SetLeft(double)", double(rect.left() * ratio));
-	axPresentationWindow_->dynamicCall("SetTop(double)", double(rect.top() * ratio));
-	axPresentationWindow_->dynamicCall("SetWidth(double)", double(rect.width() * ratio));
-	axPresentationWindow_->dynamicCall("SetHeight(double)",double(rect.height() * ratio));
+	axPresentationWindow_->dynamicCall("SetLeft(double)", double(rect.left() / dotsPerPoint_.x()));
+	axPresentationWindow_->dynamicCall("SetTop(double)", double(rect.top() / dotsPerPoint_.y()));
+	axPresentationWindow_->dynamicCall("SetWidth(double)", double(rect.width() / dotsPerPoint_.x()));
+	axPresentationWindow_->dynamicCall("SetHeight(double)",double(rect.height() / dotsPerPoint_.y()));
 }
 
 void PresentationEngine_PowerPoint::onActivateTimer()

@@ -285,15 +285,15 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide)
 		pe.axSlides_ = pe.axPresentation_->querySubObject("Slides");
 
 		pe.axSSSettings_ = pe.axPresentation_->querySubObject("SlideShowSettings");
-		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", (int) Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk);
+		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", static_cast<int>(Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk));
 
 		/*pe.axSSSettings_->dynamicCall("SetRangeType(int)", (int) Office::PowerPoint::PpSlideShowRangeType::ppShowSlideRange);
 		pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
 		pe.axSSSettings_->dynamicCall("SetEndingSlide(int)", startingSlide_+1); Does not work like expected*/
 
 		pe.axSSSettings_->dynamicCall(
-					"SetAdvanceMode(Office::PpSlideShowAdvanceMode )",
-					(isAutoPresentation_ ? (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowUseSlideTimings : (int) Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance)
+					"SetAdvanceMode(Office::PpSlideShowAdvanceMode)",
+					static_cast<int>(isAutoPresentation_ ? Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowUseSlideTimings : Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance)
 					);
 
 		pe.axSSSettings_->dynamicCall("Run()");

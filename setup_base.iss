@@ -30,7 +30,8 @@ UninstallDisplayIcon="{app}\bin_{#PlatformId}\{#MyAppExeName}"
 SignTool=ComodoSign
 SignedUninstaller=yes
 DisableDirPage=no
-Uninstallable=IsUninstallable
+Uninstallable=not IsPortableMode
+DirExistsWarning=no
 
 [Languages]
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
@@ -114,7 +115,7 @@ begin
   end;
 end;
 
-function IsUninstallable: Boolean;
+function IsPortableMode: Boolean;
 begin
-  result := WizardSetupType(false) = 'full';
+  result := WizardSetupType(false) = 'portable';
 end;

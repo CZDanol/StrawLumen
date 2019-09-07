@@ -23,6 +23,9 @@ PresentationPropertiesWidget_BibleVerse::PresentationPropertiesWidget_BibleVerse
 
 PresentationPropertiesWidget_BibleVerse::~PresentationPropertiesWidget_BibleVerse()
 {
+	if(textUpdateTimer_.isActive())
+		onTextUpdateTimerTimeout();
+
 	delete ui;
 }
 

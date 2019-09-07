@@ -13,6 +13,8 @@ DisplaySelectionWidget::DisplaySelectionWidget(QWidget *parent) :
 	ui->setupUi(this);
 
 	connect(ui->cmb, SIGNAL(activated(int)), this, SLOT(onItemActivated(int)));
+	connect(qApp, &QApplication::screenAdded, this, &DisplaySelectionWidget::updateScreenList);
+	connect(qApp, &QApplication::screenRemoved, this, &DisplaySelectionWidget::updateScreenList);
 
 	updateScreenList();
 }

@@ -52,7 +52,7 @@ void SimpleUpdater::checkForUpdates()
 			return;
 		}
 
-		if(true){//if(response["result"] == "updateAvailable" && response["newVersion"] != UPSTREAM_VERSION) {
+		if(response["result"] == "updateAvailable" && response["newVersion"] != UPSTREAM_VERSION) {
 			const QString newVersion = response["newVersion"].toString();
 			const QString changeLog = response["changeLog"].toString();
 

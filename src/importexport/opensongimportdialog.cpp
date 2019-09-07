@@ -77,6 +77,57 @@ void OpenSongImportDialog::updateUi()
 				);
 }
 
+QString OpenSongImportDialog::openSongToLumenSongFormat(const QString &openSongFormat)
+{
+	QString result = openSongFormat;
+
+	// Change sections formet
+	{
+		// Compatible sections format (that a is for the first slide of the section)
+		static const QRegularExpression sectionRegex("\\[([VCBIO][0-9]*)a?\\]\\s*");
+		result.replace(sectionRegex, "{\\1}\n");
+
+		// V1b, V1c, ... -> {---} (slide separator)
+		static const QRegularExpression sectionContinuationRegex("\\[([VCBIO][0-9]*[b-z]?)\\]\\s*");
+		result.replace(sectionContinuationRegex, "{---}\n");
+
+		// [1] -> {V1}
+		static const QRegularExpression simpleSectionRegex("\\[([1-9][0-9]*)\\]\\s*");
+		result.replace(simpleSectionRegex, "{V\\1}\n");
+
+		// Other -> {"XXX"}
+		static const QRegularExpression otherSectionRegex("\\[([a-zA-Z0-9]+)\\]\\s*");
+		result.replace(otherSectionRegex, "{\"\\1\"}\n");
+	}
+
+	// Change chords format
+	static const QRegularExpression chordLineRegex("^(\\.[^\n]*\n)([^\n]*)$", QRegularExpression::MultilineOption);
+	int offsetCorrection = 0;
+	QRegularExpressionMatchIterator it = chordLineRegex.globalMatch(result);
+	while(it.hasNext()) {
+		const QRegularExpressionMatch m = it.next();
+
+		result.remove(m.capturedStart(1)+offsetCorrection, m.capturedLength(1));
+		offsetCorrection -= m.capturedLength(1);
+
+		static const QRegularExpression chordRegex("\\S+");
+		QRegularExpressionMatchIterator it2 = chordRegex.globalMatch(m.captured(1), 1);
+		while(it2.hasNext()) {
+			const QRegularExpressionMatch m2 = it2.next();
+			const QString insertText = QString("[%1]").arg(m2.captured());
+			result.insert(m.capturedStart(2)+qMin(m2.capturedStart(),m.capturedLength(2)-1)+offsetCorrection, insertText);
+			offsetCorrection += insertText.length();
+		}
+	}
+
+	// Trim spaces on line beginnings and ends
+	static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
+	result.remove(trimmingRegex);
+	result.remove('_');
+
+	return result;
+}
+
 QString OpenSongImportDialog::importSong(const QString &filename, const int conflictBehavior, const QSet<QString> &tags, const bool addToPlaylist, QVector<QSharedPointer<Presentation> > &presentations)
 {
 	QFile f(filename);
@@ -121,53 +172,7 @@ QString OpenSongImportDialog::importSong(const QString &filename, const int conf
 			{"notes", ""}
 		};
 
-		QString content = root.firstChildElement("lyrics").text().trimmed();
-
-		// Change sections formet
-		{
-			// Compatible sections format (that a is for the first slide of the section)
-			static const QRegularExpression sectionRegex("\\[([VCBIO][0-9]*)a?\\]\\s*");
-			content.replace(sectionRegex, "{\\1}\n");
-
-			// V1b, V1c, ... -> {---} (slide separator)
-			static const QRegularExpression sectionContinuationRegex("\\[([VCBIO][0-9]*[b-z]?)\\]\\s*");
-			content.replace(sectionContinuationRegex, "{---}\n");
-
-			// [1] -> {V1}
-			static const QRegularExpression simpleSectionRegex("\\[([1-9][0-9]*)\\]\\s*");
-			content.replace(simpleSectionRegex, "{V\\1}\n");
-
-			// Other -> {"XXX"}
-			static const QRegularExpression otherSectionRegex("\\[([a-zA-Z0-9]+)\\]\\s*");
-			content.replace(otherSectionRegex, "{\"\\1\"}\n");
-		}
-
-		// Change chords format
-		static const QRegularExpression chordLineRegex("^(\\.[^\n]*\n)([^\n]*)$", QRegularExpression::MultilineOption);
-		int offsetCorrection = 0;
-		QRegularExpressionMatchIterator it = chordLineRegex.globalMatch(content);
-		while(it.hasNext()) {
-			const QRegularExpressionMatch m = it.next();
-
-			content.remove(m.capturedStart(1)+offsetCorrection, m.capturedLength(1));
-			offsetCorrection -= m.capturedLength(1);
-
-			static const QRegularExpression chordRegex("\\S+");
-			QRegularExpressionMatchIterator it2 = chordRegex.globalMatch(m.captured(1), 1);
-			while(it2.hasNext()) {
-				const QRegularExpressionMatch m2 = it2.next();
-				const QString insertText = QString("[%1]").arg(m2.captured());
-				content.insert(m.capturedStart(2)+qMin(m2.capturedStart(),m.capturedLength(2)-1)+offsetCorrection, insertText);
-				offsetCorrection += insertText.length();
-			}
-		}
-
-		// Trim spaces on line beginnings and ends
-		static const QRegularExpression trimmingRegex("^[ \t]+|[ \t]+$", QRegularExpression::MultilineOption);
-		content.remove(trimmingRegex);
-		content.remove('_');
-
-		fields.insert("content", content);
+		fields.insert("content", openSongToLumenSongFormat(root.firstChildElement("lyrics").text().trimmed()));
 
 		if(songId == -1)
 			songId = db->insert("songs", fields).toLongLong();

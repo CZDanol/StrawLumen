@@ -24,6 +24,9 @@ public:
 private:
 	void updateUi();
 
+public:
+	static QString openSongToLumenSongFormat(const QString &openSongFormat);
+
 private:
 	QString importSong(const QString &filename, const int conflictBehavior, const QSet<QString> &tags, const bool addToPlaylist, QVector<QSharedPointer<Presentation> > &presentations);
 

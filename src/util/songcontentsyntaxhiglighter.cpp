@@ -2,6 +2,7 @@
 
 #include <QRegularExpressionMatchIterator>
 #include <QTextDocument>
+#include <QPalette>
 
 #include "rec/chord.h"
 #include "rec/songsection.h"
@@ -11,7 +12,7 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 {
 	{
 		chordFormat_.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
-		chordFormat_.setForeground(Qt::blue);
+		// chordFormat_.setForeground(Qt::blue);
 		chordFormat_.setFontWeight(QFont::Bold);
 
 		chordAnnotationSymbolFormat_.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
@@ -60,6 +61,9 @@ bool SongContentSyntaxHiglighter::sepSyllables() const
 
 void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 {
+	QPalette p;
+	chordFormat_.setForeground(p.link());
+
 	// Default font changes, we must update
 	auto size = document()->defaultFont().pointSize() * 1.3;
 	chordFormat_.setFontPointSize(size);

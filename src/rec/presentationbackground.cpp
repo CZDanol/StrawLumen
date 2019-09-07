@@ -73,7 +73,11 @@ void PresentationBackground::draw(QPainter &p, const QRect &rect) const
 {
 	p.fillRect(rect, Qt::black);
 
-	p.drawImage(rect, backgroundManager->getBackground(filename_, rect.size()));
+	auto bg = backgroundManager->getBackground(filename_, rect.size());
+	QRect srcRect;
+	srcRect.setSize(rect.size().scaled(bg.size(), Qt::KeepAspectRatio));
+	srcRect.moveCenter(bg.rect().center());
+	p.drawImage(rect, bg, srcRect);
 
 	if(color_.alpha() > 0) {
 		p.save();
