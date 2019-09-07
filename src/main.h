@@ -5,6 +5,7 @@
 #include <QString>
 
 extern QDir appDataDirectory;
+extern bool isPortableMode;
 
 void initApplication();
 void uninitApplication();

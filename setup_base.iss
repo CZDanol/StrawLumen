@@ -3,7 +3,7 @@
 
 #define MyAppVersion "1.3.0.0"
 #define MyAppPublisher "Straw Solutions"
-#define MyAppCopyright "(c) 2018 Straw Solutions, Daniel Èejchan"
+#define MyAppCopyright "(c) 2019 Straw Solutions, Ing. Daniel Èejchan"
 #define MyAppURL "http://straw-solutions.cz"
 #define MyAppExeName "strawLumen.exe"
 
@@ -30,6 +30,7 @@ UninstallDisplayIcon="{app}\bin_{#PlatformId}\{#MyAppExeName}"
 SignTool=ComodoSign
 SignedUninstaller=yes
 DisableDirPage=no
+Uninstallable=IsUninstallable
 
 [Languages]
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
@@ -52,7 +53,7 @@ Source: "bin\bin_{#PlatformId}\*.dat"; DestDir: "{app}\bin_{#PlatformId}"; Flags
 Source: "bin\backgrounds\*"; DestDir: "{app}\backgrounds"; Flags: ignoreversion
 Source: "bin\bible\*"; DestDir: "{app}\bible"; Flags: ignoreversion
 Source: "bin\etc\*"; DestDir: "{app}\etc"; Flags: ignoreversion recursesubdirs
-Source: "bin\changelog.html"; DestDir: "{app}\changelog.html"; Flags: ignoreversion recursesubdirs
+Source: "bin\changelog.html"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 Source: "fonts\SourceSansPro-*.ttf"; DestDir: "{fonts}"; FontInstall: "Source Sans Pro"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "portableMode"; DestDir: "{app}"; Components: portable
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
@@ -113,3 +114,7 @@ begin
   end;
 end;
 
+function IsUninstallable: Boolean;
+begin
+  result := WizardSetupType(false) = 'full';
+end;

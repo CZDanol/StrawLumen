@@ -10,6 +10,7 @@
 #include "util/execonmainthread.h"
 #include "util/standarddialogs.h"
 #include "strawapi/strawapi.h"
+#include "main.h"
 
 #define MULTILINE(...) #__VA_ARGS__
 
@@ -51,7 +52,7 @@ void SimpleUpdater::checkForUpdates()
 			return;
 		}
 
-		if(response["result"] == "updateAvailable" && response["newVersion"] != UPSTREAM_VERSION) {
+		if(true){//if(response["result"] == "updateAvailable" && response["newVersion"] != UPSTREAM_VERSION) {
 			const QString newVersion = response["newVersion"].toString();
 			const QString changeLog = response["changeLog"].toString();
 
@@ -101,7 +102,11 @@ void SimpleUpdater::onDownloadFinished()
 	if(!downloadFile_->rename(newFileName))
 		return standardErrorDialog(tr("Nepodařilo se připravit soubor aktualizace."));
 
-	if(!QProcess::startDetached(newFileName, {}))
+	QStringList args;
+	if(isPortableMode)
+		args += {"/DIR=" + QDir(QDir(qApp->applicationDirPath()).absoluteFilePath("../")).canonicalPath(), "/TYPE=portable", "/COMPONENTS="};
+
+	if(!QProcess::startDetached(newFileName, args))
 		 return standardErrorDialog(tr("Nepodařilo se spustit aktualizaci."));
 
 	qApp->quit();

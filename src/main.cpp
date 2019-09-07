@@ -36,6 +36,7 @@
 #include "util/fusionproxystyle.h"
 
 QDir appDataDirectory;
+bool isPortableMode;
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
@@ -72,13 +73,19 @@ void initApplication() {
 #define PROC qApp->processEvents();
 	qRegisterMetaType<QSharedPointer<Presentation>>();
 
-	if(QFile::exists(QDir(qApp->applicationDirPath()).absoluteFilePath("../portableMode")))
+	isPortableMode = QFile::exists(QDir(qApp->applicationDirPath()).absoluteFilePath("../portableMode"));
+
+	if(isPortableMode)
 		appDataDirectory = QDir(QDir(qApp->applicationDirPath()).absoluteFilePath("../programData"));
 	else
 		appDataDirectory = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
 
-	if( !appDataDirectory.mkpath(".") )
-		criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));
+	if(!appDataDirectory.mkpath(".")) {
+		if(appDataDirectory.path().contains("program files", Qt::CaseInsensitive))
+			criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\". To je pravděpodobně tím, že máte nainstalovanou přenosnou verzi aplikace ve složce 'Program Files'. Přenosná verze aplikace musí být nainstalována do umístění, kam uživatel může zapisovat.").arg(appDataDirectory.absolutePath()));
+		else
+			criticalBootError(DBManager::tr("Nepodařilo se vytvořit složku pro data aplikace: \"%1\"").arg(appDataDirectory.absolutePath()));
+	}
 
 	PROC settings = new SettingsManager();
 	PROC setupStylesheet(settings->value("darkMode", true).toBool());
