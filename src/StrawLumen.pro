@@ -50,6 +50,7 @@ DISTFILES += \
 SOURCES += main.cpp \
     gui/bibletranslationmgmtdialog.cpp \
     gui/mainwindow.cpp \
+    gui/songsmodewindow.cpp \
     presentation/presentation.cpp \
     util/jobthread.cpp \
     job/activexjobthread.cpp \
@@ -157,6 +158,7 @@ SOURCES += main.cpp \
 FORMS += \
     gui/bibletranslationmgmtdialog.ui \
     gui/mainwindow.ui \
+    gui/songsmodewindow.ui \
     gui/splashscreen.ui \
     gui/mainwindow_presentationmode.ui \
     gui/activexdebugdialog.ui \
@@ -201,6 +203,7 @@ FORMS += \
 HEADERS += \
     gui/bibletranslationmgmtdialog.h \
     gui/mainwindow.h \
+    gui/songsmodewindow.h \
     presentation/presentation.h \
     util/jobthread.h \
     job/activexjobthread.h \

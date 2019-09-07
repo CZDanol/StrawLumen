@@ -1,4 +1,5 @@
 Aktuálně
+- import PowerPoint jako písní
 - escape zavře druhé okno (zkratky do okna promítání) + šipka vlevo/vpravo/presenter
 - preview aktuálního a následujícího snímku
 - mít program jako standalone soubor, který obsahuje všechny resourcy
@@ -29,8 +30,6 @@ Aktuálně
 - asistent pro převod písní z PowerPointu
 - video na pozadí
 
-- možnost smazat štítek z menu deletem
-
 - autocomplete + highlighter pro verše
 
 K přebrání
@@ -39,7 +38,6 @@ K přebrání
 - audiovizualizace jako styl pozadí
 - promítání odpočtu
 - Sekci "Písně" - možnost otevření v samostatném okně. Hodí se, když se můžu dívat na obojí najednou.
-- ukládání výběru písniček (import/export/zpěvníky)
 - nový program - tázací dialog, přidat možnost "uložit a nový"
 - když jsou akordy odděleny jenom mezerama nebo tabulátorem, informovat uživatele, že se mají vkládat do textu
 - když se nesází akordy, tak trim mezery před/za akordama
@@ -63,8 +61,6 @@ K přebrání
 - podpora pro jeden monitor?
 
 - typ slidu, kde není na projektoru zapnuto vůbec nic
-
-- 1,5 px to point nestačí (pro jiné DPI displeje)
 
 - playlistitemmodel, slidesitemmodel -> playlist udělat signál sigItems/slides abouttochange
 

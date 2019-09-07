@@ -18,6 +18,7 @@
 #include "gui/aboutdialog.h"
 #include "gui/bulkeditsongsdialog.h"
 #include "gui/bibletranslationmgmtdialog.h"
+#include "gui/songsmodewindow.h"
 #include "importexport/documentgenerationdialog.h"
 #include "importexport/lumenimportdialog.h"
 #include "importexport/opensongimportdialog.h"
@@ -43,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	ui->swMenu->addWidget(ui->wgtPresentationMode->menuWidget());
 	ui->swMenu->addWidget(ui->wgtSongsMode->menuWidget());
+	ui->twWorkspace->setCornerWidget(ui->twWorkspaceCorner);
 	ui->menuProgram->insertMenu(ui->menuProgram->actions()[1], ui->wgtSongsMode->importMenu());
 	ui->menuProgram->insertMenu(ui->menuProgram->actions()[2], ui->wgtSongsMode->exportMenu());
 
@@ -52,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(db, SIGNAL(sigQueryError(QString,QString)), this, SLOT(onDbQueryError(QString,QString)));
 
 	ui->btnPresentationMode->click();
+	updateUiEnabled();
 }
 
 MainWindow::~MainWindow()
@@ -202,6 +205,11 @@ void MainWindow::dropEvent(QDropEvent *e)
 	});
 }
 
+void MainWindow::updateUiEnabled()
+{
+
+}
+
 void MainWindow::on_actionSettings_triggered()
 {
 	settingsDialog->show();
@@ -214,12 +222,14 @@ void MainWindow::on_btnPresentationMode_clicked()
 
 	ui->swModes->setCurrentWidget(ui->wgtPresentationMode);
 	ui->swMenu->setCurrentWidget(ui->wgtPresentationMode->menuWidget());
+	updateUiEnabled();
 }
 
 void MainWindow::on_btnSongsMode_clicked()
 {
 	ui->swModes->setCurrentWidget(ui->wgtSongsMode);
 	ui->swMenu->setCurrentWidget(ui->wgtSongsMode->menuWidget());
+	updateUiEnabled();
 }
 
 void MainWindow::on_actionBackgrounds_triggered()
@@ -256,4 +266,13 @@ void MainWindow::on_actionBulkEditSongs_triggered()
 void MainWindow::on_actionBibleMgmt_triggered()
 {
 	bibleTranslationMgmtDialog()->show();
+}
+
+void MainWindow::on_btnOpenSongManagementInNewWindow_clicked()
+{
+	auto wnd = new SongsModeWindow();
+	connect(this, &MainWindow::sigClosed, wnd, &QMainWindow::close);
+
+	wnd->setAttribute(Qt::WA_DeleteOnClose);
+	wnd->show();
 }

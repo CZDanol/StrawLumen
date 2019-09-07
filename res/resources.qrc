@@ -252,5 +252,6 @@
         <file>icons/16/Change_16px.png</file>
         <file>icons/32/clapperboard_32px.png</file>
         <file>icons/16/waning_crescent_16px.png</file>
+        <file>icons/16/open_in_window_16px.png</file>
     </qresource>
 </RCC>

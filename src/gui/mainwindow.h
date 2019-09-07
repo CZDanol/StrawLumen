@@ -43,6 +43,9 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *e) override;
 	void dropEvent(QDropEvent *e) override;
 
+private:
+	void updateUiEnabled();
+
 private slots:
 	void on_actionSettings_triggered();
 	void on_btnPresentationMode_clicked();
@@ -54,6 +57,8 @@ private slots:
 	void on_actionSendFeedback_triggered();
 	void on_actionBulkEditSongs_triggered();
 	void on_actionBibleMgmt_triggered();
+
+	void on_btnOpenSongManagementInNewWindow_clicked();
 
 private:
 	Ui::MainWindow *ui;
