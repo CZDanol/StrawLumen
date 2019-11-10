@@ -20,36 +20,75 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QWidget" name="twWorkspaceCorner" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="btnOpenSongManagementInNewWindow">
-         <property name="toolTip">
-          <string>Otevřít správu písní v novém okně</string>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QWidget" name="twWorkspaceCorner" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="leftMargin">
+          <number>0</number>
          </property>
-         <property name="icon">
-          <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/16/open_in_window_16px.png</normaloff>:/icons/16/open_in_window_16px.png</iconset>
+         <property name="topMargin">
+          <number>0</number>
          </property>
-         <property name="flat">
-          <bool>true</bool>
+         <property name="rightMargin">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="twApplicationCorner" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btnAbout">
+              <property name="toolTip">
+               <string>O programu</string>
+              </property>
+              <property name="text">
+               <string>O programu</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../res/resources.qrc">
+                <normaloff>:/icons/16/Info_16px.png</normaloff>:/icons/16/Info_16px.png</iconset>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnOpenSongManagementInNewWindow">
+           <property name="toolTip">
+            <string>Otevřít správu písní v novém okně</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/16/open_in_window_16px.png</normaloff>:/icons/16/open_in_window_16px.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="ltMenu">
@@ -136,6 +175,76 @@
        </widget>
       </item>
       <item>
+       <widget class="QTabWidget" name="twApplication">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <widget class="QWidget" name="tab_4">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/logos/lumen_icon_16.png</normaloff>:/logos/lumen_icon_16.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Aplikace</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnMenu">
+            <property name="text">
+             <string>Menu</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/menu_16px.png</normaloff>:/icons/16/menu_16px.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnSettings">
+            <property name="text">
+             <string>Nastavení</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Settings_16px.png</normaloff>:/icons/16/Settings_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item>
        <widget class="QStackedWidget" name="swMenu"/>
       </item>
      </layout>
@@ -153,33 +262,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>985</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuProgram">
-    <property name="title">
-     <string>Aplikace</string>
-    </property>
-    <addaction name="actionGenerateDocuments"/>
-    <addaction name="separator"/>
-    <addaction name="actionBulkEditSongs"/>
-    <addaction name="separator"/>
-    <addaction name="actionBackgrounds"/>
-    <addaction name="actionStyles"/>
-    <addaction name="actionBibleMgmt"/>
-    <addaction name="actionSettings"/>
-    <addaction name="separator"/>
-    <addaction name="actionSendFeedback"/>
-    <addaction name="actionAbout"/>
-   </widget>
-   <addaction name="menuProgram"/>
   </widget>
   <action name="actionSettings">
    <property name="icon">

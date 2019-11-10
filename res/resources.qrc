@@ -253,5 +253,10 @@
         <file>icons/32/clapperboard_32px.png</file>
         <file>icons/16/waning_crescent_16px.png</file>
         <file>icons/16/open_in_window_16px.png</file>
+        <file>icons/16/menu_16px.png</file>
+        <file>icons/16/windows_client_16px.png</file>
+        <file>icons/16/wrench_16px.png</file>
+        <file>icons/16/sort_by_modified_date_16px.png</file>
+        <file>icons/16/transition_both_directions_16px.png</file>
     </qresource>
 </RCC>

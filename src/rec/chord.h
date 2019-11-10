@@ -20,6 +20,8 @@ public:
 	};
 
 public:
+	static const QRegularExpression &chordRegex();
+
 	Chord();
 	explicit Chord(const QString &str);
 

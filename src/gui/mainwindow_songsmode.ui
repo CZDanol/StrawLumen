@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>873</width>
+    <width>1177</width>
     <height>699</height>
    </rect>
   </property>
@@ -41,8 +41,207 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item row="0" column="2">
+       <widget class="QWidget" name="twTransposeCorner" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="2">
+       <widget class="QTabWidget" name="twTranspose">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_10">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Split Vertical_16px.png</normaloff>:/icons/16/Split Vertical_16px.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Transpozice</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnTransposeUp">
+            <property name="toolTip">
+             <string>Transponovat píseň o půltón nahoru</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Up_16px.png</normaloff>:/icons/16/Up_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnTransposeDown">
+            <property name="toolTip">
+             <string>Transponovat píseň o půltón dolů</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Down Arrow_16px.png</normaloff>:/icons/16/Down Arrow_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnTransposeFlat">
+            <property name="toolTip">
+             <string>Používat béčkové akordy místo křížkových (např. Gb místo F#)</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Flat Sign_16px.png</normaloff>:/icons/16/Flat Sign_16px.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QTabWidget" name="twImportExport">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_11">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Data Transfer_16px.png</normaloff>:/icons/16/Data Transfer_16px.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Import/export</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnImport">
+            <property name="text">
+             <string>Import</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Import_16px.png</normaloff>:/icons/16/Import_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnExport">
+            <property name="text">
+             <string>Export</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Export_16px.png</normaloff>:/icons/16/Export_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnCreateSongbook">
+            <property name="toolTip">
+             <string>Zkratka: Ctrl+P</string>
+            </property>
+            <property name="text">
+             <string>Vytvořit zpěvník</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
       <item row="1" column="0">
-       <widget class="QTabWidget" name="twEdit">
+       <widget class="QTabWidget" name="twInsert">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -144,6 +343,45 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
             </property>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QTabWidget" name="twEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_12">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Edit_16px.png</normaloff>:/icons/16/Edit_16px.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Úpravy</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
           <item>
            <widget class="QPushButton" name="btnAutoFormat">
             <property name="toolTip">
@@ -163,97 +401,17 @@ Zkratka: Alt+Shift+F</string>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="1">
-       <widget class="QTabWidget" name="twTranspose">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="tab_10">
-         <attribute name="icon">
-          <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/16/Split Vertical_16px.png</normaloff>:/icons/16/Split Vertical_16px.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Transpozice</string>
-         </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <property name="leftMargin">
-           <number>4</number>
-          </property>
-          <property name="topMargin">
-           <number>4</number>
-          </property>
-          <property name="rightMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
-           <number>4</number>
-          </property>
           <item>
-           <widget class="QPushButton" name="btnTransposeUp">
+           <widget class="QPushButton" name="btnConvertChords">
             <property name="toolTip">
-             <string>Transponovat píseň o půltón nahoru</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Převede akordy z formátu, kdy jsou akordy umístěny na vlastním řádku a odsazeny mezerami, do formátu Lumenu (chordpro).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Převést akordy</string>
             </property>
             <property name="icon">
              <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Up_16px.png</normaloff>:/icons/16/Up_16px.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnTransposeDown">
-            <property name="toolTip">
-             <string>Transponovat píseň o půltón dolů</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Down Arrow_16px.png</normaloff>:/icons/16/Down Arrow_16px.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnTransposeFlat">
-            <property name="toolTip">
-             <string>Používat béčkové akordy místo křížkových (např. Gb místo F#)</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Flat Sign_16px.png</normaloff>:/icons/16/Flat Sign_16px.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
+              <normaloff>:/icons/16/Sort By Modified Date_16px.png</normaloff>:/icons/16/Sort By Modified Date_16px.png</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -262,108 +420,6 @@ Zkratka: Alt+Shift+F</string>
           </item>
          </layout>
         </widget>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QTabWidget" name="twImportExport">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="tab_11">
-         <attribute name="icon">
-          <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/16/Data Transfer_16px.png</normaloff>:/icons/16/Data Transfer_16px.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Import/export</string>
-         </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
-          <property name="leftMargin">
-           <number>4</number>
-          </property>
-          <property name="topMargin">
-           <number>4</number>
-          </property>
-          <property name="rightMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
-           <number>4</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="btnImport">
-            <property name="text">
-             <string>Import</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Import_16px.png</normaloff>:/icons/16/Import_16px.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnExport">
-            <property name="text">
-             <string>Export</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Export_16px.png</normaloff>:/icons/16/Export_16px.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnCreateSongbook">
-            <property name="toolTip">
-             <string>Zkratka: Ctrl+P</string>
-            </property>
-            <property name="text">
-             <string>Vytvořit zpěvník</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../res/resources.qrc">
-              <normaloff>:/icons/16/Moleskine_16px.png</normaloff>:/icons/16/Moleskine_16px.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QWidget" name="twTransposeCorner" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-        </layout>
        </widget>
       </item>
      </layout>
@@ -901,7 +957,7 @@ Zkratka: Alt+Shift+F</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>twEdit</tabstop>
+  <tabstop>twInsert</tabstop>
   <tabstop>btnInsertSection</tabstop>
   <tabstop>btnInsertSlideSeparator</tabstop>
   <tabstop>twTranspose</tabstop>

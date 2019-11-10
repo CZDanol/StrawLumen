@@ -256,6 +256,7 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 	ui->btnSaveChanges->setVisible(set);
 	ui->btnDiscardChanges->setVisible(set);
 
+	ui->twInsert->setVisible(set);
 	ui->twEdit->setVisible(set);
 	ui->twTranspose->setVisible(set);
 	ui->twImportExport->setVisible(!set);
@@ -846,4 +847,52 @@ void MainWindow_SongsMode::on_btnBulkEdit_clicked()
 {
 	bulkEditSongsDialog()->show();
 	bulkEditSongsDialog()->setSelectedSongs(mainWindow->selectedSongIds());
+}
+
+void MainWindow_SongsMode::on_btnConvertChords_clicked()
+{
+	contentSelectionMorph([=](QString content){
+		static const QString chordRegexPattern =
+				Chord::chordRegex().pattern()
+				.replace(QRegularExpression("\\((?!\\?\\:)"), "(?:") // Replace capturing groups with non-capturing
+				.remove('^').remove('$') // Make it a global match
+				;
+
+		static QRegularExpression globalChordRegex(chordRegexPattern);
+
+		static const QRegularExpression regex(
+					// First - chords - line
+					"^(\\.?\\s*(?:" + chordRegexPattern + "\\s*)+)"
+					+ "\n"
+					// Second - text - line
+					+ "(.*?)$",
+					QRegularExpression::MultilineOption
+					);
+
+		QString result = content;
+		int resultPosCorrection = 0;
+
+		QRegularExpressionMatchIterator mi = regex.globalMatch(content);
+		while(mi.hasNext()) {
+			const QRegularExpressionMatch m = mi.next();
+
+			const QString chordLine = m.captured(1);
+			QString textLine = m.captured(2);
+			int textLinePosCorrection = 0;
+
+			QRegularExpressionMatchIterator mi2 = globalChordRegex.globalMatch(chordLine);
+			while(mi2.hasNext()) {
+				const QRegularExpressionMatch m2 = mi2.next();
+				const QString chordTag = QStringLiteral("[%1]").arg(m2.captured());
+
+				textLine.insert(m2.capturedStart() + textLinePosCorrection, chordTag);
+				textLinePosCorrection += chordTag.length();
+			}
+
+			result.replace(m.capturedStart() + resultPosCorrection, m.capturedLength(), textLine);
+			resultPosCorrection += textLine.length() - m.capturedLength();
+		}
+
+		return result;
+	}, false);
 }

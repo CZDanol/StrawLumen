@@ -439,11 +439,6 @@ void MainWindow_PresentationMode::on_actionAddBlackScreen_triggered()
 	addPresentationsAction_({Presentation_BlackScreen::create()});
 }
 
-void MainWindow_PresentationMode::on_btnSettings_clicked()
-{
-	settingsDialog->show();
-}
-
 void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 {
 	static const QIcon icon(":/icons/16/Microsoft PowerPoint_16px.png");

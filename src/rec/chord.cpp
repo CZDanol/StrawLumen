@@ -4,14 +4,9 @@
 
 #include "job/wordsplit.h"
 
-Chord::Chord()
+const QRegularExpression &Chord::chordRegex()
 {
-	isValid_ = false;
-}
-
-Chord::Chord(const QString &str)
-{
-	static const QRegularExpression chordRegex(
+	static const QRegularExpression regex(
 				"^"
 				"([Bb][b♭]|[a-hA-H])(s|S|is|IS|es|ES|#|b|♭)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
 				"((?:[0-9(#+\\-]|sus)[0-9a-zA-Z()#+\\-]*)?" // Extra
@@ -19,6 +14,16 @@ Chord::Chord(const QString &str)
 				"$",
 				QRegularExpression::UseUnicodePropertiesOption);
 
+	return regex;
+}
+
+Chord::Chord()
+{
+	isValid_ = false;
+}
+
+Chord::Chord(const QString &str)
+{
 	enum MatchPart {
 		mpWhole,
 		mpBaseNote, mpBaseNoteModifier,
@@ -43,7 +48,7 @@ Chord::Chord(const QString &str)
 		{"dim", cvDim}
 	};
 
-	QRegularExpressionMatch m = chordRegex.match(str);
+	QRegularExpressionMatch m = chordRegex().match(str);
 
 	isValid_ = m.hasMatch();
 	if(!isValid_)

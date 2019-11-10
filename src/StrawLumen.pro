@@ -11,7 +11,7 @@ QT       += core gui printsupport multimedia multimediawidgets widgets axcontain
 
 TEMPLATE = app
 
-VERSION = 1.3.0.0
+VERSION = 1.3.0.1
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"
@@ -24,12 +24,15 @@ win32|win64 {
 
 DEFINES += PRODUCT_IDSTR=\\\"lumen\\\"
 DEFINES += PROGRAM_VERSION=\\\"$$VERSION\\\"
-DEFINES += UPSTREAM_VERSION=\\\"1.2.0.1\\\" # If the updater gets this upstream version, it does not promote update
+DEFINES += UPSTREAM_VERSION=\\\"1.3.0.0\\\" # If the updater gets this upstream version, it does not promote update
 DEFINES += PLATFORM_ID=\\\"$${OS_STR}_$${QMAKE_TARGET.arch}\\\"
 
 TARGET = strawLumen
 
 CONFIG += c++17
+
+# Statically link MSVC distributables
+# Release:CONFIG += static_runtime TODO
 
 # Without this, the program can use max 2GB ram
 QMAKE_LFLAGS = /LARGEADDRESSAWARE

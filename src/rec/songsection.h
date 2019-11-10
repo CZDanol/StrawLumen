@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QVector>
 #include <QRegularExpression>
+#include <QSet>
 
 class SongSection
 {
@@ -26,10 +27,14 @@ public:
 
 	QPixmap icon() const;
 
+public:
+	void increaseIndex();
+
 private:
 	bool isValid_;
 	bool isStandard_;
-	QString name_, index_;
+	QString name_;
+	int index_ = 1;
 
 };
 

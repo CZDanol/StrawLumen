@@ -1,4 +1,8 @@
 Aktuálně
+- nevypne se to - mrzne na wait condition
+- update timer pro vlastní text nutně nefunguje
+
+- powerpoint - next previous možnost i ne po slidech, ale "po animacích" (poslat příkaz next powerpointu a přečíst aktuální slide)
 - import PowerPoint jako písní
 - escape zavře druhé okno (zkratky do okna promítání) + šipka vlevo/vpravo/presenter
 - preview aktuálního a následujícího snímku

@@ -60,6 +60,10 @@ private slots:
 
 	void on_btnOpenSongManagementInNewWindow_clicked();
 
+	void on_btnSettings_clicked();
+
+	void on_btnAbout_clicked();
+
 private:
 	Ui::MainWindow *ui;
 

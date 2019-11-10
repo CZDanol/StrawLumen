@@ -28,7 +28,7 @@ SongSection::SongSection(const QString &str)
 	isValid_ = ma.hasMatch();
 	isStandard_ = ma.capturedLength(mpStandardBase);
 	name_ = isStandard_ ? ma.captured(mpStandardBase) : ma.captured(mpCustomName);
-	index_ = ma.captured(mpStandardIndex);
+	index_ = qMax(1, ma.captured(mpStandardIndex).toInt());
 }
 
 SongSection SongSection::customSection(const QString &str)
@@ -47,7 +47,7 @@ bool SongSection::isValid() const
 
 QString SongSection::standardName() const
 {
-	return name_ + index_;
+	return name_ + QString::number(index_);
 }
 
 QString SongSection::userFriendlyName() const
@@ -67,7 +67,7 @@ QString SongSection::userFriendlyName() const
 	if(!isStandard_)
 		return name_;
 
-	return index_.isEmpty() ? userFriendlyNames[name_] : tr("%1 %2").arg(userFriendlyNames[name_], index_);
+	return index_ == 1 ? userFriendlyNames[name_] : tr("%1 %2").arg(userFriendlyNames[name_], QString::number(index_));
 }
 
 QString SongSection::shorthandName() const
@@ -129,9 +129,15 @@ QPixmap SongSection::icon() const
 	return map.value(standardName(), map.value(name_, QPixmap()));
 }
 
+void SongSection::increaseIndex()
+{
+	index_ ++;
+}
+
 QVector<SongSection> songSections(const QString &song)
 {
 	QVector<SongSection> result;
+	QSet<QString> songSectionNames;
 	QRegularExpressionMatchIterator it = songSectionAnnotationRegex().globalMatch(song);
 
 	while(it.hasNext()) {
@@ -140,6 +146,11 @@ QVector<SongSection> songSections(const QString &song)
 
 		if(!ss.isValid())
 			continue;
+
+		while(songSectionNames.contains(ss.standardName()))
+			ss.increaseIndex();
+
+		songSectionNames.insert(ss.standardName());
 
 		result.append(ss);
 	}
@@ -154,6 +165,7 @@ QVector<SongSectionWithContent> songSectionsWithContent(const QString &song)
 	// Default - intro
 	SongSection currentSection("I");
 	QVector<SongSectionWithContent> result;
+	QSet<QString> songSectionNames;
 	int sectionStart = 0;
 	int annotationStart = 0;
 
@@ -164,6 +176,11 @@ QVector<SongSectionWithContent> songSectionsWithContent(const QString &song)
 
 		if(!ss.isValid())
 			continue;
+
+		while(songSectionNames.contains(ss.standardName()))
+			ss.increaseIndex();
+
+		songSectionNames.insert(ss.standardName());
 
 		const QString baseContent = song.mid(sectionStart, m.capturedStart()-sectionStart);
 		const auto m2 = rxTrim.match(baseContent);

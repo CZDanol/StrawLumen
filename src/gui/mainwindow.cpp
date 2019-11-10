@@ -45,13 +45,34 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->swMenu->addWidget(ui->wgtPresentationMode->menuWidget());
 	ui->swMenu->addWidget(ui->wgtSongsMode->menuWidget());
 	ui->twWorkspace->setCornerWidget(ui->twWorkspaceCorner);
-	ui->menuProgram->insertMenu(ui->menuProgram->actions()[1], ui->wgtSongsMode->importMenu());
-	ui->menuProgram->insertMenu(ui->menuProgram->actions()[2], ui->wgtSongsMode->exportMenu());
+	ui->twApplication->setCornerWidget(ui->twApplicationCorner);
 
 	setWindowTitle(QString("Straw Lumen %1").arg(PROGRAM_VERSION));
 	restoreGeometry(settings->value("window.mainWindow.geometry").toByteArray());
 
 	connect(db, SIGNAL(sigQueryError(QString,QString)), this, SLOT(onDbQueryError(QString,QString)));
+
+	{
+		QMenu *menu = new QMenu(this);
+		menu->addAction(ui->actionGenerateDocuments);
+		menu->addMenu(ui->wgtSongsMode->importMenu());
+		menu->addMenu(ui->wgtSongsMode->exportMenu());
+		menu->addAction(ui->actionBulkEditSongs);
+
+		menu->addSeparator();
+
+		menu->addAction(ui->actionBackgrounds);
+		menu->addAction(ui->actionStyles);
+		menu->addAction(ui->actionBibleMgmt);
+		menu->addAction(ui->actionSettings);
+
+		menu->addSeparator();
+
+		menu->addAction(ui->actionSendFeedback);
+		menu->addAction(ui->actionAbout);
+
+		ui->btnMenu->setMenu(menu);
+	}
 
 	ui->btnPresentationMode->click();
 	updateUiEnabled();
@@ -275,4 +296,14 @@ void MainWindow::on_btnOpenSongManagementInNewWindow_clicked()
 
 	wnd->setAttribute(Qt::WA_DeleteOnClose);
 	wnd->show();
+}
+
+void MainWindow::on_btnSettings_clicked()
+{
+	settingsDialog->show();
+}
+
+void MainWindow::on_btnAbout_clicked()
+{
+	aboutDialog()->show();
 }
