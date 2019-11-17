@@ -14,7 +14,7 @@
 #include "gui/backgrounddialog.h"
 #include "gui/stylesdialog.h"
 #include "gui/startupsplashscreen.h"
-#include "strawapi/simpleupdater.h"
+#include "strawapi/updatemanager.h"
 #include "importexport/lumenexportdialog.h"
 #include "job/activexjobthread.h"
 #include "job/db.h"
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
 		initApplication();
 		mainWindow->show();
-		simpleUpdater()->checkForUpdates();
+		updateManager()->checkForUpdates();
 		startupSplashscreen.close();
 
 		checkBibleImport();

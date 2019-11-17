@@ -258,5 +258,7 @@
         <file>icons/16/wrench_16px.png</file>
         <file>icons/16/sort_by_modified_date_16px.png</file>
         <file>icons/16/transition_both_directions_16px.png</file>
+        <file>css/changelog.css</file>
+        <file>icons/16/up_2_16px.png</file>
     </qresource>
 </RCC>

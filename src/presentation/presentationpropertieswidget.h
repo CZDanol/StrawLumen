@@ -15,7 +15,7 @@ class PresentationPropertiesWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PresentationPropertiesWidget(const QSharedPointer<Presentation> &presentation, QWidget *parent = 0);
+	explicit PresentationPropertiesWidget(const QSharedPointer<Presentation> &presentation, QWidget *parent = nullptr);
 	~PresentationPropertiesWidget();
 
 public:

@@ -55,11 +55,13 @@ void FeedbackDialog::on_btnSend_clicked()
 	if(message.isEmpty())
 		return standardErrorDialog(tr("Prosím vyplňte tělo zprávy."));
 
+	const QString subject = ui->lnSubject->text().trimmed();
+
 	const QJsonObject request {
-		{"action", "sendFeedback"},
+		{"action", "feedback"},
 		{"product", PRODUCT_IDSTR},
-		{"contact", email},
-		{"message", message}
+		{"subject", subject},
+		{"message", QStringLiteral("Kontakt: %1\n\n%2").arg(email, message)}
 	};
 
 	StrawApi::RequestResult result;

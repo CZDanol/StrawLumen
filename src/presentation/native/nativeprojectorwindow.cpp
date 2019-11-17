@@ -19,6 +19,8 @@ NativeProjectorWindow::NativeProjectorWindow(QWidget *parent) :
 	setAttribute(Qt::WA_ShowWithoutActivating);
 	setAttribute(Qt::WA_Mapped);
 
+	installEventFilter(mainWindow);
+
 	connect(mainWindow, &MainWindow::sigClosed, this, &NativeProjectorWindow::close);
 }
 

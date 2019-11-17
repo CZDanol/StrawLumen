@@ -1,5 +1,5 @@
-#include "simpleupdater.h"
-#include "ui_simpleupdater.h"
+#include "updatemanager.h"
+#include "ui_updatemanager.h"
 
 #include <QtConcurrent/QtConcurrent>
 #include <QJsonDocument>
@@ -7,38 +7,38 @@
 #include <QScrollBar>
 
 #include "gui/mainwindow.h"
-#include "util/execonmainthread.h"
 #include "util/standarddialogs.h"
 #include "strawapi/strawapi.h"
 #include "main.h"
 
 #define MULTILINE(...) #__VA_ARGS__
 
-SimpleUpdater::SimpleUpdater(QWidget *parent) :
+UpdateManager::UpdateManager(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::SimpleUpdater)
+	ui(new Ui::UpdateManager)
 {
 	ui->setupUi(this);
 
-	QFile styleSheet(":/changelogStylesheet.css");
+	QFile styleSheet(":/css/changelog.css");
 	styleSheet.open(QIODevice::ReadOnly);
 	ui->tbChangelog->document()->setDefaultStyleSheet(QString::fromUtf8(styleSheet.readAll()));
 }
 
-SimpleUpdater::~SimpleUpdater()
+UpdateManager::~UpdateManager()
 {
 	delete ui;
 }
 
-void SimpleUpdater::checkForUpdates()
+void UpdateManager::checkForUpdates(int updateChannel)
 {
-	QPointer<SimpleUpdater> ptr(this);
-	QtConcurrent::run([this, ptr]{
+	QPointer<UpdateManager> ptr(this);
+	QtConcurrent::run([ptr, updateChannel]{
 		const QJsonObject request {
-			{"action", "checkForSoftwareUpdates"},
-			{"productKey", PRODUCT_IDSTR},
+			{"action", "checkUpdates"},
+			{"product", PRODUCT_IDSTR},
 			{"currentVersion", PROGRAM_VERSION},
-			{"platform", PLATFORM_ID}
+			{"platform", PLATFORM_ID},
+			{"updateChannel", updateChannel}
 		};
 
 		QJsonObject response;
@@ -52,15 +52,15 @@ void SimpleUpdater::checkForUpdates()
 			return;
 		}
 
-		if(response["result"] == "updateAvailable" && response["newVersion"] != UPSTREAM_VERSION) {
+		if(response["result"] == "updateAvailable" && response["newVersion"] != PROGRAM_UPSTREAM_VERSION) {
 			const QString newVersion = response["newVersion"].toString();
 			const QString changeLog = response["changeLog"].toString();
 
-			execOnMainThread([this, ptr, newVersion, changeLog]{
+			QTimer::singleShot(0, qApp, [ptr, newVersion, changeLog, updateChannel]{
 				if(ptr.isNull())
 					return;
 
-				show(newVersion, changeLog);
+				ptr->show(newVersion, changeLog, updateChannel);
 			});
 		}
 
@@ -69,17 +69,18 @@ void SimpleUpdater::checkForUpdates()
 	});
 }
 
-void SimpleUpdater::reject()
+void UpdateManager::reject()
 {
 	networkReply_.reset();
 	QDialog::reject();
 }
 
-void SimpleUpdater::show(const QString &newVersion, const QString changeLog)
+void UpdateManager::show(const QString &newVersion, const QString changeLog, int updateChannel)
 {
-	Q_UNUSED(newVersion);
+	Q_UNUSED(newVersion)
+	updateChannel_ = updateChannel;
 
-	ui->tbChangelog->document()->setHtml(QString("<html><body>%1</body></html>").arg(changeLog));
+	ui->tbChangelog->document()->setHtml(QStringLiteral("<html><body>%1</body></html>").arg(changeLog));
 
 	ui->pbProgress->setValue(0);
 	ui->pbProgress->setEnabled(false);
@@ -89,7 +90,7 @@ void SimpleUpdater::show(const QString &newVersion, const QString changeLog)
 	ui->tbChangelog->verticalScrollBar()->setValue(ui->tbChangelog->verticalScrollBar()->minimum());
 }
 
-void SimpleUpdater::onDownloadFinished()
+void UpdateManager::onDownloadFinished()
 {
 	accept();
 
@@ -98,7 +99,7 @@ void SimpleUpdater::onDownloadFinished()
 	if(networkReply_->error() != QNetworkReply::NoError)
 		return standardErrorDialog(tr("Při stahování aktualizace nastala chyba: %1").arg(networkReply_->errorString()));
 
-	const QString newFileName = QDir::temp().absoluteFilePath(QString("%1.update.exe").arg(downloadFile_->fileName()));
+	const QString newFileName = QDir::temp().absoluteFilePath(QStringLiteral("%1.update.exe").arg(downloadFile_->fileName()));
 	if(!downloadFile_->rename(newFileName))
 		return standardErrorDialog(tr("Nepodařilo se připravit soubor aktualizace."));
 
@@ -112,34 +113,34 @@ void SimpleUpdater::onDownloadFinished()
 	qApp->quit();
 }
 
-void SimpleUpdater::onDownloadProgress(qint64 received, qint64 total)
+void UpdateManager::onDownloadProgress(qint64 received, qint64 total)
 {
 	double progress = double(received) / total;
 	ui->pbProgress->setValue(int(progress * 1000.0));
 }
 
-void SimpleUpdater::onDownloadReadyRead()
+void UpdateManager::onDownloadReadyRead()
 {
 	downloadFile_->write(networkReply_->readAll());
 }
 
-SimpleUpdater *simpleUpdater()
+UpdateManager *updateManager()
 {
-	static SimpleUpdater *dlg = nullptr;
+	static UpdateManager *dlg = nullptr;
 	if(!dlg)
-		dlg = new SimpleUpdater(mainWindow);
+		dlg = new UpdateManager(mainWindow);
 
 	return dlg;
 }
 
-void SimpleUpdater::on_btnDownload_clicked()
+void UpdateManager::on_btnDownload_clicked()
 {
 	downloadFile_.reset(new QTemporaryFile());
 	if(!downloadFile_->open())
 		return standardErrorDialog(tr("Nepodařilo se připravit místo pro stahování."));
 
-	QUrl url = StrawApi::apiUrl;
-	url.setQuery(QString("action=downloadSoftware&productKey=%1&platform=%2").arg(PRODUCT_IDSTR, PLATFORM_ID));
+	QUrl url("https://api2.straw-solutions.cz/");
+	url.setQuery(QStringLiteral("action=downloadSoftware&product=%1&platform=%2&updateChannel=%3&isUpdate=1").arg(PRODUCT_IDSTR, PLATFORM_ID, QString::number(updateChannel_)));
 
 	QNetworkRequest req(url);
 	req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
@@ -155,7 +156,7 @@ void SimpleUpdater::on_btnDownload_clicked()
 	ui->pbProgress->setEnabled(true);
 }
 
-void SimpleUpdater::on_btnCancel_clicked()
+void UpdateManager::on_btnCancel_clicked()
 {
 	reject();
 }

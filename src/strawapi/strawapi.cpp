@@ -6,20 +6,20 @@
 #include <QNetworkRequest>
 #include <QJsonDocument>
 
-const QUrl StrawApi::apiUrl("https://api.straw-solutions.cz/");
-
-StrawApi::RequestResult StrawApi::requestJson(const QJsonObject &request, QJsonObject &response)
+StrawApi::RequestResult StrawApi::requestJson(const QJsonObject &requestJson, QJsonObject &response)
 {
 	QNetworkAccessManager mgr;
 	QEventLoop evLoop;
 
 	QObject::connect(&mgr,SIGNAL(finished(QNetworkReply*)),&evLoop,SLOT(quit()));
 
-	QNetworkRequest req(apiUrl);
+	QUrl url(QString::fromUtf8(QByteArray::fromBase64(QByteArray("aHR0cHM6Ly9hcGkyLnN0cmF3LXNvbHV0aW9ucy5jei8="))));
+	QNetworkRequest req(url);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-	req.setHeader(QNetworkRequest::UserAgentHeader, "StrawSolutionsAPI/1.0");
+	req.setHeader(QNetworkRequest::UserAgentHeader, "StrawAPI/1.0");
 
-	QScopedPointer<QNetworkReply> reply(mgr.post(req, QJsonDocument(request).toJson(QJsonDocument::Compact)));
+	const QByteArray requestData = QJsonDocument(requestJson).toJson(QJsonDocument::Compact);
+	QScopedPointer<QNetworkReply> reply(mgr.post(req, requestData));
 
 	// Wait for the response
 	evLoop.exec();
@@ -35,8 +35,7 @@ StrawApi::RequestResult StrawApi::requestJson(const QJsonObject &request, QJsonO
 	response = QJsonDocument::fromJson(rawResponse, &jsonErr).object();
 
 	if(jsonErr.error != QJsonParseError::NoError) {
-		qWarning() << "(api request) JSON error: " << jsonErr.errorString();
-
+		qWarning() << "(api request) JSON error: " << jsonErr.errorString() << rawResponse;
 		return RequestResult::wrongResponse;
 	}
 

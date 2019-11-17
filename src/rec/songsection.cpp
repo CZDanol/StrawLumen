@@ -9,7 +9,7 @@ SongSection::SongSection(const QString &str)
 {
 	static const QRegularExpression regex("^"
 																				"(?:"
-																				"([VCBIOM])([1-9][0-9]*)?" // Standard section format
+																				"([VCBIOMP])([1-9][0-9]*)?" // Standard section format
 																				"|"
 																				"\"([a-zA-Z0-9_\\-+]+)\"" // Custom section name
 																				")"
@@ -59,6 +59,7 @@ QString SongSection::userFriendlyName() const
 		{"O", tr("Outro")},
 		{"B", tr("Bridge")},
 		{"M", tr("Mezihra")},
+		{"P", tr("Předrefrén")}
 	};
 
 	if(!isValid_)
@@ -79,6 +80,7 @@ QString SongSection::shorthandName() const
 		{"O", tr("Outro %1")},
 		{"B", tr("Bridge %1")},
 		{"M", tr("Mezihra %1")},
+		{"P", tr("Předrefrén %1")},
 	};
 
 	if(!isValid_)
@@ -98,7 +100,7 @@ QString SongSection::annotation() const
 	if(!isStandard_)
 		return QString("{\"%1\"}").arg(name_);
 
-	return QString("{%1%2}").arg(name_, index_);
+	return QString("{%1%2}").arg(name_, QString::number(index_));
 }
 
 QPixmap SongSection::icon() const
@@ -109,6 +111,7 @@ QPixmap SongSection::icon() const
 		{"O", QPixmap(":/icons/16/Right 2_16px.png")},
 		{"B", QPixmap(":/icons/16/Circle_16px.png")},
 		{"M", QPixmap(":/icons/16/Musical Notes_16px.png")},
+		{"P", QPixmap(":/icons/16/up_2_16px.png")},
 
 		{"V", QPixmap(":/icons/16/Level 1_16px.png")},
 		{"V1", QPixmap(":/icons/16/Level 1_16px.png")},

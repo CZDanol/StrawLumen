@@ -8,17 +8,15 @@ class StrawApi
 {
 
 public:
-	enum class RequestResult {
+	enum class RequestResult : int {
 		ok,
 		connectionProblem,
-		wrongResponse
+		wrongResponse,
+		__count
 	};
 
 public:
 	static RequestResult requestJson(const QJsonObject &jsonRequest, QJsonObject &response);
-
-public:
-	static const QUrl apiUrl;
 
 };
 

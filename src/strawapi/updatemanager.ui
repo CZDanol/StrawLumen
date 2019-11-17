@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SimpleUpdater</class>
- <widget class="QDialog" name="SimpleUpdater">
-  <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
-  </property>
+ <class>UpdateManager</class>
+ <widget class="QDialog" name="UpdateManager">
   <property name="geometry">
    <rect>
     <x>0</x>

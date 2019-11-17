@@ -84,12 +84,12 @@ QString OpenSongImportDialog::openSongToLumenSongFormat(const QString &openSongF
 	// Change sections formet
 	{
 		// Compatible sections format (that a is for the first slide of the section)
-		static const QRegularExpression sectionRegex("\\[([VCBIO][0-9]*)a?\\]\\s*");
+		static const QRegularExpression sectionRegex("\\[([VCBIOP][0-9]*)a?\\]\\s*");
 		result.replace(sectionRegex, "{\\1}\n");
 
-		// V1b, V1c, ... -> {---} (slide separator)
-		static const QRegularExpression sectionContinuationRegex("\\[([VCBIO][0-9]*[b-z]?)\\]\\s*");
-		result.replace(sectionContinuationRegex, "{---}\n");
+		// V1b, V1c, ... -> {---} (slide separator) and || -> {---}
+		static const QRegularExpression sectionContinuationRegex("(\\s|\\n)*(\\[([VCBIO][0-9]*[b-z]?)\\]|\\|\\|)(\\s|\\n)*");
+		result.replace(sectionContinuationRegex, "\n{---}\n");
 
 		// [1] -> {V1}
 		static const QRegularExpression simpleSectionRegex("\\[([1-9][0-9]*)\\]\\s*");

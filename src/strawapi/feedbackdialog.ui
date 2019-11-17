@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>630</width>
-    <height>309</height>
+    <width>635</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,78 +32,17 @@
        <string>Zpětná vazba</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Comments_16px.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Email_16px.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="4">
-        <widget class="QTextEdit" name="teMessage">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="acceptRichText">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>16</width>
-           <height>8</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>8</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLineEdit" name="lnEmail"/>
-       </item>
-       <item row="4" column="1" colspan="3">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Zpráva:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Vás e-mail:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Email_16px.png</pixmap>
          </property>
         </widget>
        </item>
@@ -145,6 +84,84 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="6" column="0" colspan="4">
+        <widget class="QTextEdit" name="teMessage">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="acceptRichText">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="lnEmail"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Comments_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>8</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="2">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>16</width>
+           <height>8</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="1" colspan="3">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Zpráva:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Price Tag_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Předmět:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lnSubject"/>
        </item>
       </layout>
      </widget>

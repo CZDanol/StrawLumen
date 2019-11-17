@@ -15,8 +15,8 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(QWidget *parent = 0);
-	~MainWindow();
+	explicit MainWindow(QWidget *parent = nullptr);
+	virtual ~MainWindow() override;
 
 public:
 	void editSong(qlonglong songId);
@@ -39,9 +39,10 @@ public slots:
 	void onDbDatabaseError(const QString &error);
 
 protected:
-	void closeEvent(QCloseEvent *e) override;
-	void dragEnterEvent(QDragEnterEvent *e) override;
-	void dropEvent(QDropEvent *e) override;
+	virtual bool eventFilter(QObject *obj, QEvent *ev) override;
+	virtual void closeEvent(QCloseEvent *e) override;
+	virtual void dragEnterEvent(QDragEnterEvent *e) override;
+	virtual void dropEvent(QDropEvent *e) override;
 
 private:
 	void updateUiEnabled();

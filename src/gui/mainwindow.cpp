@@ -131,6 +131,16 @@ void MainWindow::onDbDatabaseError(const QString &error)
 	standardErrorDialog(tr("Chyba databáze: %1").arg(error));
 }
 
+bool MainWindow::eventFilter(QObject *obj, QEvent *ev)
+{
+	if(obj == nativeProjectorWindow && (ev->type() == QEvent::KeyPress || ev->type() == QEvent::KeyRelease)) {
+		QCoreApplication::sendEvent(this, ev);
+		return true;
+	}
+
+	return QMainWindow::eventFilter(obj, ev);
+}
+
 void MainWindow::closeEvent(QCloseEvent *e)
 {
 	if(!ui->wgtSongsMode->askFinishEditMode()) {

@@ -1,5 +1,5 @@
-#ifndef SIMPLEUPDATER_H
-#define SIMPLEUPDATER_H
+#ifndef UPDATEMANAGER_H
+#define UPDATEMANAGER_H
 
 #include <QDialog>
 #include <QJsonObject>
@@ -9,19 +9,21 @@
 #include <QNetworkReply>
 
 namespace Ui {
-	class SimpleUpdater;
+	class UpdateManager;
 }
 
-class SimpleUpdater : public QDialog
+class UpdateManager : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit SimpleUpdater(QWidget *parent = 0);
-	~SimpleUpdater();
+	explicit UpdateManager(QWidget *parent = nullptr);
+	virtual ~UpdateManager() override;
 
 public:
-	void checkForUpdates();
+	bool isPortableMode = false;
+
+	void checkForUpdates(int updateChannel = 0);
 
 protected:
 	void reject() override;
@@ -30,7 +32,7 @@ private slots:
 	void on_btnDownload_clicked();
 
 private:
-	void show(const QString &newVersion, const QString changeLog);
+	void show(const QString &newVersion, const QString changeLog, int updateChannel);
 
 private slots:
 	void onDownloadFinished();
@@ -41,13 +43,15 @@ private slots:
 	void on_btnCancel_clicked();
 
 private:
-	Ui::SimpleUpdater *ui;
+	Ui::UpdateManager *ui;
+	int updateChannel_;
+
 	QNetworkAccessManager networkAccessManager_;
 	QSharedPointer<QTemporaryFile> downloadFile_;
 	QSharedPointer<QNetworkReply> networkReply_;
 
 };
 
-SimpleUpdater *simpleUpdater();
+UpdateManager *updateManager();
 
-#endif // SIMPLEUPDATER_H
+#endif // UPDATEMANAGER_H

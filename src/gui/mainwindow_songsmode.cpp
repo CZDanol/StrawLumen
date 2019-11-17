@@ -84,7 +84,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	// Insert song section menu
 	{
 		const QStringList sectionNames {
-			"C", "V1", "V2", "V3", "B", "I", "O", "M"
+			"C", "V1", "V2", "V3", "B", "I", "O", "M", "P"
 		};
 
 		for(auto &sectionName : sectionNames) {
@@ -862,7 +862,7 @@ void MainWindow_SongsMode::on_btnConvertChords_clicked()
 
 		static const QRegularExpression regex(
 					// First - chords - line
-					"^(\\.?\\s*(?:" + chordRegexPattern + "\\s*)+)"
+					"^(\\.?(?:(?!\\n)\\s)*(?:" + chordRegexPattern + "(?:(?!\\n)\\s)*)+)"
 					+ "\n"
 					// Second - text - line
 					+ "(.*?)$",

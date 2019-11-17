@@ -71,3 +71,166 @@ K přebrání
 - Možnost opakovat celý program
 
 - export/import chordpro
+
+
+
+1) ROZDĚLOVÁNÍ ODDÍLŮ NA SNÍMKY
+V OpenSongu je možnost rozdělit různé části písně na více snímků jejich zalomením pomocí znaků: ||
+Zjistil jsem, že ve Straw Lumenu existuje rozdělení snímků pomocí: {---}
+Mámvšak u stovek písní dlouhé sloky nebo refrény svislítky rozdělené a Straw Lumen je nedokáže interpretovat
+jako rozdělení na dva snímky. Bylo by možné buď změnit znaky, kterými rozděluje snímky Straw Lumen,
+nebo v importu Straw Lumenu nastavit autotranslaci značek?
+
+2) ODSAZOVÁNÍ ŘÁDKŮ
+V OpenSongu jde pomocí znaku: | odsadit vše co je za svislítkem na další řádek.
+Ve Straw Lumenu jsem nepřišel na žádnou možnost odsazení na nový řádek.
+Nemyslím odszaení v textu samotném. Tam prostě píšu na další řádek odsazený Enterem.
+Myslím teď možnost odsazení nepříklad v případě názvů písní nebo autorů.
+Můžu tak odsadit anglický název písně na druhý řádek, nebo oddělit na dva řádky autory.
+
+78 Před Božím trůnem v nebesích | (BEFORE THE THRONE OF GOD ABOVE)
+Hudba a text: Charitie Lees Bancroft, Vikki Cook | překlad: Ivana Šímová
+
+Dlouhý obsah se tak rozdělí na dva řádky a snímek je čistější a přehlednější.
+Řeřením by bylo rovněž dát do programu pole "Název:" a pole "Alternativní název:"
+A mít možnost zapnout/vypnout, jestli se alternativní název zobrazuje nebo ne.
+Zvlášť u překladů zahraničních chval lidem pomáhá, když vidí, jaká píseň je to v originále.
+
+3) NEFUNKČNÍ ČÍSLOVÁNÍ PÍSNÍ A TŘÍDĚNÍ DO SLOŽEK
+Mám písně pojmenované číslem písně a pak názvem. Program však uspořádává písně velice svérázným způsobem.
+Řadí písně podle čísel takto: 1; 10; 100; 101 ... 109; 11; 111 ... 119; 
+Toto jde vyřešit vkládáním nul před čísla písní, které nemají třímístné číslo,
+avšak na snímku vypadá fakt blbě píseň pojmenovaná: 001 Ať požehnán je Bůh
+Je možné zařídit, aby program dokázal správně uspořádat čísla s různým počtem pozic?
+V OpenSongu je také možné přepínat mezi několik adresáři s písněmi.
+Můžu tak mít rozděleno několik zpěvníků. Toto velmi výrazně postrádám.
+
+4) CHYBĚJÍCÍ TYPY ODÍLŮ 
+Je super, že Straw Lumen zná oproti OpenSongu nové části písně jako: Intro, Outro, Mezihra, atd.
+Mrzí, že program nezná oddíl "Předrefrén" [P]. Část písně, která už není slokou, je vždy stejná, ale ještě to není refrén.
+Ono je samozřejmě fajn, že je možné používat i vlastní typy oddílu, ale jsou v uvozovkách a nefungují na ně klávesové zkratky.
+A konkrétně předrefrén dost postrádám, protože se zejména v moderních chválách často vyskytuje.
+A proč je podpora jen pro tři sloky? Proč nejsou oddíly sloka, refrén a další obecně s možností libovolného čísla?
+Některé staré nebo specifické písně mají i přes deset slok. Hodně písní má taky třeba dva nebo tři refrény s trochu jinými slovy.
+OpenSong neřeší jaké má sloka nebo jiná část písně číslo. Rozliší podle písmena typ oddílu a číslo za písmenem už neřeší.
+
+5) POZNÁMKY K PÍSNÍM
+OpenSong umožňuje do písně vepsat nepromítanou, ale jinak v programu viditelnou a taky vytisknutelnou poznámku.
+V OpenSongu jsou poznámky v textu uvozeny středníkem na kraji řádku. Vypadá to například takto:
+;  Liché sloky zpívají ženy a sudé sloky muži.
+Tato funkce je postradatelná, ale často se fakt hodí. Třeba i pro interní poznámky o způsobu hry.
+Bylo by super aby podobná funkce existovala a třeba se poznámky daly volitelně promítat nebo nepromítat.
+Případně kdyby byly rozlišené poznámky k částem písně a poznámky k celé písni.
+Pro poznámky k celé písni by mohlo být třeba samostatné pole v záhlaví písně, stejně jako pro název nebo autora.
+
+6) PROMÍTÁNÍ AKORDŮ
+Toto není funkce OpenSongu, ale taky by se hodilo, aby se v prezentaci daly volitelně zobrazit nebo skrýt akordy.
+Buď JEN oddělené pořadí akordů někde v rohu snímku nebo přímo akordy v textu. Hudebníci by to jistě využili.
+
+7) VIDEOPOZADÍ 
+Bylo by možné nastavit jako pozadí i libovolnou videosmyčku? V kombinaci s těmi barevnými filtry
+které fungují u obrázků atd. by to bylo nepřekonatelné řešení orpti všem jiným programům.
+
+8) OMEZENÉ MOŽNOSTI ÚPRAV STYLU NEBO ZAROVNÁNÍ
+Co když chci mít název písně ne dole uprostřed, ale vlevo nahoře a malým písmem? A pod tím hned autora?
+Možnosti nastavení zobrazení Straw Lumenu mi přijdou velice osekané. Teď nemuvím o grafických úpravách pozadí.
+Ty jsou úplně super a OpenSong něco takového postrádá. OpenSong však umožňuje samostatně na snímku
+nastavit pozici a zarovnání nadpisu, podnadpisu a textu samotného, přičemž je možné libovolně zapnout,
+jaké všechny informace se zobrazí jakožto podnadpis. (např. autor, zpěvník, číslo písně atd.)
+U každé položky lze samostatně nastavit font, velikost, barvu,styl, stíny, obrysy, řezání písma a zvýraznění.
+Bylo by super také nějaké nastavení co se dá dělat, když text přeteče vymezené textové pole.
+(zmenšení textu, zalomení na dalaší řádek, rozdělení na dva snímky.)
+Také by se hodila možnost nějakého grafického odlišení refrénu. Třeba že je text kurzivou, tučně nebo v jiné barvě.
+
+9) HLAVNÍ VS. VLASTNÍ STYL PÍSNĚ
+OpenSong umožňuje jednotně nastavit výchozí hlavní prezentační styl pro písně a biblické texty.
+Zároveň u jednotlivých písní je možné nastavit, jaký má mít píseň vlastní zobrazovací styl
+a ještě třeba nastavit pro různé části písně jiná pozadí. Když se píseň přidá do Playlistu, je možné zvolit,
+zda chci aby používala svůj vlastní styl, nebo používala ten hlavní.
+V OpenSong playlistu je také položka Změna stylu, která až do další změny změní pro následující písně hlavní styl,
+i když písně by měly jinak své vlastní styly, pokud bych je aktivoval a zatrhl, že chci přebít hlavní styl.
+
+Ve StrawLumenu jsou možnost nastavení prezentačního styl jen pro jednotlivé písně a navíc velice omezené.
+Když chci třeba každý měsíc změnit grafický styl, musel bych to ručně měnit u všech písní... což není úplně fajn...
+
+10) DOPLŇUJÍCÍ INFORMACE O PÍSNI
+OpenSong umožňuje přepnout do rozšířeného režimu editace písně, kde je možné dát informace
+o původní tónině písně, o tempu, o taktu, nebo vlastní tři nedefinovaná pole.
+Je zde také možné pro různé části písně zapnout rozdílná pozadí a vlastní prezentační styl.
+Straw Lumen umožňuje vyplnit jen základní informace o psíni, ale hudebníci by jistě využili možnost dalších údajů.
+
+11) TŘÍDĚNÍ PÍSNÍ PODLE TÉMAT 
+Rozšířený režim editace umžňuje v OpenSongu také zaškrtnout, jaká témata píseň obsahuje.
+Zaškrtávání témat je poměrně zastaralé a omezující, ale hodilo by samostnatné pole "Témata",
+kde by bylo možné umístit něco se něco na způsob hashtagů, kterými by se píseň označila.
+Potom by bylo možné při sestavování playlistu na bohoslužbu vyhledávat písně na základě témat.
+
+12) VYHLEDÁVÁNÍ V BIBLI 
+OpenSong umožňuje hledání konkrétních slov nebo textu v Bibli nebo v textech písní a jejich názvech nebo autorech.
+StrawLumen má vyhledávací pole pouze pro písně.
+
+13) ENHARMONICKÁ ZÁMĚNA AKORDŮ 
+U akordů by bylo super kromě transpozice umožnit enharmonickou záměnu béček a křížků.
+Myslím tím to, aby se dalo přepínat, jestli jde v písni o akordy Cis a Gis nebo Des a As.
+OpenSong to umožňuje.
+
+14) PREZENTAČNÍ REŽIMY 
+OpenSong umožňuje překrýt prezentaci určitými režimy, ze kterých je ve StrawLumenu jen černý režim.
+OpenSong má Normální režim, Černý režim, Bíly režim, Skrytý režim (zobrazí jen pozadí) Freeze režim (zmrazí obsah).
+A hlavně režim Logo. Ten umožňuje překrýt aktuální pozadí logem s pomocnou bílošedočernou maskou definující průhlednost.
+Logo tak může být celoplošné i poloprůhledné na aktuálním pozadí.
+Režim Freeze by se pro změnu hodil když je třeba během prezentace upravoval playlist. Aktuálně to moc nneí možné.
+Protože když kliknu na ěkterou položku playlistu, abych ji mohl editovat, tak se mi začne tato položka zobrazovat.
+OpenSong také umožňuje nastavit, který režim je ve výchozím stavu po spuštění prezentace zapnutý.
+Při zapnutí prezentace s výchozím černým režimem mi tak omylem na hlavní obrazovce neblikají věci, které tam nechci,
+dokud nezapnu režim normální, nebo dokud nenastavím, že černý režim nemá být výchozí.
+
+15) KLÁVESOVÉ ZKRATKY
+V OpenSongu dobře fungují klávesové zkratky při prezentaci, které odkazují na číslo sloky, refrén, předrefrén, bridge, ...
+Další zkratky navíc umožnují přepínat mezi režimy prezentace, které tak fungují i při prezentaci jen s jednou obrazovkou.
+
+16) ORGANIZACE PROJEKCE NA VÍCE OBRAZOVEK
+Dnes už nestačí pouhé nstavení toho, která obrazovka je ta, kam se má prezentovat.
+Často se prezentuje na více obrazovek najednou a ještě k tomu třeba i pro lidi na stagi.
+Bylo by super nějaké menu, kde by se dalo nastavit pro libovolný počet obrazovek, co se kde zobrazí.
+Rozdělení třeba na 3 typy obrazovek (OVLÁDÁNÍ, PUBLIKUM, STAGE), a přiřazování typu jednotlivým obrazovkám.
+A potom nastavení, co se na kterém typu obrazovky zobrazuje. Aby se třeba na OVLÁDACÍM monitoru zobrazovalo rozhraní programu,
+na monitorech pro PUBLIKUM pouze text písně s nadpisem a podnadpisem, a na monitorech STAGE texty i s akordama,
+poznámky o způsobu hry, možnost zobrazení vzkazů od zvukaře, v rohu třeba volitelně celkový časový odpočet,
+doba celé prezentace či aktuální čas, a třeba ve druhém rohunáhled dalšího snímku, aby hudebníci a zpěváci věděli,
+že třeba po druhé sloce pokračuje sloka třetí a ne refrén, nebo aby dokázali dál zpívat v případě že prezentující osoba zaspí.
+
+17) POLOŽKA POČÍTADLO 
+Mezi položkami Píseň, Verš, Video, Obrázek Webová stránka atd. by se hodila položka počítadlo.
+Sloužilo by pro časový odpočet třeba během přestávky, nebo pro odpočet při zahajování akce.
+Bylo by faj mít tam více režimů. Režim počítání od nebo do zadaného čísla (třeba od nebo do čísla 10, 60 nebo 100),
+režim časového odpočítávání od nastavené délky, kde by se třeba 5 minut odpočítávalo ve formátu: HH:MM:SS,
+režim časového počítání od doby, kdy byl spuštěn snímek s ním do přepnutí na dlaší snímek,
+nebo režim počítadla zobrazujícího aktuální čas. K tomu možnost nastavit font, vzhled a velikost číslic, a pozadí.
+
+18) POSOUVÁNÍ
+Někdy mi v režimu prezentace na jednu obrazovku posouvání funguje, ale někdy se stane,
+že posouvání šipkami nefunguje, ale funguje jen PageUp/PageDown a někdy nefunguje nic a ani ESCape.
+Nejde pak ani ukončit prezentace, a musím pomocí ALT+TAB přepnout do ovládacího okna a až pak zkratky ragují,
+jenže to zase není vidět prezentující okno. Musím v tu chvíli restartovat program.
+Chtělo by to doladit. OpenSong umožňuje šipkami nahoru a dolů přeskakovat mezi jednotlivými snímky,
+a šipkami doleva a doprava přeskakovat mezi jednotlivými položkami playlistu.
+Funguje to i v kombinaci s dálkovým USB prezentérem. Straw Lumen to nemá úplně domyšlené a často nefunguje.
+OpenSong je skvěle používatelný v režimu jedné obrazovky i v režimu více obrazovek a je tak univerzálně použitelný
+pro bohoslužbu, ale třeba i pro zpívání v malé skupince přes týden.
+
+19) Dvojí text
+Docela by se hodilo zejména pokud se má zpívat nějaká píseň v angličtině, aby byl pod ní viditelný třeba doslovný český překlad.
+Starší generace se potom nemusí cítit nekomfortně, že ztrácí kontrolu nad průběhem bohoslužby jenom protože nerozumí.
+Hodila by se proto možnost u písní v rámci oddílů nějakou značkou (např: -o-) odlišit že jde o překlad.
+Program by potom na stejný snímek spolu s textem zpívaným zobrazil i překlad, který by byl automaticky třeba menším písmem,
+a odsazený od zbytku textu vynechaným řádkem. V nastavení playlistu by se potom u jednotlivých písní dal volitelně
+dvojí text vypnout/zapnout (když by byl k dispozici).
+
+{V1}
+1. I see the king of glory,
+coming on the clouds with fire.
+The whole Earth shakes, the whole Earth shakes, yeah.
+-o- Vidím Krále slávy
+-o- přicházet v oblacích s ohněm.
+-o- Celá Země se chvěje, celá Země se chvěje. 

@@ -11,7 +11,7 @@ QT       += core gui printsupport multimedia multimediawidgets widgets axcontain
 
 TEMPLATE = app
 
-VERSION = 1.3.0.1
+VERSION = 1.3.1.0
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"
@@ -24,7 +24,7 @@ win32|win64 {
 
 DEFINES += PRODUCT_IDSTR=\\\"lumen\\\"
 DEFINES += PROGRAM_VERSION=\\\"$$VERSION\\\"
-DEFINES += UPSTREAM_VERSION=\\\"1.3.0.0\\\" # If the updater gets this upstream version, it does not promote update
+DEFINES += PROGRAM_UPSTREAM_VERSION=\\\"1.3.0.1\\\" # If the updater gets this upstream version, it does not promote update
 DEFINES += PLATFORM_ID=\\\"$${OS_STR}_$${QMAKE_TARGET.arch}\\\"
 
 TARGET = strawLumen
@@ -55,6 +55,8 @@ SOURCES += main.cpp \
     gui/mainwindow.cpp \
     gui/songsmodewindow.cpp \
     presentation/presentation.cpp \
+    strawapi/strawapi.cpp \
+    strawapi/updatemanager.cpp \
     util/jobthread.cpp \
     job/activexjobthread.cpp \
     gui/splashscreen.cpp \
@@ -128,8 +130,6 @@ SOURCES += main.cpp \
     job/widgetvalues.cpp \
     presentation/native/presentation_customslide.cpp \
     presentation/native/presentationpropertieswidget_customslide.cpp \
-    strawapi/simpleupdater.cpp \
-    strawapi/strawapi.cpp \
     strawapi/feedbackdialog.cpp \
     job/dbmigration.cpp \
     job/wordsplit.cpp \
@@ -169,6 +169,7 @@ FORMS += \
     presentation/powerpoint/presentationpropertieswidget_powerpoint.ui \
     presentation/native/nativeprojectorwindow.ui \
     gui/settingsdialog.ui \
+    strawapi/updatemanager.ui \
     wgt/displayselectionwidget.ui \
     gui/mainwindow_songsmode.ui \
     wgt/songlistwidget.ui \
@@ -190,7 +191,6 @@ FORMS += \
     importexport/opensongexportdialog.ui \
     gui/playlistsdialog.ui \
     presentation/native/presentationpropertieswidget_customslide.ui \
-    strawapi/simpleupdater.ui \
     strawapi/feedbackdialog.ui \
     gui/bulkeditsongsdialog.ui \
     presentation/native/presentationpropertieswidget_images.ui \
@@ -208,6 +208,8 @@ HEADERS += \
     gui/mainwindow.h \
     gui/songsmodewindow.h \
     presentation/presentation.h \
+    strawapi/strawapi.h \
+    strawapi/updatemanager.h \
     util/jobthread.h \
     job/activexjobthread.h \
     gui/splashscreen.h \
@@ -283,8 +285,6 @@ HEADERS += \
     job/widgetvalues.h \
     presentation/native/presentation_customslide.h \
     presentation/native/presentationpropertieswidget_customslide.h \
-    strawapi/simpleupdater.h \
-    strawapi/strawapi.h \
     strawapi/feedbackdialog.h \
     job/wordsplit.h \
     util/regex.h \

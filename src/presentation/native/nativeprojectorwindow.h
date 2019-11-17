@@ -2,6 +2,7 @@
 #define NATIVEPROJECTORWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 namespace Ui {
 	class NativeProjectorWindow;
@@ -16,8 +17,8 @@ public:
 	~NativeProjectorWindow() override;
 
 protected:
-	void paintEvent(QPaintEvent *) override;
-	void changeEvent(QEvent *) override;
+	virtual void paintEvent(QPaintEvent *) override;
+	virtual void changeEvent(QEvent *) override;
 
 private:
 	Ui::NativeProjectorWindow *ui;
