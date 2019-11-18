@@ -896,3 +896,11 @@ void MainWindow_SongsMode::on_btnConvertChords_clicked()
 		return result;
 	}, false);
 }
+
+void MainWindow_SongsMode::on_btnTransposeFlat_clicked()
+{
+	contentSelectionMorph([=] (QString content) {
+		transposeSong(content, 0, ui->btnTransposeFlat->isChecked());
+		return content;
+	}, false);
+}

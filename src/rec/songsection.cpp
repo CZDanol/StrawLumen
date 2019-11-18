@@ -47,7 +47,7 @@ bool SongSection::isValid() const
 
 QString SongSection::standardName() const
 {
-	return name_ + QString::number(index_);
+	return name_ + (name_ == "V" || index_ > 1 ? QString::number(index_) : QString());
 }
 
 QString SongSection::userFriendlyName() const

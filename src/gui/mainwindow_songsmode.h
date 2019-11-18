@@ -88,10 +88,10 @@ private slots:
 	void on_teContent_cursorPositionChanged();
 	void on_actionMoveChordsLeft_triggered();
 	void on_actionOnlyChords_triggered();
-
 	void on_btnBulkEdit_clicked();
-
 	void on_btnConvertChords_clicked();
+
+	void on_btnTransposeFlat_clicked();
 
 private:
 	Ui::MainWindow_SongsMode *ui;

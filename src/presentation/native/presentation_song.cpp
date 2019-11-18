@@ -212,8 +212,13 @@ void Presentation_Song::loadSlideOrder()
 	if(emptySlideBefore_)
 		slides_.append(SlideRec{QString(), QString(), QString(), emptySlideBeforePixmap});
 
-	for(const QString &sectionName : slideOrder) {
-		if(sectionName.isEmpty() || !sections_.contains(sectionName))
+	for(const QString &userSectionName : slideOrder) {
+		const SongSection section(userSectionName);
+		if(!section.isValid())
+			continue;
+
+		const QString sectionName = section.standardName();
+		if(!sections_.contains(sectionName))
 			continue;
 
 		const SectionRec &sr = sections_[sectionName];
