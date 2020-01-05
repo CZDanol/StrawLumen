@@ -11,6 +11,7 @@ void initApplication();
 void uninitApplication();
 
 void setupStylesheet(bool darkMode);
+void setupLanguage();
 
 void criticalBootError(const QString &message);
 

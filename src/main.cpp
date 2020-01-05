@@ -89,6 +89,7 @@ void initApplication() {
 
 	PROC settings = new SettingsManager();
 	PROC setupStylesheet(settings->value("darkMode", true).toBool());
+	PROC setupLanguage();
 
 	PROC db = new DatabaseManager();
 	PROC backgroundManager = new BackgroundManager();
@@ -188,4 +189,20 @@ void setupStylesheet(bool darkMode) {
 void criticalBootError(const QString &message) {
 	standardErrorDialog(message, nullptr, true);
 	exit(-1);
+}
+
+void setupLanguage()
+{
+	QDir langDir(QDir(QApplication::applicationDirPath()).absoluteFilePath("../lang"));
+
+	QString language = settings->value("language", QLocale::languageToString(QLocale::system().language())).toString();
+	if(language != "cz" && !langDir.exists(QString("%1.qm").arg(language)))
+		language = "en";
+
+	if(language == "cz")
+		return;
+
+	QTranslator *translator = new QTranslator(qApp);
+	translator->load(langDir.absoluteFilePath(QString("%1.qm").arg(language)));
+	qApp->installTranslator(translator);
 }

@@ -24,6 +24,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 	ui->cmbDefaultBibleTranslation->addItem(nullptr, "ČEP"); // ČEP default
 	updateBibleTranslationList();
+	updateLanguageList();
 
 #define F(settingsName, uiControl)\
 		loadSetting(#settingsName, ui->uiControl);\
@@ -53,6 +54,16 @@ void SettingsDialog::updateBibleTranslationList()
 		if(q.value(0) == data)
 			ui->cmbDefaultBibleTranslation->setCurrentIndex(ui->cmbDefaultBibleTranslation->count() - 1);
 	}
+}
+
+void SettingsDialog::updateLanguageList()
+{
+	ui->cmbLanguage->clear();
+	ui->cmbLanguage->addItem("Čeština", "cz");
+
+	QDir dir(QDir(qApp->applicationDirPath()).absoluteFilePath("../lang"));
+	for(const QFileInfo &f : dir.entryInfoList({"*.qm"}))
+		ui->cmbLanguage->addItem(QLocale::languageToString(QLocale(f.baseName()).language()), f.baseName());
 }
 
 

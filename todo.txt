@@ -1,6 +1,9 @@
 Aktuálně
+- lepší anglický překlad, anglický překlad instalátoru
+- export do ultimate-guitar format
 - nevypne se to - mrzne na wait condition
 - update timer pro vlastní text nutně nefunguje
+- portable aktualizace automaticky vyplnila špatnou adresu?
 
 - powerpoint - next previous možnost i ne po slidech, ale "po animacích" (poslat příkaz next powerpointu a přečíst aktuální slide)
 - import PowerPoint jako písní

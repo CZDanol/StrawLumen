@@ -260,5 +260,6 @@
         <file>icons/16/transition_both_directions_16px.png</file>
         <file>css/changelog.css</file>
         <file>icons/16/up_2_16px.png</file>
+        <file>icons/16/language_16px.png</file>
     </qresource>
 </RCC>

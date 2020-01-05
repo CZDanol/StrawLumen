@@ -9,6 +9,7 @@
 #define SETTINGS_FACTORY(F)\
 	F(darkMode, cbDarkMode) \
 	F(defaultBibleTranslation, cmbDefaultBibleTranslation) \
+	F(language, cmbLanguage) \
 	\
 	F(display, dsDisplay) \
 	\
@@ -36,6 +37,7 @@ public:
 
 private slots:
 	void updateBibleTranslationList();
+	void updateLanguageList();
 
 private slots:
 	void onDisplayChanged(QScreen *current);

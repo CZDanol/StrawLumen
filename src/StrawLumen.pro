@@ -11,7 +11,7 @@ QT       += core gui printsupport multimedia multimediawidgets widgets axcontain
 
 TEMPLATE = app
 
-VERSION = 1.3.1.1
+VERSION = 1.3.2.0
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"
@@ -26,6 +26,8 @@ DEFINES += PRODUCT_IDSTR=\\\"lumen\\\"
 DEFINES += PROGRAM_VERSION=\\\"$$VERSION\\\"
 DEFINES += PROGRAM_UPSTREAM_VERSION=\\\"1.3.1.0\\\" # If the updater gets this upstream version, it does not promote update
 DEFINES += PLATFORM_ID=\\\"$${OS_STR}_$${QMAKE_TARGET.arch}\\\"
+
+TRANSLATIONS = ../bin/lang/en.ts
 
 TARGET = strawLumen
 

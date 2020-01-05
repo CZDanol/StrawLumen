@@ -29,16 +29,16 @@ enum ItemDataRole {
 };
 
 static const QList<QPair<const char*,int>> blendModes{
-	{QT_TR_NOOP("Překrýt (klasické)"), QPainter::CompositionMode_SourceOver},
-	{QT_TR_NOOP("Multiply"), QPainter::CompositionMode_Multiply},
-	{QT_TR_NOOP("Screen"), QPainter::CompositionMode_Screen},
-	{QT_TR_NOOP("Overlay"), QPainter::CompositionMode_Overlay},
-	{QT_TR_NOOP("Darken"), QPainter::CompositionMode_Darken},
-	{QT_TR_NOOP("Lighten"), QPainter::CompositionMode_Lighten},
-	{QT_TR_NOOP("Color dodge"), QPainter::CompositionMode_ColorDodge},
-	{QT_TR_NOOP("Color burn"), QPainter::CompositionMode_ColorBurn},
-	{QT_TR_NOOP("Hard light"), QPainter::CompositionMode_HardLight},
-	{QT_TR_NOOP("Soft light"), QPainter::CompositionMode_SoftLight}
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Překrýt (klasické)"), QPainter::CompositionMode_SourceOver},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Multiply"), QPainter::CompositionMode_Multiply},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Screen"), QPainter::CompositionMode_Screen},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Overlay"), QPainter::CompositionMode_Overlay},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Darken"), QPainter::CompositionMode_Darken},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Lighten"), QPainter::CompositionMode_Lighten},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Color dodge"), QPainter::CompositionMode_ColorDodge},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Color burn"), QPainter::CompositionMode_ColorBurn},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Hard light"), QPainter::CompositionMode_HardLight},
+	{QT_TRANSLATE_NOOP(BackgroundDialog, "Soft light"), QPainter::CompositionMode_SoftLight}
 };
 
 static const QHash<int,int> blendModeIndexes = [](){
