@@ -49,6 +49,8 @@ void PresentationPropertiesWidget_Song::fillData()
 	ui->cbEmptySlideAfter->setChecked(presentation_->emptySlideAfter_);
 	ui->cbIgnoreEmptySlides->setChecked(presentation_->emptySlideAfter_);
 
+	ui->cbWordWrap->setChecked(presentation_->wordWrap_);
+
 	ui->wgtStylePreview->setPresentationStyle(presentation_->style_);
 }
 
@@ -120,4 +122,10 @@ void PresentationPropertiesWidget_Song::on_cbIgnoreEmptySlides_clicked(bool chec
 {
 	presentation_->ignoreEmptySlides_ = checked;
 	presentation_->loadSlideOrder();
+}
+
+void PresentationPropertiesWidget_Song::on_cbWordWrap_clicked(bool checked)
+{
+	presentation_->wordWrap_ = checked;
+	emit presentation_->sigSlidesChanged();
 }

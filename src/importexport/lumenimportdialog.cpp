@@ -5,6 +5,7 @@
 #include <QStandardPaths>
 #include <QSqlQuery>
 #include <QFileInfo>
+#include <QDebug>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -127,9 +128,9 @@ void LumenImportDialog::on_btnImport_clicked()
 				// Update tags
 				db->exec("DELETE FROM song_tags WHERE song = ?", {songId});
 
-				QSqlQuery q = importDb.selectQuery("SELECT tag FROM song_tags WHERE song = ?", {songId});
-				while(q.next())
-					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, q.value("tag")});
+				QSqlQuery q2 = importDb.selectQuery("SELECT tag FROM song_tags WHERE song = ?", {q.value("id")});
+				while(q2.next())
+					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, q2.value(0)});
 			}
 
 			for(const QString &tag : tags)

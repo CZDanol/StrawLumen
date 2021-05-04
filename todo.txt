@@ -1,9 +1,22 @@
 Aktuálně
+- možnost aktivovat zalamování textu v písničkách
+- z nějakého důvodu je zakázané tlačítko přidat občas ve wizardu přidání verše (U B21?)
+- přehrát akord po kliknutí
+- možnost nastavit menší a ne tučný font u akordů v tisku
+- možnost zmenšení akordových značek, možnost vypnout tučně
 - lepší anglický překlad, anglický překlad instalátoru
 - export do ultimate-guitar format
 - nevypne se to - mrzne na wait condition
 - update timer pro vlastní text nutně nefunguje
 - portable aktualizace automaticky vyplnila špatnou adresu?
+- poznámky pro hudebníky jenom do tisku
+- označení pomlk pod akordy jenom pro tisk?
+- možnost zvětšení písma všude
+- tisk - při "Dle pořadí snímků bez dupolikátů" zvýraznit duplikáty sekce (větší mezera, přidat první tři slabiky nebo tak, přidat podtržítko)
+- podpora promítání na jedné obrazovce - ovládání klávesama
+- Ctrl+A názvy písní funguje až napodruhé
+
+- Ještě jeden problém - když vybereš ze sekcí Bridge, naskočí do editoru B1  V tiskové šabloně se pak zobrazí B1 jen pokud nevyplňuješ pořadí snímků
 
 - powerpoint - next previous možnost i ne po slidech, ale "po animacích" (poslat příkaz next powerpointu a přečíst aktuální slide)
 - import PowerPoint jako písní
@@ -74,6 +87,59 @@ K přebrání
 - Možnost opakovat celý program
 
 - export/import chordpro
+
+
+• Ještě toto: Poznámky pro celou písničku bych oddělil linkou pod a autora vpravo malým fontem
+ 
+
+
+---------- Forwarded message ---------
+Od: DaniM-CZ <danim3248@gmail.com>
+Date: út 4. 2. 2020 v 22:42
+Subject: Fwd: Lumen - poznámky
+To: Dan Čejchan <danol@straw-solutions.cz>
+
+Ahoj Dane,
+ještě přidávám podněty tak, jak mě napadají. Nemyslím tím že bys to musel hned a všechno upravovat.  Jen s tím teď víc pracuju, tak to sbírám a zapisuju a posílám.  Zatím jen pro rozmyšlení co bude nakonec nejlepší.  
+Takže:
+
+• Když vytvářím písně, podívám se jak bude vypadat promítaný text a promítání ukončím, čekal bych že se vrátím automaticky do okna pro editaci písně. To se nestane.
+
+Upouštím od tohoto ... 
+• Tisk - při volbě "Dle poř snímků bez dupl" zlepšit přehlednost sekcí bez textu
+          a) vetší mezerou mezi sekcemi bez textu 
+  (znamenalo by to zbytečné roztažení písně)  
+
+• Co jsem si uvědomil je, že když je to barevně je to přehledné. My ale většinou tiskneme ČB a pak na první pohled splývá označení sekcí s akordovými značkami. Proto bych akordové značky zmenšil, ztenčil a případně zvolil jiný font. Pokud je to problém, dal bych je kurzívou.
+
+• Nápad - co psát označení sekcí celým slovem?  ... 1. sloka, Refrén,  No nevím .. Možná tučně a kurzívou .. a potom akordy normálně: 
+
+1. sloka
+   D                            G                        D        A          D
+  Ať Tvé živá voda duši mou obmývá
+   D                            G                        D        A          D
+  Ať Tvé živá voda duši mou obmývá
+   D                            G                        D        A          D
+  Ať Tvé živá voda duši mou obmývá
+
+Refrén
+   D      G      D                   A            Hmi
+ Ježíši, ó Duchu svatý, můj .............
+
+Mezihra - Ref.
+D - - - G - - - D - - -  A - - - Hmi - - - G - A - D - - - 
+ 
+
+No v g-mailu jsou moc velké rozdíly - akordy by chtěli o něco větší, ale v zásadě by mi to přišlo lepší.
+
+
+• Dnes mě taky napadlo jak  ušetřit prostor - na obr. je to vidět. - když se opakuje stejná sekce; nešlo by nastavit zobrazení Refrén (4x) ? 
+ 
+
+• Taky je tu vidět něco co nechápu; proč píše Ref 1 když v editačním okně není žádné C1 
+
+Tak zatím ....
+Dan
 
 
 

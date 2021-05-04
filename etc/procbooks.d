@@ -18,5 +18,5 @@ void main() {
 		recs ~= "{%s, BibleBook(%s, \"%s\", \"%s\", {\"%s\"})}".format(data[0],data[0],data[1],data[2],data[3..$].joiner("\",\""));
 	}
 	
-	write("booksout.txt","%s".format(recs.joiner(",")));
+	write("booksout.txt","%s".format(recs.joiner(",\n")));
 }

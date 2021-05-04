@@ -32,20 +32,30 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="5" column="3">
-    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item row="0" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="focusPolicy">
-      <enum>Qt::StrongFocus</enum>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>16</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_10">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Eye_16px.png</pixmap>
      </property>
     </widget>
    </item>
-   <item row="10" column="0" colspan="4">
+   <item row="11" column="0" colspan="4">
     <widget class="PresentationStylePreviewWidget" name="wgtStylePreview" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -61,7 +71,92 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1" colspan="3">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Náhled stylu:</string>
+     </property>
+    </widget>
+   </item>
    <item row="6" column="3">
+    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Styl:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Full Image_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Mockup_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Pozadí:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>16</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
     <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -74,21 +169,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1" colspan="3">
-    <widget class="QCheckBox" name="cbEmptySlideAfter">
-     <property name="text">
-      <string>Prázdný snímek na konci</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
+   <item row="9" column="1">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -104,7 +185,64 @@
      </property>
     </spacer>
    </item>
-   <item row="7" column="0" colspan="4">
+   <item row="3" column="1" colspan="3">
+    <widget class="QCheckBox" name="cbIgnoreEmptySlides">
+     <property name="text">
+      <string>Ignorovat prázdné snímky</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="WordCompletingLineEdit" name="lnSlideOrder">
+       <property name="placeholderText">
+        <string>prázdné = výchozí pořadí</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnAddSlideOrderItem">
+       <property name="icon">
+        <iconset resource="../../../res/resources.qrc">
+         <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Pořadí snímků:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="3">
+    <widget class="QCheckBox" name="cbEmptySlideAfter">
+     <property name="text">
+      <string>Prázdný snímek na konci</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="3">
+    <widget class="QCheckBox" name="cbEmptySlideBefore">
+     <property name="text">
+      <string>Prázdný snímek na začátku</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_11">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Last_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="4">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <spacer name="horizontalSpacer_2">
@@ -132,141 +270,17 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_5">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_12">
      <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Mockup_16px.png</pixmap>
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/word_wrap_16px.png</pixmap>
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>16</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label_6">
+   <item row="4" column="1" colspan="3">
+    <widget class="QCheckBox" name="cbWordWrap">
      <property name="text">
-      <string>Pořadí snímků:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="1" colspan="3">
-    <widget class="QCheckBox" name="cbEmptySlideBefore">
-     <property name="text">
-      <string>Prázdný snímek na začátku</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_8">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Full Image_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Pozadí:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="WordCompletingLineEdit" name="lnSlideOrder">
-       <property name="placeholderText">
-        <string>prázdné = výchozí pořadí</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnAddSlideOrderItem">
-       <property name="icon">
-        <iconset resource="../../../res/resources.qrc">
-         <normaloff>:/icons/16/Plus_16px.png</normaloff>:/icons/16/Plus_16px.png</iconset>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0">
-    <widget class="QLabel" name="label_10">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Eye_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1" colspan="3">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>Náhled stylu:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Styl:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_11">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Last_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="3">
-    <widget class="QCheckBox" name="cbIgnoreEmptySlides">
-     <property name="text">
-      <string>Ignorovat prázdné snímky</string>
+      <string>Zalamovat text</string>
      </property>
     </widget>
    </item>

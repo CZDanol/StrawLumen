@@ -261,5 +261,6 @@
         <file>css/changelog.css</file>
         <file>icons/16/up_2_16px.png</file>
         <file>icons/16/language_16px.png</file>
+        <file>icons/16/word_wrap_16px.png</file>
     </qresource>
 </RCC>

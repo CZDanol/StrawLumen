@@ -1,8 +1,8 @@
-1,Gen,Genesis,gn,gen,1m,im,1moj,imoj,1mojzisova,1mojz,imojz,imojzisova
-2,Ex,Exodus,ex,exo,2m,iim,2moj,iimoj,exod,2mojzisova,2mojz,iimojzisova,iimojz
-3,Lev,Leviticus,lv,lev,3m,iiim,3moj,iiimoj,3mojzisova,3mojz,iiimojzisova,iiimojz
-4,Num,Numeri,nu,num,4m,ivm,4moj,ivmoj,numer,4mojzisova,4mojz,ivmojzisova,ivmojz
-5,Dtn,Deuteronomium,dt,dtn,deut,5m,vm,5moj,vmoj,deuter,deuteron,5mojzisova,5mojz,vmojzisova,vmojz
+1,Gen,Genesis,gn,gen,1m,im,1moj,imoj,1mojzisova,1mojz,imojz,imojzisova,genesis
+2,Ex,Exodus,ex,exo,2m,iim,2moj,iimoj,exod,2mojzisova,2mojz,iimojzisova,iimojz,exodus
+3,Lev,Leviticus,lv,lev,3m,iiim,3moj,iiimoj,3mojzisova,3mojz,iiimojzisova,iiimojz,leviticus
+4,Num,Numeri,nu,num,4m,ivm,4moj,ivmoj,numer,4mojzisova,4mojz,ivmojzisova,ivmojz,numeri
+5,Dtn,Deuteronomium,dt,dtn,deut,5m,vm,5moj,vmoj,deuter,deuteron,5mojzisova,5mojz,vmojzisova,vmojz,deuteronomium
 6,Joz,Jozue,jozue,joz,jz
 7,Sd,Soudců,sd,sdc,soud,soudc,soudcu
 8,Rt,Rút,rút,rt,rut

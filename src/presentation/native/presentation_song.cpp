@@ -38,6 +38,8 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 	result->emptySlideAfter_ = json["emptySlideAfter"].toBool();
 	result->ignoreEmptySlides_ = json["ignoreEmptySlides"].toBool();
 
+	result->wordWrap_ = json["wordWrap"].toBool();
+
 	if(!result->loadFromDb_Uid(json["songUid"].toString()))
 		return nullptr;
 
@@ -65,7 +67,8 @@ QJsonObject Presentation_Song::toJSON() const
 		{"emptySlideAfter", emptySlideAfter_},
 		{"ignoreEmptySlides", ignoreEmptySlides_},
 		{"styleId", style_.styleId()},
-		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()}
+		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()},
+			{"wordWrap", wordWrap_}
 	};
 }
 
@@ -74,8 +77,14 @@ void Presentation_Song::drawSlide(QPainter &p, int slideId, const QRect &rect)
 	// Empty slide name -> slide is empty, only draw background
 	if(slides_[slideId].name_.isEmpty())
 		style_.background().draw(p, rect);
-	else
-		style_.drawSlide(p, rect, slides_[slideId].content_, name_);
+
+	else {
+		int flags = 0;
+		if(wordWrap_)
+			flags |= PresentationStyle::fWordWrapContent;
+
+		style_.drawSlide(p, rect, slides_[slideId].content_, name_, flags);
+	}
 }
 
 QString Presentation_Song::identification() const

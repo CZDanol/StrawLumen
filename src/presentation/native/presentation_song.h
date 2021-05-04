@@ -74,7 +74,8 @@ private:
 	qlonglong songId_ = -1;
 	QString songUid_;
 	QString name_, author_, defaultSlideOrder_, customSlideOrder_;
-	bool emptySlideBefore_, emptySlideAfter_, ignoreEmptySlides_;
+	bool emptySlideBefore_ = false, emptySlideAfter_ = false, ignoreEmptySlides_ = false;
+	bool wordWrap_ = false;
 
 private:
 	PresentationStyle style_;
