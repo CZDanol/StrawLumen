@@ -56,6 +56,7 @@ SOURCES += main.cpp \
 		gui/bibletranslationmgmtdialog.cpp \
 		gui/mainwindow.cpp \
 		gui/songsmodewindow.cpp \
+		importexport/powerpoint/powerpointimportdialog.cpp \
 		presentation/presentation.cpp \
 		strawapi/strawapi.cpp \
 		strawapi/updatemanager.cpp \
@@ -167,6 +168,7 @@ FORMS += \
 		gui/splashscreen.ui \
 		gui/mainwindow_presentationmode.ui \
 		gui/activexdebugdialog.ui \
+		importexport/powerpoint/powerpointimportdialog.ui \
 		presentation/presentationpropertieswidget.ui \
 		presentation/powerpoint/presentationpropertieswidget_powerpoint.ui \
 		presentation/native/nativeprojectorwindow.ui \
@@ -209,6 +211,7 @@ HEADERS += \
 		gui/bibletranslationmgmtdialog.h \
 		gui/mainwindow.h \
 		gui/songsmodewindow.h \
+		importexport/powerpoint/powerpointimportdialog.h \
 		presentation/presentation.h \
 		strawapi/strawapi.h \
 		strawapi/updatemanager.h \

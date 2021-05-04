@@ -25,11 +25,11 @@ bool Presentation_PowerPoint::isPowerpointFile(const QFileInfo &file)
 	return validExtensions.contains(file.suffix());
 }
 
-QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilename(const QString &filename)
+QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilename(const QString &filename, bool useSplashscreen, bool useSplashscreenStorno)
 {
 	QSharedPointer<Presentation_PowerPoint> result_;
 
-	splashscreen->asyncAction(tr("Načítání \"%1\"").arg(QFileInfo(filename).fileName()), true, *activeXJobThread, [&]{
+	const auto f = [&]{
 		QSharedPointer<Presentation_PowerPoint> result(new Presentation_PowerPoint());
 
 		result->filePath_ = filename;
@@ -40,7 +40,7 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 		if(!axApplication)
 			return standardErrorDialog(tr("Program nedetekoval instalaci PowerPointu. Bez nainstalového PowerPointu nelze pracovat s powerpointovými prezentacemi."));
 
-		if(splashscreen->isStornoPressed())
+		if(useSplashscreenStorno && splashscreen->isStornoPressed())
 			return;
 
 		auto axPresentations = axApplication->querySubObject("Presentations");
@@ -57,7 +57,7 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 			delete axPresentation;
 		});
 
-		if(splashscreen->isStornoPressed())
+		if(useSplashscreenStorno && splashscreen->isStornoPressed())
 			return;
 
 		auto axSlides = axPresentation->querySubObject("Slides");
@@ -66,10 +66,11 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 		const QDir tmpDir(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
 
 		for(int slideI = 1; slideI <= slideCount; slideI++) {
-			if(splashscreen->isStornoPressed())
+			if(useSplashscreenStorno && splashscreen->isStornoPressed())
 				return;
 
-			splashscreen->setProgress(slideI, slideCount);
+			if(useSplashscreen)
+				splashscreen->setProgress(slideI, slideCount);
 
 			auto axSlide = axSlides->querySubObject("Item(QVariant)", slideI);
 			auto axTransition = axSlide->querySubObject("SlideShowTransition");
@@ -102,6 +103,7 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 				}
 
 				slideText.replace(QRegularExpression("\\s+"), " ");
+				slideText = slideText.trimmed();
 
 				if(slideText.length() > maxDescriptionLength) {
 					slideText.resize(maxDescriptionLength - 3);
@@ -122,7 +124,7 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 			result->slideCount_ ++;
 		}
 
-		if(splashscreen->isStornoPressed())
+		if(useSplashscreenStorno && splashscreen->isStornoPressed())
 			return;
 
 		result->weakPtr_ = result;
@@ -130,7 +132,12 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 		result->blackSlideAfter_ = settings->setting_ppt_blackSlideAfter();
 
 		result_ = result;
-	});
+	};
+
+	if(useSplashscreen)
+		splashscreen->asyncAction(tr("Načítání \"%1\"").arg(QFileInfo(filename).fileName()), true, *activeXJobThread, f);
+	else
+		activeXJobThread->executeBlocking(f);
 
 	return result_;
 }

@@ -15,6 +15,7 @@ class Presentation_PowerPoint : public Presentation
 
 	friend class PresentationPropertiesWidget_PowerPoint;
 
+public:
 	struct Slide {
 		/// Raw index in the Lumen presentation
 		int index;
@@ -33,7 +34,7 @@ public:
 	static bool isPowerpointFile(const QFileInfo &file);
 
 	/// Attempts to create a powerpoint presentation. Shows splashscreen during the loading. Can fail and return null.
-	static QSharedPointer<Presentation_PowerPoint> createFromFilename(const QString &filename);
+	static QSharedPointer<Presentation_PowerPoint> createFromFilename(const QString &filename, bool useSplashscreen = true, bool useSplashscreenStorno = true);
 	static QSharedPointer<Presentation_PowerPoint> createFromJSON(const QJsonObject &json);
 
 	QJsonObject toJSON() const override;
@@ -47,6 +48,9 @@ public:
 
 	QWidget *createPropertiesWidget(QWidget *parent) override;
 
+	inline const auto &getSlides() const {
+		return slides_;
+	}
 	int slideCount() const override;
 	QString slideIdentification(int i) const override;
 	QPixmap slideIdentificationIcon(int i) const override;

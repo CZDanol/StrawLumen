@@ -926,8 +926,30 @@ Zkratka: Alt+Shift+F</string>
     <string>Vymaže ve výběru/v sekci všechny slova a nechá pouze akordy</string>
    </property>
   </action>
+  <action name="actionImportFromPowerPoint">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/16/Microsoft PowerPoint_16px.png</normaloff>:/icons/16/Microsoft PowerPoint_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>PowerPoint</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>WordCompletingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>wgt/wordcompletinglineedit.h</header>
+   <slots>
+    <signal>sigFocused()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>SongTagsLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>wgt/songtagslineedit.h</header>
+  </customwidget>
   <customwidget>
    <class>SongListWidget</class>
    <extends>QWidget</extends>
@@ -938,22 +960,9 @@ Zkratka: Alt+Shift+F</string>
    </slots>
   </customwidget>
   <customwidget>
-   <class>WordCompletingLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>wgt/wordcompletinglineedit.h</header>
-   <slots>
-    <signal>sigFocused()</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>SongContentTextEdit</class>
    <extends>QTextEdit</extends>
    <header>wgt/songcontenttextedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>SongTagsLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>wgt/songtagslineedit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -21,6 +21,7 @@
 #include "importexport/lumenimportdialog.h"
 #include "importexport/opensongimportdialog.h"
 #include "importexport/opensongexportdialog.h"
+#include "importexport/powerpoint/powerpointimportdialog.h"
 #include "util/standarddialogs.h"
 #include "util/scopeexit.h"
 #include "util/execonmainthread.h"
@@ -108,6 +109,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		importMenu_.setIcon(QPixmap(":/icons/16/Import_16px.png"));
 		importMenu_.addAction(ui->actionImportFromLumen);
 		importMenu_.addAction(ui->actionImportOpenSongSong);
+		importMenu_.addAction(ui->actionImportFromPowerPoint);
 
 		exportMenu_.setTitle(tr("Export"));
 		exportMenu_.setIcon(QPixmap(":/icons/16/Export_16px.png"));
@@ -903,4 +905,9 @@ void MainWindow_SongsMode::on_btnTransposeFlat_clicked()
 		transposeSong(content, 0, ui->btnTransposeFlat->isChecked());
 		return content;
 	}, false);
+}
+
+void MainWindow_SongsMode::on_actionImportFromPowerPoint_triggered()
+{
+	PowerPointImportDialog::instance()->show();
 }

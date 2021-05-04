@@ -93,6 +93,8 @@ private slots:
 
 	void on_btnTransposeFlat_clicked();
 
+	void on_actionImportFromPowerPoint_triggered();
+
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_, teContentMenu_;
