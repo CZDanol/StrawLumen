@@ -47,7 +47,7 @@ BibleRef::BibleRef(const QString &str)
 				")"
 				",?"
 				"\\s*"
-				"(\\p{L}+)?" // translation
+				"(\\p{L}(?:\\p{L}|[0-9])*)?" // translation
 				"\\s*$",
 				QRegularExpression::CaseInsensitiveOption);
 

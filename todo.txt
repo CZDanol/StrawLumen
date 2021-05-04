@@ -1,6 +1,4 @@
 Aktuálně
-- možnost aktivovat zalamování textu v písničkách
-- z nějakého důvodu je zakázané tlačítko přidat občas ve wizardu přidání verše (U B21?)
 - přehrát akord po kliknutí
 - možnost nastavit menší a ne tučný font u akordů v tisku
 - možnost zmenšení akordových značek, možnost vypnout tučně
