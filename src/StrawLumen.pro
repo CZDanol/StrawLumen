@@ -11,7 +11,7 @@ QT       += core gui printsupport multimedia multimediawidgets widgets axcontain
 
 TEMPLATE = app
 
-VERSION = 1.3.2.1
+VERSION = 1.3.3.0
 QMAKE_TARGET_COMPANY = "Straw Solutions"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2018 Straw Solutions"
@@ -32,6 +32,10 @@ TRANSLATIONS = ../bin/lang/en.ts ../bin/lang/slo.ts
 TARGET = strawLumen
 
 CONFIG += c++17
+
+*msvc* {
+	QMAKE_CXXFLAGS += -MP # Parallel build
+}
 
 # Statically link MSVC distributables
 # Release:CONFIG += static_runtime TODO
