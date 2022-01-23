@@ -64,6 +64,7 @@ SOURCES += main.cpp \
 		presentation/presentation.cpp \
 		strawapi/strawapi.cpp \
 		strawapi/updatemanager.cpp \
+		util/biblerefsyntaxhighlighter.cpp \
 		util/jobthread.cpp \
 		job/activexjobthread.cpp \
 		gui/splashscreen.cpp \
@@ -219,6 +220,7 @@ HEADERS += \
 		presentation/presentation.h \
 		strawapi/strawapi.h \
 		strawapi/updatemanager.h \
+		util/biblerefsyntaxhighlighter.h \
 		util/jobthread.h \
 		job/activexjobthread.h \
 		gui/splashscreen.h \

@@ -1,5 +1,4 @@
 Aktuálně
-- nefungujou verše zas některý (myslím třeba 2 petrův atp)
 - přehrát akord po kliknutí
 - možnost nastavit menší a ne tučný font u akordů v tisku
 - možnost zmenšení akordových značek, možnost vypnout tučně
@@ -14,8 +13,6 @@ Aktuálně
 - tisk - při "Dle pořadí snímků bez dupolikátů" zvýraznit duplikáty sekce (větší mezera, přidat první tři slabiky nebo tak, přidat podtržítko)
 - podpora promítání na jedné obrazovce - ovládání klávesama
 - Ctrl+A názvy písní funguje až napodruhé
-
-- Ještě jeden problém - když vybereš ze sekcí Bridge, naskočí do editoru B1  V tiskové šabloně se pak zobrazí B1 jen pokud nevyplňuješ pořadí snímků
 
 - powerpoint - next previous možnost i ne po slidech, ale "po animacích" (poslat příkaz next powerpointu a přečíst aktuální slide)
 - import PowerPoint jako písní
@@ -49,7 +46,7 @@ Aktuálně
 - asistent pro převod písní z PowerPointu
 - video na pozadí
 
-- autocomplete + highlighter pro verše
+- autocomplete pro verše
 
 K přebrání
 

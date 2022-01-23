@@ -7,6 +7,7 @@
 #include "job/db.h"
 #include "rec/biblebook.h"
 #include "job/settings.h"
+#include "util/biblerefsyntaxhighlighter.h"
 
 int chapterUID(int bookId, int chapterId) {
 	return bookId * 1000 + chapterId;

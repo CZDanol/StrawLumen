@@ -6,6 +6,27 @@
 #include "job/settings.h"
 #include "job/db.h"
 
+const QRegularExpression &BibleRef::regex()
+{
+	static const QRegularExpression r(
+				"^\\s*"
+				"((?:[0-9])*\\s*\\.?\\s*(?:\\p{L}|[ ])*)" // book
+				"\\s+"
+				"([0-9]+)" // chapter
+				"\\s*[:;,]\\s*" //separator
+				"("
+					"(?:[0-9]+(?:\\s*-\\s*[0-9]+)?)" // verse/verse range
+					"(?:\\s*,\\s*[0-9]+(?:\\s*[-–]\\s*[0-9]+)?)*" // more verse ranges
+				")"
+				",?"
+				"\\s*"
+				"(\\p{L}(?:\\p{L}|[0-9])*)?" // translation
+				"\\s*$",
+				QRegularExpression::CaseInsensitiveOption);
+
+	return r;
+}
+
 BibleRef::BibleRef()
 {
 	isValid_ = false;
@@ -35,25 +56,9 @@ BibleRef::BibleRef(QString translationId, int bookId, int chapter, const QVector
 
 BibleRef::BibleRef(const QString &str)
 {
-	static const QRegularExpression generalRegex(
-				"^\\s*"
-				"((?:[0-9])*\\s*\\.?\\s*(?:\\p{L}|[ ])*)" // book
-				"\\s+"
-				"([0-9]+)" // chapter
-				"\\s*[:;,]\\s*" //separator
-				"("
-					"(?:[0-9]+(?:\\s*-\\s*[0-9]+)?)" // verse/verse range
-					"(?:\\s*,\\s*[0-9]+(?:\\s*[-–]\\s*[0-9]+)?)*" // more verse ranges
-				")"
-				",?"
-				"\\s*"
-				"(\\p{L}(?:\\p{L}|[0-9])*)?" // translation
-				"\\s*$",
-				QRegularExpression::CaseInsensitiveOption);
-
 	isValid_ = false;
 
-	QRegularExpressionMatch m = generalRegex.match(str);
+	QRegularExpressionMatch m = regex().match(str);
 	if(!m.hasMatch())
 		return;
 

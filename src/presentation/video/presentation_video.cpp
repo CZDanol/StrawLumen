@@ -9,7 +9,14 @@
 QStringList Presentation_Video::validExtensions()
 {
 	static const QStringList result{
-		"mp4", "mov", "wmv", "webm", "flv", "avi", "mkv", "mpg", "mpeg", "m4v"
+		"mp4", "mp3",
+		"wav", "wmv", "wma",
+		"webm",
+		"mov", "mkv", "avi",
+		"mpg", "mpeg",
+		"flv", "flac",
+		"m4v", "m4a",
+		"aac",
 	};
 	return result;
 }

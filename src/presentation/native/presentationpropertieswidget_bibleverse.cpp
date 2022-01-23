@@ -4,6 +4,7 @@
 #include "presentation_bibleverse.h"
 #include "presentation_bibleverse_wizard.h"
 #include "presentation/native/presentation_customslide.h"
+#include "util/biblerefsyntaxhighlighter.h"
 
 PresentationPropertiesWidget_BibleVerse::PresentationPropertiesWidget_BibleVerse(const QSharedPointer<Presentation_BibleVerse> &presentation, QWidget *parent) :
 	QWidget(parent),
@@ -19,6 +20,8 @@ PresentationPropertiesWidget_BibleVerse::PresentationPropertiesWidget_BibleVerse
 
 	textUpdateTimer_.setSingleShot(true);
 	textUpdateTimer_.setInterval(1000);
+
+	new BibleRefSyntaxHighlighter(ui->verses->document());
 }
 
 PresentationPropertiesWidget_BibleVerse::~PresentationPropertiesWidget_BibleVerse()

@@ -3,11 +3,14 @@
 
 #include <QString>
 #include <QVector>
+#include <QRegularExpression>
 
 class BibleRef
 {
 
 public:
+	static const QRegularExpression &regex();
+
 	BibleRef();
 	BibleRef(QString translationId, int bookId, int chapter, int verse);
 	BibleRef(QString translationId, int bookId, int chapter, const QVector<int> &verses);

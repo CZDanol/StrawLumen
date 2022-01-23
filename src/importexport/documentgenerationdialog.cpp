@@ -171,7 +171,7 @@ void DocumentGenerationDialog::generateSong(qlonglong songId, QJsonArray &output
 			sectionMap.insert(ss.section.standardName(), ss);
 
 		for(const QString &slide : slideOrder)
-			sections.append(sectionMap.value(slide, SongSectionWithContent()));
+			sections.append(sectionMap.value(SongSection(slide, false).standardName(), SongSectionWithContent()));
 	}
 
 	QSet<QString> usedSections;
