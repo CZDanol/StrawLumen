@@ -222,7 +222,7 @@ void Presentation_Song::loadSlideOrder()
 		slides_.append(SlideRec{QString(), QString(), QString(), emptySlideBeforePixmap});
 
 	for(const QString &userSectionName : slideOrder) {
-		const SongSection section(userSectionName);
+		const SongSection section(userSectionName, false);
 		if(!section.isValid())
 			continue;
 

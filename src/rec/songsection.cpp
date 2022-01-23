@@ -5,13 +5,22 @@ SongSection::SongSection()
 	isValid_ = false;
 }
 
-SongSection::SongSection(const QString &str)
+SongSection::SongSection(const QString &str, bool strict)
 {
 	static const QRegularExpression regex("^"
 																				"(?:"
 																				"([VCBIOMP])([1-9][0-9]*)?" // Standard section format
 																				"|"
 																				"\"([a-zA-Z0-9_\\-+]+)\"" // Custom section name
+																				")"
+																				"$",
+																				QRegularExpression::UseUnicodePropertiesOption);
+
+	static const QRegularExpression nonStrictRegex("^"
+																				"(?:"
+																				"([VCBIOMP])([1-9][0-9]*)?" // Standard section format
+																				"|"
+																				"\"?([a-zA-Z0-9_\\-+]+)\"?" // Custom section name
 																				")"
 																				"$",
 																				QRegularExpression::UseUnicodePropertiesOption);
@@ -23,7 +32,7 @@ SongSection::SongSection(const QString &str)
 		mpCustomName
 	};
 
-	QRegularExpressionMatch ma = regex.match(str);
+	QRegularExpressionMatch ma = (strict ? regex : nonStrictRegex).match(str);
 
 	isValid_ = ma.hasMatch();
 	isStandard_ = ma.capturedLength(mpStandardBase);

@@ -14,7 +14,8 @@ class SongSection
 
 public:
 	SongSection();
-	explicit SongSection(const QString &str);
+	/// Strict - custom sections have to be wrapped with ""
+	explicit SongSection(const QString &str, bool strict = true);
 	static SongSection customSection(const QString &str);
 
 public:

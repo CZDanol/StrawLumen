@@ -80,7 +80,7 @@ void DocumentGenerationDialog::show()
 
 void DocumentGenerationDialog::setSelectedSongs(const QVector<qlonglong> &songIds)
 {
-	ui->wgtSongSelection->setSelectedSongs(songIds);
+	ui->wgtSongSelection->setSelectedSongsIfReasonable(songIds);
 }
 
 void DocumentGenerationDialog::generate(const QVector<qlonglong> &songIds)

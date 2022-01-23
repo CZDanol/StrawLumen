@@ -21,6 +21,7 @@ public:
 
 public:
 	void setSelectedSongs(const QVector<qlonglong> &songIds);
+	void setSelectedSongsIfReasonable(const QVector<qlonglong> &songIds);
 	QVector<qlonglong> selectedSongs() const;
 
 public slots:

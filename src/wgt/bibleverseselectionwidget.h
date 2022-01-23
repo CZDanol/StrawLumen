@@ -47,8 +47,7 @@ private slots:
 	void on_lstVerses_customContextMenuRequested(const QPoint &pos);
 	void on_actionGoToChapter_triggered();
 	void on_lnCode_textChanged(const QString &arg1);
-
-private:
+ private:
 	BibleRef bibleRef_;
 
 private:

@@ -68,6 +68,19 @@ void MultiSongSelectionWidget::setSelectedSongs(const QVector<qlonglong> &songId
 	selectionModel_.addItems(songIds);
 }
 
+void MultiSongSelectionWidget::setSelectedSongsIfReasonable(const QVector<qlonglong> &songIds)
+{
+	// If the new selection is subset of the current one, keep the current one (and its order)
+	//if(QSet<qlonglong>::fromList(selectionModel_.items().toList()).contains(QSet<qlonglong>::fromList(songIds.toList())))
+	//	return;
+
+	// If the current selection model has more than one song, don't change it
+	if(songIds.count() <= 1 && selectionModel_.items().count() > 1)
+		return;
+
+	setSelectedSongs(songIds);
+}
+
 QVector<qlonglong> MultiSongSelectionWidget::selectedSongs() const
 {
 	return selectionModel_.items();
