@@ -159,13 +159,16 @@ QString OpenSongImportDialog::importSong(const QString &filename, const int conf
 		if(root.tagName() != "song")
 			return tr("Soubor \"%1\" není formátu OpenSong.").arg(filename);
 
+		const QString name = denullifyString(root.firstChildElement("title").text());
+
 		// #: SONGS_TABLE_FIELDS
 		// Denullify - the database has NOT NULL columns for error checking
 		QHash<QString,QVariant> fields {
 			{"uid", uid},
 			{"lastEdit", lastEdit},
 
-			{"name", denullifyString(root.firstChildElement("title").text())},
+			{"name", name},
+			{"standardized_name", standardizeSongName(name)},
 			{"author", denullifyString(root.firstChildElement("author").text())},
 			{"copyright", denullifyString(root.firstChildElement("copyright").text())},
 			{"slideOrder", denullifyString(root.firstChildElement("presentation").text())},

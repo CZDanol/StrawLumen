@@ -96,8 +96,14 @@ void LumenImportDialog::on_btnImport_clicked()
 			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE uid = ?", {q.value("uid")});
 			qlonglong songId;
 
-			static const QStringList dataFields {"name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
+			static const QStringList dataFields {"name", "standardized_name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
 			bool updateData = true;
+
+			QHash<QString,QVariant> data;
+			for(const QString &field : dataFields)
+				data.insert(field, q.value(field));
+
+			data["standardized_name"] = standardizeSongName(data["name"].toString());
 
 			if(!existingSong.isEmpty() && (conflictBehavior == cbSkip || (conflictBehavior == cbOverwriteIfNewer && existingSong.value("lastEdit").toLongLong() >= q.value("lastEdit").toLongLong()))) {
 				 songId = existingSong.value("id").toLongLong();
@@ -105,20 +111,10 @@ void LumenImportDialog::on_btnImport_clicked()
 
 			} else if(!existingSong.isEmpty()) {
 				songId = existingSong.value("id").toLongLong();
-
-				QHash<QString,QVariant> data;
-				for(const QString &field : dataFields)
-					data.insert(field, q.value(field));
-
 				db->update("songs", data, "id = ?", {songId});
 
 			} else {
-				QHash<QString,QVariant> data;
-				for(const QString &field : dataFields)
-					data.insert(field, q.value(field));
-
-				data.insert("uid", q.value("uid"));
-
+				data["uid"] = q.value("uid");
 				songId = db->insert("songs", data).toLongLong();
 			}
 
