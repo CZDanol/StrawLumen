@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>804</width>
-    <height>400</height>
+    <width>841</width>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,6 @@
             <widget class="QLabel" name="lblVersion">
              <property name="font">
               <font>
-               <weight>75</weight>
                <bold>true</bold>
               </font>
              </property>
@@ -128,7 +127,7 @@
            <item>
             <widget class="QLabel" name="label_3">
              <property name="pixmap">
-              <pixmap resource="../../res/resources.qrc">:/logos/logo_128w.png</pixmap>
+              <pixmap resource="../../res/resources.qrc">:/logos/avatar_64w.png</pixmap>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -160,7 +159,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ing. Daniel Čejchan&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;http://straw-solutions.cz&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;http://straw-solutions.cz&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;e-mail: danol@straw-solutions.cz&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ing. Daniel Čejchan&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://danol.cz&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://danol.cz&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;e-mail: &lt;a href=&quot;mailto:mail@danol.cz&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;mail@danol.cz&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

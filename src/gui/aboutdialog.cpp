@@ -44,7 +44,7 @@ void AboutDialog::on_btnFacebookPage_clicked()
 
 void AboutDialog::on_btnWeb_clicked()
 {
-	QDesktopServices::openUrl(QUrl("https://straw-solutions.cz/?/portfolio/lumen"));
+	QDesktopServices::openUrl(QUrl("https://lumen.danol.cz"));
 }
 
 void AboutDialog::on_btnChangelog_clicked()
