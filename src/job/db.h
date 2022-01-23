@@ -44,4 +44,6 @@ QString collate(const QString &str);
 QString collateFulltextQuery(const QString &str);
 QString denullifyString(const QString &str);
 
+QString standardizeSongName(const QString &name);
+
 #endif // DB_H

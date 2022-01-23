@@ -133,7 +133,7 @@ void SongListWidget::requery()
 					"INNER JOIN songs ON songs.id = docid "
 					"%3 "
 					"%4 "
-					"ORDER BY songs.name ASC"
+					"ORDER BY songs.standardized_name ASC"
 					;
 
 
@@ -150,7 +150,7 @@ void SongListWidget::requery()
 					"FROM songs "
 					"%3 "
 					"%4 "
-					"ORDER BY songs.name ASC ";
+					"ORDER BY songs.standardized_name ASC ";
 		}
 
 		if(isTagFilter) {

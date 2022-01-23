@@ -24,6 +24,7 @@ void createDb()
 				 "id INTEGER PRIMARY KEY,"
 				 "uid TEXT NOT NULL,"
 				 "name TEXT NOT NULL,"
+				 "standardized_name TEXT NOT NULL,"
 				 "author TEXT NOT NULL,"
 				 "copyright TEXT NOT NULL,"
 				 "content TEXT NOT NULL,"
@@ -221,4 +222,17 @@ DB_MIGRATION_PROCEDURE(4, 5)
 DB_MIGRATION_PROCEDURE(5, 6)
 {
 	forceImportBibles({"SK_RSB.xml", "ENG_KJ2K.xml"});
+}
+
+DB_MIGRATION_PROCEDURE(6, 7)
+{
+	db->exec("ALTER TABLE songs ADD standardized_name TEXT");
+
+	db->beginTransaction();
+
+	auto q = db->selectQuery("SELECT id, name FROM songs");
+	while(q.next())
+		db->exec("UPDATE songs SET standardized_name = ? WHERE id = ?", {standardizeSongName(q.value(1).toString()), q.value(0)});
+
+	db->commitTransaction();
 }

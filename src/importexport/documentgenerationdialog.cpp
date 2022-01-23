@@ -69,6 +69,9 @@ DocumentGenerationDialog::~DocumentGenerationDialog()
 {
 	settings->setValue("dialog.documentGeneration.geometry", saveGeometry());
 
+	delete webPage_;
+	delete webProfile_;
+
 	delete ui;
 }
 

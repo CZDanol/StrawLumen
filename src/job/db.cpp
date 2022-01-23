@@ -12,6 +12,7 @@
 #include "rec/songsection.h"
 #include "rec/chord.h"
 #include "util/scopeexit.h"
+#include "util/regex.h"
 
 DatabaseManager *db = nullptr;
 
@@ -142,4 +143,19 @@ QString collateFulltextQuery(const QString &str)
 QString denullifyString(const QString &str)
 {
 	return str.isNull() ? "" : str;
+}
+
+QString standardizeSongName(const QString &name)
+{
+	QString r = name;
+
+	// Standardize all numbers
+	{
+		static const QRegularExpression regex("[0-9]+");
+		replaceCallback(r, regex, [] (const QRegularExpressionMatch &m) {
+			return m.captured().rightJustified(8, '0');
+		});
+	}
+
+	return r;
 }

@@ -584,6 +584,7 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
 
 	QHash<QString,QVariant> data{
 		{"name", ui->lnName->text()},
+		{"standardized_name", standardizeSongName(ui->lnName->text())},
 		{"author", ui->lnAuthor->text()},
 		{"copyright", ui->lnCopyright->text()},
 		{"content", ui->teContent->toPlainText()},

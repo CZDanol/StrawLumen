@@ -161,24 +161,6 @@ Dlouhý obsah se tak rozdělí na dva řádky a snímek je čistější a přehl
 A mít možnost zapnout/vypnout, jestli se alternativní název zobrazuje nebo ne.
 Zvlášť u překladů zahraničních chval lidem pomáhá, když vidí, jaká píseň je to v originále.
 
-3) NEFUNKČNÍ ČÍSLOVÁNÍ PÍSNÍ A TŘÍDĚNÍ DO SLOŽEK
-Mám písně pojmenované číslem písně a pak názvem. Program však uspořádává písně velice svérázným způsobem.
-Řadí písně podle čísel takto: 1; 10; 100; 101 ... 109; 11; 111 ... 119; 
-Toto jde vyřešit vkládáním nul před čísla písní, které nemají třímístné číslo,
-avšak na snímku vypadá fakt blbě píseň pojmenovaná: 001 Ať požehnán je Bůh
-Je možné zařídit, aby program dokázal správně uspořádat čísla s různým počtem pozic?
-V OpenSongu je také možné přepínat mezi několik adresáři s písněmi.
-Můžu tak mít rozděleno několik zpěvníků. Toto velmi výrazně postrádám.
-
-4) CHYBĚJÍCÍ TYPY ODÍLŮ 
-Je super, že Straw Lumen zná oproti OpenSongu nové části písně jako: Intro, Outro, Mezihra, atd.
-Mrzí, že program nezná oddíl "Předrefrén" [P]. Část písně, která už není slokou, je vždy stejná, ale ještě to není refrén.
-Ono je samozřejmě fajn, že je možné používat i vlastní typy oddílu, ale jsou v uvozovkách a nefungují na ně klávesové zkratky.
-A konkrétně předrefrén dost postrádám, protože se zejména v moderních chválách často vyskytuje.
-A proč je podpora jen pro tři sloky? Proč nejsou oddíly sloka, refrén a další obecně s možností libovolného čísla?
-Některé staré nebo specifické písně mají i přes deset slok. Hodně písní má taky třeba dva nebo tři refrény s trochu jinými slovy.
-OpenSong neřeší jaké má sloka nebo jiná část písně číslo. Rozliší podle písmena typ oddílu a číslo za písmenem už neřeší.
-
 5) POZNÁMKY K PÍSNÍM
 OpenSong umožňuje do písně vepsat nepromítanou, ale jinak v programu viditelnou a taky vytisknutelnou poznámku.
 V OpenSongu jsou poznámky v textu uvozeny středníkem na kraji řádku. Vypadá to například takto:
@@ -229,15 +211,6 @@ Rozšířený režim editace umžňuje v OpenSongu také zaškrtnout, jaká tém
 Zaškrtávání témat je poměrně zastaralé a omezující, ale hodilo by samostnatné pole "Témata",
 kde by bylo možné umístit něco se něco na způsob hashtagů, kterými by se píseň označila.
 Potom by bylo možné při sestavování playlistu na bohoslužbu vyhledávat písně na základě témat.
-
-12) VYHLEDÁVÁNÍ V BIBLI 
-OpenSong umožňuje hledání konkrétních slov nebo textu v Bibli nebo v textech písní a jejich názvech nebo autorech.
-StrawLumen má vyhledávací pole pouze pro písně.
-
-13) ENHARMONICKÁ ZÁMĚNA AKORDŮ 
-U akordů by bylo super kromě transpozice umožnit enharmonickou záměnu béček a křížků.
-Myslím tím to, aby se dalo přepínat, jestli jde v písni o akordy Cis a Gis nebo Des a As.
-OpenSong to umožňuje.
 
 14) PREZENTAČNÍ REŽIMY 
 OpenSong umožňuje překrýt prezentaci určitými režimy, ze kterých je ve StrawLumenu jen černý režim.
