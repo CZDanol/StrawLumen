@@ -1,4 +1,5 @@
 Aktuálně
+- presety - zejména pro výběr písní ke tvorbě zpěvníku
 - přehrát akord po kliknutí
 - možnost nastavit menší a ne tučný font u akordů v tisku
 - možnost zmenšení akordových značek, možnost vypnout tučně
