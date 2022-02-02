@@ -1,4 +1,16 @@
 Aktuálně
+- možnost udržování ID autora (v programu si bude každý moct nastavit jméno a ID) - písničky by vyzvaly k vytvoření nové verze, pokud autor nesedí)
+- možnost kopírovat písničku
+- doplnit chybějící anglické překlady
+- lepší podpora klávesnice - tabování v režimu promítání
+- "on beginning" a "on end" špatnej překlad
+- barevně zvýraznit ve slide listu, když je černej screen nebo když se nepromítá
+- když se drag&drop přeřadí položky v programu, vypne se black screen
+- když se vypne promítání během blackoutu, blackout výběr zmizí až po opětovném zapnutí
+- přidat popis zkratek k tlačítkám šipek
+- přidat klávesové zkratky pro přeskakování sekcí
+- možná někde vypsat klávesové zkratky nastálo?
+
 - presety - zejména pro výběr písní ke tvorbě zpěvníku
 - přehrát akord po kliknutí
 - možnost nastavit menší a ne tučný font u akordů v tisku
@@ -13,7 +25,7 @@ Aktuálně
 - možnost zvětšení písma všude
 - tisk - při "Dle pořadí snímků bez dupolikátů" zvýraznit duplikáty sekce (větší mezera, přidat první tři slabiky nebo tak, přidat podtržítko)
 - podpora promítání na jedné obrazovce - ovládání klávesama
-- Ctrl+A názvy písní funguje až napodruhé
+
 
 - powerpoint - next previous možnost i ne po slidech, ale "po animacích" (poslat příkaz next powerpointu a přečíst aktuální slide)
 - import PowerPoint jako písní

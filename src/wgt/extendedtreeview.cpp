@@ -1,6 +1,7 @@
 #include "extendedtreeview.h"
 
 #include <QKeyEvent>
+#include <QDebug>
 
 ExtendedTreeView::ExtendedTreeView(QWidget *parent) : QTreeView(parent)
 {
@@ -20,7 +21,7 @@ void ExtendedTreeView::keyPressEvent(QKeyEvent *e)
 	else if(e->key() == Qt::Key_Down)
 		emit sigDownPressed();
 
-	else if(!e->text().trimmed().isEmpty())
+	else if(!e->text().trimmed().isEmpty() && e->text().front().isPrint())
 		emit sigTextTyped(e->text());
 
 	QTreeView::keyPressEvent(e);
