@@ -335,5 +335,6 @@ void Playlist::onPresentationMorphedInto(const QSharedPointer<Presentation> &fro
 		return;
 
 	items_[ix] = to;
+	to->playlist_ = this;
 	emitItemsChanged();
 }
