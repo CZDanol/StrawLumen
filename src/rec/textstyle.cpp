@@ -48,7 +48,6 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	QSize size;
 
 	QStringRef remainingText(&str);
-	QVector<int> wrapPoints;
 
 	// Initial scale factor estimation
 	//qreal scaleFactor = qMin(1.0, static_cast<qreal>(availableSize.width()) / (metrics.height() * approxLineCount + metrics.leading() * (approxLineCount-1)));
@@ -63,7 +62,9 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	// Lay out lines
 	while(!remainingText.isEmpty()) {
 		int ix = remainingText.indexOf('\n');
-		QString line = remainingText.left(ix).trimmed().toString();
+
+		QStringRef lineRef = remainingText.left(ix).trimmed();
+		QString line = lineRef.toString();
 
 		if(size.height())
 			size.setHeight(size.height() + metrics.leading());
@@ -71,7 +72,7 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		int lineWidth = metrics.horizontalAdvance(line);
 		if(lineWidth > approxAvailableWidth && (flags & fWordWrap)) {
 			// Calculate wrap points
-			wrapPoints.clear();
+			QVector<int> wrapPoints;
 			static const QRegularExpression wrapPointsRegex("\\b(\\w )?\\w+\\p{P}*(?: …\\p{P}*)?", QRegularExpression::UseUnicodePropertiesOption);
 			QRegularExpressionMatchIterator it = wrapPointsRegex.globalMatch(line);
 			while(it.hasNext())
@@ -89,9 +90,10 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 					start = mid;
 			}
 
-			line = line.left(wrapPoints[start]);
+			const int len = wrapPoints[start];
+			line = line.left(len);
 			lineWidth = metrics.horizontalAdvance(line);
-			ix = line.length();
+			ix = lineRef.position() + len;
 		}
 
 		if(lineWidth > size.width())
@@ -101,7 +103,7 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		path.addText(-lineWidth*hAlignConst, size.height(), font, line);
 		size.setHeight(size.height() + metrics.descent());
 
-		remainingText = ix == -1 ? nullptr : remainingText.mid(ix+1);
+		remainingText = ix == -1 ? nullptr : str.midRef(ix+1);
 	}
 	QRectF pathBoundingRect = path.boundingRect();
 

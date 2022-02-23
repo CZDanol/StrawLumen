@@ -139,6 +139,8 @@ void Presentation_BibleVerse::updateVerses()
 
 		slide += ref.contentString();
 		slideName += ref.toString();
+
+		slide = slide.trimmed();
 	}
 
 	if(!slide.isEmpty()) {
@@ -147,7 +149,7 @@ void Presentation_BibleVerse::updateVerses()
 	}
 
 	for(QString &slide : slides_) {
-		QString slideDesc = slide.left(400);
+		QString slideDesc = slide.left(400).trimmed();
 		slideDesc.remove('\n');
 		slideDescriptions_ += slideDesc;
 
