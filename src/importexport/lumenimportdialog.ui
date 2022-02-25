@@ -82,7 +82,7 @@
        <item row="3" column="1">
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Existující písně:</string>
+          <string>Existující písně se stejným názvem:</string>
          </property>
         </widget>
        </item>
@@ -118,17 +118,17 @@
          </property>
          <item>
           <property name="text">
-           <string>Nepřepisovat</string>
+           <string>Přeskočit</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Přepsat, pokud je importovaná píseň novější</string>
+           <string>Přidat a nechat původní</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Vždy přepsat</string>
+           <string>Přepsat</string>
           </property>
          </item>
         </widget>

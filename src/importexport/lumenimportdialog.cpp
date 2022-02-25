@@ -19,8 +19,8 @@
 
 enum ConflictBehavior {
 	cbSkip,
-	cbOverwriteIfNewer,
-	cbAlwaysOverwrite
+	cbKeepBoth,
+	cbOverwrite
 };
 
 LumenImportDialog *lumenImportDialog()
@@ -93,7 +93,7 @@ void LumenImportDialog::on_btnImport_clicked()
 			if(isError || splashscreen->isStornoPressed())
 				break;
 
-			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE uid = ?", {q.value("uid")});
+			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE name = ?", {q.value("name")});
 			qlonglong songId;
 
 			static const QStringList dataFields {"name", "standardized_name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
@@ -105,11 +105,11 @@ void LumenImportDialog::on_btnImport_clicked()
 
 			data["standardized_name"] = standardizeSongName(data["name"].toString());
 
-			if(!existingSong.isEmpty() && (conflictBehavior == cbSkip || (conflictBehavior == cbOverwriteIfNewer && existingSong.value("lastEdit").toLongLong() >= q.value("lastEdit").toLongLong()))) {
+			if(!existingSong.isEmpty() && conflictBehavior == cbSkip) {
 				 songId = existingSong.value("id").toLongLong();
 				 updateData = false;
 
-			} else if(!existingSong.isEmpty()) {
+			} else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite) {
 				songId = existingSong.value("id").toLongLong();
 				db->update("songs", data, "id = ?", {songId});
 
@@ -127,10 +127,10 @@ void LumenImportDialog::on_btnImport_clicked()
 				QSqlQuery q2 = importDb.selectQuery("SELECT tag FROM song_tags WHERE song = ?", {q.value("id")});
 				while(q2.next())
 					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, q2.value(0)});
-			}
 
-			for(const QString &tag : tags)
-				db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
+				for(const QString &tag : tags)
+					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
+			}
 
 			if(addToPlaylist)
 				presentations.append(Presentation_Song::createFromDb(songId));
