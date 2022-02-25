@@ -87,7 +87,6 @@
             <property name="font">
              <font>
               <pointsize>12</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -222,7 +221,7 @@
            <item>
             <widget class="QPushButton" name="btnPreviousSlide">
              <property name="toolTip">
-              <string>Předchozí snímek</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Předchozí snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
@@ -242,7 +241,7 @@
            <item>
             <widget class="QPushButton" name="btnNextSlide">
              <property name="toolTip">
-              <string>Další snímek</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Další snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
@@ -282,7 +281,7 @@
            <item>
             <widget class="QPushButton" name="btnBlackScreen">
              <property name="toolTip">
-              <string>Černá obrazovka</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Černá obrazovka&lt;/p&gt;&lt;p&gt;Zkratka: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="icon">
               <iconset resource="../../res/resources.qrc">
@@ -538,7 +537,7 @@ PresentationPropertiesWidget
                 <x>0</x>
                 <y>0</y>
                 <width>302</width>
-                <height>94</height>
+                <height>92</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9"/>

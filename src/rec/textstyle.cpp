@@ -47,7 +47,7 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 	QPainterPath path;
 	QSize size;
 
-	QStringRef remainingText(&str);
+	QStringRef remainingText = QStringRef(&str).trimmed();
 
 	// Initial scale factor estimation
 	//qreal scaleFactor = qMin(1.0, static_cast<qreal>(availableSize.width()) / (metrics.height() * approxLineCount + metrics.leading() * (approxLineCount-1)));
@@ -93,7 +93,7 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 			const int len = wrapPoints[start];
 			line = line.left(len);
 			lineWidth = metrics.horizontalAdvance(line);
-			ix = lineRef.position() + len;
+			ix = lineRef.position() - remainingText.position() + len;
 		}
 
 		if(lineWidth > size.width())
@@ -103,7 +103,7 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		path.addText(-lineWidth*hAlignConst, size.height(), font, line);
 		size.setHeight(size.height() + metrics.descent());
 
-		remainingText = ix == -1 ? nullptr : str.midRef(ix+1);
+		remainingText = ix == -1 ? nullptr : str.midRef(remainingText.position() + ix+1);
 	}
 	QRectF pathBoundingRect = path.boundingRect();
 
