@@ -357,6 +357,7 @@
 						}
 					}
 				}
+
 				// Various settings
 				{
 					if(data.generateNumbering)
@@ -387,6 +388,11 @@
 					
 					document.body.querySelector(".fontSize").style["font-size"] = data.fontSize + "pt";
 				}
+
+				// Remove all scripts
+				var r = document.getElementsByTagName('script');
+				for (var i = r.length - 1; i >= 0; i--)
+				  r[i].parentNode.removeChild(r[i]);
 			}
 		</script>
 	</body>

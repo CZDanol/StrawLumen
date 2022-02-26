@@ -254,12 +254,34 @@ void DocumentGenerationDialog::onPageLoaded(bool result)
 	pageLayout.setMargins(QMarginsF(m,m,m,m));
 
 	QPointer<DocumentGenerationDialog> thisPtr(this);
-	webPage_->printToPdf([this, thisPtr](const QByteArray &data){
-		if(thisPtr.isNull())
-			return;
 
-		onPdfGenerated(data);
-	}, pageLayout);
+	if(outputFilePath_.endsWith(".html")) {
+		webPage_->toHtml([this, thisPtr] (const QString &str) {
+			splashscreen->close();
+
+			if(thisPtr.isNull())
+				return;
+
+			QFile f(outputFilePath_);
+			if(!f.open(QIODevice::WriteOnly))
+				return standardErrorDialog(tr("Nepodařilo se otevřít soubor '%1' pro zápis.").arg(outputFilePath_));
+
+			f.write(str.toUtf8());
+
+			if(ui->cbOpenWhenDone->isChecked())
+				execOnMainThread([=]{QDesktopServices::openUrl(QUrl::fromLocalFile(outputFilePath_));});
+			else
+				standardSuccessDialog(tr("Zpěvník byl uložen do \"%1\"").arg(outputFilePath_));
+		});
+	}
+	else {
+		webPage_->printToPdf([this, thisPtr](const QByteArray &data){
+			if(thisPtr.isNull())
+				return;
+
+			onPdfGenerated(data);
+		}, pageLayout);
+	}
 }
 
 void DocumentGenerationDialog::onPdfGenerated(const QByteArray &data)
@@ -305,7 +327,7 @@ void DocumentGenerationDialog::on_btnGenerate_clicked()
 		QFileDialog dlg(this);
 		dlg.setFileMode(QFileDialog::AnyFile);
 		dlg.setAcceptMode(QFileDialog::AcceptSave);
-		dlg.setNameFilter(tr("Soubory PDF (*.pdf)"));
+		dlg.setNameFilters({tr("Soubory PDF (*.pdf)"), tr("Soubory HTML (*.html)")});
 		dlg.setWindowIcon(icon);
 		dlg.setWindowTitle(tr("Vytvoření zpěvníku"));
 		dlg.setDirectory(settings->value("dialog.documentGeneration.directory", QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)).toString());
