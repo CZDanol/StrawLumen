@@ -168,6 +168,12 @@ void PresentationManager::setBlackScreen(bool set)
 	emit sigBlackScreenChanged(set);
 }
 
+void PresentationManager::raiseWindow()
+{
+	if(currentEngine_)
+		currentEngine_->raiseWindow();
+}
+
 void PresentationManager::reinitializeCurrentPresentation()
 {
 	auto presentation =	currentPresentation_;

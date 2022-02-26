@@ -28,6 +28,7 @@ public:
 
 	void setBlackScreen(bool set) override;
 	void setDisplay(const QRect &rect) override;
+	void raiseWindow() override;
 
 private:
 	bool isBlackScreen_ = false;

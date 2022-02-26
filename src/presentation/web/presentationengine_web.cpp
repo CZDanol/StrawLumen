@@ -36,3 +36,8 @@ void PresentationEngine_Web::setDisplay(const QRect &rect)
 {
 	webProjectorWindow->setGeometry(rect);
 }
+
+void PresentationEngine_Web::raiseWindow()
+{
+	webProjectorWindow->raise();
+}

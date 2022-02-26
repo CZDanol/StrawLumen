@@ -72,3 +72,8 @@ void PresentationEngine_Native::setDisplay(const QRect &rect)
 {
 	nativeProjectorWindow->setGeometry(rect);
 }
+
+void PresentationEngine_Native::raiseWindow()
+{
+	nativeProjectorWindow->raise();
+}

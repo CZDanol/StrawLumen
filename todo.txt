@@ -1,4 +1,8 @@
 Aktuálně
+- export to HTML
+   - ui pro automatické posouvání + transpozice
+   - možnost skrytí akordů
+
 - možnost udržování ID autora (v programu si bude každý moct nastavit jméno a ID) - písničky by vyzvaly k vytvoření nové verze, pokud autor nesedí)
 - možnost kopírovat písničku
 - lepší podpora klávesnice - tabování v režimu promítání

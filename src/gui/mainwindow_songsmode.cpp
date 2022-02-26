@@ -736,6 +736,7 @@ void MainWindow_SongsMode::on_actionPresentSongs_triggered()
 	mainWindow->presentationMode()->playlist()->addItems(presentations);
 	mainWindow->showPresentationMode();
 	presentationManager->setSlide(presentations.first(), 0);
+	presentationManager->raiseWindow();
 }
 
 void MainWindow_SongsMode::on_actionAddSongsToPlaylist_triggered()

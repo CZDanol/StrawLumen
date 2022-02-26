@@ -40,3 +40,8 @@ void PresentationEngine_Video::setDisplay(const QRect &rect)
 {
 	videoProjectorWindow->setGeometry(rect);
 }
+
+void PresentationEngine_Video::raiseWindow()
+{
+	videoProjectorWindow->raise();
+}

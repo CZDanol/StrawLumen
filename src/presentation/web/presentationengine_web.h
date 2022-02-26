@@ -12,11 +12,12 @@ public:
 	~PresentationEngine_Web() override;
 
 public:
-	void activateEngine() override;
-	void deactivateEngine() override;
+	virtual void activateEngine() override;
+	virtual void deactivateEngine() override;
 
-	void setBlackScreen(bool set) override;
-	void setDisplay(const QRect &rect) override;
+	virtual void setBlackScreen(bool set) override;
+	virtual void setDisplay(const QRect &rect) override;
+	virtual void raiseWindow() override;
 
 };
 

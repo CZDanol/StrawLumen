@@ -465,7 +465,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Po vytvoření otevřít PDF soubor</string>
+               <string>Po vytvoření otevřít vygenerovaný soubor</string>
               </property>
               <property name="checked">
                <bool>true</bool>

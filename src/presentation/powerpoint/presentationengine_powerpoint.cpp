@@ -71,6 +71,11 @@ void PresentationEngine_PowerPoint::setDisplay(const QRect &rect)
 	});
 }
 
+void PresentationEngine_PowerPoint::raiseWindow()
+{
+	// TODO
+}
+
 void PresentationEngine_PowerPoint::setDisplay_axThread(const QRect &rect)
 {
 	if(!axPresentation_)

@@ -35,6 +35,8 @@ public slots:
 	void setActive(bool set);
 	void setBlackScreen(bool set);
 
+	void raiseWindow();
+
 	void reinitializeCurrentPresentation();
 
 signals:

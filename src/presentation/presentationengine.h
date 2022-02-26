@@ -17,6 +17,7 @@ public:
 
 	virtual void setBlackScreen(bool set) = 0;
 	virtual void setDisplay(const QRect &rect) = 0;
+	virtual void raiseWindow() = 0;
 
 };
 
