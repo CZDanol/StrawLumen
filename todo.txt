@@ -1,13 +1,10 @@
 Aktuálně
 - možnost udržování ID autora (v programu si bude každý moct nastavit jméno a ID) - písničky by vyzvaly k vytvoření nové verze, pokud autor nesedí)
 - možnost kopírovat písničku
-- doplnit chybějící anglické překlady
 - lepší podpora klávesnice - tabování v režimu promítání
-- "on beginning" a "on end" špatnej překlad
 - barevně zvýraznit ve slide listu, když je černej screen nebo když se nepromítá
 - když se drag&drop přeřadí položky v programu, vypne se black screen
 - když se vypne promítání během blackoutu, blackout výběr zmizí až po opětovném zapnutí
-- přidat popis zkratek k tlačítkám šipek
 - přidat klávesové zkratky pro přeskakování sekcí
 - možná někde vypsat klávesové zkratky nastálo?
 

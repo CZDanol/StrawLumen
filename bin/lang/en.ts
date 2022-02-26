@@ -14,62 +14,62 @@
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="77"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="76"/>
         <source>Verze:</source>
         <translation>Version:</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="97"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="96"/>
         <source>Čas sestavení:</source>
         <translation>Build timestamp:</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="125"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="124"/>
         <source>Autor</source>
         <translation>Author</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="163"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ing. Daniel Čejchan&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;http://straw-solutions.cz&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;http://straw-solutions.cz&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;e-mail: danol@straw-solutions.cz&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="../../src/gui/aboutdialog.ui" line="162"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ing. Daniel Čejchan&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://danol.cz&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://danol.cz&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;e-mail: &lt;a href=&quot;mailto:mail@danol.cz&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;mail@danol.cz&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="230"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="229"/>
         <source>Zdroje třetích stran</source>
         <translation>Third party resources</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="268"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="267"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Icons8&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://icons8.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://icons8.com/&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Neplacená licence.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Icons8&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://icons8.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://icons8.com/&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Free licence.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="313"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="312"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zefania XML Bible Markup Language&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/zefania-sharp/&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://sourceforge.net/projects/zefania-sharp/&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Open source.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="368"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="367"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Qt framework&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://www.qt.io/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&lt;br/&gt;&lt;/span&gt;Využito pod licencí LGPL.&lt;br/&gt;Přibalené knihovny z originální distribuce.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Qt framework&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://www.qt.io/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&lt;br/&gt;&lt;/span&gt;LGPL licence.&lt;br/&gt;Original library distribution.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="387"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="386"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;K-Lite Codec Pack&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://codecguide.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://codecguide.com/&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Freeware.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="442"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="441"/>
         <source>Facebook</source>
         <translation>Facebook</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="456"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="455"/>
         <source>Web</source>
         <translation>Website</translation>
     </message>
     <message>
-        <location filename="../../src/gui/aboutdialog.ui" line="483"/>
+        <location filename="../../src/gui/aboutdialog.ui" line="482"/>
         <source>Seznam změn</source>
         <translation>Changelog</translation>
     </message>
@@ -315,13 +315,13 @@
         <translation>Go to chapter</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="130"/>
-        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="194"/>
+        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="131"/>
+        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="195"/>
         <source>(vše)</source>
         <translation>(all)</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="302"/>
+        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="303"/>
         <source>(a další; výsledky omezeny na 200 veršů)</source>
         <translation>(and more, results truncated to 200 verses)</translation>
     </message>
@@ -416,17 +416,17 @@
     <name>DBManager</name>
     <message>
         <location filename="../../src/importexport/exportdb.cpp" line="40"/>
-        <location filename="../../src/job/db.cpp" line="65"/>
+        <location filename="../../src/job/db.cpp" line="66"/>
         <source>Nepodporovaná verze databáze</source>
         <translation>Unsupported database version</translation>
     </message>
     <message>
-        <location filename="../../src/job/db.cpp" line="33"/>
+        <location filename="../../src/job/db.cpp" line="34"/>
         <source>Nepodařilo se incializovat databázi: %1</source>
         <translation>Failed to initialize database: %1</translation>
     </message>
     <message>
-        <location filename="../../src/job/db.cpp" line="41"/>
+        <location filename="../../src/job/db.cpp" line="42"/>
         <source>Chyba při inicializaci databáze: %1
 
 %2</source>
@@ -485,7 +485,7 @@
     <name>DocumentGenerationDialog</name>
     <message>
         <location filename="../../src/importexport/documentgenerationdialog.ui" line="17"/>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="307"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="332"/>
         <source>Vytvoření zpěvníku</source>
         <translation>Songbook generation</translation>
     </message>
@@ -496,7 +496,7 @@
     </message>
     <message>
         <location filename="../../src/importexport/documentgenerationdialog.ui" line="71"/>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="122"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="125"/>
         <source>Obsah</source>
         <translation>Table of contents</translation>
     </message>
@@ -612,12 +612,17 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you are skilled in HTML, CSS and JavaScript, you can customize the template – it is loced in &lt;span style=&quot;font-family: Consolas;&quot;&gt;{application folder}/etc/songbookTemplate.html&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.ui" line="542"/>
+        <location filename="../../src/importexport/documentgenerationdialog.ui" line="539"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nově je možné &lt;span style=&quot; font-weight:700;&quot;&gt;exportovat do PDF a HTML.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is now possible to &lt;span style=&quot; font-weight:700;&quot;&gt;export to PDF and HTML.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/documentgenerationdialog.ui" line="569"/>
         <source>Zavřít</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.ui" line="556"/>
+        <location filename="../../src/importexport/documentgenerationdialog.ui" line="583"/>
         <source>Vytvořit</source>
         <translation>Generate</translation>
     </message>
@@ -628,52 +633,63 @@
         <translation>A4</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="88"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="91"/>
         <source>Generování zpěvníku</source>
         <translation>Creating songbook</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="240"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="243"/>
         <source>Neznámá chyba při vytváření zpěvníku (nepodařilo se načíst šablonu).</source>
         <translation>Unknown error during songbook creation (failed to load the template).</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="266"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="267"/>
+        <source>Nepodařilo se otevřít soubor &apos;%1&apos; pro zápis.</source>
+        <translation>Failed to open file &apos;%1&apos; for writing.</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="291"/>
         <source>Vytváření PDF souboru</source>
         <translation>Creating PDF file</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="268"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="293"/>
         <source>Neznámá chyba při vytváření zpěvníku (nepodařilo se připravit PDF data).</source>
         <translation>Unknown error during songbook creation (failed to prepare PDF data).</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="272"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="297"/>
         <source>Nepodařilo se otevřít soubor &quot;%1&quot; pro zápis.</source>
         <translation>Failed to open file &quot;%1&quot; for writing.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="275"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="300"/>
         <source>Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).</source>
         <translation>Unknown error during songbook creation (all data not written).</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="280"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="330"/>
+        <source>Soubory HTML (*.html)</source>
+        <translation>HTML files (*.html)</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="274"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="305"/>
         <source>Zpěvník byl uložen do &quot;%1&quot;</source>
         <translation>Songbook saved to &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="293"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="318"/>
         <source>Aktuální konfigurace by vytvořila prázdný dokument, protože není zvoleno ani generování obsahu, ani generování slov písní.</source>
         <translation>Current configuration would create an empty document, because neither table of contents nor lyrics are marked for generation.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="297"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="322"/>
         <source>Není zvolena ani jedna píseň.</source>
         <translation>No songs are selected.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="305"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="330"/>
         <source>Soubory PDF (*.pdf)</source>
         <translation>PDF files (*.pdf)</translation>
     </message>
@@ -821,24 +837,40 @@
         <translation>File:</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="85"/>
         <source>Existující písně:</source>
-        <translation>Existing songs:</translation>
+        <translation type="vanished">Existing songs:</translation>
+    </message>
+    <message>
+        <source>Nepřepisovat</source>
+        <translation type="vanished">Do not overwrite</translation>
+    </message>
+    <message>
+        <source>Přepsat, pokud je importovaná píseň novější</source>
+        <translation type="vanished">Overwrite, if the imported song is newer</translation>
+    </message>
+    <message>
+        <source>Vždy přepsat</source>
+        <translation type="vanished">Always overwrite</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="85"/>
+        <source>Existující písně se stejným názvem:</source>
+        <translation>Existing songs with the same name:</translation>
     </message>
     <message>
         <location filename="../../src/importexport/lumenimportdialog.ui" line="121"/>
-        <source>Nepřepisovat</source>
-        <translation>Do not overwrite</translation>
+        <source>Přeskočit</source>
+        <translation>Skip</translation>
     </message>
     <message>
         <location filename="../../src/importexport/lumenimportdialog.ui" line="126"/>
-        <source>Přepsat, pokud je importovaná píseň novější</source>
-        <translation>Overwrite, if the imported song is newer</translation>
+        <source>Přidat a nechat původní</source>
+        <translation>Add and keep original</translation>
     </message>
     <message>
         <location filename="../../src/importexport/lumenimportdialog.ui" line="131"/>
-        <source>Vždy přepsat</source>
-        <translation>Always overwrite</translation>
+        <source>Přepsat</source>
+        <translation>Overwrite</translation>
     </message>
     <message>
         <location filename="../../src/importexport/lumenimportdialog.ui" line="145"/>
@@ -861,32 +893,32 @@
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="62"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="63"/>
         <source>Vybrat soubor...</source>
         <translation>Select file...</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="80"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="81"/>
         <source>Impportování písní</source>
         <translation>Importing songs</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="149"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="146"/>
         <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
         <translation>There is a lot of songs to import (%1). Do you areally want to add them all to the playlist?</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="156"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="153"/>
         <source>Písně byly importovány.</source>
         <translation>Songs were imported.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="169"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="166"/>
         <source>Soubory Straw Lumen (*.strawLumen)</source>
         <translation>Straw Lumen files (*.strawLumen)</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="171"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="168"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
@@ -1007,152 +1039,164 @@
         <translation>Time</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="164"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="163"/>
         <source>Ovládání</source>
         <translation>Controls</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="182"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="181"/>
         <source>Promítat</source>
         <translation>Enable presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="205"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="204"/>
         <source>Předchozí prezentace</source>
         <translation>Previous presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="225"/>
         <source>Předchozí snímek</source>
-        <translation>Previous slide</translation>
+        <translation type="vanished">Previous slide</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="245"/>
         <source>Další snímek</source>
-        <translation>Next slide</translation>
+        <translation type="vanished">Next slide</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="265"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="264"/>
         <source>Další prezentace</source>
         <translation>Next presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="285"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="628"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="627"/>
         <source>Černá obrazovka</source>
         <translation>Black screen</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="327"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="664"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="326"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="663"/>
         <source>Přidat do programu</source>
         <translation>Add to playlist</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="341"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="381"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="224"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Předchozí snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Previous slide&lt;/p&gt;&lt;p&gt;Shortcut: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="244"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Další snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Next slide&lt;/p&gt;&lt;p&gt;Shortcut: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="284"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Černá obrazovka&lt;/p&gt;&lt;p&gt;Zkratka: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Black screen&lt;/p&gt;&lt;p&gt;Shortcut: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="340"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="380"/>
         <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="100"/>
         <source>Program</source>
         <translation>Playlist</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="486"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="485"/>
         <source>Písně</source>
         <translation>Songs</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="504"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="503"/>
         <source>Položka</source>
         <translation>Item</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="570"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="569"/>
         <source>Snímky</source>
         <translation>Slides</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="607"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="606"/>
         <source>PowerPoint prezentace</source>
         <translation>PowerPoint presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="616"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="655"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="615"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="654"/>
         <source>Smazat</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="637"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="636"/>
         <source>Píseň</source>
         <translation>Song</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="646"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="645"/>
         <source>Upravit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="673"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="672"/>
         <source>Vlastní snímek</source>
         <translation>Custom slide</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="676"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="675"/>
         <source>Vlastní text</source>
         <translation>Custom text</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="685"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="684"/>
         <source>Upravit položku</source>
         <translation>Edit item</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="694"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="693"/>
         <source>Nový</source>
         <translation>New</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="703"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="702"/>
         <source>Uložit</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="706"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="705"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="715"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="714"/>
         <source>Načíst</source>
         <translation>Load</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="724"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="723"/>
         <source>Uložit jako</source>
         <translation>Save as</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="727"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="726"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="736"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="735"/>
         <source>Obrázky</source>
         <translation>Images</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="745"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="744"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="754"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="753"/>
         <source>Biblický verš</source>
         <translation>Bible verse</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="763"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="762"/>
         <source>Webová stránka</source>
         <translation>Website</translation>
     </message>
@@ -1266,13 +1310,13 @@
     </message>
     <message>
         <location filename="../../src/gui/mainwindow_songsmode.ui" line="197"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="107"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="108"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
     <message>
         <location filename="../../src/gui/mainwindow_songsmode.ui" line="211"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="112"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="114"/>
         <source>Export</source>
         <translation>Export</translation>
     </message>
@@ -1506,63 +1550,68 @@ Zkratka: Alt+Shift+F</source>
         <translation>Removes lyrics in the selection but keeps chords</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="98"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="935"/>
+        <source>PowerPoint</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="99"/>
         <source>Vlastní název</source>
         <translation>Custom title</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="123"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="125"/>
         <source>Kopírovat akordy z...</source>
         <translation>Copy chords from...</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="198"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="200"/>
         <source>V režimu úprav nelze mazat písně. Ukončete úpravy a zkuste to znovu.</source>
         <translation>Cannot delete songs when editing. Finish editing and try again.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="200"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="202"/>
         <source>Opravdu smazat vybrané písně?</source>
         <translation>Do you really want to delete selected songs?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="228"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="230"/>
         <source>Píseň je otevřena pro editaci. Chcete uložit provedené úpravy?</source>
         <translation>A song is open in edit mode. Save changes?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="302"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="304"/>
         <source>Schránka</source>
         <translation>Clipboard</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="307"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="322"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="309"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="324"/>
         <source>Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?</source>
         <translation>Section already contains chords. Continue?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="378"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="380"/>
         <source>Vybraná pozice neobsahuje žádnou sekci</source>
         <translation>Selection does not contain any sections</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="568"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="570"/>
         <source>Opravdu zahodit provedené úpravy?</source>
         <translation>Really discard changes?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="672"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="675"/>
         <source>Píseň aktuálně neobsahuje žádné sekce.</source>
         <translation>Song does not contain any sections.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="721"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="724"/>
         <source>Tuto akci nelze provést během úprav písně. Ukončete úpravy a zkuste to znovu.</source>
         <translation>Cannot perform this action during song editing. Finish editing and try again.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="765"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="768"/>
         <source>Píseň neobsahuje žádné sekce s textem i akordy.</source>
         <translation>Song does not contain any sections with both chords and lyrics.</translation>
     </message>
@@ -1615,7 +1664,7 @@ Zkratka: Alt+Shift+F</source>
         <translation>Selection</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/multisongselectionwidget.cpp" line="107"/>
+        <location filename="../../src/wgt/multisongselectionwidget.cpp" line="120"/>
         <source>Opravdu odebrat všechny položky z výběru?</source>
         <translation>Really remove all songs from the selection?</translation>
     </message>
@@ -1787,28 +1836,28 @@ Zkratka: Alt+Shift+F</source>
         <translation>File &quot;%1&quot; is not in OpenSong format.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="208"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="211"/>
         <source>Import písní</source>
         <translation>Importing songs</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="266"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="269"/>
         <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
         <translation>There is a lot of imported songs (%1). Really add them all to the playlist?</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="272"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="275"/>
         <source>Písně byly importovány.</source>
         <translation>Song import successfull.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="284"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="287"/>
         <source>Soubory OpenSong (*)</source>
         <translation>OpenSong files (*)</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="286"/>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="308"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="289"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="311"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
@@ -1906,6 +1955,99 @@ Zkratka: Alt+Shift+F</source>
         <location filename="../../src/gui/playlistsdialog.cpp" line="238"/>
         <source>Opravdu smazat vybraný program?</source>
         <translation>Really delete selected playlist?</translation>
+    </message>
+</context>
+<context>
+    <name>PowerPointImportDialog</name>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="17"/>
+        <source>PowerPoint import</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="44"/>
+        <source>Nastavení</source>
+        <translation>Settings</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="75"/>
+        <source>Soubory:</source>
+        <translation>Files:</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="85"/>
+        <source>Existující písně:</source>
+        <translation>Existing songs:</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="121"/>
+        <source>Nepřepisovat</source>
+        <translation>Do not overwrite</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="126"/>
+        <source>Přepsat, pokud je importovaná píseň novější</source>
+        <translation>Overwrite, if the imported song is newer</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="131"/>
+        <source>Vždy přepsat</source>
+        <translation>Always overwrite</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="145"/>
+        <source>Přidat importované písně do programu promítání</source>
+        <translation>Add imported songs to the playlist</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="166"/>
+        <source>Přidat štítky:</source>
+        <translation>Add tags:</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="224"/>
+        <source>Storno</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.ui" line="238"/>
+        <source>Importovat</source>
+        <translation>Import</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="50"/>
+        <source>Vybrat soubory</source>
+        <translation>Select files</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="50"/>
+        <source>%1 souborů</source>
+        <translation>%1 files</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="63"/>
+        <source>Impportování písní</source>
+        <translation>Importing songs</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="129"/>
+        <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
+        <translation>There&apos;s a lot fo songs to be imported (%1). Do you really want to add all of them to the playlist?</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="136"/>
+        <source>Písně byly importovány.</source>
+        <translation>The songs were imported.</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="154"/>
+        <source>Soubory PowerPoint (*.ppt *.pptx)</source>
+        <translation>PowerPoint files (*.ppt *.pptx)</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="156"/>
+        <source>Import</source>
+        <translation>Import</translation>
     </message>
 </context>
 <context>
@@ -2087,47 +2229,52 @@ Zkratka: Alt+Shift+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="80"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="227"/>
         <source>Prázdný snímek na konci</source>
         <translation>Empty slide on the end</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="125"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="263"/>
         <source>Upravit píseň</source>
         <translation>Edit song</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="161"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="283"/>
+        <source>Zalamovat text</source>
+        <translation>Wrap text</translation>
+    </message>
+    <message>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="220"/>
         <source>Pořadí snímků:</source>
         <translation>Slide order:</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="184"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="234"/>
         <source>Prázdný snímek na začátku</source>
         <translation>Empty slide on the beginning</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="205"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="132"/>
         <source>Pozadí:</source>
         <translation>Background:</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="214"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="200"/>
         <source>prázdné = výchozí pořadí</source>
         <translation>empty = default order</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="248"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="84"/>
         <source>Náhled stylu:</source>
         <translation>Style preview:</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="255"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="104"/>
         <source>Styl:</source>
         <translation>Style:</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="269"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_song.ui" line="191"/>
         <source>Ignorovat prázdné snímky</source>
         <translation>Skip empty slides</translation>
     </message>
@@ -2185,7 +2332,7 @@ Zkratka: Alt+Shift+F</source>
         <source>Příliš žluťoučký kůň
 úpěl dábělské ódy.</source>
         <comment>Slide preview main text</comment>
-        <translation type="unfinished">The quick brown fox
+        <translation>The quick brown fox
 jumps over the lazy dog.</translation>
     </message>
     <message>
@@ -2260,7 +2407,7 @@ Text</translation>
 <context>
     <name>Presentation_PowerPoint</name>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="32"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="138"/>
         <source>Načítání &quot;%1&quot;</source>
         <translation>Loading &quot;%1&quot;</translation>
     </message>
@@ -2275,12 +2422,12 @@ Text</translation>
         <translation>Failed to load presentation &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="219"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="226"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="283"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="290"/>
         <source>Nepodařilo se spustit prezentaci &quot;%1&quot;.</source>
         <translation>Failed to run presentation &quot;%1&quot;.</translation>
     </message>
@@ -2288,7 +2435,7 @@ Text</translation>
 <context>
     <name>Presentation_Song</name>
     <message>
-        <location filename="../../src/presentation/native/presentation_song.cpp" line="227"/>
+        <location filename="../../src/presentation/native/presentation_song.cpp" line="236"/>
         <source>%1-%2</source>
         <comment>%1 - section name, %2 - slide in section index (for multiple slides per section)</comment>
         <translation>%1-%2</translation>
@@ -2421,7 +2568,7 @@ Text</translation>
     <message>
         <location filename="../../src/gui/settingsdialog.ui" line="266"/>
         <source>Prázdný snímek na začátku</source>
-        <translation>Empty slide on beginning</translation>
+        <translation>Empty slide at the beginning</translation>
     </message>
     <message>
         <location filename="../../src/gui/settingsdialog.ui" line="303"/>
@@ -2431,7 +2578,7 @@ Text</translation>
     <message>
         <location filename="../../src/gui/settingsdialog.ui" line="310"/>
         <source>Prázdný snímek na konci</source>
-        <translation>Empty slide on end</translation>
+        <translation>Empty slide at the end</translation>
     </message>
     <message>
         <location filename="../../src/gui/settingsdialog.ui" line="327"/>
@@ -2446,12 +2593,12 @@ Text</translation>
     <message>
         <location filename="../../src/gui/settingsdialog.ui" line="374"/>
         <source>Černá obrazovka na začátku</source>
-        <translation>Black slide on beginning</translation>
+        <translation>Black slide at the beginning</translation>
     </message>
     <message>
         <location filename="../../src/gui/settingsdialog.ui" line="387"/>
         <source>Černá obrazovka na konci</source>
-        <translation>Black slide on end</translation>
+        <translation>Black slide at the end</translation>
     </message>
     <message>
         <location filename="../../src/gui/settingsdialog.ui" line="440"/>
@@ -2464,9 +2611,8 @@ Text</translation>
         <translation>Failed to open settings file for writing. Settings will not be saved.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/settingsdialog.cpp" line="62"/>
         <source>Čeština</source>
-        <translation>Czech</translation>
+        <translation type="vanished">Czech</translation>
     </message>
 </context>
 <context>
@@ -2566,83 +2712,83 @@ Text</translation>
 <context>
     <name>SongSection</name>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="56"/>
+        <location filename="../../src/rec/songsection.cpp" line="65"/>
         <source>Refrén</source>
         <translation>Chorus</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="57"/>
+        <location filename="../../src/rec/songsection.cpp" line="66"/>
         <source>Sloka</source>
         <translation>Verse</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="58"/>
+        <location filename="../../src/rec/songsection.cpp" line="67"/>
         <source>Intro</source>
         <translation>Intro</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="59"/>
+        <location filename="../../src/rec/songsection.cpp" line="68"/>
         <source>Outro</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="60"/>
+        <location filename="../../src/rec/songsection.cpp" line="69"/>
         <source>Bridge</source>
         <translation>Bridge</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="61"/>
+        <location filename="../../src/rec/songsection.cpp" line="70"/>
         <source>Mezihra</source>
         <translation>Interlude</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="62"/>
+        <location filename="../../src/rec/songsection.cpp" line="71"/>
         <source>Předrefrén</source>
         <translation>Prechorus</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="66"/>
-        <location filename="../../src/rec/songsection.cpp" line="87"/>
+        <location filename="../../src/rec/songsection.cpp" line="75"/>
+        <location filename="../../src/rec/songsection.cpp" line="96"/>
         <source>## NEVALIDNÍ ##</source>
         <translation>## INVALID ##</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="71"/>
+        <location filename="../../src/rec/songsection.cpp" line="80"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="77"/>
+        <location filename="../../src/rec/songsection.cpp" line="86"/>
         <source>Ref. %1</source>
         <translation>Ch. %1</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="78"/>
+        <location filename="../../src/rec/songsection.cpp" line="87"/>
         <source>%1.</source>
         <translation>%1.</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="79"/>
+        <location filename="../../src/rec/songsection.cpp" line="88"/>
         <source>Intro %1</source>
         <translation>Intro %1</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="80"/>
+        <location filename="../../src/rec/songsection.cpp" line="89"/>
         <source>Outro %1</source>
         <translation>Outro %1</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="81"/>
+        <location filename="../../src/rec/songsection.cpp" line="90"/>
         <source>Bridge %1</source>
         <translation>Bridge %1</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="82"/>
+        <location filename="../../src/rec/songsection.cpp" line="91"/>
         <source>Mezihra %1</source>
         <translation>Intermezzo %1</translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="83"/>
+        <location filename="../../src/rec/songsection.cpp" line="92"/>
         <source>Předrefrén %1</source>
         <translation>Prechorus %1</translation>
     </message>
