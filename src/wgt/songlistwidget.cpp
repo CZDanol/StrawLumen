@@ -14,6 +14,8 @@ SongListWidget::SongListWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	ui->splitter->setCollapsible(0, false);
+
 	ui->tvSongs->setModel(&songsModel_);
 	ui->lvTags->setModel(&tagsModel_);
 
