@@ -73,7 +73,7 @@ void TextStyle::drawText(QPainter &p, const QRect &rect, const QString &str, con
 		if(lineWidth > approxAvailableWidth && (flags & fWordWrap)) {
 			// Calculate wrap points
 			QVector<int> wrapPoints;
-			static const QRegularExpression wrapPointsRegex("\\b(\\w )?\\w+\\p{P}*(?: …\\p{P}*)?", QRegularExpression::UseUnicodePropertiesOption);
+			static const QRegularExpression wrapPointsRegex(R"(\b(\p{L} )?(\p{L}|\p{M}|\p{P})+( …\p{P}*)?)", QRegularExpression::UseUnicodePropertiesOption);
 			QRegularExpressionMatchIterator it = wrapPointsRegex.globalMatch(line);
 			while(it.hasNext())
 				wrapPoints += it.next().capturedEnd();

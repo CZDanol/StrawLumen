@@ -74,6 +74,8 @@ public:
 private:
 	void updatePlaylistData();
 
+	void connectSignals(const QSharedPointer<Presentation> &p);
+
 private slots:
 	void onChanged();
 	void onPlaylistRenamed(qlonglong id, const QString &newName);

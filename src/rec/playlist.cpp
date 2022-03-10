@@ -31,12 +31,8 @@ bool Playlist::addItem(const QSharedPointer<Presentation> &item)
 	Q_ASSERT(!item->playlist_);
 
 	item->playlist_ = this;
-
 	items_.append(item);
-	connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
-	connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
-	connect(item.data(), SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
-	connect(item.data(), &Presentation::sigMorphedInto, this, &Playlist::onPresentationMorphedInto);
+	connectSignals(item);
 
 	emitItemsChanged();
 	emit sigItemsAdded();
@@ -56,10 +52,7 @@ void Playlist::addItems(const QVector<QSharedPointer<Presentation> > &items)
 		item->playlist_ = this;
 
 		items_.append(item);
-		connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
-		connect(item.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
-		connect(item.data(), SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
-		connect(item.data(), &Presentation::sigMorphedInto, this, &Playlist::onPresentationMorphedInto);
+		connectSignals(item);
 	}
 
 	emitItemsChanged();
@@ -315,6 +308,14 @@ void Playlist::updatePlaylistData()
 	}
 }
 
+void Playlist::connectSignals(const QSharedPointer<Presentation> &p)
+{
+	connect(p.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
+	connect(p.data(), SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigItemChanged(Presentation*)));
+	connect(p.data(), SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
+	connect(p.data(), &Presentation::sigMorphedInto, this, &Playlist::onPresentationMorphedInto);
+}
+
 void Playlist::onChanged()
 {
 	areChangesSaved_ = false;
@@ -336,5 +337,7 @@ void Playlist::onPresentationMorphedInto(const QSharedPointer<Presentation> &fro
 
 	items_[ix] = to;
 	to->playlist_ = this;
+	connectSignals(to);
+
 	emitItemsChanged();
 }

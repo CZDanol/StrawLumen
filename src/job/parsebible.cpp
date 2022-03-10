@@ -4,6 +4,7 @@
 #include <QXmlStreamReader>
 #include <QCoreApplication>
 #include <QDir>
+#include <QRegularExpression>
 
 #include "rec/biblebook.h"
 #include "util/standarddialogs.h"
@@ -92,7 +93,10 @@ bool parseBible(const QString &filename)
 					while(xml.readNextStartElement()) {
 						if(xml.name() == "VERS" || xml.name() == "vers") {
 							const int verseId = xml.attributes().value("vnumber").toInt();
-							const QString verseText = xml.readElementText(QXmlStreamReader::IncludeChildElements).replace('\t', ' ');
+
+							static const QRegularExpression toSpaceRegex("[\t\n]"), collateSpacesRegex("  +");
+							static const QRegularExpression hebrewWeirdSymbolRegex("׃$"); // Weird hebrew buggy symbol appearing in the 2014 OSMHB bible
+							const QString verseText = xml.readElementText(QXmlStreamReader::IncludeChildElements).replace(toSpaceRegex, " ").replace(collateSpacesRegex, " ").remove(hebrewWeirdSymbolRegex).trimmed();
 							const QString collatedVerseText = collate(verseText);
 
 							const qlonglong rowId = db->insert("INSERT INTO bible_translation_verses(translation_id, book_id, chapter, verse, text) VALUES(?, ?, ?, ?, ?)", {translationId, bookNumId, chapterId, verseId, verseText}).toLongLong();

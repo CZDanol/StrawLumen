@@ -551,7 +551,7 @@ void MainWindow_SongsMode::on_btnNew_clicked()
 {
 	ui->wgtSongList->unselect();
 
-	ui->lnName->setText("Nová písnička");
+	ui->lnName->setText(tr("Nová písnička"));
 	ui->lnAuthor->clear();
 	ui->lnSlideOrder->clear();
 	ui->teContent->clear();
