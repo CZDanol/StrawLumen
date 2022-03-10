@@ -603,7 +603,7 @@
     </message>
     <message>
         <location filename="../../src/importexport/documentgenerationdialog.ui" line="468"/>
-        <source>Po vytvoření otevřít PDF soubor</source>
+        <source>Po vytvoření otevřít vygenerovaný soubor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1572,6 +1572,11 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="554"/>
+        <source>Nová písnička</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../src/gui/mainwindow_songsmode.cpp" line="570"/>
         <source>Opravdu zahodit provedené úpravy?</source>
         <translation type="unfinished"></translation>
@@ -1587,7 +1592,7 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="768"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="769"/>
         <source>Píseň neobsahuje žádné sekce s textem i akordy.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1842,17 +1847,17 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>Playlist</name>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="159"/>
+        <location filename="../../src/rec/playlist.cpp" line="152"/>
         <source>Nový program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="242"/>
+        <location filename="../../src/rec/playlist.cpp" line="235"/>
         <source>Neznámý typ prezentace: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="261"/>
+        <location filename="../../src/rec/playlist.cpp" line="254"/>
         <source>Níže vyčtené položky se nepodařilo načíst:
 
 %1</source>
@@ -2421,32 +2426,32 @@ Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="19"/>
+        <location filename="../../src/job/parsebible.cpp" line="20"/>
         <source>Nepodařilo se otevřít soubor překladu Bible &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="26"/>
+        <location filename="../../src/job/parsebible.cpp" line="27"/>
         <source>Soubor &apos;%1&apos; není validní soubor překladu Bible (E00)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="45"/>
+        <location filename="../../src/job/parsebible.cpp" line="46"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TRNEM)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="52"/>
+        <location filename="../../src/job/parsebible.cpp" line="56"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TREM)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="74"/>
+        <location filename="../../src/job/parsebible.cpp" line="78"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TREMND)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="132"/>
+        <location filename="../../src/job/parsebible.cpp" line="139"/>
         <source>Import překladů Bible</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2609,57 +2614,57 @@ Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="116"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="221"/>
         <source>Štítky:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="170"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="97"/>
         <source>Odstranit filtr štítků</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="189"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="123"/>
         <source>Vyhledat (Ctrl+F)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="199"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="133"/>
         <source>Hledat i v textech písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="202"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="136"/>
         <source>I v textech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="225"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="258"/>
         <source>Smazat štítek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="162"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="164"/>
         <source>Název</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="162"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="164"/>
         <source>Autor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="186"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="188"/>
         <source>Zobrazeny pouze písně se štítkem &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="201"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="203"/>
         <source>-- vše --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="340"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="342"/>
         <source>Opravdu smazat štítek &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>

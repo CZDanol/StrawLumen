@@ -157,7 +157,7 @@
     <message>
         <location filename="../../src/gui/backgrounddialog.cpp" line="231"/>
         <source>Pozadí se nepodařilo vložit (kopírování selhalo)</source>
-        <translation>Failed to copy background file.</translation>
+        <translation>Failed to import background file (copy failed).</translation>
     </message>
     <message>
         <location filename="../../src/gui/backgrounddialog.cpp" line="241"/>
@@ -603,8 +603,12 @@
     </message>
     <message>
         <location filename="../../src/importexport/documentgenerationdialog.ui" line="468"/>
+        <source>Po vytvoření otevřít vygenerovaný soubor</source>
+        <translation>Open generate file when finished</translation>
+    </message>
+    <message>
         <source>Po vytvoření otevřít PDF soubor</source>
-        <translation>Open PDF file when done</translation>
+        <translation type="vanished">Open PDF file when done</translation>
     </message>
     <message>
         <location filename="../../src/importexport/documentgenerationdialog.ui" line="512"/>
@@ -1596,6 +1600,11 @@ Zkratka: Alt+Shift+F</source>
         <translation>Selection does not contain any sections</translation>
     </message>
     <message>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="554"/>
+        <source>Nová písnička</source>
+        <translation>New song</translation>
+    </message>
+    <message>
         <location filename="../../src/gui/mainwindow_songsmode.cpp" line="570"/>
         <source>Opravdu zahodit provedené úpravy?</source>
         <translation>Really discard changes?</translation>
@@ -1611,7 +1620,7 @@ Zkratka: Alt+Shift+F</source>
         <translation>Cannot perform this action during song editing. Finish editing and try again.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="768"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="769"/>
         <source>Píseň neobsahuje žádné sekce s textem i akordy.</source>
         <translation>Song does not contain any sections with both chords and lyrics.</translation>
     </message>
@@ -1865,17 +1874,17 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>Playlist</name>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="159"/>
+        <location filename="../../src/rec/playlist.cpp" line="152"/>
         <source>Nový program</source>
         <translation>New playlist</translation>
     </message>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="242"/>
+        <location filename="../../src/rec/playlist.cpp" line="235"/>
         <source>Neznámý typ prezentace: &quot;%1&quot;</source>
         <translation>Unknown presentation type: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="261"/>
+        <location filename="../../src/rec/playlist.cpp" line="254"/>
         <source>Níže vyčtené položky se nepodařilo načíst:
 
 %1</source>
@@ -2449,32 +2458,32 @@ Text</translation>
         <translation>Bible translation import</translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="19"/>
+        <location filename="../../src/job/parsebible.cpp" line="20"/>
         <source>Nepodařilo se otevřít soubor překladu Bible &apos;%1&apos;</source>
         <translation>Failed to open translation file &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="26"/>
+        <location filename="../../src/job/parsebible.cpp" line="27"/>
         <source>Soubor &apos;%1&apos; není validní soubor překladu Bible (E00)</source>
         <translation>File &quot;%1&quot; is not a valid Bible translation file (E00)</translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="45"/>
+        <location filename="../../src/job/parsebible.cpp" line="46"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TRNEM)</source>
         <translation>Invalid file &quot;%1&quot; format (TRNEM)</translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="52"/>
+        <location filename="../../src/job/parsebible.cpp" line="56"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TREM)</source>
         <translation>Invalid file &quot;%1&quot; format (TREM)</translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="74"/>
+        <location filename="../../src/job/parsebible.cpp" line="78"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TREMND)</source>
         <translation>Invalid file &quot;%1&quot; format (TREMND)</translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="132"/>
+        <location filename="../../src/job/parsebible.cpp" line="139"/>
         <source>Import překladů Bible</source>
         <translation>Bible translation import</translation>
     </message>
@@ -2641,57 +2650,57 @@ Text</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="116"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="221"/>
         <source>Štítky:</source>
         <translation>Tags:</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="170"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="97"/>
         <source>Odstranit filtr štítků</source>
         <translation>Remove tag filter</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="189"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="123"/>
         <source>Vyhledat (Ctrl+F)</source>
         <translation>Search (Ctrl+F)</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="199"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="133"/>
         <source>Hledat i v textech písní</source>
         <translation>Search both in song names and lyrics</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="202"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="136"/>
         <source>I v textech</source>
         <translation>In lyrics</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.ui" line="225"/>
+        <location filename="../../src/wgt/songlistwidget.ui" line="258"/>
         <source>Smazat štítek</source>
         <translation>Delete tag</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="162"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="164"/>
         <source>Název</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="162"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="164"/>
         <source>Autor</source>
         <translation>Author</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="186"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="188"/>
         <source>Zobrazeny pouze písně se štítkem &quot;%1&quot;.</source>
         <translation>Only songs with tag &quot;%1&quot; are shown.</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="201"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="203"/>
         <source>-- vše --</source>
         <translation>-- all --</translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="340"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="342"/>
         <source>Opravdu smazat štítek &apos;%1&apos;?</source>
         <translation>Really delete tag &quot;%1&quot; ?</translation>
     </message>
