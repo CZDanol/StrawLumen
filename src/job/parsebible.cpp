@@ -49,6 +49,9 @@ bool parseBible(const QString &filename)
 					}
 
 					translationId = xml.readElementText();
+
+					// Remove all characters not supported by the bibleverse regex
+					translationId.remove(QRegularExpression("(?!\\p{L}|[0-9_]).", QRegularExpression::UseUnicodePropertiesOption));
 					if(translationId.isEmpty()) {
 						standardErrorDialog(QObject::tr("Neplatný formát souboru Bible '%1' (TREM)").arg(filename));
 						isError = true;

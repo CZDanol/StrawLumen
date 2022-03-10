@@ -20,7 +20,7 @@ const QRegularExpression &BibleRef::regex()
 				")"
 				",?"
 				"\\s*"
-				"(\\p{L}(?:\\p{L}|[0-9])*)?" // translation
+				"(\\p{L}(?:\\p{L}|[0-9_])*)?" // translation
 				"\\s*$",
 				QRegularExpression::CaseInsensitiveOption);
 
