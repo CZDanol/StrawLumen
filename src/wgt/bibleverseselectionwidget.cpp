@@ -407,6 +407,8 @@ void BibleVerseSelectionWidget::on_cmbTranslation_currentIndexChanged(int)
 	blockSelectionChangeEvents_++;
 	requeryBooks();
 	blockSelectionChangeEvents_--;
+
+	onVersesSelectionChanged();
 }
 
 void BibleVerseSelectionWidget::on_lstVerses_customContextMenuRequested(const QPoint &pos)
