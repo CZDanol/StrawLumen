@@ -11,7 +11,7 @@ QT       += core gui printsupport multimedia multimediawidgets widgets axcontain
 
 TEMPLATE = app
 
-VERSION = 1.3.5.0
+VERSION = 1.3.5.1
 QMAKE_TARGET_COMPANY = "Danol"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2022 Danol"

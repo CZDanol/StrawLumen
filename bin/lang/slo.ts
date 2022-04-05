@@ -2094,17 +2094,17 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="141"/>
-        <source>Např: Luk 10:12-15,16 ČEP</source>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="140"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Např:&lt;br/&gt;Luk 10:12-15,16 ČEP&lt;br/&gt;Žalm 118:1 B21, KJ2K (dva překlady současně)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="153"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="152"/>
         <source>Prázdné řádky oddělují snímky</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="236"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="235"/>
         <source>Převést na &quot;Vlastní text&quot;</source>
         <translation type="unfinished"></translation>
     </message>
