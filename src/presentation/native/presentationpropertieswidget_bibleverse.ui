@@ -132,13 +132,12 @@
       <widget class="QLabel" name="label_8">
        <property name="font">
         <font>
-         <weight>75</weight>
          <italic>false</italic>
          <bold>true</bold>
         </font>
        </property>
        <property name="text">
-        <string>Např: Luk 10:12-15,16 ČEP</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Např:&lt;br/&gt;Luk 10:12-15,16 ČEP&lt;br/&gt;Žalm 118:1 B21+KJ2K (dva překlady současně)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>

@@ -6,6 +6,9 @@
 #include "job/settings.h"
 #include "job/db.h"
 
+#define TRANSLATIONID_REGEX "\\p{L}(?:\\p{L}|[0-9_])*"
+#define TRANSLATIONID_SEP_REGEX "[,+]"
+
 const QRegularExpression &BibleRef::regex()
 {
 	static const QRegularExpression r(
@@ -20,7 +23,7 @@ const QRegularExpression &BibleRef::regex()
 				")"
 				",?"
 				"\\s*"
-				"(\\p{L}(?:\\p{L}|[0-9_])*)?" // translation
+				"(" TRANSLATIONID_REGEX "(?:\\s*" TRANSLATIONID_SEP_REGEX "\\s*" TRANSLATIONID_REGEX ")*)?" // translation
 				"\\s*$",
 				QRegularExpression::CaseInsensitiveOption);
 
@@ -34,7 +37,7 @@ BibleRef::BibleRef()
 
 BibleRef::BibleRef(QString translationId, int bookId, int chapter, int verse)
 {
-	this->translationId = translationId;
+	this->translationIds = QStringList{translationId};
 	this->bookId = bookId;
 	this->chapter = chapter;
 	verses_ += verse;
@@ -45,7 +48,7 @@ BibleRef::BibleRef(QString translationId, int bookId, int chapter, const QVector
 {
 	Q_ASSERT(!verses.isEmpty());
 
-	this->translationId = translationId;
+	this->translationIds = QStringList{translationId};
 	this->bookId = bookId;
 	this->chapter = chapter;
 
@@ -62,9 +65,14 @@ BibleRef::BibleRef(const QString &str)
 	if(!m.hasMatch())
 		return;
 
-	translationId = m.captured(4);
-	if(translationId.isEmpty())
-		translationId = settings->defaultBibleTranslation();
+	if(m.capturedLength(4)){
+		static const QRegularExpression sepRegex(TRANSLATIONID_SEP_REGEX);
+		translationIds = m.captured(4).split(sepRegex);
+		for(QString &t : translationIds)
+			t = t.trimmed();
+	}
+	else
+		translationIds += settings->defaultBibleTranslation();
 
 	bookId = -1;
 	QString bookName = collate(m.captured(1));
@@ -141,8 +149,8 @@ QString BibleRef::toString() const
 		return nullptr;
 
 	QString result = QString("%1 %2:%3").arg(getBibleBook(bookId).id, QString::number(chapter), versesString());
-	if(translationId != settings->defaultBibleTranslation())
-		result += QString(" %1").arg(translationId);
+	if(translationIds.size() > 1 || translationIds.size() == 0 || translationIds[0] != settings->defaultBibleTranslation())
+		result += QString(" %1").arg(translationIds.join(", "));
 
 	return result;
 }
@@ -166,44 +174,48 @@ QString BibleRef::contentString() const
 	static const QRegularExpression endsWithSentenceEndRegex(".*[.!?][^.!?,;:\\-–]*?$");
 	static const QRegularExpression endsWithMarkRegex(".*[,;:\\-–]$");
 
-	int previousVerse = -1;
-	QString previousVerseStr;
+	for(const QString &translationId : translationIds) {
+		int previousVerse = -1;
+		QString previousVerseStr;
 
-	QSqlQuery q = db->selectQuery(
-				QString("SELECT text, verse FROM bible_translation_verses WHERE (translation_id = ?) AND (book_id = ?) AND (chapter = ?) AND (verse IN (%1))").arg(versesStr),
-				{translationId, bookId, chapter}
-				);
-	while(q.next()) {
-		const int verse = q.value(1).toInt();
-		const QString verseStr = q.value(0).toString();
+		QSqlQuery q = db->selectQuery(
+					QString("SELECT text, verse FROM bible_translation_verses WHERE (translation_id = ?) AND (book_id = ?) AND (chapter = ?) AND (verse IN (%1)) ORDER BY verse ASC").arg(versesStr),
+					{translationId, bookId, chapter}
+					);
+		while(q.next()) {
+			const int verse = q.value(1).toInt();
+			const QString verseStr = q.value(0).toString();
 
-		// Previous verse is not connected and does not end with . -> sentence,...
-		if(previousVerse != -1 && previousVerse != verse - 1 && !previousVerseStr.contains(endsWithSentenceEndRegex)) {
-			if(previousVerseStr.contains(endsWithMarkRegex))
+			// Previous verse is not connected and does not end with . -> sentence,...
+			if(previousVerse != -1 && previousVerse != verse - 1 && !previousVerseStr.contains(endsWithSentenceEndRegex)) {
+				if(previousVerseStr.contains(endsWithMarkRegex))
+					result += ' ';
+
+				result += "…";
+			}
+
+			if(!result.isEmpty())
 				result += ' ';
 
-			result += "…";
+			// Previous verse is not connected
+			if(previousVerse != -1 && previousVerse != verse - 1)
+				result += "(…) ";
+
+			// Verses are not connected and this verse does not start with a capital letter -> ...text
+			if(previousVerse != verse - 1 && verseStr.contains(startsWithSmallLetterRegex))
+				result += "…";
+
+			result += verseStr;
+			previousVerse = verse;
+			previousVerseStr = verseStr;
 		}
 
-		if(!result.isEmpty())
-			result += ' ';
-
-		// Previous verse is not connected
-		if(previousVerse != -1 && previousVerse != verse - 1)
-			result += "(…) ";
-
-		// Verses are not connected and this verse does not start with a capital letter -> ...text
-		if(previousVerse != verse - 1 && verseStr.contains(startsWithSmallLetterRegex))
+		// Last verse does not end with . -> add ...
+		if(!previousVerseStr.contains(endsWithSentenceEndRegex))
 			result += "…";
 
-		result += verseStr;
-		previousVerse = verse;
-		previousVerseStr = verseStr;
+		result += "\n\n";
 	}
 
-	// Last verse does not end with . -> add ...
-	if(!previousVerseStr.contains(endsWithSentenceEndRegex))
-		result += "…";
-
-	return result;
+	return result.trimmed();
 }

@@ -2121,17 +2121,21 @@ Zkratka: Alt+Shift+F</source>
         <translation>Verses:</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="141"/>
-        <source>Např: Luk 10:12-15,16 ČEP</source>
-        <translation>E.g.: Psalm 1:1 KJ2K</translation>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="140"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Např:&lt;br/&gt;Luk 10:12-15,16 ČEP&lt;br/&gt;Žalm 118:1 B21, KJ2K (dva překlady současně)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example:&lt;br/&gt;Luke 10:12-15,16 KJ2K&lt;br/&gt;Psalm 118:1 B21, KJ2K (two translations simultaneously)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="153"/>
+        <source>Např: Luk 10:12-15,16 ČEP</source>
+        <translation type="vanished">E.g.: Psalm 1:1 KJ2K</translation>
+    </message>
+    <message>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="152"/>
         <source>Prázdné řádky oddělují snímky</source>
         <translation>Empty lines separate slides</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="236"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="235"/>
         <source>Převést na &quot;Vlastní text&quot;</source>
         <translation>Convert to &quot;Custom slide&quot;</translation>
     </message>

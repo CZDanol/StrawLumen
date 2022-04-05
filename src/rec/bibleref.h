@@ -17,7 +17,7 @@ public:
 	BibleRef(const QString &str);
 
 public:
-	QString translationId;
+	QStringList translationIds;
 	int bookId, chapter;
 
 public:

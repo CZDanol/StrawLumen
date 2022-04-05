@@ -82,7 +82,7 @@ void BibleVerseSelectionWidget::setBibleRef(const BibleRef &set, bool updateInpu
 		return;
 	}
 
-	currentTranslationId_ = set.translationId;
+	currentTranslationId_ = set.translationIds.value(0);
 	currentBookId_ = set.bookId;
 	currentChapterUID_ = chapterUID(currentBookId_, set.chapter);
 
