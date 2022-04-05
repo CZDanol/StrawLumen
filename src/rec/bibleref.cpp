@@ -150,7 +150,7 @@ QString BibleRef::toString() const
 
 	QString result = QString("%1 %2:%3").arg(getBibleBook(bookId).id, QString::number(chapter), versesString());
 	if(translationIds.size() > 1 || translationIds.size() == 0 || translationIds[0] != settings->defaultBibleTranslation())
-		result += QString(" %1").arg(translationIds.join(", "));
+		result += QString(" %1").arg(translationIds.join('+'));
 
 	return result;
 }
