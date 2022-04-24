@@ -36,13 +36,12 @@ void PresentationPropertiesWidget_BibleVerse::fillData()
 {
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
-	ui->verses->setPlainText(presentation_->versesStr_);
+	ui->verses->setPlainText(presentation_->versesStr());
 }
 
 void PresentationPropertiesWidget_BibleVerse::onTextUpdateTimerTimeout()
 {
-	presentation_->versesStr_ = ui->verses->toPlainText();
-	presentation_->updateVerses();
+	presentation_->setVersesStr(ui->verses->toPlainText());
 
 	emit presentation_->sigSlidesChanged();
 }

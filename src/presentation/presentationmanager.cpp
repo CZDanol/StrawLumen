@@ -112,7 +112,7 @@ void PresentationManager::setSlide(const Playlist* playlist, int globalSlideId, 
 void PresentationManager::setSlide(const QSharedPointer<Presentation> &presentation, int localSlideId, bool force)
 {
 	if(!presentation || !presentation->slideCount())
-			return setActive(false);
+		return setActive(false);
 
 	if(localSlideId < 0)
 		localSlideId = 0;

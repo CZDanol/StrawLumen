@@ -12,6 +12,7 @@
 #include "gui/settingsdialog.h"
 #include "gui/playlistsdialog.h"
 #include "gui/mainwindow_songsmode.h"
+#include "gui/quickbibleversewindow.h"
 #include "rec/playlist.h"
 #include "presentation/presentationmanager.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
@@ -283,7 +284,8 @@ void MainWindow_PresentationMode::onPlaylistForceSelection(int first, int last)
 
 void MainWindow_PresentationMode::onMgrCurrentSlideChanged(int globalSlideId)
 {
-	ui->tvSlides->setCurrentIndex(slidesItemModel_.index(globalSlideId, 0));
+	if(globalSlideId >= 0)
+		ui->tvSlides->setCurrentIndex(slidesItemModel_.index(globalSlideId, 0));
 }
 
 void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
@@ -631,3 +633,9 @@ void MainWindow_PresentationMode::on_actionAddWebPresentation_triggered()
 {
 	addPresentationsAction_({Presentation_Web::create()});
 }
+
+void MainWindow_PresentationMode::on_btnQuickVerse_clicked()
+{
+	QuickBibleVerseWindow::instance()->show();
+}
+

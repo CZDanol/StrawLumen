@@ -4,9 +4,11 @@ Aktuálně
    - možnost skrytí akordů
    - linky z obsahu na jednotlivé písně
 
+- live bible promítání z wizardu
+
+- průvodce veršů + nastavení - podpora více výchozích překladů najednou (z comboboxu udělat listbox s checkboxama)
 - průvodce veršů - možnost automaticky rozdělit dělší úsek bible na víc slidů
 
-- možnost udržování ID autora (v programu si bude každý moct nastavit jméno a ID) - písničky by vyzvaly k vytvoření nové verze, pokud autor nesedí)
 - možnost kopírovat písničku
 - lepší podpora klávesnice - tabování v režimu promítání
 - barevně zvýraznit ve slide listu, když je černej screen nebo když se nepromítá

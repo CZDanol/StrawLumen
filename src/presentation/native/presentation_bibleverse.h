@@ -20,6 +20,12 @@ public:
 	QJsonObject toJSON() const override;
 
 public:
+	inline const QString &versesStr() const {
+		return versesStr_;
+	}
+	void setVersesStr(const QString &set, bool defaultEmptySlide = false);
+
+public:
 	void drawSlide(QPainter &p, int slideId, const QRect &rect) override;
 
 public:
@@ -42,7 +48,7 @@ private:
 	Presentation_BibleVerse();
 
 private:
-	void updateVerses();
+	void updateVerses(bool defaultEmptySlide = false);
 
 private slots:
 	void onStyleChanged();
@@ -52,6 +58,7 @@ private slots:
 private:
 	PresentationStyle style_;
 	QString versesStr_;
+	bool defaultEmptySlide_ = false;
 	QStringList slides_, slideDescriptions_, slideNames_;
 
 };

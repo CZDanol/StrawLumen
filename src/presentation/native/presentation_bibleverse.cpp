@@ -43,11 +43,21 @@ QSharedPointer<Presentation_BibleVerse> Presentation_BibleVerse::createFromJSON(
 
 QJsonObject Presentation_BibleVerse::toJSON() const
 {
-	return QJsonObject{
+	return {
 		{"styleId", style_.styleId()},
-		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()},
-		{"verses", versesStr_}
-		};
+		{"background", (style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue())},
+		{"verses", versesStr_},
+	};
+}
+
+void Presentation_BibleVerse::setVersesStr(const QString &set, bool defaultEmptySlide)
+{
+	if(versesStr_ == set && defaultEmptySlide_ == defaultEmptySlide)
+		return;
+
+	versesStr_ = set;
+	defaultEmptySlide_ = defaultEmptySlide;
+	updateVerses(defaultEmptySlide);
 }
 
 void Presentation_BibleVerse::drawSlide(QPainter &p, int slideId, const QRect &rect)
@@ -111,7 +121,7 @@ Presentation_BibleVerse::Presentation_BibleVerse()
 	connect(&style_, &PresentationStyle::sigNeedsRepaint, this, &Presentation_BibleVerse::onStyleNeedsRepaint);
 }
 
-void Presentation_BibleVerse::updateVerses()
+void Presentation_BibleVerse::updateVerses(bool defaultEmptySlide)
 {
 	QString slide, slideName;
 
@@ -146,6 +156,11 @@ void Presentation_BibleVerse::updateVerses()
 	if(!slide.isEmpty()) {
 		slides_ += slide;
 		slideNames_ += slideName;
+	}
+
+	if(defaultEmptySlide && slides_.isEmpty()) {
+		slides_ += QString{};
+		slideNames_ += QString{};
 	}
 
 	for(QString &slide : slides_) {

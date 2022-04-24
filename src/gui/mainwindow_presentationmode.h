@@ -82,6 +82,8 @@ private slots:
 	void on_actionAddBibleVerse_triggered();
 	void on_actionAddWebPresentation_triggered();
 
+	void on_btnQuickVerse_clicked();
+
 private:
 	Ui::MainWindow_PresentationMode *ui;
 	QTimer currentTimeTimer_;

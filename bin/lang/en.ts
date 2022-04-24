@@ -1048,12 +1048,12 @@
         <translation>Controls</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="181"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="249"/>
         <source>Promítat</source>
         <translation>Enable presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="204"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="209"/>
         <source>Předchozí prezentace</source>
         <translation>Previous presentation</translation>
     </message>
@@ -1066,216 +1066,226 @@
         <translation type="vanished">Next slide</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="264"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="229"/>
         <source>Další prezentace</source>
         <translation>Next presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="627"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="638"/>
         <source>Černá obrazovka</source>
         <translation>Black screen</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="326"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="663"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="337"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="674"/>
         <source>Přidat do programu</source>
         <translation>Add to playlist</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="224"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="189"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Předchozí snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Previous slide&lt;/p&gt;&lt;p&gt;Shortcut: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="244"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Další snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Next slide&lt;/p&gt;&lt;p&gt;Shortcut: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="284"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="272"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rychlé promátní verše&lt;br/&gt;&lt;br/&gt;Zkratka: Ctrl+Shift+V&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quick verse&lt;br/&gt;&lt;br/&gt;Shortcut: Ctrl+Shift+V&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="285"/>
+        <source>Ctrl+Shift+V</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="295"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Černá obrazovka&lt;/p&gt;&lt;p&gt;Zkratka: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Black screen&lt;/p&gt;&lt;p&gt;Shortcut: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="340"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="380"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="100"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="351"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="391"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="101"/>
         <source>Program</source>
         <translation>Playlist</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="485"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="496"/>
         <source>Písně</source>
         <translation>Songs</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="503"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="514"/>
         <source>Položka</source>
         <translation>Item</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="569"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="580"/>
         <source>Snímky</source>
         <translation>Slides</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="606"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="617"/>
         <source>PowerPoint prezentace</source>
         <translation>PowerPoint presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="615"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="654"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="626"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="665"/>
         <source>Smazat</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="636"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="647"/>
         <source>Píseň</source>
         <translation>Song</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="645"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="656"/>
         <source>Upravit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="672"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="683"/>
         <source>Vlastní snímek</source>
         <translation>Custom slide</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="675"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="686"/>
         <source>Vlastní text</source>
         <translation>Custom text</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="684"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="695"/>
         <source>Upravit položku</source>
         <translation>Edit item</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="693"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="704"/>
         <source>Nový</source>
         <translation>New</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="702"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="713"/>
         <source>Uložit</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="705"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="716"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="714"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="725"/>
         <source>Načíst</source>
         <translation>Load</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="723"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="734"/>
         <source>Uložit jako</source>
         <translation>Save as</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="726"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="737"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="735"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="746"/>
         <source>Obrázky</source>
         <translation>Images</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="744"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="755"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="753"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="764"/>
         <source>Biblický verš</source>
         <translation>Bible verse</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="762"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="773"/>
         <source>Webová stránka</source>
         <translation>Website</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="82"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="83"/>
         <source>Přidat před:</source>
         <translation>Insert before:</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="87"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="88"/>
         <source>Přidat za:</source>
         <translation>Insert after:</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="109"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="110"/>
         <source>Načíst nedávné</source>
         <translation>Load recent</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="211"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="212"/>
         <source>Program promítání obsahuje neuložené změny. Opravdu chcete pokračovat?</source>
         <translation>Playlist contains unsaved changes. Do you really want to continue?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="271"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="272"/>
         <source>HH:mm:ss</source>
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="394"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="396"/>
         <source>%1*</source>
         <translation>%1*</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="427"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="429"/>
         <source>Opravdu smazat vybrané prezentace?</source>
         <translation>Do you really want to delete selected presentations?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="449"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="451"/>
         <source>PowerPoint prezentace (%1)</source>
         <translation>PowerPoint presentation (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="451"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="453"/>
         <source>Import prezentace PowerPoint</source>
         <translation>Import PowerPoint presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="511"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="513"/>
         <source>Skrýt</source>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="520"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="522"/>
         <source>Zobrazit</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="584"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="586"/>
         <source>Soubory obrázků (%1)</source>
         <translation>Image files (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="586"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="588"/>
         <source>Přidání obrázků</source>
         <translation>Adding images</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="604"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="606"/>
         <source>Soubory videa (%1)</source>
         <translation>Video files (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="606"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="608"/>
         <source>Import videa</source>
         <translation>Importing videos</translation>
     </message>
@@ -2122,8 +2132,12 @@ Zkratka: Alt+Shift+F</source>
     </message>
     <message>
         <location filename="../../src/presentation/native/presentationpropertieswidget_bibleverse.ui" line="140"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Např:&lt;br/&gt;Luk 10:12-15,16 ČEP&lt;br/&gt;Žalm 118:1 B21+KJ2K (dva překlady současně)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example:&lt;br/&gt;Luk 10:12-15,16 ČEP&lt;br/&gt;Žalm 118:1 B21+KJ2K (two translations simultaneously)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Např:&lt;br/&gt;Luk 10:12-15,16 ČEP&lt;br/&gt;Žalm 118:1 B21, KJ2K (dva překlady současně)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example:&lt;br/&gt;Luke 10:12-15,16 KJ2K&lt;br/&gt;Psalm 118:1 B21, KJ2K (two translations simultaneously)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example:&lt;br/&gt;Luke 10:12-15,16 KJ2K&lt;br/&gt;Psalm 118:1 B21, KJ2K (two translations simultaneously)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Např: Luk 10:12-15,16 ČEP</source>
@@ -2357,7 +2371,7 @@ jumps over the lazy dog.</translation>
 <context>
     <name>Presentation_BibleVerse</name>
     <message>
-        <location filename="../../src/presentation/native/presentation_bibleverse.cpp" line="60"/>
+        <location filename="../../src/presentation/native/presentation_bibleverse.cpp" line="70"/>
         <source>Verš</source>
         <translation>Verse</translation>
     </message>
@@ -2534,6 +2548,14 @@ Text</translation>
         <location filename="../../src/util/standarddialogs.cpp" line="97"/>
         <source>Úspěch</source>
         <translation>Success</translation>
+    </message>
+</context>
+<context>
+    <name>QuickBibleVerseWindow</name>
+    <message>
+        <location filename="../../src/gui/quickbibleversewindow.ui" line="17"/>
+        <source>Rychlé promítání verše</source>
+        <translation>Quick verse presentation</translation>
     </message>
 </context>
 <context>

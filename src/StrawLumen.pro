@@ -11,7 +11,7 @@ QT       += core gui printsupport multimedia multimediawidgets widgets axcontain
 
 TEMPLATE = app
 
-VERSION = 1.3.5.1
+VERSION = 1.3.6.0
 QMAKE_TARGET_COMPANY = "Danol"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
 QMAKE_TARGET_COPYRIGHT = "(c) 2022 Danol"
@@ -59,6 +59,7 @@ DISTFILES += \
 SOURCES += main.cpp \
 		gui/bibletranslationmgmtdialog.cpp \
 		gui/mainwindow.cpp \
+		gui/quickbibleversewindow.cpp \
 		gui/songsmodewindow.cpp \
 		importexport/powerpoint/powerpointimportdialog.cpp \
 		presentation/presentation.cpp \
@@ -169,6 +170,7 @@ SOURCES += main.cpp \
 FORMS += \
 		gui/bibletranslationmgmtdialog.ui \
 		gui/mainwindow.ui \
+		gui/quickbibleversewindow.ui \
 		gui/songsmodewindow.ui \
 		gui/splashscreen.ui \
 		gui/mainwindow_presentationmode.ui \
@@ -215,6 +217,7 @@ FORMS += \
 HEADERS += \
 		gui/bibletranslationmgmtdialog.h \
 		gui/mainwindow.h \
+		gui/quickbibleversewindow.h \
 		gui/songsmodewindow.h \
 		importexport/powerpoint/powerpointimportdialog.h \
 		presentation/presentation.h \
