@@ -44,6 +44,64 @@
        <string>Nastavení</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Folder_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Existující písně se stejným názvem:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Timeline_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Soubor:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Přidat štítky:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>16</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_2">
          <property name="pixmap">
@@ -62,42 +120,34 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Folder_16px.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Soubor:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3">
+       <item row="5" column="3">
         <widget class="SongTagsLineEdit" name="lnTags"/>
        </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_3">
+       <item row="2" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbAddToPlaylist">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>Existující písně se stejným názvem:</string>
+          <string>Přidat importované písně do programu promítání</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <spacer name="horizontalSpacer_2">
+       <item row="1" column="1">
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeType">
           <enum>QSizePolicy::Fixed</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>16</width>
-           <height>20</height>
+           <width>20</width>
+           <height>16</height>
           </size>
          </property>
         </spacer>
@@ -133,8 +183,15 @@
          </item>
         </widget>
        </item>
-       <item row="2" column="1" colspan="3">
-        <widget class="QCheckBox" name="cbAddToPlaylist">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbStripTags">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -142,46 +199,9 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Přidat importované písně do programu promítání</string>
+          <string>Zahodit štítky importovaných písní</string>
          </property>
         </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Timeline_16px.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Přidat štítky:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>16</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
