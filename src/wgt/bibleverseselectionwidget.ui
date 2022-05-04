@@ -37,10 +37,41 @@
        <string>Verš</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_11">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_16">
          <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Holy Bible_16px.png</pixmap>
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Search_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Vyhledat:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Zápis:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="lnCode"/>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lnSearch">
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Google Translate_16px.png</pixmap>
          </property>
         </widget>
        </item>
@@ -60,35 +91,14 @@
          </property>
         </spacer>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_16">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_11">
          <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Search_16px.png</pixmap>
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Holy Bible_16px.png</pixmap>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QComboBox" name="cmbTranslation">
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_15">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Google Translate_16px.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Zápis:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="4">
+       <item row="4" column="0" colspan="4">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="1" column="0" colspan="2">
           <widget class="QListView" name="lstBooks">
@@ -243,13 +253,6 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Vyhledat:</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="1">
         <widget class="QLabel" name="label_5">
          <property name="text">
@@ -257,15 +260,21 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="3">
-        <widget class="QLineEdit" name="lnSearch">
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
+       <item row="2" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
-       <item row="0" column="3">
-        <widget class="QLineEdit" name="lnCode"/>
+       <item row="1" column="3" rowspan="2">
+        <widget class="BibleTranslationListBox" name="lstBibleTranslations"/>
        </item>
       </layout>
      </widget>
@@ -282,6 +291,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BibleTranslationListBox</class>
+   <extends>QListWidget</extends>
+   <header>wgt/bibletranslationlistbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../res/resources.qrc"/>
  </resources>

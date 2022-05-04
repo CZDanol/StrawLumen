@@ -6,6 +6,8 @@
 #include "util/standarddialogs.h"
 #include "main.h"
 
+const QString bibleTranslationListSep = "##+##";
+
 #define SETTING_SAVE(T) template<> void saveSetting<T>(const QString &name, const T *widget)
 #define SETTING_LOAD(T) template<> void loadSetting<T>(const QString &name, T *widget)
 
@@ -36,11 +38,6 @@ QVariant SettingsManager::value(const QString &key, const QVariant &def) const
 QRect SettingsManager::projectionDisplayGeometry() const
 {
 	return settingsDialog->ui->dsDisplay->selectedScreen()->geometry();
-}
-
-QString SettingsManager::defaultBibleTranslation() const
-{
-	return setting_defaultBibleTranslation().toString();
 }
 
 SETTING_SAVE(QComboBox)
@@ -117,4 +114,13 @@ SETTING_LOAD(StyleSelectionWidget)
 
 	style.loadFromDb(id);
 	widget->setPresentationStyle(style);
+}
+
+SETTING_SAVE(BibleTranslationListBox)
+{
+	settings->setValue(name, widget->selectedTranslations().join(bibleTranslationListSep));
+}
+SETTING_LOAD(BibleTranslationListBox)
+{
+	widget->updateList(settings->value(name, "ČEP").toString().split(bibleTranslationListSep));
 }

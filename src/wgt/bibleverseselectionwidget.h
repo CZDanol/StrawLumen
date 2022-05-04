@@ -43,10 +43,11 @@ private slots:
 	void onVersesSelectionChanged();
 
 private slots:
-	void on_cmbTranslation_currentIndexChanged(int index);
+	void on_lstBibleTranslations_sigChanged();
 	void on_lstVerses_customContextMenuRequested(const QPoint &pos);
 	void on_actionGoToChapter_triggered();
 	void on_lnCode_textChanged(const QString &arg1);
+
  private:
 	BibleRef bibleRef_;
 
@@ -55,15 +56,15 @@ private:
 	bool isSearch_ = false;
 
 private:
-	QStringListModel translationsModel_, booksModel_, chaptersModel_;
-	QStringList translationList_, booksList_, chaptersList_;
-	QStringList translationIds_;
+	QStringListModel booksModel_, chaptersModel_;
+	QStringList booksList_, chaptersList_;
 	QVector<int> bookIds_, chapterUIDs_;
 	QHash<QString,int> translationRows_;
 
 private:
 	QTimer searchTimer_;
-	QString currentTranslationId_;
+	QStringList selectedTranslationIds_;
+	QString sampleTranslationId_;
 	int currentBookId_ = -1, currentChapterUID_ = -1;
 	bool isCurrentChapterSelected_ = false;
 	QSet<int> selectedVerseUIDs_;

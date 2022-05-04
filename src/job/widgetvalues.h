@@ -7,6 +7,7 @@
 
 #include "wgt/displayselectionwidget.h"
 #include "wgt/styleselectionwidget.h"
+#include "wgt/bibletranslationlistbox.h"
 
 template<typename Widget>
 inline decltype(auto) getWidgetValue(const Widget *wgt) { Q_UNUSED(wgt); throw 0; }
@@ -20,5 +21,6 @@ WIDGET_VALUE_GETTER(QComboBox, currentData)
 
 WIDGET_VALUE_GETTER(DisplaySelectionWidget, selectedScreen)
 WIDGET_VALUE_GETTER(StyleSelectionWidget, presentationStyle)
+WIDGET_VALUE_GETTER(BibleTranslationListBox, selectedTranslations)
 
 #endif // WIDGETVALUES_H

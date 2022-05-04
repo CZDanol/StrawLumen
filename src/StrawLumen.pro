@@ -86,6 +86,7 @@ SOURCES += main.cpp \
 		presentation/powerpoint/presentationpropertieswidget_powerpoint.cpp \
 		gui/settingsdialog.cpp \
 		util/updatesdisabler.cpp \
+		wgt/bibletranslationlistbox.cpp \
 		wgt/displayselectionwidget.cpp \
 		presentation/native/presentationengine_native.cpp \
 		presentation/native/presentation_blackscreen.cpp \
@@ -244,6 +245,7 @@ HEADERS += \
 		presentation/powerpoint/presentationpropertieswidget_powerpoint.h \
 		gui/settingsdialog.h \
 		util/updatesdisabler.h \
+		wgt/bibletranslationlistbox.h \
 		wgt/displayselectionwidget.h \
 		presentation/native/presentationengine_native.h \
 		presentation/native/presentation_blackscreen.h \

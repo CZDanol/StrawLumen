@@ -10,12 +10,15 @@
 
 #include "wgt/displayselectionwidget.h"
 #include "wgt/styleselectionwidget.h"
+#include "wgt/bibletranslationlistbox.h"
 #include "rec/presentationstyle.h"
 #include "gui/settingsdialog.h"
 #include "job/widgetvalues.h"
 
 #define UI_SETTINGSDIALOGPATH "ui_settingsdialog.h"
 #include UI_SETTINGSDIALOGPATH
+
+extern const QString bibleTranslationListSep;
 
 class SettingsManager {
 
@@ -29,7 +32,6 @@ public:
 
 public:
 	QRect projectionDisplayGeometry() const;
-	QString defaultBibleTranslation() const;
 
 private:
 	QSettings settings_;
@@ -69,6 +71,7 @@ SETTING_HEADERS(QGroupBox, &QGroupBox::clicked)
 
 SETTING_HEADERS(DisplaySelectionWidget, &DisplaySelectionWidget::sigCurrentChangedByUser)
 SETTING_HEADERS(StyleSelectionWidget, &StyleSelectionWidget::sigPresentationStyleChangedByUser)
+SETTING_HEADERS(BibleTranslationListBox, &BibleTranslationListBox::sigChanged)
 
 #undef SETTING_HEADERS
 

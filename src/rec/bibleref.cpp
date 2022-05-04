@@ -36,19 +36,22 @@ BibleRef::BibleRef()
 }
 
 BibleRef::BibleRef(QString translationId, int bookId, int chapter, int verse)
+	: BibleRef(QStringList{translationId}, bookId, chapter, QVector<int>{verse})
 {
-	this->translationIds = QStringList{translationId};
-	this->bookId = bookId;
-	this->chapter = chapter;
-	verses_ += verse;
-	isValid_ = true;
+
 }
 
 BibleRef::BibleRef(QString translationId, int bookId, int chapter, const QVector<int> &verses)
+	: BibleRef(QStringList{translationId}, bookId, chapter, verses)
+{
+
+}
+
+BibleRef::BibleRef(const QStringList &translationIds, int bookId, int chapter, const QVector<int> &verses)
 {
 	Q_ASSERT(!verses.isEmpty());
 
-	this->translationIds = QStringList{translationId};
+	this->translationIds = translationIds;
 	this->bookId = bookId;
 	this->chapter = chapter;
 
@@ -72,7 +75,7 @@ BibleRef::BibleRef(const QString &str)
 			t = t.trimmed();
 	}
 	else
-		translationIds += settings->defaultBibleTranslation();
+		translationIds += settings->setting_defaultBibleTranslation();
 
 	bookId = -1;
 	QString bookName = collate(m.captured(1));
@@ -149,7 +152,7 @@ QString BibleRef::toString() const
 		return nullptr;
 
 	QString result = QString("%1 %2:%3").arg(getBibleBook(bookId).id, QString::number(chapter), versesString());
-	if(translationIds.size() > 1 || translationIds.size() == 0 || translationIds[0] != settings->defaultBibleTranslation())
+	if(translationIds != settings->setting_defaultBibleTranslation())
 		result += QString(" %1").arg(translationIds.join('+'));
 
 	return result;

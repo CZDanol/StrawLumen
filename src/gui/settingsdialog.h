@@ -8,7 +8,7 @@
 // settingName, uiControl
 #define SETTINGS_FACTORY(F)\
 	F(darkMode, cbDarkMode) \
-	F(defaultBibleTranslation, cmbDefaultBibleTranslation) \
+	F(defaultBibleTranslation, lstDefaultBibleTranslation) \
 	F(language, cmbLanguage) \
 	\
 	F(display, dsDisplay) \

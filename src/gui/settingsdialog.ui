@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>779</width>
-    <height>310</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -45,53 +45,6 @@
            <string>Všeobecné</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="1" column="2">
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>16</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_12">
-             <property name="pixmap">
-              <pixmap resource="../../res/resources.qrc">:/icons/16/Holy Bible_16px.png</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Výchozí překlad bible:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QComboBox" name="cmbDefaultBibleTranslation">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="pixmap">
-              <pixmap resource="../../res/resources.qrc">:/icons/16/waning_crescent_16px.png</pixmap>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="1" colspan="3">
             <widget class="QCheckBox" name="cbDarkMode">
              <property name="sizePolicy">
@@ -108,21 +61,28 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_13">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_12">
              <property name="pixmap">
-              <pixmap resource="../../res/resources.qrc">:/icons/16/language_16px.png</pixmap>
+              <pixmap resource="../../res/resources.qrc">:/icons/16/Holy Bible_16px.png</pixmap>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="3" column="1">
             <widget class="QLabel" name="label_14">
              <property name="text">
               <string>Jazyk (nutný restart):</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="pixmap">
+              <pixmap resource="../../res/resources.qrc">:/icons/16/waning_crescent_16px.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
             <widget class="QComboBox" name="cmbLanguage">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -131,6 +91,52 @@
               </sizepolicy>
              </property>
             </widget>
+           </item>
+           <item row="1" column="2">
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>16</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Výchozí překlady Bible:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_13">
+             <property name="pixmap">
+              <pixmap resource="../../res/resources.qrc">:/icons/16/language_16px.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="3" rowspan="2">
+            <widget class="BibleTranslationListBox" name="lstDefaultBibleTranslation"/>
            </item>
           </layout>
          </widget>
@@ -464,6 +470,11 @@
    <extends>QWidget</extends>
    <header>wgt/displayselectionwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BibleTranslationListBox</class>
+   <extends>QListWidget</extends>
+   <header>wgt/bibletranslationlistbox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

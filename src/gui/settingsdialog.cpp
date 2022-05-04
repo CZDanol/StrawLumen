@@ -22,7 +22,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
 	connect(db, &DatabaseManager::sigBibleTranslationsChanged, this, &SettingsDialog::updateBibleTranslationList);
 
-	ui->cmbDefaultBibleTranslation->addItem(nullptr, "ČEP"); // ČEP default
 	updateBibleTranslationList();
 	updateLanguageList();
 
@@ -43,17 +42,7 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::updateBibleTranslationList()
 {
-	UpdatesDisabler _ud(ui->cmbDefaultBibleTranslation);
-	QVariant data = ui->cmbDefaultBibleTranslation->currentData();
-
-	ui->cmbDefaultBibleTranslation->clear();
-
-	QSqlQuery q = db->selectQuery("SELECT translation_id, name FROM bible_translations ORDER BY translation_id");
-	while(q.next()) {
-		ui->cmbDefaultBibleTranslation->addItem(q.value(0).toString() + " | " + q.value(1).toString(), q.value(0));
-		if(q.value(0) == data)
-			ui->cmbDefaultBibleTranslation->setCurrentIndex(ui->cmbDefaultBibleTranslation->count() - 1);
-	}
+	ui->lstDefaultBibleTranslation->updateList();
 }
 
 void SettingsDialog::updateLanguageList()
