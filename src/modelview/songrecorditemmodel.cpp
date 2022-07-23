@@ -4,16 +4,20 @@
 #include <QByteArray>
 #include <QMimeData>
 
-#include "job/db.h"
-
 SongRecordItemModel::SongRecordItemModel(QObject *parent) : QAbstractTableModel(parent)
 {
-
+	setDb(db);
 }
 
 SongRecordItemModel::~SongRecordItemModel()
 {
 	qDeleteAll(items_);
+}
+
+void SongRecordItemModel::setDb(DatabaseManager *mgr)
+{
+	db_ = mgr;
+	clear();
 }
 
 QVector<qlonglong> SongRecordItemModel::items() const
@@ -304,7 +308,7 @@ bool SongRecordItemModel::dropMimeData(const QMimeData *mime, Qt::DropAction act
 
 SongRecordItemModel::SongRecord *SongRecordItemModel::createRecord(qlonglong songId)
 {
-	QSqlRecord r = db->selectRow("SELECT name, author, (SELECT GROUP_CONCAT(tag) FROM song_tags WHERE song = songs.id ORDER BY tag ASC) as tags FROM songs WHERE id = ?", {songId});
+	QSqlRecord r = db_->selectRow("SELECT name, author, (SELECT GROUP_CONCAT(tag) FROM song_tags WHERE song = songs.id ORDER BY tag ASC) as tags FROM songs WHERE id = ?", {songId});
 
 	SongRecord *rec = new SongRecord();
 	rec->songId = songId;

@@ -6,6 +6,7 @@
 #include <QTimer>
 
 #include "modelview/songsitemmodel.h"
+#include "job/db.h"
 
 namespace Ui {
 	class SongListWidget;
@@ -23,6 +24,8 @@ public:
 	inline void setShowTags(bool set) {
 		showTags_ = set;
 	}
+
+	void setDb(DatabaseManager *mgr, bool allowDbEdit);
 
 signals:
 	/// Beware - first is songId (not row id), second is rowid in the view
@@ -84,6 +87,11 @@ private:
 	QString currentFilterText_;
 	QString currentTagFitler();
 	QTimer typingTimer_;
+
+private:
+	DatabaseManager *db_ = nullptr;
+	QScopedPointer<QObject> dbSignalProxy_;
+	bool allowDbEdit_ = false;
 
 };
 

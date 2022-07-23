@@ -4,6 +4,8 @@
 #include <QAbstractTableModel>
 #include <QHash>
 
+#include "job/db.h"
+
 class SongRecordItemModel : public QAbstractTableModel
 {
 	Q_OBJECT
@@ -17,6 +19,9 @@ private:
 public:
 	explicit SongRecordItemModel(QObject *parent = nullptr);
 	virtual ~SongRecordItemModel();
+
+public:
+	void setDb(DatabaseManager *mgr);
 
 signals:
 	void sigItemsManipulated(int index, int count);
@@ -55,6 +60,7 @@ private:
 	void moveItems(const QVector<int> &itemIndexes, int targetPosition);
 
 private:
+	DatabaseManager *db_ = nullptr;
 	QVector<SongRecord*> items_;
 	QHash<qlonglong, SongRecord*> itemMap_;
 

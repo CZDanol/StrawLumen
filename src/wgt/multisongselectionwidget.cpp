@@ -62,6 +62,15 @@ MultiSongSelectionWidget::~MultiSongSelectionWidget()
 	delete ui;
 }
 
+void MultiSongSelectionWidget::setDb(DatabaseManager *mgr, bool allowEdit)
+{
+	selectionModel_.setDb(mgr);
+	selectionModel_.clear();
+
+	ui->wgtSongList->setDb(mgr, allowEdit);
+	ui->wgtSongList->requery();
+}
+
 void MultiSongSelectionWidget::setSelectedSongs(const QVector<qlonglong> &songIds)
 {
 	selectionModel_.clear();

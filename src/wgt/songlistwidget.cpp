@@ -5,7 +5,6 @@
 #include <QShowEvent>
 #include <QMenu>
 
-#include "job/db.h"
 #include "util/standarddialogs.h"
 
 SongListWidget::SongListWidget(QWidget *parent) :
@@ -14,6 +13,8 @@ SongListWidget::SongListWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	setDb(db, true);
+
 	ui->splitter->setCollapsible(0, false);
 
 	ui->tvSongs->setModel(&songsModel_);
@@ -21,9 +22,6 @@ SongListWidget::SongListWidget(QWidget *parent) :
 
 	typingTimer_.setSingleShot(true);
 	typingTimer_.setInterval(500);
-
-	connect(db, SIGNAL(sigSongListChanged()), this, SLOT(requeryTags()));
-	connect(db, SIGNAL(sigSongListChanged()), this, SLOT(requery()));
 
 	connect(ui->lnSearch, SIGNAL(editingFinished()), this, SLOT(requeryIfFilterChanged()));
 	connect(ui->lnSearch, SIGNAL(textChanged(QString)), &typingTimer_, SLOT(start()));
@@ -55,6 +53,16 @@ SongListWidget::SongListWidget(QWidget *parent) :
 SongListWidget::~SongListWidget()
 {
 	delete ui;
+}
+
+void SongListWidget::setDb(DatabaseManager *mgr, bool allowDbEdit)
+{
+	dbSignalProxy_.reset(new QObject(this));
+	connect(mgr, &DatabaseManager::sigSongListChanged, dbSignalProxy_.data(), [this] { requeryTags(); requery(); });
+	db_ = mgr;
+	allowDbEdit_ = allowDbEdit;
+
+	ui->actionDeleteTag->setEnabled(allowDbEdit_);
 }
 
 int SongListWidget::currentRowIndex() const
@@ -165,7 +173,7 @@ void SongListWidget::requery()
 		if(showTags_)
 			tagsQuery = QStringLiteral(", (SELECT GROUP_CONCAT(tag, ', ') FROM song_tags WHERE song_tags.song = songs.id ORDER BY tag ASC) AS '%1'").arg(tr("Štítky"));
 
-		songsModel_.setQuery(db->selectQuery(query.arg(tr("Název"), tr("Autor"), tagsQuery, joins, filters.size() ? "WHERE " + filters.join(" AND ") : QString()), args));
+		songsModel_.setQuery(db_->selectQuery(query.arg(tr("Název"), tr("Autor"), tagsQuery, joins, filters.size() ? "WHERE " + filters.join(" AND ") : QString()), args));
 
 		while(songsModel_.canFetchMore())
 			songsModel_.fetchMore();
@@ -205,7 +213,7 @@ void SongListWidget::requeryTags()
 												"FROM song_tags "
 												"GROUP BY tag "
 												"ORDER BY tag ASC").arg(tr("-- vše --"));
-	QSqlQuery q = db->selectQuery(sql);
+	QSqlQuery q = db_->selectQuery(sql);
 	tagsModel_.setQuery(q);
 
 	if(tagsModel_.record(prevIndex).value("tag") == prevTag)
@@ -342,10 +350,13 @@ void SongListWidget::on_actionDeleteTag_triggered()
 	if(ui->lvTags->currentIndex().row() <= 0)
 		return;
 
+	if(!allowDbEdit_)
+		return;
+
 	const QString tag = tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag").toString();
 	if(!standardConfirmDialog(tr("Opravdu smazat štítek '%1'?").arg(tag)))
 		return;
 
-	db->exec("DELETE FROM song_tags WHERE tag = ?", {tag});
-	emit db->sigSongListChanged();
+	db_->exec("DELETE FROM song_tags WHERE tag = ?", {tag});
+	emit db_->sigSongListChanged();
 }
