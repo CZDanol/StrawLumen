@@ -5,7 +5,6 @@ Aktuálně
    - linky z obsahu na jednotlivé písně
 
 - selektivní áimport písní
-- možnost automaticky přidat štítek datumu import
 - průvodce veršů + nastavení - podpora více výchozích překladů najednou (z comboboxu udělat listbox s checkboxama)
 - průvodce veršů - možnost automaticky rozdělit dělší úsek bible na víc slidů
 

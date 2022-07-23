@@ -57,6 +57,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		connect(ui->wgtSongList, SIGNAL(sigCustomContextMenuRequested(QPoint)), this, SLOT(onSongListContextMenuRequested(QPoint)));
 
 		ui->wgtSongList->setDragEnabled(false);
+		ui->wgtSongList->setShowTags(false);
 
 		songListContextMenu_.addAction(ui->actionDeleteSongs);
 		songListContextMenu_.addSeparator();

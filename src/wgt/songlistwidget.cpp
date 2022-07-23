@@ -130,11 +130,11 @@ void SongListWidget::requery()
 		QString query;
 		if(!searchFilter.isEmpty()) {
 			query =
-					"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
+					"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' %3"
 					"FROM songs_fulltext "
 					"INNER JOIN songs ON songs.id = docid "
-					"%3 "
 					"%4 "
+					"%5 "
 					"ORDER BY songs.standardized_name ASC"
 					;
 
@@ -148,10 +148,10 @@ void SongListWidget::requery()
 
 		} else {
 			query =
-					"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' "
+					"SELECT songs.id, songs.name AS '%1', songs.author AS '%2' %3"
 					"FROM songs "
-					"%3 "
 					"%4 "
+					"%5 "
 					"ORDER BY songs.standardized_name ASC ";
 		}
 
@@ -161,7 +161,11 @@ void SongListWidget::requery()
 			args += tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag");
 		}
 
-		songsModel_.setQuery(db->selectQuery(query.arg(tr("Název"), tr("Autor"), joins, filters.size() ? "WHERE " + filters.join(" AND ") : QString()), args));
+		QString tagsQuery = "";
+		if(showTags_)
+			tagsQuery = QStringLiteral(", (SELECT GROUP_CONCAT(tag, ', ') FROM song_tags WHERE song_tags.song = songs.id ORDER BY tag ASC) AS '%1'").arg(tr("Štítky"));
+
+		songsModel_.setQuery(db->selectQuery(query.arg(tr("Název"), tr("Autor"), tagsQuery, joins, filters.size() ? "WHERE " + filters.join(" AND ") : QString()), args));
 
 		while(songsModel_.canFetchMore())
 			songsModel_.fetchMore();

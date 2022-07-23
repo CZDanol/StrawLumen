@@ -33,14 +33,14 @@
      <item>
       <widget class="QCheckBox" name="cbAutoSplit">
        <property name="text">
-        <string>Automatically split after:</string>
+        <string>Automaticky rozdělit po:</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QSpinBox" name="sbAutoSplit">
        <property name="suffix">
-        <string> verses</string>
+        <string> verších</string>
        </property>
        <property name="minimum">
         <number>1</number>

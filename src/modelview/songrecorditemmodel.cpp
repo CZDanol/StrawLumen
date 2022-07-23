@@ -174,6 +174,9 @@ QVariant SongRecordItemModel::data(const QModelIndex &index, int role) const
 	case 1:
 		return rec->author;
 
+	case 2:
+		return rec->tags;
+
 	default:
 		return QVariant();
 
@@ -201,6 +204,9 @@ QVariant SongRecordItemModel::headerData(int section, Qt::Orientation orientatio
 	case 1:
 		return tr("Autor");
 
+	case 2:
+			return tr("Štítky");
+
 	default:
 		return QVariant();
 
@@ -214,7 +220,7 @@ int SongRecordItemModel::rowCount(const QModelIndex &) const
 
 int SongRecordItemModel::columnCount(const QModelIndex &) const
 {
-	return 2;
+	return 3;
 }
 
 Qt::DropActions SongRecordItemModel::supportedDropActions() const
@@ -298,12 +304,13 @@ bool SongRecordItemModel::dropMimeData(const QMimeData *mime, Qt::DropAction act
 
 SongRecordItemModel::SongRecord *SongRecordItemModel::createRecord(qlonglong songId)
 {
-	QSqlRecord r = db->selectRow("SELECT name, author FROM songs WHERE id = ?", {songId});
+	QSqlRecord r = db->selectRow("SELECT name, author, (SELECT GROUP_CONCAT(tag) FROM song_tags WHERE song = songs.id ORDER BY tag ASC) as tags FROM songs WHERE id = ?", {songId});
 
 	SongRecord *rec = new SongRecord();
 	rec->songId = songId;
 	rec->name = r.value("name").toString();
 	rec->author = r.value("author").toString();
+	rec->tags = r.value("tags").toString();
 
 	return rec;
 }

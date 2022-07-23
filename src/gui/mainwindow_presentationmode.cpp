@@ -159,6 +159,8 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 
 	// Song list
 	{
+		ui->wgtSongList->setShowTags(false);
+
 		connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), this, SLOT(onSongListItemActivated(qlonglong)));
 		connect(ui->wgtSongList, SIGNAL(sigCustomContextMenuRequested(QPoint)), this, SLOT(onSongListContextMenuRequested(QPoint)));
 

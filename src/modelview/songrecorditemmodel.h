@@ -11,7 +11,7 @@ class SongRecordItemModel : public QAbstractTableModel
 private:
 	struct SongRecord {
 		qlonglong songId;
-		QString name, author;
+		QString name, author, tags;
 	};
 
 public:

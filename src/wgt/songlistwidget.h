@@ -19,6 +19,11 @@ public:
 	explicit SongListWidget(QWidget *parent = 0);
 	~SongListWidget();
 
+public:
+	inline void setShowTags(bool set) {
+		showTags_ = set;
+	}
+
 signals:
 	/// Beware - first is songId (not row id), second is rowid in the view
 	void sigCurrentChanged(qlonglong songId, int previousRowId);
@@ -72,6 +77,7 @@ private slots:
 	void on_actionDeleteTag_triggered();
 
 private:
+	bool showTags_ = true;
 	Ui::SongListWidget *ui;
 	SongsItemModel songsModel_;
 	QSqlQueryModel tagsModel_;
