@@ -25,14 +25,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	updateBibleTranslationList();
 	updateLanguageList();
 
-#define F(settingsName, uiControl)\
-		loadSetting(#settingsName, ui->uiControl);\
-		connect(ui->uiControl, settingsControlChangeSignal(ui->uiControl), [this]{\
-			saveSetting(#settingsName, ui->uiControl);\
-		});
-
-	SETTINGS_FACTORY(F)
-#undef F
+	SETTINGS_FACTORY(SETTINGS_LINK)
 }
 
 SettingsDialog::~SettingsDialog()

@@ -20,6 +20,12 @@
 
 extern const QString bibleTranslationListSep;
 
+#define SETTINGS_LINK(settingsName, uiControl)\
+		loadSetting(#settingsName, ui->uiControl);\
+		connect(ui->uiControl, settingsControlChangeSignal(ui->uiControl), [this]{\
+			saveSetting(#settingsName, ui->uiControl);\
+		});
+
 class SettingsManager {
 
 public:
