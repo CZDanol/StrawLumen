@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>734</width>
-    <height>605</height>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,6 +41,191 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="VideoControlTabWidget" name="wgtVideoControl" native="true"/>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="twControls">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_8">
+         <attribute name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Presentation_16px.png</normaloff>:/icons/16/Presentation_16px.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Ovládání</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnEnableProjection">
+            <property name="toolTip">
+             <string>Promítat</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/32/Video Projector_32px.png</normaloff>:/icons/32/Video Projector_32px.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnPreviousPresentation">
+            <property name="toolTip">
+             <string>Předchozí prezentace</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/32/Skip to Start_32px.png</normaloff>:/icons/32/Skip to Start_32px.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnPreviousSlide">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Předchozí snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/32/Sort Left_32px.png</normaloff>:/icons/32/Sort Left_32px.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnNextSlide">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Další snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/32/Sort Right_32px.png</normaloff>:/icons/32/Sort Right_32px.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnNextPresentation">
+            <property name="toolTip">
+             <string>Další prezentace</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/32/End_32px.png</normaloff>:/icons/32/End_32px.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnBlackScreen">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Černá obrazovka&lt;/p&gt;&lt;p&gt;Zkratka: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/32/TV Off_32px.png</normaloff>:/icons/32/TV Off_32px.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnQuickVerse">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rychlé promátní verše&lt;br/&gt;&lt;br/&gt;Zkratka: Ctrl+Shift+V&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/32/Holy Bible_32px.png</normaloff>:/icons/32/Holy Bible_32px.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+Shift+V</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
       <item>
        <widget class="QTabWidget" name="twControls_2">
         <property name="sizePolicy">
@@ -100,9 +285,6 @@
        </widget>
       </item>
       <item>
-       <widget class="VideoControlTabWidget" name="wgtVideoControl" native="true"/>
-      </item>
-      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -138,182 +320,6 @@
            <number>0</number>
           </property>
          </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTabWidget" name="twControls">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="tab_8">
-          <attribute name="icon">
-           <iconset resource="../../res/resources.qrc">
-            <normaloff>:/icons/16/Presentation_16px.png</normaloff>:/icons/16/Presentation_16px.png</iconset>
-          </attribute>
-          <attribute name="title">
-           <string>Ovládání</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="3">
-            <widget class="QPushButton" name="btnNextSlide">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Další snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/icons/32/Sort Right_32px.png</normaloff>:/icons/32/Sort Right_32px.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="btnPreviousSlide">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Předchozí snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/icons/32/Sort Left_32px.png</normaloff>:/icons/32/Sort Left_32px.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="btnPreviousPresentation">
-             <property name="toolTip">
-              <string>Předchozí prezentace</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/icons/32/Skip to Start_32px.png</normaloff>:/icons/32/Skip to Start_32px.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QPushButton" name="btnNextPresentation">
-             <property name="toolTip">
-              <string>Další prezentace</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/icons/32/End_32px.png</normaloff>:/icons/32/End_32px.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QPushButton" name="btnEnableProjection">
-             <property name="toolTip">
-              <string>Promítat</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/icons/32/Video Projector_32px.png</normaloff>:/icons/32/Video Projector_32px.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QPushButton" name="btnQuickVerse">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rychlé promátní verše&lt;br/&gt;&lt;br/&gt;Zkratka: Ctrl+Shift+V&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/icons/32/Holy Bible_32px.png</normaloff>:/icons/32/Holy Bible_32px.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="shortcut">
-              <string>Ctrl+Shift+V</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QPushButton" name="btnBlackScreen">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Černá obrazovka&lt;/p&gt;&lt;p&gt;Zkratka: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/icons/32/TV Off_32px.png</normaloff>:/icons/32/TV Off_32px.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
        <item>
@@ -373,7 +379,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>256</height>
+           <height>160</height>
           </size>
          </property>
          <property name="focusPolicy">
@@ -548,7 +554,7 @@ PresentationPropertiesWidget
                 <x>0</x>
                 <y>0</y>
                 <width>274</width>
-                <height>70</height>
+                <height>173</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9"/>
@@ -792,7 +798,6 @@ PresentationPropertiesWidget
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>twControls</tabstop>
   <tabstop>btnPreviousPresentation</tabstop>
   <tabstop>btnPreviousSlide</tabstop>
   <tabstop>btnNextSlide</tabstop>
@@ -806,7 +811,6 @@ PresentationPropertiesWidget
   <tabstop>saPresentationProperties</tabstop>
   <tabstop>tabWidget_2</tabstop>
   <tabstop>tvSlides</tabstop>
-  <tabstop>twControls_2</tabstop>
  </tabstops>
  <resources>
   <include location="../../res/resources.qrc"/>

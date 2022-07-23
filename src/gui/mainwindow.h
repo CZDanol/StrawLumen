@@ -58,11 +58,8 @@ private slots:
 	void on_actionSendFeedback_triggered();
 	void on_actionBulkEditSongs_triggered();
 	void on_actionBibleMgmt_triggered();
-
 	void on_btnOpenSongManagementInNewWindow_clicked();
-
 	void on_btnSettings_clicked();
-
 	void on_btnAbout_clicked();
 
 private:

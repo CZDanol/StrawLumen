@@ -4,8 +4,6 @@ Aktuálně
    - možnost skrytí akordů
    - linky z obsahu na jednotlivé písně
 
-- live bible promítání z wizardu
-
 - průvodce veršů + nastavení - podpora více výchozích překladů najednou (z comboboxu udělat listbox s checkboxama)
 - průvodce veršů - možnost automaticky rozdělit dělší úsek bible na víc slidů
 
