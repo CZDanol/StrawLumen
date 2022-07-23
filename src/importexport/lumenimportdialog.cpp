@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QFileInfo>
 #include <QDebug>
+#include <QDate>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -16,6 +17,12 @@
 #include "presentation/native/presentation_song.h"
 #include "importexport/exportdb.h"
 #include "util/standarddialogs.h"
+
+// settingName, uiControl
+#define LUMENIMPORT_SETTINGS_FACTORY(F)\
+	F(lumenImport_stripTags, cbStripTags) \
+	F(lumenImport_addDateLabel, cbAddDateLabel) \
+
 
 enum ConflictBehavior {
 	cbSkip,
@@ -37,6 +44,9 @@ LumenImportDialog::LumenImportDialog(QWidget *parent) :
 	ui(new Ui::LumenImportDialog)
 {
 	ui->setupUi(this);
+
+	LUMENIMPORT_SETTINGS_FACTORY(SETTINGS_LINK);
+	ui->lblCurrentDateLabel->setText(QDate::currentDate().toString("yyyy_MM_dd"));
 }
 
 LumenImportDialog::~LumenImportDialog()
@@ -74,7 +84,10 @@ void LumenImportDialog::on_btnImport_clicked()
 	const int conflictBehavior = ui->cmbConflictBehavior->currentIndex();
 	const bool addToPlaylist = ui->cbAddToPlaylist->isChecked();
 	const bool stripTags = ui->cbStripTags->isChecked();
-	const QSet<QString> tags = ui->lnTags->toTags();
+
+	QSet<QString> tags = ui->lnTags->toTags();
+	if(ui->cbAddDateLabel->isChecked())
+		tags += ui->lblCurrentDateLabel->text();
 
 	bool isError = false;
 	QVector<QSharedPointer<Presentation> > presentations;

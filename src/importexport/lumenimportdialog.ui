@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>468</width>
-    <height>240</height>
+    <height>299</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,17 +44,16 @@
        <string>Nastavení</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Folder_16px.png</pixmap>
+       <item row="4" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbStripTags">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Existující písně se stejným názvem:</string>
+          <string>Zahodit štítky importovaných písní</string>
          </property>
         </widget>
        </item>
@@ -65,8 +64,62 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="2" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbAddToPlaylist">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Přidat importované písně do programu promítání</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
         <widget class="QLabel" name="label_4">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>16</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="btnSelectFile">
+         <property name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Open_16px.png</normaloff>:/icons/16/Open_16px.png</iconset>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Přidat štítky:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_8">
          <property name="pixmap">
           <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
          </property>
@@ -79,10 +132,10 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Přidat štítky:</string>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Sort By Modified Date_16px.png</pixmap>
          </property>
         </widget>
        </item>
@@ -102,55 +155,19 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Sort By Modified Date_16px.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="btnSelectFile">
-         <property name="icon">
-          <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/16/Open_16px.png</normaloff>:/icons/16/Open_16px.png</iconset>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="3">
-        <widget class="SongTagsLineEdit" name="lnTags"/>
-       </item>
-       <item row="2" column="1" colspan="3">
-        <widget class="QCheckBox" name="cbAddToPlaylist">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Přidat importované písně do programu promítání</string>
+          <string>Existující písně se stejným názvem:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Folder_16px.png</pixmap>
          </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>16</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
        <item row="3" column="3">
         <widget class="QComboBox" name="cmbConflictBehavior">
@@ -183,25 +200,35 @@
          </item>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_8">
+       <item row="6" column="3">
+        <widget class="SongTagsLineEdit" name="lnTags"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_9">
          <property name="pixmap">
           <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
          </property>
         </widget>
        </item>
-       <item row="4" column="1" colspan="3">
-        <widget class="QCheckBox" name="cbStripTags">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Zahodit štítky importovaných písní</string>
-         </property>
-        </widget>
+       <item row="5" column="1" colspan="3">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QCheckBox" name="cbAddDateLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Přidat štítek s aktuálním datem:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblCurrentDateLabel"/>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
