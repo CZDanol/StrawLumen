@@ -21,7 +21,7 @@ public:
 	virtual ~SongRecordItemModel();
 
 public:
-	void setDb(DatabaseManager *mgr);
+	void setDb(DBManager *mgr);
 
 signals:
 	void sigItemsManipulated(int index, int count);
@@ -60,7 +60,7 @@ private:
 	void moveItems(const QVector<int> &itemIndexes, int targetPosition);
 
 private:
-	DatabaseManager *db_ = nullptr;
+	DBManager *db_ = nullptr;
 	QVector<SongRecord*> items_;
 	QHash<qlonglong, SongRecord*> itemMap_;
 

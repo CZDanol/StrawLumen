@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "importexport/exportdb.h"
+
 namespace Ui {
 	class LumenImportDialog;
 }
@@ -30,6 +32,7 @@ private slots:
 private:
 	Ui::LumenImportDialog *ui;
 	QString importFilename_;
+	QScopedPointer<ExportDatabaseManager> db_;
 
 };
 

@@ -14,7 +14,7 @@ SongRecordItemModel::~SongRecordItemModel()
 	qDeleteAll(items_);
 }
 
-void SongRecordItemModel::setDb(DatabaseManager *mgr)
+void SongRecordItemModel::setDb(DBManager *mgr)
 {
 	db_ = mgr;
 	clear();
@@ -308,7 +308,9 @@ bool SongRecordItemModel::dropMimeData(const QMimeData *mime, Qt::DropAction act
 
 SongRecordItemModel::SongRecord *SongRecordItemModel::createRecord(qlonglong songId)
 {
-	QSqlRecord r = db_->selectRow("SELECT name, author, (SELECT GROUP_CONCAT(tag) FROM song_tags WHERE song = songs.id ORDER BY tag ASC) as tags FROM songs WHERE id = ?", {songId});
+	QSqlRecord r;
+	if(db_)
+		r = db_->selectRow("SELECT name, author, (SELECT GROUP_CONCAT(tag) FROM song_tags WHERE song = songs.id ORDER BY tag ASC) as tags FROM songs WHERE id = ?", {songId});
 
 	SongRecord *rec = new SongRecord();
 	rec->songId = songId;

@@ -42,6 +42,8 @@ MultiSongSelectionWidget::MultiSongSelectionWidget(QWidget *parent) :
 	});
 
 	connect(&selectionModel_, SIGNAL(sigItemsManipulated(int,int)), this, SLOT(onSelectionItemsManipulated(int,int)));
+	connect(&selectionModel_, &SongRecordItemModel::modelReset, this, &MultiSongSelectionWidget::sigSelectionChanged);
+	connect(&selectionModel_, &SongRecordItemModel::sigItemsManipulated, this, &MultiSongSelectionWidget::sigSelectionChanged);
 
 	// Setup headers
 	{
@@ -62,12 +64,13 @@ MultiSongSelectionWidget::~MultiSongSelectionWidget()
 	delete ui;
 }
 
-void MultiSongSelectionWidget::setDb(DatabaseManager *mgr, bool allowEdit)
+void MultiSongSelectionWidget::setDb(DBManager *mgr, bool allowEdit)
 {
 	selectionModel_.setDb(mgr);
 	selectionModel_.clear();
 
 	ui->wgtSongList->setDb(mgr, allowEdit);
+	ui->wgtSongList->requeryTags();
 	ui->wgtSongList->requery();
 }
 
@@ -93,6 +96,11 @@ void MultiSongSelectionWidget::setSelectedSongsIfReasonable(const QVector<qlongl
 QVector<qlonglong> MultiSongSelectionWidget::selectedSongs() const
 {
 	return selectionModel_.items();
+}
+
+bool MultiSongSelectionWidget::isAnySongSelected() const
+{
+	return selectionModel_.rowCount(QModelIndex()) > 0;
 }
 
 void MultiSongSelectionWidget::focusSongList()

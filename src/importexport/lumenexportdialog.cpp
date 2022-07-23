@@ -86,7 +86,7 @@ void LumenExportDialog::on_btnExport_clicked()
 			const qlonglong songId = songIds[i];
 
 			static const QStringList fields {
-				"uid", "name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"
+				"uid", "name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit", "standardized_name"
 			};
 			const QSqlRecord r = db->selectRow(QString("SELECT %1 FROM songs WHERE id = ?").arg(fields.join(',')), {songId});
 

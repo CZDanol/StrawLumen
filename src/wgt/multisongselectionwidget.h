@@ -20,16 +20,20 @@ public:
 	~MultiSongSelectionWidget();
 
 public:
-	void setDb(DatabaseManager *mgr, bool allowEdit);
+	void setDb(DBManager *mgr, bool allowEdit);
 
 public:
 	void setSelectedSongs(const QVector<qlonglong> &songIds);
 	void setSelectedSongsIfReasonable(const QVector<qlonglong> &songIds);
 	QVector<qlonglong> selectedSongs() const;
+	bool isAnySongSelected() const;
 
 public slots:
 	void focusSongList();
 	void clearSelection();
+
+signals:
+	void sigSelectionChanged();
 
 private slots:
 	void deleteSelected();

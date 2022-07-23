@@ -25,7 +25,7 @@ public:
 		showTags_ = set;
 	}
 
-	void setDb(DatabaseManager *mgr, bool allowDbEdit);
+	void setDb(DBManager *mgr, bool allowDbEdit);
 
 signals:
 	/// Beware - first is songId (not row id), second is rowid in the view
@@ -89,8 +89,7 @@ private:
 	QTimer typingTimer_;
 
 private:
-	DatabaseManager *db_ = nullptr;
-	QScopedPointer<QObject> dbSignalProxy_;
+	DBManager *db_ = nullptr;
 	bool allowDbEdit_ = false;
 
 };

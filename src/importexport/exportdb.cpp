@@ -1,9 +1,11 @@
 #include "exportdb.h"
 
 #include <QFile>
+#include <QSqlQuery>
 
 #include "gui/mainwindow.h"
 #include "util/macroutils.h"
+#include "job/db.h"
 
 #define EXPORT_DB_MIGRATION_PROCEDURE(fromVersion, toVersion) void ExportDatabaseManager::migrateExportDbFrom_v ## fromVersion(DBManager *db)
 
@@ -112,4 +114,17 @@ EXPORT_DB_MIGRATION_PROCEDURE(1,2)
 EXPORT_DB_MIGRATION_PROCEDURE(2,3)
 {
 	db->exec("UPDATE songs SET uid = CAST(uid AS TEXT)");
+}
+
+EXPORT_DB_MIGRATION_PROCEDURE(3,4)
+{
+	db->exec("ALTER TABLE songs ADD standardized_name TEXT");
+
+	db->beginTransaction();
+
+	auto q = db->selectQuery("SELECT id, name FROM songs");
+	while(q.next())
+		db->exec("UPDATE songs SET standardized_name = ? WHERE id = ?", {standardizeSongName(q.value(1).toString()), q.value(0)});
+
+	db->commitTransaction();
 }

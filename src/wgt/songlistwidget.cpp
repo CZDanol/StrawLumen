@@ -34,6 +34,8 @@ SongListWidget::SongListWidget(QWidget *parent) :
 
 	connect(ui->lvTags->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onCurrentTagChanged(QModelIndex,QModelIndex)));
 
+	connect(db, &DatabaseManager::sigSongListChanged, this, [this] { requeryTags(); requery(); });
+
 	{
 		auto sc = new QShortcut(Qt::Key_Escape, ui->lnSearch, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
 		connect(sc, SIGNAL(activated()), this, SLOT(clearFilters()));
@@ -55,10 +57,8 @@ SongListWidget::~SongListWidget()
 	delete ui;
 }
 
-void SongListWidget::setDb(DatabaseManager *mgr, bool allowDbEdit)
+void SongListWidget::setDb(DBManager *mgr, bool allowDbEdit)
 {
-	dbSignalProxy_.reset(new QObject(this));
-	connect(mgr, &DatabaseManager::sigSongListChanged, dbSignalProxy_.data(), [this] { requeryTags(); requery(); });
 	db_ = mgr;
 	allowDbEdit_ = allowDbEdit;
 
@@ -127,7 +127,7 @@ void SongListWidget::requery()
 	const bool isTagFilter = ui->lvTags->currentIndex().row() > 0;
 
 	// Query data
-	{
+	if(db_) {
 		QString joins;
 		QStringList filters;
 		DBManager::Args args;
@@ -178,9 +178,11 @@ void SongListWidget::requery()
 		while(songsModel_.canFetchMore())
 			songsModel_.fetchMore();
 	}
+	else
+		songsModel_.setQuery({});
 
 	// Setup headers
-	{
+	if(db_) {
 		auto header = ui->tvSongs->header();
 		header->hideSection(0);
 		header->setSectionResizeMode(1, QHeaderView::Fixed);
@@ -204,6 +206,11 @@ void SongListWidget::requery()
 
 void SongListWidget::requeryTags()
 {
+	if(!db_) {
+		tagsModel_.setQuery({});
+		return;
+	}
+
 	const int prevIndex = ui->lvTags->currentIndex().row();
 	const QVariant prevTag = tagsModel_.record(prevIndex).value("tag");
 
@@ -350,7 +357,7 @@ void SongListWidget::on_actionDeleteTag_triggered()
 	if(ui->lvTags->currentIndex().row() <= 0)
 		return;
 
-	if(!allowDbEdit_)
+	if(!allowDbEdit_ || !db_)
 		return;
 
 	const QString tag = tagsModel_.record(ui->lvTags->currentIndex().row()).value("tag").toString();
@@ -358,5 +365,5 @@ void SongListWidget::on_actionDeleteTag_triggered()
 		return;
 
 	db_->exec("DELETE FROM song_tags WHERE tag = ?", {tag});
-	emit db_->sigSongListChanged();
+	emit db->sigSongListChanged();
 }

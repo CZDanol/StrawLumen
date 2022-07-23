@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <QDate>
+#include <QSet>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
@@ -45,6 +46,8 @@ LumenImportDialog::LumenImportDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	ui->wgtSongSelection->setDb(nullptr, false);
+
 	LUMENIMPORT_SETTINGS_FACTORY(SETTINGS_LINK);
 	ui->lblCurrentDateLabel->setText(QDate::currentDate().toString("yyyy_MM_dd"));
 }
@@ -81,9 +84,16 @@ void LumenImportDialog::on_btnClose_clicked()
 
 void LumenImportDialog::on_btnImport_clicked()
 {
+	if(!ui->wgtSongSelection->isAnySongSelected())
+		return standardErrorDialog(tr("Není vybrána žádná píseň pro import."), this);
+
 	const int conflictBehavior = ui->cmbConflictBehavior->currentIndex();
 	const bool addToPlaylist = ui->cbAddToPlaylist->isChecked();
 	const bool stripTags = ui->cbStripTags->isChecked();
+
+	QSet<int> ids;
+	for(const int id : ui->wgtSongSelection->selectedSongs())
+		ids += id;
 
 	QSet<QString> tags = ui->lnTags->toTags();
 	if(ui->cbAddDateLabel->isChecked())
@@ -107,10 +117,13 @@ void LumenImportDialog::on_btnImport_clicked()
 			if(isError || splashscreen->isStornoPressed())
 				break;
 
+			if(!ids.contains(q.value("id").toInt()))
+				continue;
+
 			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE name = ?", {q.value("name")});
 			qlonglong songId;
 
-			static const QStringList dataFields {"name", "standardized_name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
+			static const QStringList dataFields {"name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
 			bool updateData = true;
 
 			QHash<QString,QVariant> data;
@@ -189,6 +202,15 @@ void LumenImportDialog::on_btnSelectFile_clicked()
 
 	settings->setValue("lumenExportDirectory", dlg.directory().absolutePath());
 	importFilename_ = dlg.selectedFiles().first();
+
+	db_.reset(new ExportDatabaseManager(importFilename_, false));
+	if(db_->database().isOpen()) {
+		ui->wgtSongSelection->setDb(db_.data(), false);
+	}
+	else {
+		db_.reset();
+		importFilename_.clear();
+	}
 
 	updateUi();
 }
