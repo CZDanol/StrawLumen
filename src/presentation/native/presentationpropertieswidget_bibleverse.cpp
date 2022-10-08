@@ -34,14 +34,17 @@ PresentationPropertiesWidget_BibleVerse::~PresentationPropertiesWidget_BibleVers
 
 void PresentationPropertiesWidget_BibleVerse::fillData()
 {
+	isSettingUp_ ++;
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
 	ui->verses->setPlainText(presentation_->versesStr());
+	isSettingUp_ --;
 }
 
 void PresentationPropertiesWidget_BibleVerse::onTextUpdateTimerTimeout()
 {
 	presentation_->setVersesStr(ui->verses->toPlainText());
+	ui->verses->document()->setModified(false);
 
 	emit presentation_->sigSlidesChanged();
 }
@@ -65,12 +68,14 @@ void PresentationPropertiesWidget_BibleVerse::on_btnWizard_clicked()
 	});
 }
 
-void PresentationPropertiesWidget_BibleVerse::on_verses_textChanged()
-{
-	textUpdateTimer_.start();
-}
-
 void PresentationPropertiesWidget_BibleVerse::on_btnMorphIntoCustomSlide_clicked()
 {
 	emit presentation_->sigMorphedInto(presentation_, presentation_->toCustomSlide());
 }
+
+void PresentationPropertiesWidget_BibleVerse::on_verses_modificationChanged(bool arg1)
+{
+	if(arg1 && !isSettingUp_)
+		textUpdateTimer_.start();
+}
+

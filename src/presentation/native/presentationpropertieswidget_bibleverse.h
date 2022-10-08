@@ -30,13 +30,15 @@ private slots:
 	void on_wgtStyle_sigPresentationStyleChangedByUser();
 	void on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &);
 	void on_btnWizard_clicked();
-	void on_verses_textChanged();
 	void on_btnMorphIntoCustomSlide_clicked();
+
+	void on_verses_modificationChanged(bool arg1);
 
 private:
 	Ui::PresentationPropertiesWidget_BibleVerse *ui;
 	QSharedPointer<Presentation_BibleVerse> presentation_;
 	QTimer textUpdateTimer_;
+	int isSettingUp_ = 0;
 
 };
 

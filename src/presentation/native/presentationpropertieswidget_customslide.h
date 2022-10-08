@@ -30,12 +30,14 @@ private slots:
 private slots:
 	void on_wgtStyle_sigPresentationStyleChangedByUser();
 	void on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &);
-	void on_teText_textChanged();
+
+	void on_teText_modificationChanged(bool arg1);
 
 private:
 	Ui::PresentationPropertiesWidget_CustomSlide *ui;
 	QSharedPointer<Presentation_CustomSlide> presentation_;
 	QTimer textUpdateTimer_;
+	int isSettingUp_ = 0;
 
 };
 

@@ -28,16 +28,20 @@ PresentationPropertiesWidget_CustomSlide::~PresentationPropertiesWidget_CustomSl
 
 void PresentationPropertiesWidget_CustomSlide::fillData()
 {
+	isSettingUp_ ++;
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
 
 	ui->teText->setPlainText(presentation_->text_);
+	isSettingUp_ --;
 }
 
 void PresentationPropertiesWidget_CustomSlide::onUpdateTimerTimeout()
 {
 	presentation_->text_ = ui->teText->toPlainText().trimmed();
 	presentation_->updateSlides();
+	ui->teText->document()->setModified(false);
+
 	emit presentation_->sigSlidesChanged();
 }
 
@@ -53,7 +57,9 @@ void PresentationPropertiesWidget_CustomSlide::on_wgtBackground_sigPresentationB
 	presentation_->style_.setBackground(background);
 }
 
-void PresentationPropertiesWidget_CustomSlide::on_teText_textChanged()
+void PresentationPropertiesWidget_CustomSlide::on_teText_modificationChanged(bool arg1)
 {
-	textUpdateTimer_.start();
+	if(arg1 && !isSettingUp_)
+		textUpdateTimer_.start();
 }
+
