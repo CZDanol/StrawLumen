@@ -59,6 +59,8 @@ LumenImportDialog::~LumenImportDialog()
 
 void LumenImportDialog::show()
 {
+	ui->wgtSongSelection->clearSelection();
+	ui->wgtSongSelection->setDb(nullptr, false);
 	importFilename_.clear();
 	updateUi();
 	QDialog::show();
