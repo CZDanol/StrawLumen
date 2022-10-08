@@ -74,7 +74,7 @@ const QHash<int,BibleBook> bibleBooks_ {
 	{62, BibleBook{62, "1Jan", "1. list Janův", QStringList{"1j","ij","1jan","ijan","1janova","ijanova"}}},
 	{63, BibleBook{63, "2Jan", "2. list Janův", QStringList{"2j","iij","2jan","iijan","2janova","iijanova"}}},
 	{64, BibleBook{64, "3Jan", "3. list Janův", QStringList{"3j","iiij","3jan","iiijan","3janova","iiijanova"}}},
-	{65, BibleBook{65, "Jud", "List Judův", QStringList{"ju","juda","jd"}}},
+	{65, BibleBook{65, "Jud", "List Judův", QStringList{"jud", "ju","juda","jd"}}},
 	{66, BibleBook{66, "Zj", "Zjevení Janovo", QStringList{"zj","zjev","apok","zjv","zjeveni"}}}
 };
 
