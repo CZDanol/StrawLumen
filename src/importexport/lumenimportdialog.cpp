@@ -59,9 +59,8 @@ LumenImportDialog::~LumenImportDialog()
 
 void LumenImportDialog::show()
 {
-	ui->wgtSongSelection->clearSelection();
-	ui->wgtSongSelection->setDb(nullptr, false);
 	importFilename_.clear();
+	loadImportFile();
 	updateUi();
 	QDialog::show();
 }
@@ -69,6 +68,7 @@ void LumenImportDialog::show()
 void LumenImportDialog::show(const QString &filename)
 {
 	importFilename_ = filename;
+	loadImportFile();
 	updateUi();
 	QDialog::show();
 }
@@ -77,6 +77,25 @@ void LumenImportDialog::updateUi()
 {
 	ui->btnSelectFile->setText(importFilename_.isEmpty() ? tr("Vybrat soubor...") : QFileInfo(importFilename_).fileName());
 	ui->btnImport->setEnabled(!importFilename_.isEmpty());
+}
+
+void LumenImportDialog::loadImportFile()
+{
+	if(importFilename_.isEmpty()) {
+		db_.reset();
+		ui->wgtSongSelection->clearSelection();
+		ui->wgtSongSelection->setDb(nullptr, false);
+		return;
+	}
+
+	db_.reset(new ExportDatabaseManager(importFilename_, false));
+	if(db_->database().isOpen()) {
+		ui->wgtSongSelection->setDb(db_.data(), false);
+	}
+	else {
+		db_.reset();
+		importFilename_.clear();
+	}
 }
 
 void LumenImportDialog::on_btnClose_clicked()
@@ -205,14 +224,6 @@ void LumenImportDialog::on_btnSelectFile_clicked()
 	settings->setValue("lumenExportDirectory", dlg.directory().absolutePath());
 	importFilename_ = dlg.selectedFiles().first();
 
-	db_.reset(new ExportDatabaseManager(importFilename_, false));
-	if(db_->database().isOpen()) {
-		ui->wgtSongSelection->setDb(db_.data(), false);
-	}
-	else {
-		db_.reset();
-		importFilename_.clear();
-	}
-
+	loadImportFile();
 	updateUi();
 }

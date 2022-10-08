@@ -23,6 +23,7 @@ public:
 
 private:
 	void updateUi();
+	void loadImportFile();
 
 private slots:
 	void on_btnClose_clicked();
