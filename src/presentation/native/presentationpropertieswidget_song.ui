@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>371</height>
+    <height>414</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,33 +32,17 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>16</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="10" column="0">
-    <widget class="QLabel" name="label_10">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Eye_16px.png</pixmap>
+   <item row="0" column="1">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Pořadí snímků:</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="0" colspan="4">
-    <widget class="PresentationStylePreviewWidget" name="wgtStylePreview" native="true">
+   <item row="10" column="0" colspan="4">
+    <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -66,56 +50,18 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>128</height>
+       <height>8</height>
       </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_8">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="1" colspan="3">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>Náhled stylu:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="3">
-    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
      </property>
      <property name="focusPolicy">
       <enum>Qt::StrongFocus</enum>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Styl:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_7">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_11">
      <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Full Image_16px.png</pixmap>
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Last_16px.png</pixmap>
      </property>
     </widget>
    </item>
@@ -126,73 +72,7 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Pozadí:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="3">
-    <widget class="PresentationBackgroundSelectionWidget" name="wgtBackground" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::StrongFocus</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="1" colspan="3">
-    <widget class="QCheckBox" name="cbIgnoreEmptySlides">
-     <property name="text">
-      <string>Ignorovat prázdné snímky</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
+   <item row="1" column="0" colspan="4">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="WordCompletingLineEdit" name="lnSlideOrder">
@@ -214,35 +94,56 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Pořadí snímků:</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="1" colspan="3">
-    <widget class="QCheckBox" name="cbEmptySlideAfter">
-     <property name="text">
-      <string>Prázdný snímek na konci</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" colspan="3">
     <widget class="QCheckBox" name="cbEmptySlideBefore">
      <property name="text">
       <string>Prázdný snímek na začátku</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_11">
-     <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/16/Last_16px.png</pixmap>
+   <item row="9" column="1">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Pozadí:</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0" colspan="4">
+   <item row="3" column="1" colspan="3">
+    <widget class="QCheckBox" name="cbEmptySlideAfter">
+     <property name="text">
+      <string>Prázdný snímek na konci</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Sign Out_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Styl:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Full Image_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="1" colspan="3">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Náhled stylu:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="4">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <spacer name="horizontalSpacer_2">
@@ -270,17 +171,128 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
+   <item row="14" column="0" colspan="4">
+    <widget class="PresentationStylePreviewWidget" name="wgtStylePreview" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>128</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" colspan="3">
+    <widget class="QCheckBox" name="cbIgnoreEmptySlides">
+     <property name="text">
+      <string>Ignorovat prázdné snímky</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>16</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Logout Rounded Left_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Paint Palette_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="0">
+    <widget class="QLabel" name="label_10">
+     <property name="pixmap">
+      <pixmap resource="../../../res/resources.qrc">:/icons/16/Eye_16px.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
     <widget class="QLabel" name="label_12">
      <property name="pixmap">
       <pixmap resource="../../../res/resources.qrc">:/icons/16/word_wrap_16px.png</pixmap>
      </property>
     </widget>
    </item>
-   <item row="4" column="1" colspan="3">
+   <item row="0" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>16</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="12" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>16</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="1" colspan="3">
     <widget class="QCheckBox" name="cbWordWrap">
      <property name="text">
       <string>Zalamovat text</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="4">
+    <widget class="StyleSelectionWidget" name="wgtStyle" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>8</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
     </widget>
    </item>
@@ -326,8 +338,6 @@
   <tabstop>cbEmptySlideBefore</tabstop>
   <tabstop>cbEmptySlideAfter</tabstop>
   <tabstop>cbIgnoreEmptySlides</tabstop>
-  <tabstop>wgtStyle</tabstop>
-  <tabstop>wgtBackground</tabstop>
   <tabstop>btnEditSong</tabstop>
  </tabstops>
  <resources>

@@ -53,6 +53,7 @@ void ExportDatabaseManager::createDb()
 						 "id INTEGER PRIMARY KEY,"
 						 "uid TEXT NOT NULL,"
 						 "name TEXT NOT NULL,"
+				 "standardized_name TEXT NOT NULL,"
 						 "author TEXT NOT NULL,"
 						 "copyright TEXT NOT NULL,"
 						 "content TEXT NOT NULL,"
