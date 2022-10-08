@@ -41,7 +41,7 @@ const QHash<int,BibleBook> bibleBooks_ {
 	{38, BibleBook{38, "Za", "Zacharjáš", QStringList{"za","zach","zachar","zacharjas","zacharias","zacharijas","zch"}}},
 	{39, BibleBook{39, "Mal", "Malachjáš", QStringList{"mal","ma","malach","malachjas","malachias","malachijas"}}},
 	{1001, BibleBook{1001, "Tób", "Tóbit", QStringList{"tob","tobit","tb"}}},
-	{1002, BibleBook{1002, "Júd", "Júdit", QStringList{"jud","judit","jdt"}}},
+	{1002, BibleBook{1002, "Jdt", "Júdit", QStringList{"judit","jdt"}}},
 	{1003, BibleBook{1003, "PDa", "Přídavky k Danielovi", QStringList{"pda"}}},
 	{1004, BibleBook{1004, "PEst", "Přídavky k Ester", QStringList{"pest","pes"}}},
 	{1005, BibleBook{1005, "Mdr", "Kniha moudrosti", QStringList{"mdr","moud","moudr","moudrost"}}},
