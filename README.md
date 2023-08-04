@@ -1,4 +1,7 @@
-# Starw Lumen
+# Straw Lumen
+![Screenshot 1](web/img/sshot1.png)
+![Screenshot 2](web/img/sshot2.png)
+
 Straw Lumen je freeware česká alternative pro OpenSong s několika dalšími funkcemi.
 
 <img src="web/img/icons8/Video_Projector_32px.png" style="width: auto; margin-right: 0.5em;" />**Promítání písní.** Straw Lumen umožňuje promítání slov písní na druhém monitoru. Lze nastavit obrázek pozadí, barvu a písmo textů, ohraničení apod.
@@ -32,7 +35,3 @@ Straw Lumen je freeware česká alternative pro OpenSong s několika dalšími f
 * [Demo video](https://www.youtube.com/embed/QR0BEUmtWZk?origin=http://straw-solutions.cz)
 * [Facebook stránka](https://www.facebook.com/Straw-Lumen-2006377716122441)
 * [Facebook komunita](https://www.facebook.com/groups/1944200419221897)
-
-## Média
-![Screenshot 1](web/img/sshot1.png)
-![Screenshot 2](web/img/sshot2.png)
