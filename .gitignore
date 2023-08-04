@@ -1,6 +1,6 @@
 setup/
 build/
-etc/
+local_etc/
 lib/
 installDeps/*.exe
 bin/**/*.ilk
