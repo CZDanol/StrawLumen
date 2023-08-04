@@ -1,4 +1,5 @@
 #include "mainwindow_songsmode.h"
+#include "gui/mainwindow.h"
 #include "ui_mainwindow_songsmode.h"
 
 #include <QStyle>
@@ -12,7 +13,6 @@
 #include <QClipboard>
 #include <QMimeData>
 
-#include "gui/splashscreen.h"
 #include "gui/mainwindow_presentationmode.h"
 #include "gui/bulkeditsongsdialog.h"
 #include "presentation/native/presentation_song.h"
@@ -23,14 +23,10 @@
 #include "importexport/opensongexportdialog.h"
 #include "importexport/powerpoint/powerpointimportdialog.h"
 #include "util/standarddialogs.h"
-#include "util/scopeexit.h"
-#include "util/execonmainthread.h"
-#include "util/regex.h"
 #include "util/songcontentsyntaxhiglighter.h"
 #include "rec/chord.h"
 #include "rec/playlist.h"
 #include "job/db.h"
-#include "job/settings.h"
 #include "job/wordsplit.h"
 #include "presentation/presentationmanager.h"
 

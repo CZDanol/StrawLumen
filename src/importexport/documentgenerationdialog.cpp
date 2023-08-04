@@ -1,4 +1,5 @@
 #include "documentgenerationdialog.h"
+#include "gui/mainwindow.h"
 #include "ui_documentgenerationdialog.h"
 
 #include <QLayout>
