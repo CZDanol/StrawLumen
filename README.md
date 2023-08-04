@@ -1,6 +1,6 @@
 # Straw Lumen
-<img src="web/img/sshot1.png" style="width: 50%; display: inline-block; margin-left: 0; margin-right: 0;">
-<img src="web/img/sshot2.png" style="width: 50%; display: inline-block; margin-left: 0; margin-right: 0;">
+![Screenshot 1](web/img/sshot1.png)
+![Screenshot 2](web/img/sshot2.png)
 
 Straw Lumen je freeware česká alternative pro OpenSong s několika dalšími funkcemi.
 
