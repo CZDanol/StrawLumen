@@ -3,8 +3,8 @@
 
 #define MyAppVersion "1.3.7.1"
 #define MyAppPublisher "Danol"
-#define MyAppCopyright "(c) 2022 Ing. Daniel Èejchan"
-#define MyAppURL "http://danol.cz"
+#define MyAppCopyright "(c) 2023 Danol"
+#define MyAppURL "https://danol.cz"
 #define MyAppExeName "strawLumen.exe"
 
 [Setup]

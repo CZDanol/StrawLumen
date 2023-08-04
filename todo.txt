@@ -1,12 +1,12 @@
 Aktuálně
+- jiný výchozí styl pro Bibli jak pro písně
+- import v OpenLyrics - dát vědět pepik77@seznam.cz až to bude
 - export to HTML
    - ui pro automatické posouvání + transpozice
    - možnost skrytí akordů
    - linky z obsahu na jednotlivé písně
 
 - update english
-- průvodce veršů + nastavení - podpora více výchozích překladů najednou (z comboboxu udělat listbox s checkboxama)
-- průvodce veršů - možnost automaticky rozdělit dělší úsek bible na víc slidů
 
 - možnost kopírovat písničku
 - lepší podpora klávesnice - tabování v režimu promítání

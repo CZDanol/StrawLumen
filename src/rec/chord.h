@@ -10,41 +10,41 @@ class Chord
 {
 
 public:
-	enum Quality {
-		cvDur,
-		cvMoll,
-		cvMaj,
-		cvAug,
-		cvDim,
-		_cvCount
-	};
+    enum Quality {
+        cvDur,
+        cvMoll,
+        cvMaj,
+        cvAug,
+        cvDim,
+        _cvCount
+    };
 
 public:
-	static const QRegularExpression &chordRegex();
+    static const QRegularExpression &chordRegex();
 
-	Chord();
-	explicit Chord(const QString &str);
+    Chord();
+    explicit Chord(const QString &str);
 
 public:
-	bool isValid() const;
-	bool isFlat() const;
+    bool isValid() const;
+    bool isFlat() const;
 
-	Chord transposed(int by) const;
+    Chord transposed(int by) const;
 
-	QString toString(bool flatVariant = false) const;
+    QString toString(bool flatVariant = false) const;
 
 private:
-	bool isValid_, isFlat_;
-	int baseNote_;
-	Quality quality_;
-	QString extra_;
-	int inversionNote_; ///< -1 if no inversion
+    bool isValid_, isFlat_;
+    int baseNote_;
+    Quality quality_;
+    QString extra_;
+    int inversionNote_; ///< -1 if no inversion
 
 };
 
 struct ChordInSong {
-	Chord chord;
-	int annotationPos, annotationLength;
+    Chord chord;
+    qsizetype annotationPos, annotationLength;
 };
 using ChordsInSong = QVector<ChordInSong>;
 

@@ -10,41 +10,41 @@
 
 class SongSection
 {
-	Q_DECLARE_TR_FUNCTIONS(SongSection)
+    Q_DECLARE_TR_FUNCTIONS(SongSection)
 
 public:
-	SongSection();
-	/// Strict - custom sections have to be wrapped with ""
-	explicit SongSection(const QString &str, bool strict = true);
-	static SongSection customSection(const QString &str);
+    SongSection();
+    /// Strict - custom sections have to be wrapped with ""
+    explicit SongSection(const QString &str, bool strict = true);
+    static SongSection customSection(const QString &str);
 
 public:
-	bool isValid() const;
+    bool isValid() const;
 
-	QString standardName() const;
-	QString userFriendlyName() const;
-	QString shorthandName() const;
-	QString annotation() const;
+    QString standardName() const;
+    QString userFriendlyName() const;
+    QString shorthandName() const;
+    QString annotation() const;
 
-	QPixmap icon() const;
+    QPixmap icon() const;
 
 public:
-	void increaseIndex();
+    void increaseIndex();
 
 private:
-	bool isValid_;
-	bool isStandard_;
-	QString name_;
-	int index_ = 1;
+    bool isValid_;
+    bool isStandard_;
+    QString name_;
+    int index_ = 1;
 
 };
 
 struct SongSectionWithContent {
-	SongSection section;
-	QString content;
-	int contentPos;
-	int annotationPos;
-	int untrimmedContentEnd;
+    SongSection section;
+    QString content;
+    qsizetype contentPos;
+    qsizetype annotationPos;
+    qsizetype untrimmedContentEnd;
 };
 
 /// Captures: 0 - whole annotation; 1 - annotation prefix, 2 - section name, 3 - annotation suffix

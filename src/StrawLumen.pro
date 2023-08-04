@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport multimedia multimediawidgets widgets axcontainer sql xml webenginewidgets network webengine
+QT       += core gui printsupport multimedia multimediawidgets widgets axcontainer sql xml webenginewidgets network webenginecore core5compat webview
 
 # For debugging purposes
 # CONFIG += console
@@ -14,7 +14,7 @@ TEMPLATE = app
 VERSION = 1.3.7.1
 QMAKE_TARGET_COMPANY = "Danol"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
-QMAKE_TARGET_COPYRIGHT = "(c) 2022 Danol"
+QMAKE_TARGET_COPYRIGHT = "(c) 2023 Danol"
 QMAKE_TARGET_DESCRIPTION = "Straw Lumen"
 
 win32|win64 {
