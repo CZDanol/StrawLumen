@@ -33,5 +33,3 @@ Straw Lumen je freeware česká alternative pro OpenSong s několika dalšími f
 
 ## Odkazy
 * [Demo video](https://www.youtube.com/embed/QR0BEUmtWZk?origin=http://straw-solutions.cz)
-* [Facebook stránka](https://www.facebook.com/Straw-Lumen-2006377716122441)
-* [Facebook komunita](https://www.facebook.com/groups/1944200419221897)
