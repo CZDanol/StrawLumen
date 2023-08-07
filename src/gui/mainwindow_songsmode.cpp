@@ -595,12 +595,12 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked()
         currentSongId_ = db->insert("songs", data).toLongLong();
 
     } else
-        db->update("songs", data, "id = ?", {currentSongId_});
+				db->update("songs", data, "id = ?", {currentSongId_});
 
-    db->updateSongFulltextIndex(currentSongId_);
+		DatabaseManager::updateSongFulltextIndex(db, currentSongId_);
 
-    // Tags
-    db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
+		// Tags
+		db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
     for(QString tag : ui->lnTags->toTags())
         db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
 

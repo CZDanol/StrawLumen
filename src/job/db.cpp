@@ -80,11 +80,10 @@ bool DatabaseManager::blockListChangedSignals(bool set)
 	return result;
 }
 
-void DatabaseManager::updateSongFulltextIndex(qlonglong songId)
-{
+void DatabaseManager::updateSongFulltextIndex(DBManager *db, qlonglong songId) {
 	db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {songId});
 
-	QSqlRecord r = db->selectRow("SELECT name, author, content FROM songs WHERE id = ?", {songId});
+	QSqlRecord r = db->selectRow("SELECT id, name, author, content FROM songs WHERE id = ?", {songId});
 
 	QString content = r.value("content").toString();
 	content.remove(songChordAnnotationRegex());

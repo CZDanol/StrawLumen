@@ -182,7 +182,7 @@ QString OpenSongImportDialog::importSong(const QString &filename, const int conf
 		else
 			db->update("songs", fields, "id = ?", {songId});
 
-		db->updateSongFulltextIndex(songId);
+		DatabaseManager::updateSongFulltextIndex(db, songId);
 	}
 
 	for(const QString &tag : tags)

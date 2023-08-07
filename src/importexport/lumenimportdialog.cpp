@@ -167,7 +167,7 @@ void LumenImportDialog::on_btnImport_clicked()
 			}
 
 			if(updateData) {
-				db->updateSongFulltextIndex(songId);
+				DatabaseManager::updateSongFulltextIndex(db, songId);
 
 				// Update tags
 				db->exec("DELETE FROM song_tags WHERE song = ?", {songId});
@@ -178,7 +178,7 @@ void LumenImportDialog::on_btnImport_clicked()
 						db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, q2.value(0)});
 				}
 
-				for(const QString &tag : tags)
+				for (const QString &tag : qAsConst(tags))
 					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
 			}
 

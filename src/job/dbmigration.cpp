@@ -183,7 +183,7 @@ DB_MIGRATION_PROCEDURE(3, 4)
 
 	auto q = db->selectQuery("SELECT id FROM songs");
 	while(q.next())
-		db->updateSongFulltextIndex(q.value(0).toLongLong());
+		DatabaseManager::updateSongFulltextIndex(db, q.value(0).toLongLong());
 
 	db->commitTransaction();
 }

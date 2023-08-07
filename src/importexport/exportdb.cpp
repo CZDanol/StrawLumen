@@ -4,8 +4,9 @@
 #include <QSqlQuery>
 
 #include "gui/mainwindow.h"
-#include "util/macroutils.h"
 #include "job/db.h"
+#include "rec/chord.h"
+#include "util/macroutils.h"
 
 #define EXPORT_DB_MIGRATION_PROCEDURE(fromVersion, toVersion) void ExportDatabaseManager::migrateExportDbFrom_v ## fromVersion(DBManager *db)
 
@@ -50,16 +51,25 @@ void ExportDatabaseManager::createDb()
 	// SONGS
 	{
 		exec("CREATE TABLE songs ("
-						 "id INTEGER PRIMARY KEY,"
-						 "uid TEXT NOT NULL,"
-						 "name TEXT NOT NULL,"
+				 "id INTEGER PRIMARY KEY,"
+				 "uid TEXT NOT NULL,"
+				 "name TEXT NOT NULL,"
 				 "standardized_name TEXT NOT NULL,"
+				 "author TEXT NOT NULL,"
+				 "copyright TEXT NOT NULL,"
+				 "content TEXT NOT NULL,"
+				 "notes TEXT NOT NULL,"
+				 "slideOrder TEXT NOT NULL,"
+				 "lastEdit INTEGER NOT NULL"
+				 ")");
+	}
+
+	// SONGS_FULLTEXT
+	{
+		db->exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
+						 "name TEXT NOT NULL,"
 						 "author TEXT NOT NULL,"
-						 "copyright TEXT NOT NULL,"
-						 "content TEXT NOT NULL,"
-						 "notes TEXT NOT NULL,"
-						 "slideOrder TEXT NOT NULL,"
-						 "lastEdit INTEGER NOT NULL"
+						 "content TEXT NOT NULL"
 						 ")");
 	}
 
@@ -128,4 +138,16 @@ EXPORT_DB_MIGRATION_PROCEDURE(3,4)
 		db->exec("UPDATE songs SET standardized_name = ? WHERE id = ?", {standardizeSongName(q.value(1).toString()), q.value(0)});
 
 	db->commitTransaction();
+}
+
+EXPORT_DB_MIGRATION_PROCEDURE(4, 5) {
+	db->exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
+					 "name TEXT NOT NULL,"
+					 "author TEXT NOT NULL,"
+					 "content TEXT NOT NULL"
+					 ")");
+
+	QSqlQuery q = db->selectQuery("SELECT id FROM songs");
+	while (q.next())
+		DatabaseManager::updateSongFulltextIndex(db, q.value(0).toInt());
 }

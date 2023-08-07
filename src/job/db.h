@@ -28,7 +28,7 @@ public:
 	bool blockListChangedSignals(bool set);
 
 public:
-	void updateSongFulltextIndex(qlonglong songId);
+	static void updateSongFulltextIndex(DBManager *db, qlonglong songId);
 
 private slots:
 	void onSongChanged();

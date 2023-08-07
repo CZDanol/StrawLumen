@@ -100,7 +100,9 @@ void LumenExportDialog::on_btnExport_clicked()
             QSqlQuery q = db->selectQuery("SELECT tag FROM song_tags WHERE song = ?", {songId});
             while(q.next())
                 exportDb.exec("INSERT INTO song_tags(song, tag) VALUES(?, ?)", {exportSongId, q.value("tag")});
-        }
+
+						DatabaseManager::updateSongFulltextIndex(db, songId);
+				}
 
         exportDb.commitTransaction();
     });

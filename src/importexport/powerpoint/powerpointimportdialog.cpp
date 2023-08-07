@@ -110,8 +110,8 @@ void PowerPointImportDialog::on_btnImport_clicked()
                 else
                     db->update("songs", data, "id = ?", {songId});
 
-                db->updateSongFulltextIndex(songId);
-            }
+								DatabaseManager::updateSongFulltextIndex(db, songId);
+						}
 
             for(const QString &tag : tags)
                 db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
