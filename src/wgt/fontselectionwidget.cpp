@@ -69,12 +69,13 @@ void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
 	ui->cmbFontStyle->setCurrentIndex(pos);
 
 	if(stringList.size())
-		on_cmbFontStyle_activated(stringList[pos]);
+		on_cmbFontStyle_activated(pos);
 }
 
-void FontSelectionWidget::on_cmbFont_activated(const QString &arg1)
-{
-	if(selectedFont_.family() == arg1)
+void FontSelectionWidget::on_cmbFont_activated(int) {
+	const QString arg1 = ui->cmbFont->currentText();
+
+	if (selectedFont_.family() == arg1)
 		return;
 
 	const QString fontStyleName = selectedFont_.styleName();
@@ -84,9 +85,10 @@ void FontSelectionWidget::on_cmbFont_activated(const QString &arg1)
 	emit sigFontChangedByUser(selectedFont_);
 }
 
-void FontSelectionWidget::on_cmbFontStyle_activated(const QString &arg1)
-{
-	if(selectedFont_.styleName() == arg1)
+void FontSelectionWidget::on_cmbFontStyle_activated(int) {
+	const QString arg1 = ui->cmbFontStyle->currentText();
+
+	if (selectedFont_.styleName() == arg1)
 		return;
 
 	selectedFont_ = fontDatabase().font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());

@@ -42,11 +42,19 @@ QRect SettingsManager::projectionDisplayGeometry() const
 
 SETTING_SAVE(QComboBox)
 {
-	settings->setValue(name, widget->currentData());
+	if (auto data = widget->currentData(); !data.isNull())
+		settings->setValue(name, data);
+	else
+		settings->setValue(name, QStringLiteral("index:%1").arg(widget->currentIndex()));
 }
 SETTING_LOAD(QComboBox)
 {
-	const QVariant data = settings->value(name, widget->currentIndex());
+	const QVariant data = settings->value(name, QStringLiteral("index:%1").arg(widget->currentIndex()));
+	if (const auto dstr = data.toString(); dstr.startsWith("index:")) {
+		widget->setCurrentIndex(dstr.mid(6).toInt());
+		return;
+	}
+
 	int ix = widget->currentIndex();
 
 	for(int i = 0; i < widget->count(); i++) {

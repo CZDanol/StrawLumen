@@ -31,8 +31,8 @@ private slots:
 	void updateFontStyleList(const QString &setStyle);
 
 private slots:
-	void on_cmbFont_activated(const QString &arg1);
-	void on_cmbFontStyle_activated(const QString &arg1);
+	void on_cmbFont_activated(int ix);
+	void on_cmbFontStyle_activated(int ix);
 	void on_sbSize_valueChanged(int arg1);
 	void on_btnBold_toggled(bool checked);
 	void on_btnItalic_toggled(bool checked);

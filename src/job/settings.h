@@ -64,11 +64,10 @@ inline void loadSetting(const QString &name, T *widget) { Q_UNUSED(name) Q_UNUSE
 template<typename T>
 inline auto settingsControlChangeSignal(T *widget) { Q_UNUSED(widget) throw 0; }
 
-#define SETTING_HEADERS(T, signal)\
-	template<> void saveSetting<T>(const QString &name, const T *widget);\
-	template<> void loadSetting<T>(const QString &name, T *widget);\
-	template<> inline auto settingsControlChangeSignal<T>(T*) {return signal;}
-
+#define SETTING_HEADERS(T, signal)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             \
+	template <> void saveSetting<T>(const QString &name, const T *widget);                                                                                                                                                                                                                                                                                                                                                                                                                                                       \
+	template <> void loadSetting<T>(const QString &name, T *widget);                                                                                                                                                                                                                                                                                                                                                                                                                                                             \
+	template <> inline auto settingsControlChangeSignal<T>(T *) { return signal; }
 
 SETTING_HEADERS(QComboBox, QOverload<int>::of(&QComboBox::activated))
 SETTING_HEADERS(QSpinBox, &QSpinBox::editingFinished)
