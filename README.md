@@ -26,10 +26,10 @@ Straw Lumen je freeware česká alternative pro OpenSong s několika dalšími f
 
 ## Stáhnout
 * [**Windows 64-bit**](https://api2.danol.cz/?action=downloadSoftware&product=lumen&platform=win_x86_64)
-* [**Windows 32-bit**](https://api2.danol.cz/?action=downloadSoftware&product=lumen&platform=win_x86)
 
 #### Dodatečné materiály
 * [**Kancionálové písně CB**](kancionalCB.strawLumen)
 
 ## Odkazy
 * [Demo video](https://www.youtube.com/embed/QR0BEUmtWZk?origin=http://straw-solutions.cz)
+* [Changelog](bin/changelog.html)
