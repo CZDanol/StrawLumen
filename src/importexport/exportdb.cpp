@@ -66,11 +66,11 @@ void ExportDatabaseManager::createDb()
 
 	// SONGS_FULLTEXT
 	{
-		db->exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
-						 "name TEXT NOT NULL,"
-						 "author TEXT NOT NULL,"
-						 "content TEXT NOT NULL"
-						 ")");
+		exec("CREATE VIRTUAL TABLE songs_fulltext USING fts4 ("
+				 "name TEXT NOT NULL,"
+				 "author TEXT NOT NULL,"
+				 "content TEXT NOT NULL"
+				 ")");
 	}
 
 	// SONG_TAGS
