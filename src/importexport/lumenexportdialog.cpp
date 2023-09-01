@@ -101,7 +101,7 @@ void LumenExportDialog::on_btnExport_clicked()
             while(q.next())
                 exportDb.exec("INSERT INTO song_tags(song, tag) VALUES(?, ?)", {exportSongId, q.value("tag")});
 
-						DatabaseManager::updateSongFulltextIndex(db, songId);
+						DatabaseManager::updateSongFulltextIndex(&exportDb, exportSongId);
 				}
 
         exportDb.commitTransaction();
