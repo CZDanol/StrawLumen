@@ -116,14 +116,16 @@ QVector<int> czech(const QString &src, ChordsInSong &chords, int options) {
 							")")
 					.arg(rxsMiddleBase, rxsConsonant, rxsOnlyStartConsonant);
 
+	static const QString rxsEnglishSuffix = "(?:'[sd])?)";
+
 	/// Syllable in the end of the word
 	static const QString rxsEnd = //
-			QString("(?:%1%2*)").arg(rxsMiddle, rxsConsonant);
+			QString("(?:%1%2*%3").arg(rxsMiddle, rxsConsonant, rxsEnglishSuffix);
 
-	/// Syllable in the beginningh of the word
+	/// Syllable in the beginning of the word
 	static const QString rxsStart = //
 			QString("(?:"
-							"(?:[svzk]\\b\\s*)?(?:" // Possible (silent) preposition
+							"(?:\\b(?<!['])[svzk]\\b\\s*)?(?:" // Possible (silent) preposition
 							"%4*?%2"
 							"|%3\\b"
 							"|%1"
@@ -132,7 +134,7 @@ QVector<int> czech(const QString &src, ChordsInSong &chords, int options) {
 
 	static const QRegularExpression rxWord( //
 			QString("\\b(%1)(%2*)(%3?)\\b"
-							"|\\b\\p{L}+\\b%4")
+							"|\\b(?:\\p{L}|['])+\\b%4")
 					.arg(rxsStart, rxsMiddle, rxsEnd, (options & IncludeNewlines) ? "|[ \t]*$" : "" //
 							),
 			QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption | QRegularExpression::MultilineOption);
