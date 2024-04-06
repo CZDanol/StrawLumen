@@ -1,14 +1,13 @@
 #ifndef PRESENTATIONBACKGROUND_H
 #define PRESENTATIONBACKGROUND_H
 
-#include <QString>
 #include <QColor>
-#include <QJsonValue>
 #include <QCoreApplication>
+#include <QJsonValue>
 #include <QPainter>
+#include <QString>
 
-class PresentationBackground : public QObject
-{
+class PresentationBackground : public QObject {
 	Q_OBJECT
 
 public:
@@ -50,7 +49,6 @@ private:
 	QString filename_;
 	QColor color_ = Qt::transparent;
 	int blendMode_ = QPainter::CompositionMode_SourceOver;
-
 };
 
-#endif // PRESENTATIONBACKGROUND_H
+#endif// PRESENTATIONBACKGROUND_H

@@ -1,13 +1,12 @@
 #ifndef BACKGROUNDMANAGER_H
 #define BACKGROUNDMANAGER_H
 
-#include <QObject>
 #include <QCache>
-#include <QImage>
 #include <QDir>
+#include <QImage>
+#include <QObject>
 
-class BackgroundManager : public QObject
-{
+class BackgroundManager : public QObject {
 	Q_OBJECT
 
 public:
@@ -25,12 +24,11 @@ public:
 	void preloadBackground(const QString &filename, const QSize &requiredSize);
 
 private:
-	QCache<QString,QImage> cache_;
+	QCache<QString, QImage> cache_;
 	QImage nullImage_;
 	QDir internalBackgroundDirectory_, userBackgroundDirectory_;
-
 };
 
 extern BackgroundManager *backgroundManager;
 
-#endif // BACKGROUNDMANAGER_H
+#endif// BACKGROUNDMANAGER_H

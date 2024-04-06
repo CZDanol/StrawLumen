@@ -1,8 +1,8 @@
 #ifndef PRESENTATIONPROPERTIESWIDGET_IMAGES_H
 #define PRESENTATIONPROPERTIESWIDGET_IMAGES_H
 
-#include <QWidget>
 #include <QModelIndexList>
+#include <QWidget>
 
 namespace Ui {
 	class PresentationPropertiesWidget_Images;
@@ -10,8 +10,7 @@ namespace Ui {
 
 class Presentation_Images;
 
-class PresentationPropertiesWidget_Images : public QWidget
-{
+class PresentationPropertiesWidget_Images : public QWidget {
 	Q_OBJECT
 
 public:
@@ -35,7 +34,6 @@ private slots:
 private:
 	Ui::PresentationPropertiesWidget_Images *ui;
 	QSharedPointer<Presentation_Images> presentation_;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_IMAGES_H
+#endif// PRESENTATIONPROPERTIESWIDGET_IMAGES_H

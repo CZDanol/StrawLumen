@@ -3,8 +3,8 @@
 
 #include <functional>
 
-#include <QObject>
 #include <QCache>
+#include <QObject>
 #include <QVariant>
 
 class AsyncCacheManagerRecord : public QObject {
@@ -12,18 +12,16 @@ class AsyncCacheManagerRecord : public QObject {
 
 public:
 	QVariant data;
-
 };
 
-class AsyncCacheManager : public QObject
-{
+class AsyncCacheManager : public QObject {
 	Q_OBJECT
 
 public:
 	using CheckStornoFunction = std::function<bool()>;
 
 	/// Arguments: ref result, ref cost (memory usage), storno function; returning: false on interrupted
-	using ProduceFunction = std::function<bool(QVariant&, int&, const CheckStornoFunction&)>;
+	using ProduceFunction = std::function<bool(QVariant &, int &, const CheckStornoFunction &)>;
 	using CallbackFunction = std::function<void()>;
 
 public:
@@ -34,9 +32,8 @@ public:
 
 private:
 	QCache<QString, AsyncCacheManagerRecord> cache_;
-
 };
 
 extern AsyncCacheManager *asyncCache;
 
-#endif // ASYNCCACHEMANAGER_H
+#endif// ASYNCCACHEMANAGER_H

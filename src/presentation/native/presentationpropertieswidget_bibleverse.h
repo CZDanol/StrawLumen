@@ -1,8 +1,8 @@
 #ifndef PRESENTATIONPROPERTIESWIDGET_BIBLEVERSE_H
 #define PRESENTATIONPROPERTIESWIDGET_BIBLEVERSE_H
 
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 
 #include "rec/presentationbackground.h"
 
@@ -12,8 +12,7 @@ namespace Ui {
 
 class Presentation_BibleVerse;
 
-class PresentationPropertiesWidget_BibleVerse : public QWidget
-{
+class PresentationPropertiesWidget_BibleVerse : public QWidget {
 	Q_OBJECT
 
 public:
@@ -39,7 +38,6 @@ private:
 	QSharedPointer<Presentation_BibleVerse> presentation_;
 	QTimer textUpdateTimer_;
 	int isSettingUp_ = 0;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_BIBLEVERSE_H
+#endif// PRESENTATIONPROPERTIESWIDGET_BIBLEVERSE_H

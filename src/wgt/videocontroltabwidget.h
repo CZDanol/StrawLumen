@@ -7,8 +7,7 @@ namespace Ui {
 	class VideoControlTabWidget;
 }
 
-class VideoControlTabWidget : public QWidget
-{
+class VideoControlTabWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -29,7 +28,6 @@ private slots:
 private:
 	Ui::VideoControlTabWidget *ui;
 	bool ignoreChangeEvents_ = false;
-
 };
 
-#endif // VIDEOCONTROLTABWIDGET_H
+#endif// VIDEOCONTROLTABWIDGET_H

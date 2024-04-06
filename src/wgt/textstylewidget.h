@@ -9,8 +9,7 @@ namespace Ui {
 	class TextStyleWidget;
 }
 
-class TextStyleWidget : public QWidget
-{
+class TextStyleWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -43,7 +42,6 @@ private:
 	TextStyle textStyle_;
 	bool isReadOnly_ = false;
 	bool isSettingUp_ = false;
-
 };
 
-#endif // TEXTSTYLEWIDGET_H
+#endif// TEXTSTYLEWIDGET_H

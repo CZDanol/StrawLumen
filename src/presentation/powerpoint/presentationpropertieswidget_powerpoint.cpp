@@ -4,11 +4,9 @@
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/presentationmanager.h"
 
-PresentationPropertiesWidget_PowerPoint::PresentationPropertiesWidget_PowerPoint(const QSharedPointer<Presentation_PowerPoint> &presentation, QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::PresentationPropertiesWidget_PowerPoint),
-	presentation_(presentation)
-{
+PresentationPropertiesWidget_PowerPoint::PresentationPropertiesWidget_PowerPoint(const QSharedPointer<Presentation_PowerPoint> &presentation, QWidget *parent) : QWidget(parent),
+                                                                                                                                                                 ui(new Ui::PresentationPropertiesWidget_PowerPoint),
+                                                                                                                                                                 presentation_(presentation) {
 	ui->setupUi(this);
 
 	ui->cbAutoPresentation->setChecked(presentation->isAutoPresentation_);
@@ -18,21 +16,18 @@ PresentationPropertiesWidget_PowerPoint::PresentationPropertiesWidget_PowerPoint
 	updateUiEnabled();
 }
 
-PresentationPropertiesWidget_PowerPoint::~PresentationPropertiesWidget_PowerPoint()
-{
+PresentationPropertiesWidget_PowerPoint::~PresentationPropertiesWidget_PowerPoint() {
 	delete ui;
 }
 
-void PresentationPropertiesWidget_PowerPoint::updateUiEnabled()
-{
+void PresentationPropertiesWidget_PowerPoint::updateUiEnabled() {
 	const bool isAutoPresentation = ui->cbAutoPresentation->isChecked();
 
 	ui->cbBlackSlideBefore->setEnabled(!isAutoPresentation);
 	ui->cbBlackSlideAfter->setEnabled(!isAutoPresentation);
 }
 
-void PresentationPropertiesWidget_PowerPoint::on_cbAutoPresentation_clicked(bool checked)
-{
+void PresentationPropertiesWidget_PowerPoint::on_cbAutoPresentation_clicked(bool checked) {
 	presentation_->isAutoPresentation_ = checked;
 	updateUiEnabled();
 
@@ -43,14 +38,12 @@ void PresentationPropertiesWidget_PowerPoint::on_cbAutoPresentation_clicked(bool
 		presentationManager->reinitializeCurrentPresentation();
 }
 
-void PresentationPropertiesWidget_PowerPoint::on_cbBlackSlideBefore_clicked(bool checked)
-{
+void PresentationPropertiesWidget_PowerPoint::on_cbBlackSlideBefore_clicked(bool checked) {
 	presentation_->blackSlideBefore_ = checked;
 	emit presentation_->sigSlidesChanged();
 }
 
-void PresentationPropertiesWidget_PowerPoint::on_cbBlackSlideAfter_clicked(bool checked)
-{
+void PresentationPropertiesWidget_PowerPoint::on_cbBlackSlideAfter_clicked(bool checked) {
 	presentation_->blackSlideAfter_ = checked;
 	emit presentation_->sigSlidesChanged();
 }

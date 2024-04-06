@@ -4,13 +4,12 @@
 #include <functional>
 #include <thread>
 
+#include <QMutex>
 #include <QObject>
 #include <QQueue>
-#include <QMutex>
 #include <QWaitCondition>
 
-class JobThread : public QObject
-{
+class JobThread : public QObject {
 	Q_OBJECT
 
 public:
@@ -36,7 +35,6 @@ private:
 	QMutex mutex_;
 	bool doQuit_ = false;
 	std::thread thread_;
-
 };
 
-#endif // JOBTHREAD_H
+#endif// JOBTHREAD_H

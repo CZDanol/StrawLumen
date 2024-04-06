@@ -4,49 +4,66 @@
 
 #include "job/wordsplit.h"
 
-const QRegularExpression &Chord::chordRegex()
-{
+const QRegularExpression &Chord::chordRegex() {
 	static const QRegularExpression regex(
-				"^"
-				"([Bb][b♭]|[a-hA-H])(s|S|is|IS|es|ES|#|b|♭)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?" // Base
-				"((?:[0-9(#+\\-]|sus)[0-9a-zA-Z()#+\\-]*)?" // Extra
-				"(?:/([a-hA-H])(s|S|is|IS|es|ES|#|b)?)?" // Inversions
-				"$",
-				QRegularExpression::UseUnicodePropertiesOption);
+	  "^"
+	  "([Bb][b♭]|[a-hA-H])(s|S|is|IS|es|ES|#|b|♭)?([dD]ur|m|mi|min|moll|M|maj|aug|dim|\\+)?"// Base
+	  "((?:[0-9(#+\\-]|sus)[0-9a-zA-Z()#+\\-]*)?"                                           // Extra
+	  "(?:/([a-hA-H])(s|S|is|IS|es|ES|#|b)?)?"                                              // Inversions
+	  "$",
+	  QRegularExpression::UseUnicodePropertiesOption);
 
 	return regex;
 }
 
-Chord::Chord()
-{
+Chord::Chord() {
 	isValid_ = false;
 }
 
-Chord::Chord(const QString &str)
-{
+Chord::Chord(const QString &str) {
 	enum MatchPart {
 		mpWhole,
-		mpBaseNote, mpBaseNoteModifier,
-		mpQuality, mpExtra,
-		mpInversionNote, mpInversionNoteModifier
+		mpBaseNote,
+		mpBaseNoteModifier,
+		mpQuality,
+		mpExtra,
+		mpInversionNote,
+		mpInversionNoteModifier
 	};
 
-	static const QHash<QString, int> notePitches {
-		{"c", 0}, {"d", 2}, {"e", 4}, {"f", 5}, {"g", 7}, {"a", 9}, {"b", 10}, {"b♭", 10}, {"h", 11}
-	};
+	static const QHash<QString, int> notePitches{
+	  {"c", 0},
+	  {"d", 2},
+	  {"e", 4},
+	  {"f", 5},
+	  {"g", 7},
+	  {"a", 9},
+	  {"b", 10},
+	  {"b♭", 10},
+	  {"h", 11}};
 
-	static const QHash<QString, int> noteModifierEffects {
-		{"s", -1}, {"S", -1}, {"es", -1}, {"ES", -1}, {"b", -1}, {"♭", -1},
-		{"is", 1}, {"IS", 1}, {"#", 1}
-	};
+	static const QHash<QString, int> noteModifierEffects{
+	  {"s", -1},
+	  {"S", -1},
+	  {"es", -1},
+	  {"ES", -1},
+	  {"b", -1},
+	  {"♭", -1},
+	  {"is", 1},
+	  {"IS", 1},
+	  {"#", 1}};
 
-	static const QHash<QString, Quality> qualities {
-		{"dur", cvDur}, {"Dur", cvDur},
-		{"m", cvMoll}, {"mi", cvMoll}, {"min", cvMoll}, {"moll", cvMoll},
-		{"M", cvMaj}, {"maj", cvMaj},
-		{"aug", cvAug},
-		{"dim", cvDim}
-	};
+	static const QHash<QString, Quality> qualities{
+	  {"dur", cvDur},
+	  {"Dur", cvDur},
+	  {"m", cvMoll},
+	  {"mi", cvMoll},
+	  {"min", cvMoll},
+	  {"moll", cvMoll},
+	  {"M", cvMaj},
+	  {"maj", cvMaj},
+	  {"aug", cvAug},
+	  {"dim", cvDim}};
 
 	QRegularExpressionMatch m = chordRegex().match(str);
 
@@ -62,7 +79,8 @@ Chord::Chord(const QString &str)
 	if(baseNote == baseNote.toLower()) {
 		quality_ = cvMoll;
 		baseNote_ = notePitches[baseNote];
-	} else {
+	}
+	else {
 		quality_ = cvDur;
 		baseNote_ = notePitches[baseNote.toLower()];
 	}
@@ -97,18 +115,15 @@ Chord::Chord(const QString &str)
 		inversionNote_ += noteModifierEffects[m.captured(mpInversionNoteModifier)];
 }
 
-bool Chord::isValid() const
-{
+bool Chord::isValid() const {
 	return isValid_;
 }
 
-bool Chord::isFlat() const
-{
+bool Chord::isFlat() const {
 	return isFlat_;
 }
 
-Chord Chord::transposed(int by) const
-{
+Chord Chord::transposed(int by) const {
 	Chord result(*this);
 
 	auto &base = result.baseNote_;
@@ -117,7 +132,7 @@ Chord Chord::transposed(int by) const
 	if(base >= 12)
 		base = base % 12;
 	else if(base < 0)
-		base = 12 - ( -base % 12 );
+		base = 12 - (-base % 12);
 
 	auto &inv = result.inversionNote_;
 	if(inv != -1) {
@@ -125,14 +140,13 @@ Chord Chord::transposed(int by) const
 		if(inv >= 12)
 			inv = inv % 12;
 		else if(inv < 0)
-			inv = 12 - ( -inv % 12 );
+			inv = 12 - (-inv % 12);
 	}
 
 	return result;
 }
 
-QString Chord::toString(bool flatVariant) const
-{
+QString Chord::toString(bool flatVariant) const {
 	static const QString variantStrings[_cvCount] = {"", "m", "maj", "aug", "dim"};
 
 	static const QString noteNames[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B♭", "H"};
@@ -153,8 +167,7 @@ QString Chord::toString(bool flatVariant) const
 	return result;
 }
 
-ChordsInSong songChords(const QString &song)
-{
+ChordsInSong songChords(const QString &song) {
 	QVector<ChordInSong> result;
 	QRegularExpressionMatchIterator it = songChordAnnotationRegex().globalMatch(song);
 
@@ -171,11 +184,10 @@ ChordsInSong songChords(const QString &song)
 	return result;
 }
 
-void transposeSong(QString &song, int by, bool flatChords)
-{
+void transposeSong(QString &song, int by, bool flatChords) {
 	int posCorrection = 0;
 
-	for(ChordInSong &chs : songChords(song)) {
+	for(ChordInSong &chs: songChords(song)) {
 		QString newChord = QString("[%1]").arg(chs.chord.transposed(by).toString(flatChords));
 
 		song.replace(chs.annotationPos + posCorrection, chs.annotationLength, newChord);
@@ -183,25 +195,22 @@ void transposeSong(QString &song, int by, bool flatChords)
 	}
 }
 
-const QRegularExpression &songChordAnnotationRegex()
-{
+const QRegularExpression &songChordAnnotationRegex() {
 	static const QRegularExpression result("(\\[)([a-zA-Z0-9()\\-#♭/+]+)(\\])");
 	return result;
 }
 
-QString removeSongChords(const QString &song)
-{
+QString removeSongChords(const QString &song) {
 	QVector<ChordInSong> chords;
 	return removeSongChords(song, chords);
 }
 
-QString removeSongChords(const QString &song, QVector<ChordInSong> &chords)
-{
+QString removeSongChords(const QString &song, QVector<ChordInSong> &chords) {
 	chords = songChords(song);
 
 	QString result = song;
 	int correction = 0;
-	for(const ChordInSong &chs : chords) {
+	for(const ChordInSong &chs: chords) {
 		result.remove(chs.annotationPos + correction, chs.annotationLength);
 		correction -= chs.annotationLength;
 	}
@@ -209,8 +218,7 @@ QString removeSongChords(const QString &song, QVector<ChordInSong> &chords)
 	return result;
 }
 
-QString copySongChords(const QString &source, const QString &target)
-{
+QString copySongChords(const QString &source, const QString &target) {
 	const QStringList sourceLines = source.split('\n');
 	QStringList resultLines = target.split('\n');
 
@@ -232,14 +240,14 @@ QString copySongChords(const QString &source, const QString &target)
 		int splitId = 0;
 		int splitPos = 0;
 		int correction = 0;
-		for(const ChordInSong &chs : sourceChords) {
+		for(const ChordInSong &chs: sourceChords) {
 			while(splitId < splitCount && chs.annotationPos + chs.annotationLength >= sourceSplitPositions[splitId]) {
 				splitPos = targetSplitPositions[splitId];
-				splitId ++;
+				splitId++;
 			}
 
 			const bool chordIsFollowedBySpace = sourceLine.mid(chs.annotationPos + chs.annotationLength, 1) == " ";
-			const QString chordAnnotation = sourceLine.mid(chs.annotationPos, chs.annotationLength); // Use exactly the same chord annotation
+			const QString chordAnnotation = sourceLine.mid(chs.annotationPos, chs.annotationLength);// Use exactly the same chord annotation
 
 			resultLine.insert(splitPos + correction, chordAnnotation);
 			correction += chordAnnotation.length();
@@ -254,9 +262,8 @@ QString copySongChords(const QString &source, const QString &target)
 	return resultLines.join('\n');
 }
 
-ChordInSong chordAroundPos(const QString &song, int pos)
-{
-	int annotationStart = song.left(pos+1).lastIndexOf('[');
+ChordInSong chordAroundPos(const QString &song, int pos) {
+	int annotationStart = song.left(pos + 1).lastIndexOf('[');
 	if(annotationStart == -1)
 		return ChordInSong();
 
@@ -267,12 +274,11 @@ ChordInSong chordAroundPos(const QString &song, int pos)
 	return ChordInSong{Chord(m.captured(2)), annotationStart, m.capturedLength()};
 }
 
-QVector<ChordInSong> chordsInsideSelection(const QString &song, int selectionStart, int selectionEnd)
-{
+QVector<ChordInSong> chordsInsideSelection(const QString &song, int selectionStart, int selectionEnd) {
 	auto chords = songChords(song);
 	ChordsInSong result;
 
-	for(const ChordInSong &chs : chords) {
+	for(const ChordInSong &chs: chords) {
 		if(chs.annotationPos + chs.annotationLength <= selectionStart)
 			continue;
 
@@ -285,7 +291,6 @@ QVector<ChordInSong> chordsInsideSelection(const QString &song, int selectionSta
 	return result;
 }
 
-ChordsInSong chordsInsideSelection(const QTextCursor &textCursor)
-{
+ChordsInSong chordsInsideSelection(const QTextCursor &textCursor) {
 	return chordsInsideSelection(textCursor.document()->toPlainText(), textCursor.selectionStart(), textCursor.selectionEnd());
 }

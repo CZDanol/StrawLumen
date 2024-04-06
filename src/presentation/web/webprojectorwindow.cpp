@@ -7,10 +7,8 @@
 
 WebProjectorWindow *webProjectorWindow = nullptr;
 
-WebProjectorWindow::WebProjectorWindow(QWidget *parent) :
-	QMainWindow(parent),
-	ui(new Ui::WebProjectorWindow)
-{
+WebProjectorWindow::WebProjectorWindow(QWidget *parent) : QMainWindow(parent),
+                                                          ui(new Ui::WebProjectorWindow) {
 	ui->setupUi(this);
 	setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_ShowWithoutActivating);
@@ -23,24 +21,20 @@ WebProjectorWindow::WebProjectorWindow(QWidget *parent) :
 	setCentralWidget(webView_);
 }
 
-WebProjectorWindow::~WebProjectorWindow()
-{
+WebProjectorWindow::~WebProjectorWindow() {
 	delete ui;
 }
 
-void WebProjectorWindow::setUrl(const QUrl &url)
-{
+void WebProjectorWindow::setUrl(const QUrl &url) {
 	webView_->load(url);
 	webView_->show();
 }
 
-void WebProjectorWindow::setBlackScreen(bool set)
-{
+void WebProjectorWindow::setBlackScreen(bool set) {
 	webView_->setVisible(!set);
 }
 
-void WebProjectorWindow::changeEvent(QEvent *e)
-{
+void WebProjectorWindow::changeEvent(QEvent *e) {
 	if(this->isActiveWindow())
 		mainWindow->activateWindow();
 

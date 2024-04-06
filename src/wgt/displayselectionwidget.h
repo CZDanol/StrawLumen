@@ -1,16 +1,15 @@
 #ifndef DISPLAYSELECTIONWIDGET_H
 #define DISPLAYSELECTIONWIDGET_H
 
-#include <QWidget>
-#include <QScreen>
 #include <QPair>
+#include <QScreen>
+#include <QWidget>
 
 namespace Ui {
 	class DisplaySelectionWidget;
 }
 
-class DisplaySelectionWidget : public QWidget
-{
+class DisplaySelectionWidget : public QWidget {
 	Q_OBJECT
 	Q_PROPERTY(bool preferNonprimaryScreens MEMBER isPreferNonprimaryScreens_)
 
@@ -19,12 +18,12 @@ public:
 	~DisplaySelectionWidget();
 
 signals:
-	void sigCurrentChangedByUser(QScreen* current);
+	void sigCurrentChangedByUser(QScreen *current);
 
 public:
 	QScreen *selectedScreen() const;
-	QPair<QRect,QString> selectedScreenId() const;
-	void setSelectedScreen(const QPair<QRect,QString> &id);
+	QPair<QRect, QString> selectedScreenId() const;
+	void setSelectedScreen(const QPair<QRect, QString> &id);
 
 public slots:
 	void updateScreenList();
@@ -34,11 +33,10 @@ private slots:
 
 private:
 	Ui::DisplaySelectionWidget *ui;
-	QList<QScreen*> screenList_;
+	QList<QScreen *> screenList_;
 	QScreen *primaryScreen_;
 	int primaryScreenIndex_ = 0, anyNonprimaryScreenIndex_ = 0;
 	bool isPreferNonprimaryScreens_ = false;
-
 };
 
-#endif // DISPLAYSELECTIONWIDGET_H
+#endif// DISPLAYSELECTIONWIDGET_H

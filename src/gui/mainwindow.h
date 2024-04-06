@@ -10,8 +10,7 @@ namespace Ui {
 class MainWindow_PresentationMode;
 class MainWindow_SongsMode;
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
 	Q_OBJECT
 
 public:
@@ -64,9 +63,8 @@ private slots:
 
 private:
 	Ui::MainWindow *ui;
-
 };
 
 extern MainWindow *mainWindow;
 
-#endif // MAINWINDOW_H
+#endif// MAINWINDOW_H

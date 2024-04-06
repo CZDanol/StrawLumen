@@ -1,11 +1,11 @@
 #ifndef PRESENTATIONPROPERTIESWIDGET_SONG_H
 #define PRESENTATIONPROPERTIESWIDGET_SONG_H
 
-#include <QWidget>
-#include <QRegularExpressionValidator>
 #include <QCompleter>
-#include <QStringListModel>
 #include <QMenu>
+#include <QRegularExpressionValidator>
+#include <QStringListModel>
+#include <QWidget>
 
 #include "rec/presentationbackground.h"
 
@@ -15,8 +15,7 @@ namespace Ui {
 
 class Presentation_Song;
 
-class PresentationPropertiesWidget_Song : public QWidget
-{
+class PresentationPropertiesWidget_Song : public QWidget {
 	Q_OBJECT
 
 public:
@@ -51,7 +50,6 @@ private:
 	QCompleter slideOrderCompleter_;
 	QStringListModel slideOrderCompleterModel_;
 	QMenu *addCustomSlideOrderItemMenu_;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_SONG_H
+#endif// PRESENTATIONPROPERTIESWIDGET_SONG_H

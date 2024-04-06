@@ -2,9 +2,9 @@
 #define SPLASHSCREEN_H
 
 #include <QDialog>
-#include <QVector>
 #include <QPixmap>
 #include <QTimer>
+#include <QVector>
 
 #include "util/jobthread.h"
 
@@ -12,8 +12,7 @@ namespace Ui {
 	class Splashscreen;
 }
 
-class Splashscreen : public QDialog
-{
+class Splashscreen : public QDialog {
 	Q_OBJECT
 
 public:
@@ -55,9 +54,8 @@ private:
 	int animStep_ = 0;
 	QTimer animTimer_;
 	bool isStornoPressed_ = false;
-
 };
 
 extern Splashscreen *splashscreen;
 
-#endif // SPLASHSCREEN_H
+#endif// SPLASHSCREEN_H

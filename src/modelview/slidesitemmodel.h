@@ -1,15 +1,14 @@
 #ifndef SLIDESITEMMODEL_H
 #define SLIDESITEMMODEL_H
 
-#include <QObject>
 #include <QAbstractTableModel>
+#include <QObject>
 #include <QSharedPointer>
 
 class Playlist;
 class Presentation;
 
-class SlidesItemModel : public QAbstractTableModel
-{
+class SlidesItemModel : public QAbstractTableModel {
 	Q_OBJECT
 
 public:
@@ -45,8 +44,6 @@ private slots:
 
 private:
 	QSharedPointer<Playlist> playlist_;
-
-
 };
 
-#endif // SLIDESITEMMODEL_H
+#endif// SLIDESITEMMODEL_H

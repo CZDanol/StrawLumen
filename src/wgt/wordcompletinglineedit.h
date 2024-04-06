@@ -6,8 +6,7 @@
 
 #include "wgt/extendedlineedit.h"
 
-class WordCompletingLineEdit : public ExtendedLineEdit
-{
+class WordCompletingLineEdit : public ExtendedLineEdit {
 	Q_OBJECT
 
 public:
@@ -34,7 +33,6 @@ private:
 	QCompleter *c_ = nullptr;
 	QRegularExpression wordSeparator_;
 	QString completerSuffix_;
-
 };
 
-#endif // WORDCOMPLETINGLINEEDIT_H
+#endif// WORDCOMPLETINGLINEEDIT_H

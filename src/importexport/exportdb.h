@@ -6,8 +6,7 @@
 #define EXPORT_DB_VERSION_HISTORY_FACTORY(F) F(1) F(2) F(3) F(4)
 #define CURRENT_EXPORT_DB_VERSION 5
 
-class ExportDatabaseManager : public DBManager
-{
+class ExportDatabaseManager : public DBManager {
 
 public:
 	ExportDatabaseManager(const QString &filename, bool overwrite);
@@ -16,10 +15,9 @@ private:
 	void createDb();
 
 private:
-#define F(version) void migrateExportDbFrom_v ## version(DBManager *db);
-EXPORT_DB_VERSION_HISTORY_FACTORY(F)
+#define F(version) void migrateExportDbFrom_v##version(DBManager *db);
+	EXPORT_DB_VERSION_HISTORY_FACTORY(F)
 #undef F
-
 };
 
-#endif // EXPORTDATABASEMANAGER_H
+#endif// EXPORTDATABASEMANAGER_H

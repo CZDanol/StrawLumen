@@ -6,8 +6,7 @@ namespace Ui {
 	class PowerPointImportDialog;
 }
 
-class PowerPointImportDialog : public QDialog
-{
+class PowerPointImportDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -31,6 +30,4 @@ private slots:
 private:
 	Ui::PowerPointImportDialog *ui;
 	QStringList inputFiles_;
-
 };
-

@@ -5,8 +5,7 @@
 
 #include "rec/textstyle.h"
 
-class TextStylePreviewWidget : public QFrame
-{
+class TextStylePreviewWidget : public QFrame {
 	Q_OBJECT
 
 public:
@@ -23,7 +22,6 @@ private:
 	TextStyle textStyle_;
 	QString previewText_;
 	bool wasFirstUpdate_ = false;
-
 };
 
-#endif // TEXTSTYLEPREVIEWWIDGET_H
+#endif// TEXTSTYLEPREVIEWWIDGET_H

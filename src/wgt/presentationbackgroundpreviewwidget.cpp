@@ -4,18 +4,15 @@
 
 #include "job/settings.h"
 
-PresentationBackgroundPreviewWidget::PresentationBackgroundPreviewWidget(QWidget *parent) : QWidget(parent)
-{
+PresentationBackgroundPreviewWidget::PresentationBackgroundPreviewWidget(QWidget *parent) : QWidget(parent) {
 	connect(&presentationBackground_, &PresentationBackground::sigNeedsRepaint, this, &PresentationBackgroundPreviewWidget::onNeedsRepaint);
 }
 
-void PresentationBackgroundPreviewWidget::setPresentationBackground(const PresentationBackground &background)
-{
+void PresentationBackgroundPreviewWidget::setPresentationBackground(const PresentationBackground &background) {
 	presentationBackground_ = background;
 }
 
-void PresentationBackgroundPreviewWidget::paintEvent(QPaintEvent *)
-{
+void PresentationBackgroundPreviewWidget::paintEvent(QPaintEvent *) {
 	QRect previewRect;
 	previewRect.setSize(settings->projectionDisplayGeometry().size().scaled(size(), Qt::KeepAspectRatio));
 	previewRect.moveCenter(rect().center());
@@ -25,7 +22,6 @@ void PresentationBackgroundPreviewWidget::paintEvent(QPaintEvent *)
 	presentationBackground_.draw(p, previewRect);
 }
 
-void PresentationBackgroundPreviewWidget::onNeedsRepaint()
-{
+void PresentationBackgroundPreviewWidget::onNeedsRepaint() {
 	update();
 }

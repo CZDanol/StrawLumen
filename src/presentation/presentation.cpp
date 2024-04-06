@@ -2,63 +2,50 @@
 
 #include <QApplication>
 
-QString Presentation::slideIdentification(int) const
-{
+QString Presentation::slideIdentification(int) const {
 	return QString();
 }
 
-QPixmap Presentation::slideIdentificationIcon(int) const
-{
+QPixmap Presentation::slideIdentificationIcon(int) const {
 	return QPixmap();
 }
 
-QString Presentation::slideDescription(int) const
-{
+QString Presentation::slideDescription(int) const {
 	return QString();
 }
 
-
-Playlist *Presentation::playlist() const
-{
+Playlist *Presentation::playlist() const {
 	return playlist_;
 }
 
-int Presentation::positionInPlaylist() const
-{
+int Presentation::positionInPlaylist() const {
 	return positionInPlaylist_;
 }
 
-int Presentation::globalSlideIdOffset() const
-{
+int Presentation::globalSlideIdOffset() const {
 	return globalSlideIdOffset_;
 }
 
-QPixmap Presentation::specialIcon() const
-{
+QPixmap Presentation::specialIcon() const {
 	return QPixmap();
 }
 
-QWidget *Presentation::createPropertiesWidget(QWidget *)
-{
+QWidget *Presentation::createPropertiesWidget(QWidget *) {
 	return nullptr;
 }
 
-void Presentation::deactivatePresentation()
-{
-
+void Presentation::deactivatePresentation() {
 }
 
-void Presentation::setSlide(int localSlideId, bool force)
-{
+void Presentation::setSlide(int localSlideId, bool force) {
 	Q_UNUSED(localSlideId);
 	Q_UNUSED(force);
 }
 
-Presentation::Presentation()
-{
+Presentation::Presentation() {
 	moveToThread(QApplication::instance()->thread());
 
 	connect(this, SIGNAL(sigSlidesChanged()), this, SIGNAL(sigChanged()));
-	connect(this, SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigChanged()));
-	connect(this, SIGNAL(sigItemChanged(Presentation*)), this, SIGNAL(sigSlidesChanged()));
+	connect(this, SIGNAL(sigItemChanged(Presentation *)), this, SIGNAL(sigChanged()));
+	connect(this, SIGNAL(sigItemChanged(Presentation *)), this, SIGNAL(sigSlidesChanged()));
 }

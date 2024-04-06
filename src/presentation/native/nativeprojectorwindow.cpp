@@ -4,16 +4,14 @@
 #include "gui/mainwindow.h"
 #include "presentation/native/presentationengine_native.h"
 
-#include <QPainter>
 #include <QFocusEvent>
 #include <QLayout>
+#include <QPainter>
 
 NativeProjectorWindow *nativeProjectorWindow = nullptr;
 
-NativeProjectorWindow::NativeProjectorWindow(QWidget *parent) :
-	QMainWindow(parent),
-	ui(new Ui::NativeProjectorWindow)
-{
+NativeProjectorWindow::NativeProjectorWindow(QWidget *parent) : QMainWindow(parent),
+                                                                ui(new Ui::NativeProjectorWindow) {
 	ui->setupUi(this);
 	setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_ShowWithoutActivating);
@@ -24,13 +22,11 @@ NativeProjectorWindow::NativeProjectorWindow(QWidget *parent) :
 	connect(mainWindow, &MainWindow::sigClosed, this, &NativeProjectorWindow::close);
 }
 
-NativeProjectorWindow::~NativeProjectorWindow()
-{
+NativeProjectorWindow::~NativeProjectorWindow() {
 	delete ui;
 }
 
-void NativeProjectorWindow::paintEvent(QPaintEvent *)
-{
+void NativeProjectorWindow::paintEvent(QPaintEvent *) {
 	QPainter p(this);
 	p.setRenderHint(QPainter::Antialiasing);
 	p.setRenderHint(QPainter::SmoothPixmapTransform);
@@ -41,8 +37,7 @@ void NativeProjectorWindow::paintEvent(QPaintEvent *)
 		presentationEngine_native->currentPresentation()->drawSlide(p, presentationEngine_native->currentSlide(), rect());
 }
 
-void NativeProjectorWindow::changeEvent(QEvent *e)
-{
+void NativeProjectorWindow::changeEvent(QEvent *e) {
 	if(this->isActiveWindow())
 		mainWindow->activateWindow();
 

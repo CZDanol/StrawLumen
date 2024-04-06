@@ -5,8 +5,7 @@
 
 #include "rec/presentationstyle.h"
 
-class PresentationStylePreviewWidget : public QWidget
-{
+class PresentationStylePreviewWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -20,7 +19,6 @@ protected:
 
 private:
 	PresentationStyle presentationStyle_;
-
 };
 
-#endif // PRESENTATIONSTYLEPREVIEWWIDGET_H
+#endif// PRESENTATIONSTYLEPREVIEWWIDGET_H

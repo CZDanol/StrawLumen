@@ -1,21 +1,19 @@
 #include "playlistsdialog.h"
 #include "ui_playlistsdialog.h"
 
-#include <QJsonDocument>
 #include <QDateTime>
+#include <QJsonDocument>
 #include <QShortcut>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
 #include "job/db.h"
-#include "rec/playlist.h"
 #include "presentation/presentation.h"
+#include "rec/playlist.h"
 #include "util/standarddialogs.h"
 
-PlaylistsDialog::PlaylistsDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::PlaylistsDialog)
-{
+PlaylistsDialog::PlaylistsDialog(QWidget *parent) : QDialog(parent),
+                                                    ui(new Ui::PlaylistsDialog) {
 	ui->setupUi(this);
 
 	ui->lstItems->setModel(&itemsModel_);
@@ -23,13 +21,11 @@ PlaylistsDialog::PlaylistsDialog(QWidget *parent) :
 	new QShortcut(Qt::Key_Delete, ui->btnDelete, SLOT(click()));
 }
 
-PlaylistsDialog::~PlaylistsDialog()
-{
+PlaylistsDialog::~PlaylistsDialog() {
 	delete ui;
 }
 
-void PlaylistsDialog::show(bool save)
-{
+void PlaylistsDialog::show(bool save) {
 	ui->btnSave->setVisible(save);
 	ui->btnLoad->setVisible(!save);
 	ui->btnNew->setVisible(save);
@@ -39,20 +35,17 @@ void PlaylistsDialog::show(bool save)
 	QDialog::show();
 }
 
-void PlaylistsDialog::saveWorkingPlaylist(qlonglong playlistId)
-{
+void PlaylistsDialog::saveWorkingPlaylist(qlonglong playlistId) {
 	QVariant playlistName = db->selectValueDef("SELECT name FROM playlists WHERE id = ?", {playlistId});
 	if(playlistName.isNull())
 		return standardErrorDialog(tr("Program se nepodařilo uložit, protože byl v databázi smazán."));
 
 	auto playlist = mainWindow->presentationMode()->playlist();
 	db->exec(
-				"UPDATE playlists SET data = ?, lastTouch = ? WHERE id = ?",
-				{
-					QJsonDocument(playlist->toJSON()).toJson(QJsonDocument::Compact),
-					QDateTime::currentSecsSinceEpoch(),
-					playlistId
-				});
+	  "UPDATE playlists SET data = ?, lastTouch = ? WHERE id = ?",
+	  {QJsonDocument(playlist->toJSON()).toJson(QJsonDocument::Compact),
+	   QDateTime::currentSecsSinceEpoch(),
+	   playlistId});
 
 	playlist->dbId = playlistId;
 	playlist->dbName = playlistName.toString();
@@ -61,8 +54,7 @@ void PlaylistsDialog::saveWorkingPlaylist(qlonglong playlistId)
 	//standardSuccessDialog(tr("Program uložen."));
 }
 
-bool PlaylistsDialog::loadPlaylist(qlonglong playlistId)
-{
+bool PlaylistsDialog::loadPlaylist(qlonglong playlistId) {
 	auto playlist = mainWindow->presentationMode()->playlist();
 	if(!mainWindow->presentationMode()->askSaveChanges())
 		return false;
@@ -85,8 +77,7 @@ bool PlaylistsDialog::loadPlaylist(qlonglong playlistId)
 	return success;
 }
 
-void PlaylistsDialog::updateUiEnabled()
-{
+void PlaylistsDialog::updateUiEnabled() {
 	const QListWidgetItem *i = ui->lstPlaylists->currentItem();
 	const bool isEditableItem = i && (i->flags() & Qt::ItemIsEditable);
 
@@ -101,8 +92,7 @@ void PlaylistsDialog::updateUiEnabled()
 	ui->btnSave->setEnabled(isEditableItem);
 }
 
-void PlaylistsDialog::requery()
-{
+void PlaylistsDialog::requery() {
 	const qlonglong selectedId = ui->lstPlaylists->currentItem() ? ui->lstPlaylists->currentItem()->data(Qt::UserRole).toLongLong() : -1;
 
 	ui->lstPlaylists->clear();
@@ -134,8 +124,7 @@ void PlaylistsDialog::requery()
 	}
 }
 
-PlaylistsDialog *playlistsDialog()
-{
+PlaylistsDialog *playlistsDialog() {
 	static PlaylistsDialog *dlg = nullptr;
 	if(!dlg)
 		dlg = new PlaylistsDialog(mainWindow);
@@ -143,8 +132,7 @@ PlaylistsDialog *playlistsDialog()
 	return dlg;
 }
 
-void PlaylistsDialog::on_btnNew_clicked()
-{
+void PlaylistsDialog::on_btnNew_clicked() {
 	const QString playlistName = tr("Nový program", "Newly created playlist name");
 	const QVariant playlistId = db->insert("INSERT INTO playlists(name, lastTouch) VALUES(?, ?)", {playlistName, QDateTime::currentSecsSinceEpoch()});
 
@@ -160,8 +148,7 @@ void PlaylistsDialog::on_btnNew_clicked()
 	}
 }
 
-void PlaylistsDialog::on_lstPlaylists_itemChanged(QListWidgetItem *item)
-{
+void PlaylistsDialog::on_lstPlaylists_itemChanged(QListWidgetItem *item) {
 	const QString newName = item->data(Qt::DisplayRole).toString();
 	const qlonglong id = item->data(Qt::UserRole).toLongLong();
 
@@ -169,8 +156,7 @@ void PlaylistsDialog::on_lstPlaylists_itemChanged(QListWidgetItem *item)
 	emit db->sigPlaylistRenamed(id, newName);
 }
 
-void PlaylistsDialog::on_btnRename_clicked()
-{
+void PlaylistsDialog::on_btnRename_clicked() {
 	QListWidgetItem *i = ui->lstPlaylists->currentItem();
 	if(!i || !(i->flags() & Qt::ItemIsEditable))
 		return;
@@ -178,8 +164,7 @@ void PlaylistsDialog::on_btnRename_clicked()
 	ui->lstPlaylists->editItem(i);
 }
 
-void PlaylistsDialog::on_lstPlaylists_currentItemChanged(QListWidgetItem *i, QListWidgetItem *)
-{
+void PlaylistsDialog::on_lstPlaylists_currentItemChanged(QListWidgetItem *i, QListWidgetItem *) {
 	updateUiEnabled();
 
 	if(!i) {
@@ -191,7 +176,7 @@ void PlaylistsDialog::on_lstPlaylists_currentItemChanged(QListWidgetItem *i, QLi
 	if(!(i->flags() & Qt::ItemIsEditable)) {
 		QStringList items;
 
-		for(const QSharedPointer<Presentation> &item : mainWindow->presentationMode()->playlist()->items())
+		for(const QSharedPointer<Presentation> &item: mainWindow->presentationMode()->playlist()->items())
 			items << item->identification();
 
 		itemsModel_.setStringList(items);
@@ -203,16 +188,14 @@ void PlaylistsDialog::on_lstPlaylists_currentItemChanged(QListWidgetItem *i, QLi
 	itemsModel_.setStringList(Playlist::itemNamesFromJSON(json));
 }
 
-void PlaylistsDialog::on_btnLoad_clicked()
-{
+void PlaylistsDialog::on_btnLoad_clicked() {
 	if(loadPlaylist(ui->lstPlaylists->currentItem()->data(Qt::UserRole).toLongLong()))
 		accept();
 }
 
-void PlaylistsDialog::on_btnSave_clicked()
-{
+void PlaylistsDialog::on_btnSave_clicked() {
 	if(!itemsModel_.stringList().isEmpty() && !standardConfirmDialog(tr("Opravdu chcete pokračovat a přepsat vybraný program?")))
-		 return;
+		return;
 
 	QListWidgetItem *i = ui->lstPlaylists->currentItem();
 	if(!i || !(i->flags() & Qt::ItemIsEditable))
@@ -224,13 +207,11 @@ void PlaylistsDialog::on_btnSave_clicked()
 	accept();
 }
 
-void PlaylistsDialog::on_btnClose_clicked()
-{
+void PlaylistsDialog::on_btnClose_clicked() {
 	accept();
 }
 
-void PlaylistsDialog::on_btnDelete_clicked()
-{
+void PlaylistsDialog::on_btnDelete_clicked() {
 	QListWidgetItem *i = ui->lstPlaylists->currentItem();
 	if(!i || !(i->flags() & Qt::ItemIsEditable))
 		return;
@@ -242,8 +223,7 @@ void PlaylistsDialog::on_btnDelete_clicked()
 	delete i;
 }
 
-void PlaylistsDialog::on_lstPlaylists_itemActivated(QListWidgetItem *)
-{
+void PlaylistsDialog::on_lstPlaylists_itemActivated(QListWidgetItem *) {
 	if(ui->btnLoad->isVisible())
 		ui->btnLoad->click();
 	else

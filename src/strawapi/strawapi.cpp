@@ -1,17 +1,16 @@
 #include "strawapi.h"
 
-#include <QNetworkAccessManager>
 #include <QEventLoop>
+#include <QJsonDocument>
+#include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
-#include <QJsonDocument>
 
-StrawApi::RequestResult StrawApi::requestJson(const QJsonObject &requestJson, QJsonObject &response)
-{
+StrawApi::RequestResult StrawApi::requestJson(const QJsonObject &requestJson, QJsonObject &response) {
 	QNetworkAccessManager mgr;
 	QEventLoop evLoop;
 
-	QObject::connect(&mgr,SIGNAL(finished(QNetworkReply*)),&evLoop,SLOT(quit()));
+	QObject::connect(&mgr, SIGNAL(finished(QNetworkReply *)), &evLoop, SLOT(quit()));
 
 	QUrl url(QString::fromUtf8(QByteArray::fromBase64(QByteArray("aHR0cHM6Ly9hcGkyLnN0cmF3LXNvbHV0aW9ucy5jei8="))));
 	QNetworkRequest req(url);

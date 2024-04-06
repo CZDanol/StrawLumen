@@ -1,15 +1,14 @@
 #ifndef NATIVEPROJECTORWINDOW_H
 #define NATIVEPROJECTORWINDOW_H
 
-#include <QMainWindow>
 #include <QKeyEvent>
+#include <QMainWindow>
 
 namespace Ui {
 	class NativeProjectorWindow;
 }
 
-class NativeProjectorWindow : public QMainWindow
-{
+class NativeProjectorWindow : public QMainWindow {
 	Q_OBJECT
 
 public:
@@ -22,9 +21,8 @@ protected:
 
 private:
 	Ui::NativeProjectorWindow *ui;
-
 };
 
 extern NativeProjectorWindow *nativeProjectorWindow;
 
-#endif // NATIVEPROJECTORWINDOW_H
+#endif// NATIVEPROJECTORWINDOW_H

@@ -4,8 +4,7 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-class SongContentSyntaxHiglighter : public QSyntaxHighlighter
-{
+class SongContentSyntaxHiglighter : public QSyntaxHighlighter {
 	Q_OBJECT
 
 public:
@@ -32,7 +31,6 @@ private:
 
 private:
 	bool sepSyllables_ = false;
-
 };
 
-#endif // SONGCONTENTSYNTAXHIGLIGHTER_H
+#endif// SONGCONTENTSYNTAXHIGLIGHTER_H

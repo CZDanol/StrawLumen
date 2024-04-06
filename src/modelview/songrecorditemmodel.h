@@ -6,8 +6,7 @@
 
 #include "job/db.h"
 
-class SongRecordItemModel : public QAbstractTableModel
-{
+class SongRecordItemModel : public QAbstractTableModel {
 	Q_OBJECT
 
 private:
@@ -61,9 +60,8 @@ private:
 
 private:
 	DBManager *db_ = nullptr;
-	QVector<SongRecord*> items_;
-	QHash<qlonglong, SongRecord*> itemMap_;
-
+	QVector<SongRecord *> items_;
+	QHash<qlonglong, SongRecord *> itemMap_;
 };
 
-#endif // SONGRECORDITEMMODEL_H
+#endif// SONGRECORDITEMMODEL_H

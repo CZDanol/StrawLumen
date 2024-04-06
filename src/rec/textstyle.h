@@ -1,23 +1,23 @@
 #ifndef TEXTSTYLE_H
 #define TEXTSTYLE_H
 
-#include <QFont>
 #include <QColor>
-#include <QTextOption>
+#include <QFont>
 #include <QJsonValue>
+#include <QTextOption>
 
 // F(identifier, capitalizedIdentifier, Type, defaultValue)
-#define TEXT_STYLE_FIELD_FACTORY(F)\
-	F(font, Font, QFont, QFont("Tahoma", 12))\
-	F(color, Color, QColor, Qt::white)\
-	\
-	F(outlineEnabled, OutlineEnabled, bool, false)\
-	F(outlineWidth, OutlineWidth, int, 8)\
-	F(outlineColor, OutlineColor, QColor, Qt::black)\
-	\
-	F(backgroundEnabled, BackgroundEnabled, bool, false)\
-	F(backgroundPadding, BackgroundPadding, int, 20)\
-	F(backgroundColor, BackgroundColor, QColor, QColor(0,0,0,128))
+#define TEXT_STYLE_FIELD_FACTORY(F)                    \
+	F(font, Font, QFont, QFont("Tahoma", 12))            \
+	F(color, Color, QColor, Qt::white)                   \
+                                                       \
+	F(outlineEnabled, OutlineEnabled, bool, false)       \
+	F(outlineWidth, OutlineWidth, int, 8)                \
+	F(outlineColor, OutlineColor, QColor, Qt::black)     \
+                                                       \
+	F(backgroundEnabled, BackgroundEnabled, bool, false) \
+	F(backgroundPadding, BackgroundPadding, int, 20)     \
+	F(backgroundColor, BackgroundColor, QColor, QColor(0, 0, 0, 128))
 
 struct TextStyle {
 
@@ -44,7 +44,6 @@ public:
 
 public:
 	bool operator==(const TextStyle &other) const;
-
 };
 
-#endif // TEXTSTYLE_H
+#endif// TEXTSTYLE_H

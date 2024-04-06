@@ -1,9 +1,9 @@
 #ifndef PRESENTATIONPROPERTIESWIDGET_CUSTOMSLIDE_H
 #define PRESENTATIONPROPERTIESWIDGET_CUSTOMSLIDE_H
 
-#include <QWidget>
 #include <QSharedPointer>
 #include <QTimer>
+#include <QWidget>
 
 #include "rec/presentationbackground.h"
 
@@ -13,8 +13,7 @@ namespace Ui {
 
 class Presentation_CustomSlide;
 
-class PresentationPropertiesWidget_CustomSlide : public QWidget
-{
+class PresentationPropertiesWidget_CustomSlide : public QWidget {
 	Q_OBJECT
 
 public:
@@ -38,7 +37,6 @@ private:
 	QSharedPointer<Presentation_CustomSlide> presentation_;
 	QTimer textUpdateTimer_;
 	int isSettingUp_ = 0;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_CUSTOMSLIDE_H
+#endif// PRESENTATIONPROPERTIESWIDGET_CUSTOMSLIDE_H

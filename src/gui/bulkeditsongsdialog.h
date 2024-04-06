@@ -7,8 +7,7 @@ namespace Ui {
 	class BulkEditSongsDialog;
 }
 
-class BulkEditSongsDialog : public QDialog
-{
+class BulkEditSongsDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -24,9 +23,8 @@ private slots:
 
 private:
 	Ui::BulkEditSongsDialog *ui;
-
 };
 
 BulkEditSongsDialog *bulkEditSongsDialog();
 
-#endif // BULKEDITSONGSDIALOG_H
+#endif// BULKEDITSONGSDIALOG_H

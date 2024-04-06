@@ -8,8 +8,7 @@ class Presentation;
 class PresentationEngine;
 class Playlist;
 
-class PresentationManager : public QObject
-{
+class PresentationManager : public QObject {
 	Q_OBJECT
 
 public:
@@ -57,9 +56,8 @@ private:
 	QSharedPointer<Presentation> currentPresentation_;
 	int currentLocalSlideId_ = -1;
 	bool isBlackScren_ = false;
-
 };
 
 extern PresentationManager *presentationManager;
 
-#endif // PRESENTATIONMANAGER_H
+#endif// PRESENTATIONMANAGER_H

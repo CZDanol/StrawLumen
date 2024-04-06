@@ -1,12 +1,11 @@
 #include "presentation_customslide.h"
 
+#include "job/backgroundmanager.h"
+#include "job/settings.h"
 #include "presentation/native/nativeprojectorwindow.h"
 #include "presentation/native/presentationpropertieswidget_customslide.h"
-#include "job/settings.h"
-#include "job/backgroundmanager.h"
 
-QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::create()
-{
+QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::create() {
 	QSharedPointer<Presentation_CustomSlide> result(new Presentation_CustomSlide);
 
 	result->style_ = settings->setting_song_defaultStyle();
@@ -17,8 +16,7 @@ QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::create()
 	return result;
 }
 
-QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::createFromJSON(const QJsonObject &json)
-{
+QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::createFromJSON(const QJsonObject &json) {
 	QSharedPointer<Presentation_CustomSlide> result(new Presentation_CustomSlide);
 	QSignalBlocker sb(result.data());
 
@@ -34,7 +32,7 @@ QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::createFromJSO
 		result->style_ = style;
 	}
 
-	result->text_ = json["text"].toString();	
+	result->text_ = json["text"].toString();
 	result->wordWrap_ = json["wordWrap"].toBool();
 	result->updateSlides();
 
@@ -42,76 +40,63 @@ QSharedPointer<Presentation_CustomSlide> Presentation_CustomSlide::createFromJSO
 	return result;
 }
 
-QJsonObject Presentation_CustomSlide::toJSON() const
-{
+QJsonObject Presentation_CustomSlide::toJSON() const {
 	return QJsonObject{
-		{"styleId", style_.styleId()},
-		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()},
-		{"text", text_},
-		{"wordWrap", wordWrap_}
-	};
+	  {"styleId", style_.styleId()},
+	  {"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()},
+	  {"text", text_},
+	  {"wordWrap", wordWrap_}};
 }
 
-void Presentation_CustomSlide::drawSlide(QPainter &p, int slideId, const QRect &rect)
-{
+void Presentation_CustomSlide::drawSlide(QPainter &p, int slideId, const QRect &rect) {
 	Q_UNUSED(slideId);
 
 	style_.drawSlide(p, rect, slides_[slideId], titles_[slideId], wordWrap_ ? PresentationStyle::fWordWrapContent : 0);
 }
 
-QString Presentation_CustomSlide::identification() const
-{
+QString Presentation_CustomSlide::identification() const {
 	return tr("Vlastní text");
 }
 
-QPixmap Presentation_CustomSlide::icon() const
-{
+QPixmap Presentation_CustomSlide::icon() const {
 	static QPixmap icon(":/icons/16/Text Box_16px.png");
 	return icon;
 }
 
-QWidget *Presentation_CustomSlide::createPropertiesWidget(QWidget *parent)
-{
+QWidget *Presentation_CustomSlide::createPropertiesWidget(QWidget *parent) {
 	return new PresentationPropertiesWidget_CustomSlide(weakPtr_.toStrongRef().staticCast<Presentation_CustomSlide>(), parent);
 }
 
-int Presentation_CustomSlide::slideCount() const
-{
+int Presentation_CustomSlide::slideCount() const {
 	return slides_.length();
 }
 
-QString Presentation_CustomSlide::slideDescription(int slideId) const
-{
+QString Presentation_CustomSlide::slideDescription(int slideId) const {
 	return descriptions_[slideId];
 }
 
-QString Presentation_CustomSlide::slideIdentification(int slideId) const
-{
+QString Presentation_CustomSlide::slideIdentification(int slideId) const {
 	return titles_[slideId];
 }
 
-QString Presentation_CustomSlide::classIdentifier() const
-{
+QString Presentation_CustomSlide::classIdentifier() const {
 	return "native.customSlide";
 }
 
-void Presentation_CustomSlide::setText(const QString &set)
-{
+void Presentation_CustomSlide::setText(const QString &set) {
 	text_ = set;
 	updateSlides();
 	emit sigItemChanged(this);
 }
 
-Presentation_CustomSlide::Presentation_CustomSlide()
-{
+Presentation_CustomSlide::Presentation_CustomSlide() {
 	connect(&style_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(&style_, SIGNAL(sigChanged()), this, SIGNAL(sigChanged()));
 	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
 	connect(&style_, &PresentationStyle::sigNeedsRepaint, this, &Presentation_CustomSlide::onStyleNeedsRepaint);
 }
 
-void Presentation_CustomSlide::updateSlides()
-{
+void Presentation_CustomSlide::updateSlides() {
 	static const QRegularExpression descRegex("\\s+");
 	static const QRegularExpression sectionRegex("^\\{\\s*(.*?)\\s*\\}\\s*$", QRegularExpression::MultilineOption);
 
@@ -122,7 +107,7 @@ void Presentation_CustomSlide::updateSlides()
 	titles_ += nullptr;
 
 	int lastPos = 0;
-	auto f = [&] (int pos) {
+	auto f = [&](int pos) {
 		QString text = text_.mid(lastPos, pos - lastPos).trimmed();
 		slides_ += text;
 
@@ -147,8 +132,7 @@ void Presentation_CustomSlide::updateSlides()
 	}
 }
 
-void Presentation_CustomSlide::onStyleChanged()
-{
+void Presentation_CustomSlide::onStyleChanged() {
 	if(signalsBlocked())
 		return;
 
@@ -156,13 +140,11 @@ void Presentation_CustomSlide::onStyleChanged()
 		nativeProjectorWindow->update();
 }
 
-void Presentation_CustomSlide::onStyleBackgroundChanged()
-{
+void Presentation_CustomSlide::onStyleBackgroundChanged() {
 	backgroundManager->preloadBackground(style_.background().filename(), settings->projectionDisplayGeometry().size());
 }
 
-void Presentation_CustomSlide::onStyleNeedsRepaint()
-{
+void Presentation_CustomSlide::onStyleNeedsRepaint() {
 	if(signalsBlocked())
 		return;
 

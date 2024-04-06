@@ -4,8 +4,7 @@
 #include <QJsonObject>
 #include <QUrl>
 
-class StrawApi
-{
+class StrawApi {
 
 public:
 	enum class RequestResult : int {
@@ -17,7 +16,6 @@ public:
 
 public:
 	static RequestResult requestJson(const QJsonObject &jsonRequest, QJsonObject &response);
-
 };
 
-#endif // STRAWAPI_H
+#endif// STRAWAPI_H

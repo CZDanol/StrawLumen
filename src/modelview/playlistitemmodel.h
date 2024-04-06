@@ -1,15 +1,14 @@
 #ifndef PLAYLISTITEMMODEL_H
 #define PLAYLISTITEMMODEL_H
 
-#include <QObject>
 #include <QAbstractTableModel>
+#include <QObject>
 #include <QSharedPointer>
 
 class Playlist;
 class Presentation;
 
-class PlaylistItemModel : public QAbstractTableModel
-{
+class PlaylistItemModel : public QAbstractTableModel {
 	Q_OBJECT
 
 public:
@@ -41,7 +40,6 @@ private slots:
 private:
 	QSharedPointer<Playlist> playlist_;
 	int prevRowCount_ = 0;
-
 };
 
-#endif // PLAYLISTITEMMODEL_H
+#endif// PLAYLISTITEMMODEL_H

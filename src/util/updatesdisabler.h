@@ -11,7 +11,6 @@ public:
 
 private:
 	QWidget *wgt_;
-
 };
 
-#endif // UPDATEDISABLER_H
+#endif// UPDATEDISABLER_H

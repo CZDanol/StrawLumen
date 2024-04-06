@@ -7,8 +7,7 @@ namespace Ui {
 	class ActiveXDebugDialog;
 }
 
-class ActiveXDebugDialog : public QDialog
-{
+class ActiveXDebugDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -20,9 +19,8 @@ public:
 
 private:
 	Ui::ActiveXDebugDialog *ui;
-
 };
 
 ActiveXDebugDialog *activeXDebugDialog();
 
-#endif // ACTIVEXDEBUGDIALOG_H
+#endif// ACTIVEXDEBUGDIALOG_H

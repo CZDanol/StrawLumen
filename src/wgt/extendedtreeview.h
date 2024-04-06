@@ -3,8 +3,7 @@
 
 #include <QTreeView>
 
-class ExtendedTreeView : public QTreeView
-{
+class ExtendedTreeView : public QTreeView {
 	Q_OBJECT
 
 public:
@@ -27,7 +26,6 @@ protected:
 
 private:
 	StartDragFunction startDragFunction_;
-
 };
 
-#endif // EXTENDEDTREEVIEW_H
+#endif// EXTENDEDTREEVIEW_H

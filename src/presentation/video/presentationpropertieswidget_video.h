@@ -9,8 +9,7 @@ namespace Ui {
 
 class Presentation_Video;
 
-class PresentationPropertiesWidget_Video : public QWidget
-{
+class PresentationPropertiesWidget_Video : public QWidget {
 	Q_OBJECT
 
 public:
@@ -25,7 +24,6 @@ private slots:
 private:
 	Ui::PresentationPropertiesWidget_Video *ui;
 	QSharedPointer<Presentation_Video> presentation_;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_VIDEO_H
+#endif// PRESENTATIONPROPERTIESWIDGET_VIDEO_H

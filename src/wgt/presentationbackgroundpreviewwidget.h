@@ -5,8 +5,7 @@
 
 #include "rec/presentationbackground.h"
 
-class PresentationBackgroundPreviewWidget : public QWidget
-{
+class PresentationBackgroundPreviewWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -23,7 +22,6 @@ private slots:
 
 private:
 	PresentationBackground presentationBackground_;
-
 };
 
-#endif // PRESENTATIONBACKGROUNDPREVIEWWIDGET_H
+#endif// PRESENTATIONBACKGROUNDPREVIEWWIDGET_H

@@ -3,17 +3,15 @@
 
 #include <QFileDialog>
 
-#include "job/db.h"
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
-#include "util/updatesdisabler.h"
-#include "util/standarddialogs.h"
+#include "job/db.h"
 #include "job/parsebible.h"
+#include "util/standarddialogs.h"
+#include "util/updatesdisabler.h"
 
-BibleTranslationMgmtDialog::BibleTranslationMgmtDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::BibleTranslationMgmtDialog)
-{
+BibleTranslationMgmtDialog::BibleTranslationMgmtDialog(QWidget *parent) : QDialog(parent),
+                                                                          ui(new Ui::BibleTranslationMgmtDialog) {
 	ui->setupUi(this);
 	ui->twList->setCornerWidget(ui->twListCorner);
 
@@ -24,18 +22,16 @@ BibleTranslationMgmtDialog::BibleTranslationMgmtDialog(QWidget *parent) :
 	updateUiEnabled();
 }
 
-BibleTranslationMgmtDialog::~BibleTranslationMgmtDialog()
-{
+BibleTranslationMgmtDialog::~BibleTranslationMgmtDialog() {
 	delete ui;
 }
 
-void BibleTranslationMgmtDialog::updateList()
-{
+void BibleTranslationMgmtDialog::updateList() {
 	UpdatesDisabler _ud(ui->lstList);
 	ui->lstList->clear();
 
 	QSqlQuery q = db->selectQuery("SELECT translation_id, name FROM bible_translations ORDER BY translation_id");
-	QList<QTreeWidgetItem*> items;
+	QList<QTreeWidgetItem *> items;
 	while(q.next()) {
 		QTreeWidgetItem *i = new QTreeWidgetItem();
 		i->setText(0, q.value(0).toString());
@@ -46,36 +42,32 @@ void BibleTranslationMgmtDialog::updateList()
 	ui->lstList->addTopLevelItems(items);
 }
 
-void BibleTranslationMgmtDialog::updateUiEnabled()
-{
+void BibleTranslationMgmtDialog::updateUiEnabled() {
 	ui->btnDelete->setEnabled(!ui->lstList->selectedItems().isEmpty());
 }
 
-BibleTranslationMgmtDialog *bibleTranslationMgmtDialog()
-{
+BibleTranslationMgmtDialog *bibleTranslationMgmtDialog() {
 	static BibleTranslationMgmtDialog *result = new BibleTranslationMgmtDialog(mainWindow);
 	return result;
 }
 
-void BibleTranslationMgmtDialog::on_btnDelete_clicked()
-{
+void BibleTranslationMgmtDialog::on_btnDelete_clicked() {
 	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané překlady?"), this))
 		return;
 
 	QStringList translations;
-	for(auto i : ui->lstList->selectedItems())
+	for(auto i: ui->lstList->selectedItems())
 		translations += i->text(0);
 
 	splashscreen->asyncAction(tr("Mazání překladů"), false, [&] {
-		for(const auto &translation : translations)
+		for(const auto &translation: translations)
 			deleteBible(translation);
 	});
 
 	emit db->sigBibleTranslationsChanged();
 }
 
-void BibleTranslationMgmtDialog::on_btnImport_clicked()
-{
+void BibleTranslationMgmtDialog::on_btnImport_clicked() {
 	static const QIcon icon(":/icons/16/Holy Bible_16px.png");
 
 	QFileDialog dlg(this);
@@ -88,8 +80,8 @@ void BibleTranslationMgmtDialog::on_btnImport_clicked()
 	if(!dlg.exec())
 		return;
 
-	splashscreen->asyncAction(QObject::tr("Import překladu Bible"), false, [&]{
-		for(auto file : dlg.selectedFiles()) {
+	splashscreen->asyncAction(QObject::tr("Import překladu Bible"), false, [&] {
+		for(auto file: dlg.selectedFiles()) {
 			if(!parseBible(file))
 				return;
 		}
@@ -100,7 +92,6 @@ void BibleTranslationMgmtDialog::on_btnImport_clicked()
 	emit db->sigBibleTranslationsChanged();
 }
 
-void BibleTranslationMgmtDialog::on_btnClose_clicked()
-{
+void BibleTranslationMgmtDialog::on_btnClose_clicked() {
 	close();
 }

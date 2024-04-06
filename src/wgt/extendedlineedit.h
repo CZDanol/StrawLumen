@@ -3,8 +3,7 @@
 
 #include <QLineEdit>
 
-class ExtendedLineEdit : public QLineEdit
-{
+class ExtendedLineEdit : public QLineEdit {
 	Q_OBJECT
 
 public:
@@ -19,7 +18,6 @@ signals:
 protected:
 	virtual void focusInEvent(QFocusEvent *e) override;
 	virtual void keyPressEvent(QKeyEvent *e) override;
-
 };
 
-#endif // EXTENDEDLINEEDIT_H
+#endif// EXTENDEDLINEEDIT_H

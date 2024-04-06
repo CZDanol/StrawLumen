@@ -3,12 +3,11 @@
 
 #include "presentation/presentationengine.h"
 
-class PresentationEngine_Web : public PresentationEngine
-{
+class PresentationEngine_Web : public PresentationEngine {
 	Q_OBJECT
 
 public:
-	explicit PresentationEngine_Web(QObject *parent =  nullptr);
+	explicit PresentationEngine_Web(QObject *parent = nullptr);
 	~PresentationEngine_Web() override;
 
 public:
@@ -18,9 +17,8 @@ public:
 	virtual void setBlackScreen(bool set) override;
 	virtual void setDisplay(const QRect &rect) override;
 	virtual void raiseWindow() override;
-
 };
 
 extern PresentationEngine_Web *presentationEngine_web;
 
-#endif // PRESENTATIONENGINE_WEB_H
+#endif// PRESENTATIONENGINE_WEB_H

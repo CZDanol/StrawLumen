@@ -3,8 +3,7 @@
 
 #include <QSqlQueryModel>
 
-class SongsItemModel : public QSqlQueryModel
-{
+class SongsItemModel : public QSqlQueryModel {
 	Q_OBJECT
 
 public:
@@ -20,8 +19,7 @@ public:
 	Qt::DropActions supportedDropActions() const override;
 	bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const override;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
-
 };
 
 
-#endif // SONGSITEMMODEL_H
+#endif// SONGSITEMMODEL_H

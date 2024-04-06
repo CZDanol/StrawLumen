@@ -1,7 +1,7 @@
 #include "wordcompletinglineedit.h"
 
-#include <QKeyEvent>
 #include <QAbstractItemView>
+#include <QKeyEvent>
 #include <QScrollBar>
 
 int lastEndOf(const QRegularExpression &regExp, const QString &str) {
@@ -14,19 +14,17 @@ int lastEndOf(const QRegularExpression &regExp, const QString &str) {
 	return result;
 }
 
-WordCompletingLineEdit::WordCompletingLineEdit(QWidget *parent) : ExtendedLineEdit(parent)
-{
+WordCompletingLineEdit::WordCompletingLineEdit(QWidget *parent) : ExtendedLineEdit(parent) {
 	static QRegularExpression defaultWordSeparator("\\W+", QRegularExpression::UseUnicodePropertiesOption);
 	wordSeparator_ = defaultWordSeparator;
 }
 
-void WordCompletingLineEdit::setCompleter(QCompleter *completer)
-{
-	if (c_)
+void WordCompletingLineEdit::setCompleter(QCompleter *completer) {
+	if(c_)
 		QObject::disconnect(c_, 0, this, 0);
 
 	c_ = completer;
-	if (!c_)
+	if(!c_)
 		return;
 
 	c_->setWidget(this);
@@ -37,21 +35,18 @@ void WordCompletingLineEdit::setCompleter(QCompleter *completer)
 	QObject::connect(c_, SIGNAL(highlighted(QString)), this, SLOT(onCompleterHighlighted(QString)));
 }
 
-void WordCompletingLineEdit::setCompleterSuffix(const QString &suffix)
-{
+void WordCompletingLineEdit::setCompleterSuffix(const QString &suffix) {
 	completerSuffix_ = suffix;
 }
 
-void WordCompletingLineEdit::setWordSeparator(const QRegularExpression &sep)
-{
+void WordCompletingLineEdit::setWordSeparator(const QRegularExpression &sep) {
 	wordSeparator_ = sep;
 }
 
-void WordCompletingLineEdit::keyPressEvent(QKeyEvent *e)
-{
+void WordCompletingLineEdit::keyPressEvent(QKeyEvent *e) {
 	ExtendedLineEdit::keyPressEvent(e);
 
-	if (!c_)
+	if(!c_)
 		return;
 
 	//if (c_->completionPrefix().length() < 1)
@@ -71,8 +66,7 @@ void WordCompletingLineEdit::keyPressEvent(QKeyEvent *e)
 	//	c_->popup()->setCurrentIndex(c_->completionModel()->index(0,0));
 }
 
-void WordCompletingLineEdit::onCompleterActivated(const QString &replacement)
-{
+void WordCompletingLineEdit::onCompleterActivated(const QString &replacement) {
 	QString text_ = text();
 	const int cursorPos = cursorPosition();
 	const int start = lastEndOf(wordSeparator_, text_.left(cursorPos));
@@ -84,14 +78,13 @@ void WordCompletingLineEdit::onCompleterActivated(const QString &replacement)
 		realReplacement += completerSuffix_;
 	}
 
-	text_.replace(start, end-start, realReplacement);
+	text_.replace(start, end - start, realReplacement);
 
 	setText(text_);
 	setCursorPosition(start + realReplacement.length());
 }
 
-void WordCompletingLineEdit::onCompleterHighlighted(const QString &replacement)
-{
+void WordCompletingLineEdit::onCompleterHighlighted(const QString &replacement) {
 	QString text_ = text();
 	const int cursorPos = cursorPosition();
 	const int start = lastEndOf(wordSeparator_, text_.left(cursorPos));
@@ -100,15 +93,14 @@ void WordCompletingLineEdit::onCompleterHighlighted(const QString &replacement)
 	if(end < cursorPos)
 		end = text_.length();
 
-	text_.replace(start, end-start, replacement);
+	text_.replace(start, end - start, replacement);
 
 	setText(text_);
-	setCursorPosition(start+replacement.size());
-	cursorBackward(true, replacement.size() - (cursorPos-start));
+	setCursorPosition(start + replacement.size());
+	cursorBackward(true, replacement.size() - (cursorPos - start));
 }
 
-QString WordCompletingLineEdit::wordPrefixAtCursor() const
-{
+QString WordCompletingLineEdit::wordPrefixAtCursor() const {
 	const QString text_ = text();
 	const int cursorPos = cursorPosition();
 	const int start = lastEndOf(wordSeparator_, text_.left(cursorPos));

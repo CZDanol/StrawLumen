@@ -3,12 +3,12 @@
 
 #include <QObject>
 
-class PresentationEngine : public QObject
-{
+class PresentationEngine : public QObject {
 	Q_OBJECT
 
 public:
 	explicit PresentationEngine(QObject *parent = nullptr);
+
 	virtual ~PresentationEngine() {}
 
 public:
@@ -18,7 +18,6 @@ public:
 	virtual void setBlackScreen(bool set) = 0;
 	virtual void setDisplay(const QRect &rect) = 0;
 	virtual void raiseWindow() = 0;
-
 };
 
-#endif // PRESENTATIONENGINE_H
+#endif// PRESENTATIONENGINE_H

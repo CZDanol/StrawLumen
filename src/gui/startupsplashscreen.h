@@ -7,8 +7,7 @@ namespace Ui {
 	class StartupSplashscreen;
 }
 
-class StartupSplashscreen : public QDialog
-{
+class StartupSplashscreen : public QDialog {
 	Q_OBJECT
 
 public:
@@ -17,7 +16,6 @@ public:
 
 private:
 	Ui::StartupSplashscreen *ui;
-
 };
 
-#endif // STARTUPSPLASHSCREEN_H
+#endif// STARTUPSPLASHSCREEN_H

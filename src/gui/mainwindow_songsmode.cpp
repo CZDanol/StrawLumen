@@ -2,42 +2,41 @@
 #include "gui/mainwindow.h"
 #include "ui_mainwindow_songsmode.h"
 
-#include <QStyle>
-#include <QUuid>
-#include <QShortcut>
-#include <QMenu>
-#include <QStringList>
+#include <QClipboard>
 #include <QDateTime>
 #include <QFileDialog>
-#include <QStandardPaths>
-#include <QClipboard>
+#include <QMenu>
 #include <QMimeData>
+#include <QShortcut>
+#include <QStandardPaths>
+#include <QStringList>
+#include <QStyle>
+#include <QUuid>
 
-#include "gui/mainwindow_presentationmode.h"
 #include "gui/bulkeditsongsdialog.h"
-#include "presentation/native/presentation_song.h"
+#include "gui/mainwindow_presentationmode.h"
 #include "importexport/documentgenerationdialog.h"
 #include "importexport/lumenexportdialog.h"
 #include "importexport/lumenimportdialog.h"
-#include "importexport/opensongimportdialog.h"
 #include "importexport/opensongexportdialog.h"
+#include "importexport/opensongimportdialog.h"
 #include "importexport/powerpoint/powerpointimportdialog.h"
-#include "util/standarddialogs.h"
-#include "util/songcontentsyntaxhiglighter.h"
-#include "rec/chord.h"
-#include "rec/playlist.h"
 #include "job/db.h"
 #include "job/wordsplit.h"
+#include "presentation/native/presentation_song.h"
 #include "presentation/presentationmanager.h"
+#include "rec/chord.h"
+#include "rec/playlist.h"
+#include "util/songcontentsyntaxhiglighter.h"
+#include "util/standarddialogs.h"
 
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
-	F(lnName) F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags) F(teNotes)
+	F(lnName)                    \
+	F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags) F(teNotes)
 
-MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::MainWindow_SongsMode)
-{
+MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) : QWidget(parent),
+                                                              ui(new Ui::MainWindow_SongsMode) {
 	ui->setupUi(this);
 	ui->twSong->setCornerWidget(ui->twSongCorner);
 	ui->twSongs->setCornerWidget(ui->twSongsCorner);
@@ -47,7 +46,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 	// Song list
 	{
-		connect(ui->wgtSongList, SIGNAL(sigCurrentChanged(qlonglong,int)), this, SLOT(onCurrentSongChanged(qlonglong, int)));
+		connect(ui->wgtSongList, SIGNAL(sigCurrentChanged(qlonglong, int)), this, SLOT(onCurrentSongChanged(qlonglong, int)));
 		connect(ui->wgtSongList, SIGNAL(sigSelectionChanged()), this, SLOT(onSelectionChanged()));
 		connect(ui->wgtSongList, SIGNAL(sigItemActivated(qlonglong)), ui->btnEdit, SLOT(click()));
 		connect(ui->wgtSongList, SIGNAL(sigCustomContextMenuRequested(QPoint)), this, SLOT(onSongListContextMenuRequested(QPoint)));
@@ -81,19 +80,18 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 
 	// Insert song section menu
 	{
-		const QStringList sectionNames {
-			"C", "V1", "V2", "V3", "B", "I", "O", "M", "P"
-		};
+		const QStringList sectionNames{
+		  "C", "V1", "V2", "V3", "B", "I", "O", "M", "P"};
 
-		for(auto &sectionName : sectionNames) {
+		for(auto &sectionName: sectionNames) {
 			SongSection section(sectionName);
-			insertSectionMenu_.addAction(section.icon(), section.userFriendlyName(), [=]{
+			insertSectionMenu_.addAction(section.icon(), section.userFriendlyName(), [=] {
 				insertSongSection(section);
 			});
 		}
 
 		SongSection customSection = SongSection::customSection("");
-		insertSectionMenu_.addAction(customSection.icon(), tr("Vlastní název"), [=]{
+		insertSectionMenu_.addAction(customSection.icon(), tr("Vlastní název"), [=] {
 			insertSongSection(customSection, true);
 		});
 
@@ -150,7 +148,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 		new QShortcut(Qt::Key_Escape, ui->btnDiscardChanges, SLOT(click()));
 		new QShortcut(Qt::Key_F2, ui->btnEdit, SLOT(click()));
 
-		connect(new QShortcut(Qt::CTRL | Qt::Key_F12, ui->teContent), &QShortcut::activated, this, [this](){
+		connect(new QShortcut(Qt::CTRL | Qt::Key_F12, ui->teContent), &QShortcut::activated, this, [this]() {
 			ui->teContent->syntaxHiglighter()->setSepSyllables(!ui->teContent->syntaxHiglighter()->sepSyllables());
 		});
 
@@ -162,34 +160,28 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) :
 	setSongEditMode(false);
 }
 
-MainWindow_SongsMode::~MainWindow_SongsMode()
-{
+MainWindow_SongsMode::~MainWindow_SongsMode() {
 	delete ui;
 }
 
-QWidget *MainWindow_SongsMode::menuWidget()
-{
+QWidget *MainWindow_SongsMode::menuWidget() {
 	return ui->wgtMenu;
 }
 
-QMenu *MainWindow_SongsMode::importMenu()
-{
+QMenu *MainWindow_SongsMode::importMenu() {
 	return &importMenu_;
 }
 
-QMenu *MainWindow_SongsMode::exportMenu()
-{
+QMenu *MainWindow_SongsMode::exportMenu() {
 	return &exportMenu_;
 }
 
-void MainWindow_SongsMode::editSong(qlonglong songId)
-{
+void MainWindow_SongsMode::editSong(qlonglong songId) {
 	onCurrentSongChanged(songId, ui->wgtSongList->currentRowIndex());
 	ui->btnEdit->click();
 }
 
-void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds)
-{
+void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds) {
 	if(songIds.isEmpty())
 		return;
 
@@ -200,7 +192,7 @@ void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds)
 		return;
 
 	db->beginTransaction();
-	for(qlonglong id : songIds) {
+	for(qlonglong id: songIds) {
 		db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {id});
 		db->exec("DELETE FROM songs WHERE id = ?", {id});
 		db->exec("DELETE FROM song_tags WHERE song = ?", {id});
@@ -209,7 +201,7 @@ void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds)
 
 	const bool prevBlocked = db->blockListChangedSignals(true);
 
-	for(qlonglong id : songIds)
+	for(qlonglong id: songIds)
 		emit db->sigSongChanged(id);
 
 	db->blockListChangedSignals(prevBlocked);
@@ -219,8 +211,7 @@ void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds)
 	updateSongManipulationButtonsEnabled();
 }
 
-bool MainWindow_SongsMode::askFinishEditMode()
-{
+bool MainWindow_SongsMode::askFinishEditMode() {
 	if(!isSongEditMode_)
 		return true;
 
@@ -235,13 +226,11 @@ bool MainWindow_SongsMode::askFinishEditMode()
 	return true;
 }
 
-QVector<qlonglong> MainWindow_SongsMode::selectedSongIds()
-{
+QVector<qlonglong> MainWindow_SongsMode::selectedSongIds() {
 	return ui->wgtSongList->selectedRowIds();
 }
 
-void MainWindow_SongsMode::setSongEditMode(bool set)
-{
+void MainWindow_SongsMode::setSongEditMode(bool set) {
 	if(isSongEditMode_ == set) {
 		updateSongManipulationButtonsEnabled();
 		return;
@@ -262,30 +251,28 @@ void MainWindow_SongsMode::setSongEditMode(bool set)
 
 	ui->btnAddCustomSlideOrderItem->setEnabled(set);
 
-#define F(uiControl) \
-	ui->uiControl->setReadOnly(!set);\
+#define F(uiControl)                               \
+	ui->uiControl->setReadOnly(!set);                \
 	ui->uiControl->style()->unpolish(ui->uiControl); \
 	ui->uiControl->style()->polish(ui->uiControl);
 
 	SONG_FIELDS_FACTORY(F)
-		#undef F
+#undef F
 
-			updateSongManipulationButtonsEnabled();
+	updateSongManipulationButtonsEnabled();
 }
 
-void MainWindow_SongsMode::updateSongManipulationButtonsEnabled()
-{
+void MainWindow_SongsMode::updateSongManipulationButtonsEnabled() {
 	ui->btnEdit->setEnabled(!isSongEditMode_ && currentSongId_ != -1);
 	ui->actionDeleteSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 	ui->actionPresentSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 }
 
-void MainWindow_SongsMode::updateCopyChordsMenu()
-{
+void MainWindow_SongsMode::updateCopyChordsMenu() {
 	const auto sections = songSectionsWithContent(ui->teContent->toPlainText());
 
 	QList<SongSectionWithContent> relevantSections;
-	for(const SongSectionWithContent &sc : sections) {
+	for(const SongSectionWithContent &sc: sections) {
 		QVector<ChordInSong> chords;
 		const QString sectionContentWithoutChords = removeSongChords(sc.content, chords).trimmed();
 
@@ -298,8 +285,8 @@ void MainWindow_SongsMode::updateCopyChordsMenu()
 	copyChordsMenu_.clear();
 
 	if(QApplication::clipboard()->mimeData()->hasText()) {
-		copyChordsMenu_.addAction(QIcon(":/icons/16/Paste_16px.png"), tr("Schránka"), [this]{
-			contentSelectionMorph([](QString str){
+		copyChordsMenu_.addAction(QIcon(":/icons/16/Paste_16px.png"), tr("Schránka"), [this] {
+			contentSelectionMorph([](QString str) {
 				QVector<ChordInSong> chords;
 				QString newStr = removeSongChords(str, chords);
 
@@ -307,14 +294,15 @@ void MainWindow_SongsMode::updateCopyChordsMenu()
 					return str;
 
 				return copySongChords(QApplication::clipboard()->text(), newStr);
-			}, true);
+			},
+			                      true);
 		});
 	}
 
-	for(const SongSectionWithContent &sc : relevantSections) {
+	for(const SongSectionWithContent &sc: relevantSections) {
 		const QString sourceContent = sc.content;
-		copyChordsMenu_.addAction(sc.section.icon(), sc.section.userFriendlyName(), [this, sourceContent]{
-			contentSelectionMorph([sourceContent](QString str){
+		copyChordsMenu_.addAction(sc.section.icon(), sc.section.userFriendlyName(), [this, sourceContent] {
+			contentSelectionMorph([sourceContent](QString str) {
 				QVector<ChordInSong> chords;
 				QString newStr = removeSongChords(str, chords);
 
@@ -322,30 +310,28 @@ void MainWindow_SongsMode::updateCopyChordsMenu()
 					return str;
 
 				return copySongChords(sourceContent, newStr);
-			}, true);
+			},
+			                      true);
 		});
 	}
 
 	copyChordsMenu_.setEnabled(isSongEditMode_ && !copyChordsMenu_.actions().isEmpty());
 }
 
-void MainWindow_SongsMode::updateTeContentMenu()
-{
+void MainWindow_SongsMode::updateTeContentMenu() {
 	updateCopyChordsMenu();
 	updateMoveChordActionsEnabled();
 
 	teContentMenu_.setEnabled(isSongEditMode_);
 }
 
-void MainWindow_SongsMode::updateMoveChordActionsEnabled()
-{
+void MainWindow_SongsMode::updateMoveChordActionsEnabled() {
 	const bool enabled = isSongEditMode_ && !chordsInsideSelection(ui->teContent->textCursor()).isEmpty();
 	ui->actionMoveChordsLeft->setEnabled(enabled);
 	ui->actionMoveChordsRight->setEnabled(enabled);
 }
 
-void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool positionCursorInMiddle)
-{
+void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool positionCursorInMiddle) {
 	if(!isSongEditMode_)
 		return;
 
@@ -357,13 +343,12 @@ void MainWindow_SongsMode::insertSongSection(const SongSection &section, bool po
 
 	if(positionCursorInMiddle) {
 		QTextCursor c = ui->teContent->textCursor();
-		c.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1 + section.annotation().length()/2);
+		c.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1 + section.annotation().length() / 2);
 		ui->teContent->setTextCursor(c);
 	}
 }
 
-void MainWindow_SongsMode::contentSelectionMorph(const std::function<QString (QString)> &callback, bool onlySection)
-{
+void MainWindow_SongsMode::contentSelectionMorph(const std::function<QString(QString)> &callback, bool onlySection) {
 	if(!isSongEditMode_)
 		return;
 
@@ -378,8 +363,8 @@ void MainWindow_SongsMode::contentSelectionMorph(const std::function<QString (QS
 
 		cursor.setPosition(section.first);
 		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, section.second.length());
-
-	} else if(!hasSelection)
+	}
+	else if(!hasSelection)
 		cursor.select(QTextCursor::Document);
 
 	QString data = cursor.selectedText();
@@ -393,8 +378,7 @@ void MainWindow_SongsMode::contentSelectionMorph(const std::function<QString (QS
 		ui->teContent->setTextCursor(cursor);
 }
 
-void MainWindow_SongsMode::moveChords(bool right)
-{
+void MainWindow_SongsMode::moveChords(bool right) {
 	if(!isSongEditMode_)
 		return;
 
@@ -419,19 +403,19 @@ void MainWindow_SongsMode::moveChords(bool right)
 
 		if(right) {
 			// Aggregate all directly following chords
-			while(chsI+1 < chords.length() && chords[chsI+1].annotationPos + chords[chsI+1].annotationLength == annotPos) {
-				annotPos -= chords[chsI+1].annotationLength;
-				annotLength += chords[chsI+1].annotationLength;
+			while(chsI + 1 < chords.length() && chords[chsI + 1].annotationPos + chords[chsI + 1].annotationLength == annotPos) {
+				annotPos -= chords[chsI + 1].annotationLength;
+				annotLength += chords[chsI + 1].annotationLength;
 				chsI++;
 			}
 
 			while(splits[i] <= annotPos + annotLength)
 				i++;
-
-		} else {
+		}
+		else {
 			// Aggregate all directly following chords
-			while(chsI+1 < chords.length() && chords[chsI+1].annotationPos == annotPos + annotLength) {
-				annotLength += chords[chsI+1].annotationLength;
+			while(chsI + 1 < chords.length() && chords[chsI + 1].annotationPos == annotPos + annotLength) {
+				annotLength += chords[chsI + 1].annotationLength;
 				chsI++;
 			}
 
@@ -449,7 +433,8 @@ void MainWindow_SongsMode::moveChords(bool right)
 
 			start = qMin(start, splits[i] - annotLength);
 			end = qMax(end, splits[i]);
-		} else {
+		}
+		else {
 			content.remove(annotPos, annotLength);
 			content.insert(splits[i], movedStr);
 
@@ -469,9 +454,8 @@ void MainWindow_SongsMode::moveChords(bool right)
 	ui->teContent->setTextCursor(cursor);
 }
 
-QPair<int, QString> MainWindow_SongsMode::songSectionAroundPos(int pos)
-{
-	for(const SongSectionWithContent &sc : songSectionsWithContent(ui->teContent->toPlainText())) {
+QPair<int, QString> MainWindow_SongsMode::songSectionAroundPos(int pos) {
+	for(const SongSectionWithContent &sc: songSectionsWithContent(ui->teContent->toPlainText())) {
 		if(pos >= sc.annotationPos && pos < sc.untrimmedContentEnd)
 			return QPair<int, QString>(sc.contentPos, sc.content);
 	}
@@ -479,8 +463,7 @@ QPair<int, QString> MainWindow_SongsMode::songSectionAroundPos(int pos)
 	return QPair<int, QString>(-1, QString());
 }
 
-void MainWindow_SongsMode::fillSongData()
-{
+void MainWindow_SongsMode::fillSongData() {
 	if(currentSongId_ == -1)
 		return;
 
@@ -503,8 +486,7 @@ void MainWindow_SongsMode::fillSongData()
 	ui->lnTags->setText(tags);
 }
 
-void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
-{
+void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId) {
 	if(songId == currentSongId_)
 		return;
 
@@ -521,18 +503,15 @@ void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId)
 	fillSongData();
 }
 
-void MainWindow_SongsMode::onSelectionChanged()
-{
+void MainWindow_SongsMode::onSelectionChanged() {
 	updateSongManipulationButtonsEnabled();
 }
 
-void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPos)
-{
+void MainWindow_SongsMode::onSongListContextMenuRequested(const QPoint &globalPos) {
 	songListContextMenu_.popup(globalPos);
 }
 
-void MainWindow_SongsMode::onTeContentContextMenuRequested(const QPoint &pos)
-{
+void MainWindow_SongsMode::onTeContentContextMenuRequested(const QPoint &pos) {
 	auto cursor = ui->teContent->textCursor();
 	const auto cursorForPosition = ui->teContent->cursorForPosition(pos);
 
@@ -544,8 +523,7 @@ void MainWindow_SongsMode::onTeContentContextMenuRequested(const QPoint &pos)
 	teContentMenu_.exec(ui->teContent->viewport()->mapToGlobal(pos));
 }
 
-void MainWindow_SongsMode::on_btnNew_clicked()
-{
+void MainWindow_SongsMode::on_btnNew_clicked() {
 	ui->wgtSongList->unselect();
 
 	ui->lnName->setText(tr("Nová písnička"));
@@ -562,77 +540,69 @@ void MainWindow_SongsMode::on_btnNew_clicked()
 	ui->lnName->selectAll();
 }
 
-void MainWindow_SongsMode::on_btnDiscardChanges_clicked()
-{
+void MainWindow_SongsMode::on_btnDiscardChanges_clicked() {
 	if(!standardConfirmDialog(tr("Opravdu zahodit provedené úpravy?")))
 		return;
 
 	setSongEditMode(false);
-	fillSongData(); // Load original data
+	fillSongData();// Load original data
 }
 
-void MainWindow_SongsMode::on_btnSaveChanges_clicked()
-{
+void MainWindow_SongsMode::on_btnSaveChanges_clicked() {
 	// #: SONGS_TABLE_FIELDS
 
 	setSongEditMode(false);
 
 	db->beginTransaction();
 
-	QHash<QString,QVariant> data{
-		{"name", ui->lnName->text()},
-		{"standardized_name", standardizeSongName(ui->lnName->text())},
-		{"author", ui->lnAuthor->text()},
-		{"copyright", ui->lnCopyright->text()},
-		{"content", ui->teContent->toPlainText()},
-		{"slideOrder", ui->lnSlideOrder->text().simplified()},
-		{"notes", ui->teNotes->toPlainText()},
-		{"lastEdit", QDateTime::currentSecsSinceEpoch()}
-	};
+	QHash<QString, QVariant> data{
+	  {"name", ui->lnName->text()},
+	  {"standardized_name", standardizeSongName(ui->lnName->text())},
+	  {"author", ui->lnAuthor->text()},
+	  {"copyright", ui->lnCopyright->text()},
+	  {"content", ui->teContent->toPlainText()},
+	  {"slideOrder", ui->lnSlideOrder->text().simplified()},
+	  {"notes", ui->teNotes->toPlainText()},
+	  {"lastEdit", QDateTime::currentSecsSinceEpoch()}};
 
 	if(currentSongId_ == -1) {
 		data.insert("uid", QUuid::createUuid().toString());
 		currentSongId_ = db->insert("songs", data).toLongLong();
-
-	} else
+	}
+	else
 		db->update("songs", data, "id = ?", {currentSongId_});
 
 	DatabaseManager::updateSongFulltextIndex(db, currentSongId_);
 
 	// Tags
 	db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
-	for(QString tag : ui->lnTags->toTags())
+	for(QString tag: ui->lnTags->toTags())
 		db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
 
 	db->commitTransaction();
 
 	updateSongManipulationButtonsEnabled();
 	emit db->sigSongChanged(currentSongId_);
-
 }
 
-void MainWindow_SongsMode::on_btnEdit_clicked()
-{
+void MainWindow_SongsMode::on_btnEdit_clicked() {
 	setSongEditMode(true);
 	ui->lnName->setFocus();
 }
 
-void MainWindow_SongsMode::on_actionDeleteSongs_triggered()
-{
+void MainWindow_SongsMode::on_actionDeleteSongs_triggered() {
 	requestDeleteSongs(ui->wgtSongList->selectedRowIds());
 }
 
-void MainWindow_SongsMode::on_lnSlideOrder_sigFocused()
-{
+void MainWindow_SongsMode::on_lnSlideOrder_sigFocused() {
 	QStringList lst;
-	for(SongSection &section : songSections(ui->teContent->toPlainText()))
+	for(SongSection &section: songSections(ui->teContent->toPlainText()))
 		lst.append(section.standardName());
 
 	slideOrderCompleterModel_.setStringList(lst);
 }
 
-void MainWindow_SongsMode::on_btnInsertChord_clicked()
-{
+void MainWindow_SongsMode::on_btnInsertChord_clicked() {
 	if(!isSongEditMode_)
 		return;
 
@@ -642,44 +612,42 @@ void MainWindow_SongsMode::on_btnInsertChord_clicked()
 
 	QTextCursor tc = ui->teContent->textCursor();
 	tc.insertText(insertStr);
-	tc.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, insertStr.length()-1);
-	tc.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, insertStr.length()-2);
+	tc.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, insertStr.length() - 1);
+	tc.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, insertStr.length() - 2);
 	ui->teContent->setTextCursor(tc);
 }
 
-void MainWindow_SongsMode::on_btnTransposeUp_clicked()
-{
+void MainWindow_SongsMode::on_btnTransposeUp_clicked() {
 	contentSelectionMorph([=](QString content) {
 		transposeSong(content, 1, ui->btnTransposeFlat->isChecked());
 		return content;
-	}, false);
+	},
+	                      false);
 }
 
-void MainWindow_SongsMode::on_btnTransposeDown_clicked()
-{
+void MainWindow_SongsMode::on_btnTransposeDown_clicked() {
 	contentSelectionMorph([=](QString content) {
 		transposeSong(content, -1, ui->btnTransposeFlat->isChecked());
 		return content;
-	}, false);
+	},
+	                      false);
 }
 
-void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed()
-{
+void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed() {
 	addCustomSlideOrderItemMenu_.clear();
 
 	const auto sections = songSections(ui->teContent->toPlainText());
 	if(sections.isEmpty())
 		return standardInfoDialog(tr("Píseň aktuálně neobsahuje žádné sekce."));
 
-	for(SongSection section : sections)
-		addCustomSlideOrderItemMenu_.addAction(section.icon(), section.userFriendlyName(), [this, section]{
+	for(SongSection section: sections)
+		addCustomSlideOrderItemMenu_.addAction(section.icon(), section.userFriendlyName(), [this, section] {
 			const QString text = ui->lnSlideOrder->text();
 			ui->lnSlideOrder->setText((text.isEmpty() ? "" : text + " ") + section.standardName());
 		});
 }
 
-void MainWindow_SongsMode::on_btnInsertSlideSeparator_clicked()
-{
+void MainWindow_SongsMode::on_btnInsertSlideSeparator_clicked() {
 	if(!isSongEditMode_)
 		return;
 
@@ -687,41 +655,35 @@ void MainWindow_SongsMode::on_btnInsertSlideSeparator_clicked()
 	ui->teContent->insertPlainText("{---}");
 }
 
-void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered()
-{
+void MainWindow_SongsMode::on_actionImportOpenSongSong_triggered() {
 	openSongImportDialog()->show();
 }
 
-void MainWindow_SongsMode::on_btnCreateSongbook_clicked()
-{
+void MainWindow_SongsMode::on_btnCreateSongbook_clicked() {
 	documentGenerationDialog()->show();
 	documentGenerationDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }
 
-void MainWindow_SongsMode::on_actionCreateSongbookFromSelection_triggered()
-{
+void MainWindow_SongsMode::on_actionCreateSongbookFromSelection_triggered() {
 	documentGenerationDialog()->show();
 	documentGenerationDialog()->setSelectedSongs(ui->wgtSongList->selectedRowIds());
 }
 
-void MainWindow_SongsMode::on_actionExportToLumen_triggered()
-{
+void MainWindow_SongsMode::on_actionExportToLumen_triggered() {
 	lumenExportDialog()->show();
 	lumenExportDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }
 
-void MainWindow_SongsMode::on_actionImportFromLumen_triggered()
-{
+void MainWindow_SongsMode::on_actionImportFromLumen_triggered() {
 	lumenImportDialog()->show();
 }
 
-void MainWindow_SongsMode::on_actionPresentSongs_triggered()
-{
+void MainWindow_SongsMode::on_actionPresentSongs_triggered() {
 	if(isSongEditMode_)
 		return standardErrorDialog(tr("Tuto akci nelze provést během úprav písně. Ukončete úpravy a zkuste to znovu."));
 
-	QVector<QSharedPointer<Presentation> > presentations;
-	for(qlonglong songId : ui->wgtSongList->selectedRowIds()) {
+	QVector<QSharedPointer<Presentation>> presentations;
+	for(qlonglong songId: ui->wgtSongList->selectedRowIds()) {
 		auto pres = Presentation_Song::createFromDb(songId);
 		if(pres)
 			presentations.append(pres);
@@ -736,10 +698,9 @@ void MainWindow_SongsMode::on_actionPresentSongs_triggered()
 	presentationManager->raiseWindow();
 }
 
-void MainWindow_SongsMode::on_actionAddSongsToPlaylist_triggered()
-{
-	QVector<QSharedPointer<Presentation> > presentations;
-	for(qlonglong songId : ui->wgtSongList->selectedRowIds()) {
+void MainWindow_SongsMode::on_actionAddSongsToPlaylist_triggered() {
+	QVector<QSharedPointer<Presentation>> presentations;
+	for(qlonglong songId: ui->wgtSongList->selectedRowIds()) {
 		auto pres = Presentation_Song::createFromDb(songId);
 		if(pres)
 			presentations.append(pres);
@@ -752,39 +713,36 @@ void MainWindow_SongsMode::on_actionAddSongsToPlaylist_triggered()
 	mainWindow->blinkPresentationModeButton();
 }
 
-void MainWindow_SongsMode::on_actionExportToOpenSong_triggered()
-{
+void MainWindow_SongsMode::on_actionExportToOpenSong_triggered() {
 	openSongExportDialog()->show();
 	openSongExportDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }
 
-void MainWindow_SongsMode::on_btnCopyChords_pressed()
-{
+void MainWindow_SongsMode::on_btnCopyChords_pressed() {
 	updateCopyChordsMenu();
 
 	if(copyChordsMenu_.actions().isEmpty())
 		return standardErrorDialog(tr("Píseň neobsahuje žádné sekce s textem i akordy."));
 }
 
-void MainWindow_SongsMode::on_actionDeleteChords_triggered()
-{
-	contentSelectionMorph([](QString str){
+void MainWindow_SongsMode::on_actionDeleteChords_triggered() {
+	contentSelectionMorph([](QString str) {
 		static const QRegularExpression rxTrim("\\u2029\\s+|\\s+\\u2029", QRegularExpression::MultilineOption);
 
 		str = removeSongChords(str);
 		str = str.trimmed();
 		str.remove(rxTrim);
 		return str;
-	}, true);
+	},
+	                      true);
 }
 
-void MainWindow_SongsMode::on_btnAutoFormat_clicked()
-{
-	contentSelectionMorph([=](QString content){
+void MainWindow_SongsMode::on_btnAutoFormat_clicked() {
+	contentSelectionMorph([=](QString content) {
 		// Standardize chords
 		ChordsInSong chords = songChords(content);
 		int correction = 0;
-		for(const ChordInSong &chs : chords) {
+		for(const ChordInSong &chs: chords) {
 			const QString newAnnotation = QString("[%1]").arg(chs.chord.toString(chs.chord.isFlat()));
 			content.replace(chs.annotationPos + correction, chs.annotationLength, newAnnotation);
 			correction += newAnnotation.length() - chs.annotationLength;
@@ -809,31 +767,28 @@ void MainWindow_SongsMode::on_btnAutoFormat_clicked()
 		content = content.trimmed();
 
 		return content;
-	}, false);
+	},
+	                      false);
 }
 
-void MainWindow_SongsMode::on_actionMoveChordsRight_triggered()
-{
+void MainWindow_SongsMode::on_actionMoveChordsRight_triggered() {
 	moveChords(true);
 }
 
-void MainWindow_SongsMode::on_teContent_cursorPositionChanged()
-{
+void MainWindow_SongsMode::on_teContent_cursorPositionChanged() {
 	updateMoveChordActionsEnabled();
 }
 
-void MainWindow_SongsMode::on_actionMoveChordsLeft_triggered()
-{
+void MainWindow_SongsMode::on_actionMoveChordsLeft_triggered() {
 	moveChords(false);
 }
 
-void MainWindow_SongsMode::on_actionOnlyChords_triggered()
-{
-	contentSelectionMorph([](QString str){
+void MainWindow_SongsMode::on_actionOnlyChords_triggered() {
+	contentSelectionMorph([](QString str) {
 		QString newContent;
 		int prev = 0;
-		for(const ChordInSong &chs : songChords(str)) {
-			if(str.mid(prev, chs.annotationPos-prev).contains(QChar(0x2029)))
+		for(const ChordInSong &chs: songChords(str)) {
+			if(str.mid(prev, chs.annotationPos - prev).contains(QChar(0x2029)))
 				newContent += QChar(0x2029);
 
 			newContent += str.mid(chs.annotationPos, chs.annotationLength);
@@ -841,34 +796,31 @@ void MainWindow_SongsMode::on_actionOnlyChords_triggered()
 		}
 
 		return newContent;
-	}, true);
+	},
+	                      true);
 }
 
-void MainWindow_SongsMode::on_btnBulkEdit_clicked()
-{
+void MainWindow_SongsMode::on_btnBulkEdit_clicked() {
 	bulkEditSongsDialog()->show();
 	bulkEditSongsDialog()->setSelectedSongs(mainWindow->selectedSongIds());
 }
 
-void MainWindow_SongsMode::on_btnConvertChords_clicked()
-{
-	contentSelectionMorph([=](QString content){
+void MainWindow_SongsMode::on_btnConvertChords_clicked() {
+	contentSelectionMorph([=](QString content) {
 		static const QString chordRegexPattern =
-				Chord::chordRegex().pattern()
-				.replace(QRegularExpression("\\((?!\\?\\:)"), "(?:") // Replace capturing groups with non-capturing
-				.remove('^').remove('$') // Make it a global match
-				;
+		  Chord::chordRegex().pattern().replace(QRegularExpression("\\((?!\\?\\:)"), "(?:")// Replace capturing groups with non-capturing
+		    .remove('^')
+		    .remove('$')// Make it a global match
+		  ;
 
 		static QRegularExpression globalChordRegex(chordRegexPattern);
 
 		static const QRegularExpression regex(
-					// First - chords - line
-					"^(\\.?(?:(?!\\n)\\s)*(?:" + chordRegexPattern + "(?:(?!\\n)\\s)*)+)"
-					+ "\n"
-					// Second - text - line
-					+ "(.*?)$",
-					QRegularExpression::MultilineOption
-					);
+		  // First - chords - line
+		  "^(\\.?(?:(?!\\n)\\s)*(?:" + chordRegexPattern + "(?:(?!\\n)\\s)*)+)" + "\n"
+		    // Second - text - line
+		    + "(.*?)$",
+		  QRegularExpression::MultilineOption);
 
 		QString result = content;
 		int resultPosCorrection = 0;
@@ -895,18 +847,18 @@ void MainWindow_SongsMode::on_btnConvertChords_clicked()
 		}
 
 		return result;
-	}, false);
+	},
+	                      false);
 }
 
-void MainWindow_SongsMode::on_btnTransposeFlat_clicked()
-{
-	contentSelectionMorph([=] (QString content) {
+void MainWindow_SongsMode::on_btnTransposeFlat_clicked() {
+	contentSelectionMorph([=](QString content) {
 		transposeSong(content, 0, ui->btnTransposeFlat->isChecked());
 		return content;
-	}, false);
+	},
+	                      false);
 }
 
-void MainWindow_SongsMode::on_actionImportFromPowerPoint_triggered()
-{
+void MainWindow_SongsMode::on_actionImportFromPowerPoint_triggered() {
 	PowerPointImportDialog::instance()->show();
 }

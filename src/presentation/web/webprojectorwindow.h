@@ -9,8 +9,7 @@ namespace Ui {
 	class WebProjectorWindow;
 }
 
-class WebProjectorWindow : public QMainWindow
-{
+class WebProjectorWindow : public QMainWindow {
 	Q_OBJECT
 
 public:
@@ -27,9 +26,8 @@ protected:
 private:
 	Ui::WebProjectorWindow *ui;
 	QWebEngineView *webView_;
-
 };
 
 extern WebProjectorWindow *webProjectorWindow;
 
-#endif // WEBPROJECTORWINDOW_H
+#endif// WEBPROJECTORWINDOW_H

@@ -1,51 +1,50 @@
 #ifndef CHORD_H
 #define CHORD_H
 
-#include <QString>
-#include <QVector>
 #include <QRegularExpression>
+#include <QString>
 #include <QTextCursor>
+#include <QVector>
 
-class Chord
-{
-
-public:
-    enum Quality {
-        cvDur,
-        cvMoll,
-        cvMaj,
-        cvAug,
-        cvDim,
-        _cvCount
-    };
+class Chord {
 
 public:
-    static const QRegularExpression &chordRegex();
-
-    Chord();
-    explicit Chord(const QString &str);
+	enum Quality {
+		cvDur,
+		cvMoll,
+		cvMaj,
+		cvAug,
+		cvDim,
+		_cvCount
+	};
 
 public:
-    bool isValid() const;
-    bool isFlat() const;
+	static const QRegularExpression &chordRegex();
 
-    Chord transposed(int by) const;
+	Chord();
+	explicit Chord(const QString &str);
 
-    QString toString(bool flatVariant = false) const;
+public:
+	bool isValid() const;
+	bool isFlat() const;
+
+	Chord transposed(int by) const;
+
+	QString toString(bool flatVariant = false) const;
 
 private:
-    bool isValid_, isFlat_;
-    int baseNote_;
-    Quality quality_;
-    QString extra_;
-    int inversionNote_; ///< -1 if no inversion
-
+	bool isValid_, isFlat_;
+	int baseNote_;
+	Quality quality_;
+	QString extra_;
+	int inversionNote_;///< -1 if no inversion
 };
 
 struct ChordInSong {
-    Chord chord;
-    qsizetype annotationPos, annotationLength;
+	Chord chord;
+	qsizetype annotationPos, annotationLength;
 };
+
 using ChordsInSong = QVector<ChordInSong>;
 
 /// Captures: 0 - whole, 1 - annotation prefix, 2 - chord, 3 - annotation suffix
@@ -73,4 +72,4 @@ void transposeSong(QString &song, int by, bool flatChords = false);
 /// Copies chords from source and inserts them into target (based on syllable count)
 QString copySongChords(const QString &source, const QString &target);
 
-#endif // CHORD_H
+#endif// CHORD_H

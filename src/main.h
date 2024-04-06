@@ -15,4 +15,4 @@ void setupLanguage();
 
 void criticalBootError(const QString &message);
 
-#endif // MAIN_H
+#endif// MAIN_H

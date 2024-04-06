@@ -1,8 +1,8 @@
 #ifndef PRESENTATIONPROPERTIESWIDGET_H
 #define PRESENTATIONPROPERTIESWIDGET_H
 
-#include <QWidget>
 #include <QSharedPointer>
+#include <QWidget>
 
 namespace Ui {
 	class PresentationPropertiesWidget;
@@ -10,8 +10,7 @@ namespace Ui {
 
 class Presentation;
 
-class PresentationPropertiesWidget : public QWidget
-{
+class PresentationPropertiesWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -25,7 +24,6 @@ private:
 	Ui::PresentationPropertiesWidget *ui;
 	QSharedPointer<Presentation> presentation_;
 	QWidget *propertiesWidget_;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_H
+#endif// PRESENTATIONPROPERTIESWIDGET_H

@@ -3,10 +3,8 @@
 
 #include <QStyle>
 
-ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::ColorSelectionWidget)
-{
+ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) : QWidget(parent),
+                                                              ui(new Ui::ColorSelectionWidget) {
 	ui->setupUi(this);
 	ui->wgtC1->setComponent(ColorComponentWidget::ccHslHue);
 	ui->wgtC2->setComponent(ColorComponentWidget::ccHslSaturation);
@@ -19,13 +17,11 @@ ColorSelectionWidget::ColorSelectionWidget(QWidget *parent) :
 	connect(ui->wgtCAlpha, SIGNAL(sigColorChangedByUser(QColor)), this, SLOT(onComponentColorChangedByUser(QColor)));
 }
 
-ColorSelectionWidget::~ColorSelectionWidget()
-{
+ColorSelectionWidget::~ColorSelectionWidget() {
 	delete ui;
 }
 
-void ColorSelectionWidget::setColor(const QColor &color)
-{
+void ColorSelectionWidget::setColor(const QColor &color) {
 	// Cannot be because comparison converts to RGB -> in some cases saturation information can be lost
 	/*if(currentColor_ == color)
 		return;*/
@@ -40,8 +36,7 @@ void ColorSelectionWidget::setColor(const QColor &color)
 	ui->lnHex->setText(color.name(isAlphaChannelEnabled_ ? QColor::HexArgb : QColor::HexRgb));
 }
 
-void ColorSelectionWidget::setAlphaChannelEnabled(bool set)
-{
+void ColorSelectionWidget::setAlphaChannelEnabled(bool set) {
 	if(isAlphaChannelEnabled_ == set)
 		return;
 
@@ -51,8 +46,7 @@ void ColorSelectionWidget::setAlphaChannelEnabled(bool set)
 	ui->lblAlphaIcon->setVisible(set);
 }
 
-void ColorSelectionWidget::setReadOnly(bool set)
-{
+void ColorSelectionWidget::setReadOnly(bool set) {
 	if(isReadOnly_ == set)
 		return;
 
@@ -68,19 +62,16 @@ void ColorSelectionWidget::setReadOnly(bool set)
 	ui->wgtCAlpha->setEnabled(!set);
 }
 
-bool ColorSelectionWidget::isAlphaChannelEnabled() const
-{
+bool ColorSelectionWidget::isAlphaChannelEnabled() const {
 	return isAlphaChannelEnabled_;
 }
 
-void ColorSelectionWidget::onComponentColorChangedByUser(const QColor &newColor)
-{
+void ColorSelectionWidget::onComponentColorChangedByUser(const QColor &newColor) {
 	setColor(newColor);
 	emit sigColorChangedByUser(newColor);
 }
 
-void ColorSelectionWidget::on_lnHex_editingFinished()
-{
+void ColorSelectionWidget::on_lnHex_editingFinished() {
 	setColor(QColor(ui->lnHex->text()));
 	emit sigColorChangedByUser(currentColor_);
 }

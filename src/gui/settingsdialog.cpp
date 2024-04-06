@@ -4,22 +4,20 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "main.h"
-#include "job/settings.h"
 #include "job/db.h"
+#include "job/settings.h"
+#include "main.h"
 #include "presentation/presentationengine.h"
 #include "presentation/presentationmanager.h"
 #include "util/updatesdisabler.h"
 
 SettingsDialog *settingsDialog = nullptr;
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::SettingsDialog)
-{
+SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
+                                                  ui(new Ui::SettingsDialog) {
 	ui->setupUi(this);
 
-	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen*)), this, SLOT(onDisplayChanged(QScreen*)));
+	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen *)), this, SLOT(onDisplayChanged(QScreen *)));
 	connect(db, &DatabaseManager::sigBibleTranslationsChanged, this, &SettingsDialog::updateBibleTranslationList);
 
 	updateBibleTranslationList();
@@ -28,39 +26,32 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	SETTINGS_FACTORY(SETTINGS_LINK)
 }
 
-SettingsDialog::~SettingsDialog()
-{
+SettingsDialog::~SettingsDialog() {
 	delete ui;
 }
 
-void SettingsDialog::updateBibleTranslationList()
-{
+void SettingsDialog::updateBibleTranslationList() {
 	ui->lstDefaultBibleTranslation->updateList();
 }
 
-void SettingsDialog::updateLanguageList()
-{
+void SettingsDialog::updateLanguageList() {
 	ui->cmbLanguage->clear();
 	ui->cmbLanguage->addItem("Čeština", "cz");
 
 	QDir dir(QDir(qApp->applicationDirPath()).absoluteFilePath("../lang"));
-	for(const QFileInfo &f : dir.entryInfoList({"*.qm"}))
+	for(const QFileInfo &f: dir.entryInfoList({"*.qm"}))
 		ui->cmbLanguage->addItem(QLocale::languageToString(QLocale(f.baseName()).language()), f.baseName());
 }
 
-
-void SettingsDialog::onDisplayChanged(QScreen *current)
-{
+void SettingsDialog::onDisplayChanged(QScreen *current) {
 	if(presentationManager->isActive())
 		presentationManager->currentEngine()->setDisplay(current->geometry());
 }
 
-void SettingsDialog::on_btnClose_clicked()
-{
+void SettingsDialog::on_btnClose_clicked() {
 	accept();
 }
 
-void SettingsDialog::on_cbDarkMode_clicked(bool checked)
-{
+void SettingsDialog::on_cbDarkMode_clicked(bool checked) {
 	setupStylesheet(checked);
 }

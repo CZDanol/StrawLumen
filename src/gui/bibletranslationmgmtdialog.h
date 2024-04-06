@@ -8,8 +8,7 @@ namespace Ui {
 	class BibleTranslationMgmtDialog;
 }
 
-class BibleTranslationMgmtDialog : public QDialog
-{
+class BibleTranslationMgmtDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -29,9 +28,8 @@ private slots:
 
 private:
 	Ui::BibleTranslationMgmtDialog *ui;
-
 };
 
 BibleTranslationMgmtDialog *bibleTranslationMgmtDialog();
 
-#endif // BIBLETRANSLATIONMGMTDIALOG_H
+#endif// BIBLETRANSLATIONMGMTDIALOG_H

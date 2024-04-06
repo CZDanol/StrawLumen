@@ -15,11 +15,10 @@ public:
 
 public slots:
 	void onJob(const _ExecOnMainThreadJob &job);
-
 };
 
 Q_DECLARE_METATYPE(_ExecOnMainThreadJob)
 
 void execOnMainThread(const _ExecOnMainThreadJob &job);
 
-#endif // EXECONMAINTHREAD_H
+#endif// EXECONMAINTHREAD_H

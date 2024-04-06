@@ -8,8 +8,8 @@ class DatabaseManager;
 
 void createDb();
 
-#define F(version) void migrateDbFrom_v ## version();
+#define F(version) void migrateDbFrom_v##version();
 DB_VERSION_HISTORY_FACTORY(F)
 #undef F
 
-#endif // DBMIGRATION_H
+#endif// DBMIGRATION_H

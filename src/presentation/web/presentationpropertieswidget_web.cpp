@@ -4,34 +4,29 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 
-#include "presentation_web.h"
+#include "job/settings.h"
 #include "presentation/presentationmanager.h"
 #include "presentation/web/webprojectorwindow.h"
-#include "job/settings.h"
+#include "presentation_web.h"
 
-PresentationPropertiesWidget_Web::PresentationPropertiesWidget_Web(const QSharedPointer<Presentation_Web> &presentation, QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::PresentationPropertiesWidget_Web),
-	presentation_(presentation)
-{
+PresentationPropertiesWidget_Web::PresentationPropertiesWidget_Web(const QSharedPointer<Presentation_Web> &presentation, QWidget *parent) : QWidget(parent),
+                                                                                                                                            ui(new Ui::PresentationPropertiesWidget_Web),
+                                                                                                                                            presentation_(presentation) {
 	ui->setupUi(this);
 	fillData();
 }
 
-PresentationPropertiesWidget_Web::~PresentationPropertiesWidget_Web()
-{
+PresentationPropertiesWidget_Web::~PresentationPropertiesWidget_Web() {
 	on_lnUrl_editingFinished();
 
 	delete ui;
 }
 
-void PresentationPropertiesWidget_Web::fillData()
-{
+void PresentationPropertiesWidget_Web::fillData() {
 	ui->lnUrl->setText(presentation_->url_.toString());
 }
 
-void PresentationPropertiesWidget_Web::on_lnUrl_editingFinished()
-{
+void PresentationPropertiesWidget_Web::on_lnUrl_editingFinished() {
 	const QUrl newUrl = QUrl::fromUserInput(ui->lnUrl->text());
 
 	if(presentation_->url_ == newUrl)
@@ -45,8 +40,7 @@ void PresentationPropertiesWidget_Web::on_lnUrl_editingFinished()
 		webProjectorWindow->setUrl(presentation_->url_);
 }
 
-void PresentationPropertiesWidget_Web::on_btnLocalFile_clicked()
-{
+void PresentationPropertiesWidget_Web::on_btnLocalFile_clicked() {
 	static const QIcon icon(":/icons/16/Open_16px.png");
 
 	QFileDialog dlg(this);

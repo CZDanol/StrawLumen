@@ -17,6 +17,6 @@ namespace WordSplit {
 
 	QString splitVisualization(const QString &str, const QVector<int> &splits);
 
-}
+}// namespace WordSplit
 
-#endif // WORDSPLIT_H
+#endif// WORDSPLIT_H

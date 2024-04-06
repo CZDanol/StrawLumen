@@ -1,6 +1,4 @@
 #include "presentationengine.h"
 
-PresentationEngine::PresentationEngine(QObject *parent) : QObject(parent)
-{
-
+PresentationEngine::PresentationEngine(QObject *parent) : QObject(parent) {
 }

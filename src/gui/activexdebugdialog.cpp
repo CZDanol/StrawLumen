@@ -4,28 +4,23 @@
 #include "gui/mainwindow.h"
 #include "util/execonmainthread.h"
 
-ActiveXDebugDialog::ActiveXDebugDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::ActiveXDebugDialog)
-{
+ActiveXDebugDialog::ActiveXDebugDialog(QWidget *parent) : QDialog(parent),
+                                                          ui(new Ui::ActiveXDebugDialog) {
 	ui->setupUi(this);
 }
 
-ActiveXDebugDialog::~ActiveXDebugDialog()
-{
+ActiveXDebugDialog::~ActiveXDebugDialog() {
 	delete ui;
 }
 
-void ActiveXDebugDialog::show(QString html)
-{
-	execOnMainThread([=]{
+void ActiveXDebugDialog::show(QString html) {
+	execOnMainThread([=] {
 		ui->tb->setHtml(html);
 		QDialog::show();
 	});
 }
 
-ActiveXDebugDialog *activeXDebugDialog()
-{
+ActiveXDebugDialog *activeXDebugDialog() {
 	static ActiveXDebugDialog *dlg = nullptr;
 	if(!dlg)
 		dlg = new ActiveXDebugDialog(mainWindow);

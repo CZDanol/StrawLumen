@@ -1,23 +1,23 @@
 #ifndef PRESENTATIONSTYLE_H
 #define PRESENTATIONSTYLE_H
 
-#include <QObject>
-#include <QJsonValue>
 #include <QJsonObject>
+#include <QJsonValue>
+#include <QObject>
 
-#include "rec/textstyle.h"
 #include "rec/presentationbackground.h"
+#include "rec/textstyle.h"
 
 // F(identifier, capitalizedIdentifier, Type, defaultValue)
-#define PRESENTATION_STYLE_FIELD_FACTORY(F)\
-	F(name, Name, QString, QString())\
-	F(mainTextStyle, MainTextStyle, TextStyle, TextStyle())\
-	F(titleTextStyle, TitleTextStyle, TextStyle, TextStyle())\
-	F(background, Background, PresentationBackground, PresentationBackground())\
-	F(topPadding, TopPadding, int, 5) F(bottomPadding, BottomPadding, int, 5) F(leftPadding, LeftPadding, int, 5) F(rightPadding, RightPadding, int, 5) F(titleTextPadding, TitleTextPadding, int, 10)
+#define PRESENTATION_STYLE_FIELD_FACTORY(F)                                   \
+	F(name, Name, QString, QString())                                           \
+	F(mainTextStyle, MainTextStyle, TextStyle, TextStyle())                     \
+	F(titleTextStyle, TitleTextStyle, TextStyle, TextStyle())                   \
+	F(background, Background, PresentationBackground, PresentationBackground()) \
+	F(topPadding, TopPadding, int, 5)                                           \
+	F(bottomPadding, BottomPadding, int, 5) F(leftPadding, LeftPadding, int, 5) F(rightPadding, RightPadding, int, 5) F(titleTextPadding, TitleTextPadding, int, 10)
 
-class PresentationStyle : public QObject
-{
+class PresentationStyle : public QObject {
 	Q_OBJECT
 
 public:
@@ -61,22 +61,21 @@ private:
 
 public slots:
 	// Field setters
-#define F(identifier, capitalizedIdentifier, Type, defaultValue) void set ## capitalizedIdentifier(const Type &set);
+#define F(identifier, capitalizedIdentifier, Type, defaultValue) void set##capitalizedIdentifier(const Type &set);
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
 #undef F
 
 public:
-		// Field getters
+	// Field getters
 #define F(identifier, capitalizedIdentifier, Type, defaultValue) const Type &identifier() const;
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
 #undef F
 
 private:
 	// Fields
-#define F(identifier, capitalizedIdentifier, Type, defaultValue) Type identifier ## _ = defaultValue;
+#define F(identifier, capitalizedIdentifier, Type, defaultValue) Type identifier##_ = defaultValue;
 	PRESENTATION_STYLE_FIELD_FACTORY(F)
 #undef F
-
 };
 
-#endif // PRESENTATIONSTYLE_H
+#endif// PRESENTATIONSTYLE_H

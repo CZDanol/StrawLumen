@@ -5,6 +5,6 @@
 
 #include <QRegularExpression>
 
-void replaceCallback(QString &str, const QRegularExpression &regex, const std::function<QString(const QRegularExpressionMatch& m)> &callback);
+void replaceCallback(QString &str, const QRegularExpression &regex, const std::function<QString(const QRegularExpressionMatch &m)> &callback);
 
-#endif // REGEX_H
+#endif// REGEX_H

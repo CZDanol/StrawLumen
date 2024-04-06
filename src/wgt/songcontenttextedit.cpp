@@ -1,21 +1,18 @@
 #include "songcontenttextedit.h"
 
-#include "util/songcontentsyntaxhiglighter.h"
 #include "rec/chord.h"
+#include "util/songcontentsyntaxhiglighter.h"
 
-SongContentTextEdit::SongContentTextEdit(QWidget *parent) : QTextEdit(parent)
-{
+SongContentTextEdit::SongContentTextEdit(QWidget *parent) : QTextEdit(parent) {
 	contentSyntaxHiglighter_ = new SongContentSyntaxHiglighter(document());
 	viewport()->installEventFilter(this);
 }
 
-SongContentSyntaxHiglighter *SongContentTextEdit::syntaxHiglighter()
-{
+SongContentSyntaxHiglighter *SongContentTextEdit::syntaxHiglighter() {
 	return contentSyntaxHiglighter_;
 }
 
-void SongContentTextEdit::keyPressEvent(QKeyEvent *e)
-{
+void SongContentTextEdit::keyPressEvent(QKeyEvent *e) {
 	if(e->modifiers() == Qt::AltModifier && e->key() == Qt::Key_Left) {
 		emit sigAltlLeftPressed();
 		e->ignore();
@@ -29,14 +26,14 @@ void SongContentTextEdit::keyPressEvent(QKeyEvent *e)
 	}
 
 	if(!isEnabled() || isReadOnly())
-		return QTextEdit::keyPressEvent(e);;
+		return QTextEdit::keyPressEvent(e);
+	;
 
-	static QHash<QString,QString> autocompleteStrings {
-		{"[", "]"},
-		{"{", "}"},
-		{"(", ")"},
-		{"\"", "\""}
-	};
+	static QHash<QString, QString> autocompleteStrings{
+	  {"[", "]"},
+	  {"{", "}"},
+	  {"(", ")"},
+	  {"\"", "\""}};
 
 	QTextEdit::keyPressEvent(e);
 
@@ -50,11 +47,10 @@ void SongContentTextEdit::keyPressEvent(QKeyEvent *e)
 	}
 }
 
-bool SongContentTextEdit::eventFilter(QObject *obj, QEvent *e)
-{
+bool SongContentTextEdit::eventFilter(QObject *obj, QEvent *e) {
 	// On double click on chord, select the entire chord
-	if(e->type() == QEvent::MouseButtonDblClick && static_cast<QMouseEvent*>(e)->button() == Qt::LeftButton) {
-		auto chs = chordAroundPos(toPlainText(), cursorForPosition(static_cast<QMouseEvent*>(e)->pos()).position());
+	if(e->type() == QEvent::MouseButtonDblClick && static_cast<QMouseEvent *>(e)->button() == Qt::LeftButton) {
+		auto chs = chordAroundPos(toPlainText(), cursorForPosition(static_cast<QMouseEvent *>(e)->pos()).position());
 		if(!chs.chord.isValid())
 			return false;
 

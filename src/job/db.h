@@ -6,8 +6,7 @@
 
 #include "job/dbmanager.h"
 
-class DatabaseManager : public DBManager
-{
+class DatabaseManager : public DBManager {
 	Q_OBJECT
 
 public:
@@ -35,7 +34,6 @@ private slots:
 
 private:
 	bool blockListChangedSignals_ = false;
-
 };
 
 extern DatabaseManager *db;
@@ -46,4 +44,4 @@ QString denullifyString(const QString &str);
 
 QString standardizeSongName(const QString &name);
 
-#endif // DB_H
+#endif// DB_H

@@ -2,11 +2,11 @@
 
 #include <functional>
 
-#include <QTimer>
-#include <QPointer>
-#include <QPalette>
-#include <QSharedPointer>
 #include <QDateTime>
+#include <QPalette>
+#include <QPointer>
+#include <QSharedPointer>
+#include <QTimer>
 #include <QtMath>
 
 static const QColor flashColor("#ffa632");
@@ -14,10 +14,9 @@ static const QColor flashColor("#ffa632");
 QColor mixColors(const QColor &c1, const QColor &c2, qreal progress) {
 	const qreal progressInv = 0.99 - progress;
 	return QColor::fromRgbF(
-				c1.redF() * progressInv + c2.redF() * progress,
-				c1.greenF() * progressInv + c2.greenF() * progress,
-				c1.blueF() * progressInv + c2.blueF() * progress
-				);
+	  c1.redF() * progressInv + c2.redF() * progress,
+	  c1.greenF() * progressInv + c2.greenF() * progress,
+	  c1.blueF() * progressInv + c2.blueF() * progress);
 }
 
 auto flashAnimation(QWidget *wgt, std::function<void()> endFunc) {
@@ -25,7 +24,7 @@ auto flashAnimation(QWidget *wgt, std::function<void()> endFunc) {
 	const QPalette originalPalette = wgt->palette();
 
 	QTimer *tim = new QTimer(wgt);
-	QObject::connect(tim, &QTimer::timeout, [animStart, wgt, originalPalette, tim, endFunc]{
+	QObject::connect(tim, &QTimer::timeout, [animStart, wgt, originalPalette, tim, endFunc] {
 		const qint64 msecsElapsed = QDateTime::currentMSecsSinceEpoch() - animStart;
 		const qreal progress = abs(sin(msecsElapsed / 200.0 * M_PI_2));
 		QPalette palette = originalPalette;
@@ -51,17 +50,15 @@ auto flashAnimation(QWidget *wgt, std::function<void()> endFunc) {
 	tim->start();
 }
 
-void flashButton(QPushButton *btn)
-{
+void flashButton(QPushButton *btn) {
 	const bool wasFlat = btn->isFlat();
 	btn->setFlat(false);
 
-	flashAnimation(btn, [btn, wasFlat]{
+	flashAnimation(btn, [btn, wasFlat] {
 		btn->setFlat(wasFlat);
 	});
 }
 
-void flashWidget(QWidget *wgt)
-{
-	flashAnimation(wgt, []{});
+void flashWidget(QWidget *wgt) {
+	flashAnimation(wgt, [] {});
 }

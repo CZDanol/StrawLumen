@@ -1,11 +1,10 @@
 #include "bibletranslationlistbox.h"
 
-#include "util/updatesdisabler.h"
 #include "job/db.h"
 #include "job/settings.h"
+#include "util/updatesdisabler.h"
 
-BibleTranslationListBox::BibleTranslationListBox(QWidget *parent) : QListWidget(parent)
-{
+BibleTranslationListBox::BibleTranslationListBox(QWidget *parent) : QListWidget(parent) {
 	setDragDropMode(DragDropMode::InternalMove);
 	setDefaultDropAction(Qt::MoveAction);
 	setMinimumWidth(400);
@@ -16,8 +15,7 @@ BibleTranslationListBox::BibleTranslationListBox(QWidget *parent) : QListWidget(
 	connect(model(), &QAbstractItemModel::rowsMoved, this, &BibleTranslationListBox::sigChanged);
 }
 
-void BibleTranslationListBox::updateList()
-{
+void BibleTranslationListBox::updateList() {
 	QStringList selectedTranslations;
 	for(qsizetype i = 0; i < count(); i++) {
 		QListWidgetItem *wi = item(i);
@@ -28,12 +26,11 @@ void BibleTranslationListBox::updateList()
 	updateList(selectedTranslations);
 }
 
-void BibleTranslationListBox::updateList(const QStringList &selection)
-{
+void BibleTranslationListBox::updateList(const QStringList &selection) {
 	UpdatesDisabler _ud(this);
 	clear();
 
-	QMap<QString, QListWidgetItem*> items;
+	QMap<QString, QListWidgetItem *> items;
 
 	QSqlQuery q = db->selectQuery("SELECT translation_id, name FROM bible_translations ORDER BY translation_id");
 	while(q.next()) {
@@ -45,7 +42,7 @@ void BibleTranslationListBox::updateList(const QStringList &selection)
 	}
 
 	// Add selected translations first, in the order they were selected
-	for(const QString &tr : qAsConst(selection)) {
+	for(const QString &tr: qAsConst(selection)) {
 		QListWidgetItem *wi = items.take(tr);
 		if(!wi)
 			continue;
@@ -55,12 +52,11 @@ void BibleTranslationListBox::updateList(const QStringList &selection)
 	}
 
 	// The add the unselected items in alphabetical order
-	for(QListWidgetItem *wi : qAsConst(items))
+	for(QListWidgetItem *wi: qAsConst(items))
 		addItem(wi);
 }
 
-QStringList BibleTranslationListBox::selectedTranslations() const
-{
+QStringList BibleTranslationListBox::selectedTranslations() const {
 	QStringList lst;
 
 	for(qsizetype i = 0; i < count(); i++) {

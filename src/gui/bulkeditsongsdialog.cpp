@@ -3,40 +3,33 @@
 
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
-#include "util/standarddialogs.h"
 #include "job/db.h"
+#include "util/standarddialogs.h"
 
-BulkEditSongsDialog::BulkEditSongsDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::BulkEditSongsDialog)
-{
+BulkEditSongsDialog::BulkEditSongsDialog(QWidget *parent)
+    : QDialog(parent), ui(new Ui::BulkEditSongsDialog) {
 	ui->setupUi(this);
 }
 
-BulkEditSongsDialog::~BulkEditSongsDialog()
-{
+BulkEditSongsDialog::~BulkEditSongsDialog() {
 	delete ui;
 }
 
-void BulkEditSongsDialog::setSelectedSongs(const QVector<qlonglong> &songIds)
-{
+void BulkEditSongsDialog::setSelectedSongs(const QVector<qlonglong> &songIds) {
 	ui->wgtSongSelection->setSelectedSongs(songIds);
 }
 
-BulkEditSongsDialog *bulkEditSongsDialog()
-{
+BulkEditSongsDialog *bulkEditSongsDialog() {
 	static BulkEditSongsDialog *result = new BulkEditSongsDialog(mainWindow);
 	return result;
 }
 
-void BulkEditSongsDialog::on_btnStorno_clicked()
-{
+void BulkEditSongsDialog::on_btnStorno_clicked() {
 	reject();
 }
 
-void BulkEditSongsDialog::on_btnGenerate_clicked()
-{
-	splashscreen->asyncAction(tr("Provádění úprav"), false, [=](){
+void BulkEditSongsDialog::on_btnGenerate_clicked() {
+	splashscreen->asyncAction(tr("Provádění úprav"), false, [=]() {
 		db->beginTransaction();
 
 		QSqlQuery q(db->database());
@@ -46,10 +39,10 @@ void BulkEditSongsDialog::on_btnGenerate_clicked()
 			const auto tags = ui->lnRemoveTags->toTags();
 			q.prepare("DELETE FROM song_tags WHERE song = ? AND tag = ?");
 
-			for(const qlonglong song : ui->wgtSongSelection->selectedSongs()) {
+			for(const qlonglong song: ui->wgtSongSelection->selectedSongs()) {
 				q.bindValue(0, song);
 
-				for(const QString &tag : tags) {
+				for(const QString &tag: tags) {
 					q.bindValue(1, tag);
 					q.exec();
 				}
@@ -61,10 +54,10 @@ void BulkEditSongsDialog::on_btnGenerate_clicked()
 			const auto tags = ui->lnAddTags->toTags();
 			q.prepare("INSERT INTO song_tags(song, tag) VALUES(?, ?)");
 
-			for(const qlonglong song : ui->wgtSongSelection->selectedSongs()) {
+			for(const qlonglong song: ui->wgtSongSelection->selectedSongs()) {
 				q.bindValue(0, song);
 
-				for(const QString &tag : tags) {
+				for(const QString &tag: tags) {
 					q.bindValue(1, tag);
 					q.exec();
 				}
@@ -74,7 +67,7 @@ void BulkEditSongsDialog::on_btnGenerate_clicked()
 		db->commitTransaction();
 	});
 
-	for(const qlonglong song : ui->wgtSongSelection->selectedSongs())
+	for(const qlonglong song: ui->wgtSongSelection->selectedSongs())
 		emit db->sigSongChanged(song);
 
 	emit db->sigSongListChanged();

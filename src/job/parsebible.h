@@ -12,4 +12,4 @@ void forceImportBibles(const QStringList &filenames);
 bool parseBible(const QString &filename);
 void deleteBible(const QString &translationId);
 
-#endif // PARSEBIBLE_H
+#endif// PARSEBIBLE_H

@@ -1,19 +1,18 @@
 #ifndef SONGLISTWIDGET_H
 #define SONGLISTWIDGET_H
 
-#include <QWidget>
 #include <QSqlQuery>
 #include <QTimer>
+#include <QWidget>
 
-#include "modelview/songsitemmodel.h"
 #include "job/db.h"
+#include "modelview/songsitemmodel.h"
 
 namespace Ui {
 	class SongListWidget;
 }
 
-class SongListWidget : public QWidget
-{
+class SongListWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -91,7 +90,6 @@ private:
 private:
 	DBManager *db_ = nullptr;
 	bool allowDbEdit_ = false;
-
 };
 
-#endif // SONGLISTWIDGET_H
+#endif// SONGLISTWIDGET_H

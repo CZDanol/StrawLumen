@@ -1,13 +1,13 @@
 #ifndef BIBLEVERSESELECTIONWIDGET_H
 #define BIBLEVERSESELECTIONWIDGET_H
 
-#include <QWidget>
-#include <QSqlQueryModel>
-#include <QStringListModel>
-#include <QStandardItemModel>
 #include <QCompleter>
-#include <QTreeWidgetItem>
+#include <QSqlQueryModel>
+#include <QStandardItemModel>
+#include <QStringListModel>
 #include <QTimer>
+#include <QTreeWidgetItem>
+#include <QWidget>
 
 #include "rec/bibleref.h"
 
@@ -15,8 +15,7 @@ namespace Ui {
 	class BibleVerseSelectionWidget;
 }
 
-class BibleVerseSelectionWidget : public QWidget
-{
+class BibleVerseSelectionWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -48,7 +47,7 @@ private slots:
 	void on_actionGoToChapter_triggered();
 	void on_lnCode_textChanged(const QString &arg1);
 
- private:
+private:
 	BibleRef bibleRef_;
 
 private:
@@ -59,7 +58,7 @@ private:
 	QStringListModel booksModel_, chaptersModel_;
 	QStringList booksList_, chaptersList_;
 	QVector<int> bookIds_, chapterUIDs_;
-	QHash<QString,int> translationRows_;
+	QHash<QString, int> translationRows_;
 
 private:
 	QTimer searchTimer_;
@@ -72,7 +71,6 @@ private:
 
 private:
 	Ui::BibleVerseSelectionWidget *ui;
-
 };
 
-#endif // BIBLEVERSESELECTIONWIDGET_H
+#endif// BIBLEVERSESELECTIONWIDGET_H

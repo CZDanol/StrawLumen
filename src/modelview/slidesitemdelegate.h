@@ -3,8 +3,7 @@
 
 #include <QStyledItemDelegate>
 
-class SlidesItemDelegate : public QStyledItemDelegate
-{
+class SlidesItemDelegate : public QStyledItemDelegate {
 	Q_OBJECT
 
 public:
@@ -16,7 +15,6 @@ public:
 
 private:
 	void _paintImpl(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-
 };
 
-#endif // SLIDESITEMDELEGATE_H
+#endif// SLIDESITEMDELEGATE_H

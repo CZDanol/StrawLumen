@@ -5,8 +5,7 @@
 
 #include "presentation/native/presentation_nativepresentation.h"
 
-class Presentation_BlackScreen : public Presentation_NativePresentation
-{
+class Presentation_BlackScreen : public Presentation_NativePresentation {
 	Q_OBJECT
 
 public:
@@ -32,7 +31,6 @@ public:
 
 private:
 	Presentation_BlackScreen();
-
 };
 
-#endif // PRESENTATION_BLACKSCREEN_H
+#endif// PRESENTATION_BLACKSCREEN_H

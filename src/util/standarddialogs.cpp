@@ -5,8 +5,7 @@
 
 #include "util/execonmainthread.h"
 
-bool standardDeleteConfirmDialog(const QString message, QWidget *parent)
-{
+bool standardDeleteConfirmDialog(const QString message, QWidget *parent) {
 	QMessageBox *mb = new QMessageBox(QMessageBox::Question, QObject::tr("Potvrdit smazání"), message);
 	mb->setParent(parent);
 	mb->setWindowModality(Qt::ApplicationModal);
@@ -27,8 +26,7 @@ bool standardDeleteConfirmDialog(const QString message, QWidget *parent)
 	return mb->clickedButton() == yesBtn;
 }
 
-bool standardConfirmDialog(const QString message, QWidget *parent)
-{
+bool standardConfirmDialog(const QString message, QWidget *parent) {
 	QMessageBox *mb = new QMessageBox(QMessageBox::Question, QObject::tr("Potvrzení"), message);
 	mb->setParent(parent);
 	mb->setWindowModality(Qt::ApplicationModal);
@@ -49,9 +47,8 @@ bool standardConfirmDialog(const QString message, QWidget *parent)
 	return mb->clickedButton() == yesBtn;
 }
 
-void standardErrorDialog(const QString message, QWidget *parent, bool blocking)
-{
-	auto f = [message, parent]{
+void standardErrorDialog(const QString message, QWidget *parent, bool blocking) {
+	auto f = [message, parent] {
 		QMessageBox *mb = new QMessageBox(QMessageBox::Critical, QObject::tr("Chyba"), message);
 		mb->setParent(parent);
 		mb->setWindowModality(Qt::ApplicationModal);
@@ -72,9 +69,8 @@ void standardErrorDialog(const QString message, QWidget *parent, bool blocking)
 		execOnMainThread(f);
 }
 
-void standardInfoDialog(const QString message, QWidget *parent)
-{
-	execOnMainThread([message, parent]{
+void standardInfoDialog(const QString message, QWidget *parent) {
+	execOnMainThread([message, parent] {
 		QMessageBox *mb = new QMessageBox(QMessageBox::Information, QObject::tr("Informace"), message);
 		mb->setParent(parent);
 		mb->setWindowModality(Qt::ApplicationModal);
@@ -91,9 +87,8 @@ void standardInfoDialog(const QString message, QWidget *parent)
 	});
 }
 
-void standardSuccessDialog(const QString message, QWidget *parent)
-{
-	execOnMainThread([message, parent]{
+void standardSuccessDialog(const QString message, QWidget *parent) {
+	execOnMainThread([message, parent] {
 		QMessageBox *mb = new QMessageBox(QMessageBox::Information, QObject::tr("Úspěch"), message);
 		mb->setParent(parent);
 		mb->setWindowModality(Qt::ApplicationModal);

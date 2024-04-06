@@ -1,17 +1,15 @@
 #include "presentationpropertieswidget_song.h"
 #include "ui_presentationpropertieswidget_song.h"
 
-#include "presentation/native/presentation_song.h"
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_songsmode.h"
+#include "presentation/native/presentation_song.h"
 
-PresentationPropertiesWidget_Song::PresentationPropertiesWidget_Song(const QSharedPointer<Presentation_Song> &presentation, QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::PresentationPropertiesWidget_Song),
-	presentation_(presentation)
-{
+PresentationPropertiesWidget_Song::PresentationPropertiesWidget_Song(const QSharedPointer<Presentation_Song> &presentation, QWidget *parent) : QWidget(parent),
+                                                                                                                                               ui(new Ui::PresentationPropertiesWidget_Song),
+                                                                                                                                               presentation_(presentation) {
 	ui->setupUi(this);
-	connect(presentation.data(), SIGNAL(sigItemChanged(Presentation*)), this, SLOT(fillData()));
+	connect(presentation.data(), SIGNAL(sigItemChanged(Presentation *)), this, SLOT(fillData()));
 	connect(ui->wgtStyle, SIGNAL(sigPresentationStyleChangedByUser()), this, SLOT(onStyleChangedByUser()));
 
 	connect(&presentation->style_, SIGNAL(sigChanged()), this, SLOT(onPresentationStyleChanged()));
@@ -33,13 +31,11 @@ PresentationPropertiesWidget_Song::PresentationPropertiesWidget_Song(const QShar
 	fillData();
 }
 
-PresentationPropertiesWidget_Song::~PresentationPropertiesWidget_Song()
-{
+PresentationPropertiesWidget_Song::~PresentationPropertiesWidget_Song() {
 	delete ui;
 }
 
-void PresentationPropertiesWidget_Song::fillData()
-{
+void PresentationPropertiesWidget_Song::fillData() {
 	ui->wgtStyle->setPresentationStyle(presentation_->style_);
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
 
@@ -54,45 +50,39 @@ void PresentationPropertiesWidget_Song::fillData()
 	ui->wgtStylePreview->setPresentationStyle(presentation_->style_);
 }
 
-void PresentationPropertiesWidget_Song::onStyleChangedByUser()
-{
+void PresentationPropertiesWidget_Song::onStyleChangedByUser() {
 	presentation_->style_ = ui->wgtStyle->presentationStyle();
 	ui->wgtBackground->setPresentationBackground(presentation_->style_.background());
 	// No need to emit
 }
 
-void PresentationPropertiesWidget_Song::onPresentationStyleChanged()
-{
+void PresentationPropertiesWidget_Song::onPresentationStyleChanged() {
 	ui->wgtStylePreview->setPresentationStyle(presentation_->style_);
 }
 
-void PresentationPropertiesWidget_Song::on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &background)
-{
+void PresentationPropertiesWidget_Song::on_wgtBackground_sigPresentationBackgroundChangedByUser(const PresentationBackground &background) {
 	presentation_->style_.setBackground(background);
 }
 
-void PresentationPropertiesWidget_Song::on_lnSlideOrder_editingFinished()
-{
+void PresentationPropertiesWidget_Song::on_lnSlideOrder_editingFinished() {
 	presentation_->customSlideOrder_ = ui->lnSlideOrder->text();
 	presentation_->loadSlideOrder();
 }
 
-void PresentationPropertiesWidget_Song::on_lnSlideOrder_sigFocused()
-{
+void PresentationPropertiesWidget_Song::on_lnSlideOrder_sigFocused() {
 	QStringList lst;
-	for(const Presentation_Song::SectionRec &sr : presentation_->sections_)
+	for(const Presentation_Song::SectionRec &sr: presentation_->sections_)
 		lst.append(sr.section.standardName());
 
 	slideOrderCompleterModel_.setStringList(lst);
 }
 
-void PresentationPropertiesWidget_Song::on_btnAddSlideOrderItem_pressed()
-{
+void PresentationPropertiesWidget_Song::on_btnAddSlideOrderItem_pressed() {
 	addCustomSlideOrderItemMenu_->clear();
 
-	for(const Presentation_Song::SectionRec &sr : presentation_->sections_) {
+	for(const Presentation_Song::SectionRec &sr: presentation_->sections_) {
 		SongSection section = sr.section;
-		addCustomSlideOrderItemMenu_->addAction(sr.section.icon(), sr.section.userFriendlyName(), [this, section]{
+		addCustomSlideOrderItemMenu_->addAction(sr.section.icon(), sr.section.userFriendlyName(), [this, section] {
 			const QString text = ui->lnSlideOrder->text();
 			ui->lnSlideOrder->setText((text.isEmpty() ? "" : text + " ") + section.standardName());
 			on_lnSlideOrder_editingFinished();
@@ -100,32 +90,27 @@ void PresentationPropertiesWidget_Song::on_btnAddSlideOrderItem_pressed()
 	}
 }
 
-void PresentationPropertiesWidget_Song::on_cbEmptySlideBefore_clicked(bool checked)
-{
+void PresentationPropertiesWidget_Song::on_cbEmptySlideBefore_clicked(bool checked) {
 	presentation_->emptySlideBefore_ = checked;
 	presentation_->loadSlideOrder();
 }
 
-void PresentationPropertiesWidget_Song::on_cbEmptySlideAfter_clicked(bool checked)
-{
+void PresentationPropertiesWidget_Song::on_cbEmptySlideAfter_clicked(bool checked) {
 	presentation_->emptySlideAfter_ = checked;
 	presentation_->loadSlideOrder();
 }
 
-void PresentationPropertiesWidget_Song::on_btnEditSong_clicked()
-{
+void PresentationPropertiesWidget_Song::on_btnEditSong_clicked() {
 	mainWindow->showSongsMode();
 	mainWindow->songsMode()->editSong(presentation_->songId_);
 }
 
-void PresentationPropertiesWidget_Song::on_cbIgnoreEmptySlides_clicked(bool checked)
-{
+void PresentationPropertiesWidget_Song::on_cbIgnoreEmptySlides_clicked(bool checked) {
 	presentation_->ignoreEmptySlides_ = checked;
 	presentation_->loadSlideOrder();
 }
 
-void PresentationPropertiesWidget_Song::on_cbWordWrap_clicked(bool checked)
-{
+void PresentationPropertiesWidget_Song::on_cbWordWrap_clicked(bool checked) {
 	presentation_->wordWrap_ = checked;
 	emit presentation_->sigSlidesChanged();
 }

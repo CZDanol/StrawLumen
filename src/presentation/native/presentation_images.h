@@ -1,14 +1,13 @@
 #ifndef PRESENTATION_IMAGES_H
 #define PRESENTATION_IMAGES_H
 
-#include <QStandardItemModel>
 #include <QStandardItem>
+#include <QStandardItemModel>
 #include <QTimer>
 
 #include "presentation_nativepresentation.h"
 
-class Presentation_Images : public Presentation_NativePresentation
-{
+class Presentation_Images : public Presentation_NativePresentation {
 	Q_OBJECT
 
 	friend class PresentationPropertiesWidget_Images;
@@ -64,7 +63,6 @@ private:
 private:
 	QTimer autoTimer_;
 	int autoSlide_ = 0;
-
 };
 
-#endif // PRESENTATION_IMAGES_H
+#endif// PRESENTATION_IMAGES_H

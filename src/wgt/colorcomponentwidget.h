@@ -1,18 +1,23 @@
 #ifndef COLORCOMPONENTWIDGET_H
 #define COLORCOMPONENTWIDGET_H
 
-#include <QWidget>
 #include <QPixmap>
+#include <QWidget>
 
-class ColorComponentWidget : public QWidget
-{
+class ColorComponentWidget : public QWidget {
 	Q_OBJECT
 
 public:
 	enum ColorComponent {
-		ccHsvHue, ccHsvSaturation, ccValue,
-		ccHslHue, ccHslSaturation, ccLightness,
-		ccRed, ccGreen, ccBlue,
+		ccHsvHue,
+		ccHsvSaturation,
+		ccValue,
+		ccHslHue,
+		ccHslSaturation,
+		ccLightness,
+		ccRed,
+		ccGreen,
+		ccBlue,
 		ccAlpha,
 		_ccCount
 	};
@@ -43,7 +48,6 @@ private:
 	QPixmap backgroundCache_;
 	ColorComponent component_ = ccHsvHue;
 	QRect barRect_;
-
 };
 
-#endif // COLORCOMPONENTWIDGET_H
+#endif// COLORCOMPONENTWIDGET_H

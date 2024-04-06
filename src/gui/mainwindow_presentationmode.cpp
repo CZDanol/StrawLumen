@@ -2,36 +2,34 @@
 #include "gui/mainwindow_songsmode.h"
 #include "ui_mainwindow_presentationmode.h"
 
-#include <QFileInfo>
-#include <QStringList>
 #include <QDateTime>
-#include <QShortcut>
 #include <QFileDialog>
+#include <QFileInfo>
+#include <QShortcut>
 #include <QStandardPaths>
+#include <QStringList>
 
-#include "presentation/presentationpropertieswidget.h"
 #include "gui/mainwindow.h"
 #include "gui/playlistsdialog.h"
 #include "gui/quickbibleversewindow.h"
-#include "rec/playlist.h"
-#include "presentation/presentationmanager.h"
-#include "presentation/powerpoint/presentation_powerpoint.h"
+#include "job/db.h"
+#include "job/settings.h"
+#include "presentation/native/presentation_bibleverse.h"
 #include "presentation/native/presentation_blackscreen.h"
 #include "presentation/native/presentation_customslide.h"
-#include "presentation/native/presentation_song.h"
 #include "presentation/native/presentation_images.h"
-#include "presentation/native/presentation_bibleverse.h"
+#include "presentation/native/presentation_song.h"
+#include "presentation/powerpoint/presentation_powerpoint.h"
+#include "presentation/presentationmanager.h"
+#include "presentation/presentationpropertieswidget.h"
 #include "presentation/video/presentation_video.h"
 #include "presentation/web/presentation_web.h"
-#include "job/settings.h"
-#include "job/db.h"
-#include "util/standarddialogs.h"
+#include "rec/playlist.h"
 #include "util/guianimations.h"
+#include "util/standarddialogs.h"
 
-MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::MainWindow_PresentationMode)
-{
+MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) : QWidget(parent),
+                                                                            ui(new Ui::MainWindow_PresentationMode) {
 	ui->setupUi(this);
 	setAcceptDrops(true);
 
@@ -54,9 +52,9 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 			header->resizeSection(0, 24);
 			header->setSectionResizeMode(1, QHeaderView::Stretch);
 
-			connect(&playlistItemModel_, SIGNAL(sigForceSelection(int,int)), this, SLOT(onPlaylistForceSelection(int,int)));
+			connect(&playlistItemModel_, SIGNAL(sigForceSelection(int, int)), this, SLOT(onPlaylistForceSelection(int, int)));
 			connect(&playlistItemModel_, SIGNAL(modelReset()), this, SLOT(onPlaylistModelReset()));
-			connect(ui->tvPlaylist->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onPresentationSelected(QModelIndex)));
+			connect(ui->tvPlaylist->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(onPresentationSelected(QModelIndex)));
 			connect(playlist_.data(), &Playlist::sigNameChanged, this, &MainWindow_PresentationMode::onPlaylistManipulatedAnyhow);
 			connect(playlist_.data(), &Playlist::sigChanged, this, &MainWindow_PresentationMode::onPlaylistManipulatedAnyhow);
 			connect(playlist_.data(), &Playlist::sigSaved, this, &MainWindow_PresentationMode::onPlaylistManipulatedAnyhow);
@@ -126,7 +124,7 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 		header->resizeSection(1, 64);
 		header->setSectionResizeMode(2, QHeaderView::Stretch);
 
-		connect(ui->tvSlides->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onSlideSelected(QModelIndex)));
+		connect(ui->tvSlides->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(onSlideSelected(QModelIndex)));
 		connect(presentationManager, SIGNAL(sigCurrentSlideChanged(int)), this, SLOT(onMgrCurrentSlideChanged(int)));
 		connect(&slidesItemModel_, SIGNAL(sigAfterSlidesChanged()), this, SLOT(onAfterSlidesViewSlidesChanged()));
 	}
@@ -191,23 +189,19 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) :
 	updateControlsUIEnabled();
 }
 
-MainWindow_PresentationMode::~MainWindow_PresentationMode()
-{
+MainWindow_PresentationMode::~MainWindow_PresentationMode() {
 	delete ui;
 }
 
-QWidget *MainWindow_PresentationMode::menuWidget()
-{
+QWidget *MainWindow_PresentationMode::menuWidget() {
 	return ui->wgtMenu;
 }
 
-VideoControlTabWidget *MainWindow_PresentationMode::videoControlWidget()
-{
+VideoControlTabWidget *MainWindow_PresentationMode::videoControlWidget() {
 	return ui->wgtVideoControl;
 }
 
-bool MainWindow_PresentationMode::askSaveChanges()
-{
+bool MainWindow_PresentationMode::askSaveChanges() {
 	if(!playlist_->items().count() || playlist_->areChangesSaved())
 		return true;
 
@@ -217,24 +211,21 @@ bool MainWindow_PresentationMode::askSaveChanges()
 	return true;
 }
 
-QSharedPointer<Playlist> MainWindow_PresentationMode::playlist()
-{
+QSharedPointer<Playlist> MainWindow_PresentationMode::playlist() {
 	return playlist_;
 }
 
-QVector<qlonglong> MainWindow_PresentationMode::selectedSongIds()
-{
+QVector<qlonglong> MainWindow_PresentationMode::selectedSongIds() {
 	return ui->wgtSongList->selectedRowIds();
 }
 
-void MainWindow_PresentationMode::updatePlaylistsMenu()
-{
+void MainWindow_PresentationMode::updatePlaylistsMenu() {
 	playlistsRecentMenu_.clear();
 
 	QSqlQuery q = db->selectQuery("SELECT id, name, lastTouch FROM playlists ORDER BY lastTouch DESC LIMIT 5");
 	while(q.next()) {
 		const qlonglong id = q.value("id").toLongLong();
-		playlistsRecentMenu_.addAction(q.value("name").toString(), [id]{
+		playlistsRecentMenu_.addAction(q.value("name").toString(), [id] {
 			playlistsDialog()->loadPlaylist(id);
 		});
 	}
@@ -242,8 +233,7 @@ void MainWindow_PresentationMode::updatePlaylistsMenu()
 	playlistsRecentMenu_.setEnabled(!playlistsRecentMenu_.actions().isEmpty());
 }
 
-void MainWindow_PresentationMode::updateControlsUIEnabled()
-{
+void MainWindow_PresentationMode::updateControlsUIEnabled() {
 	bool isActive = presentationManager->isActive();
 	bool isFirstSlide = isActive && presentationManager->currentGlobalSlideId() == 0;
 	bool isLastSlide = isActive && presentationManager->currentGlobalSlideId() == playlist_->slideCount() - 1;
@@ -258,40 +248,34 @@ void MainWindow_PresentationMode::updateControlsUIEnabled()
 	ui->btnBlackScreen->setEnabled(isActive);
 }
 
-void MainWindow_PresentationMode::disablePresentation()
-{
+void MainWindow_PresentationMode::disablePresentation() {
 	presentationManager->setActive(false);
 }
 
-void MainWindow_PresentationMode::scrollToCurrentSlideInSlidesView()
-{
+void MainWindow_PresentationMode::scrollToCurrentSlideInSlidesView() {
 	ui->tvSlides->scrollTo(ui->tvSlides->currentIndex(), QAbstractItemView::PositionAtCenter);
 }
 
-void MainWindow_PresentationMode::onCurrentTimeTimer()
-{
+void MainWindow_PresentationMode::onCurrentTimeTimer() {
 	QDateTime currentTime = QDateTime::currentDateTime();
 	ui->lblCurrentTime->setText(currentTime.toString(tr("HH:mm:ss")));
-	currentTimeTimer_.setInterval(1000-currentTime.time().msec());
+	currentTimeTimer_.setInterval(1000 - currentTime.time().msec());
 }
 
-void MainWindow_PresentationMode::onPlaylistForceSelection(int first, int last)
-{
+void MainWindow_PresentationMode::onPlaylistForceSelection(int first, int last) {
 	auto model = ui->tvPlaylist->selectionModel();
 	model->clear();
 
-	for(int i = first; i <= last; i ++)
+	for(int i = first; i <= last; i++)
 		model->select(playlistItemModel_.index(i, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 }
 
-void MainWindow_PresentationMode::onMgrCurrentSlideChanged(int globalSlideId)
-{
+void MainWindow_PresentationMode::onMgrCurrentSlideChanged(int globalSlideId) {
 	if(globalSlideId >= 0)
 		ui->tvSlides->setCurrentIndex(slidesItemModel_.index(globalSlideId, 0));
 }
 
-void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
-{
+void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current) {
 	presentationManager->setSlide(playlist_.data(), current.row());
 
 	auto presentation = presentationManager->currentPresentation();
@@ -299,8 +283,7 @@ void MainWindow_PresentationMode::onSlideSelected(const QModelIndex &current)
 		ui->tvPlaylist->setCurrentIndex(playlistItemModel_.index(presentation->positionInPlaylist(), 0));
 }
 
-void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &current)
-{
+void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &current) {
 	ui->twLeftBottom->setTabEnabled(ui->twLeftBottom->indexOf(ui->tabPresentationProperties), current.isValid());
 
 	if(!current.isValid())
@@ -327,8 +310,7 @@ void MainWindow_PresentationMode::onPresentationSelected(const QModelIndex &curr
 	ui->saPresentationProperties->setWidget(presentationPropertiesWidget_);
 }
 
-void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
-{
+void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged() {
 	auto presentation = presentationManager->currentPresentation();
 
 	// If the current item was removed
@@ -337,71 +319,62 @@ void MainWindow_PresentationMode::onAfterSlidesViewSlidesChanged()
 
 	// In case presentation slide count changed to ensure to stay in the current presentation
 	disablePlaylistSelectionChange_++;
-	presentationManager->setSlide(playlist_.data(), presentation->globalSlideIdOffset() + qMin(presentationManager->currentLocalSlideId(), presentation->slideCount()-1), true);
+	presentationManager->setSlide(playlist_.data(), presentation->globalSlideIdOffset() + qMin(presentationManager->currentLocalSlideId(), presentation->slideCount() - 1), true);
 	disablePlaylistSelectionChange_--;
 }
 
-void MainWindow_PresentationMode::onPlaylistModelReset()
-{
+void MainWindow_PresentationMode::onPlaylistModelReset() {
 	onPresentationSelected(ui->tvPlaylist->selectionModel()->currentIndex());
 }
 
-void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &point)
-{
+void MainWindow_PresentationMode::onPlaylistContextMenuRequested(const QPoint &point) {
 	if(ui->tvPlaylist->selectionModel()->selectedRows().count())
 		playlistContextMenu_.popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
 	else
 		addPresentationMenu_.popup(ui->tvPlaylist->viewport()->mapToGlobal(point));
 }
 
-void MainWindow_PresentationMode::onSongListContextMenuRequested(const QPoint &point)
-{
+void MainWindow_PresentationMode::onSongListContextMenuRequested(const QPoint &point) {
 	if(!ui->wgtSongList->selectedRowCount())
 		return;
 
 	songListContextMenu_.popup(point);
 }
 
-void MainWindow_PresentationMode::onSongListItemActivated(qlonglong songId)
-{
+void MainWindow_PresentationMode::onSongListItemActivated(qlonglong songId) {
 	playlist_->addItem(Presentation_Song::createFromDb(songId));
 }
 
-void MainWindow_PresentationMode::onAddPresentationMenuAboutToShow()
-{
-	addPresentationsAction_ = [this](const QVector<QSharedPointer<Presentation > > &presentations) {
+void MainWindow_PresentationMode::onAddPresentationMenuAboutToShow() {
+	addPresentationsAction_ = [this](const QVector<QSharedPointer<Presentation>> &presentations) {
 		playlist_->addItems(presentations);
 		ui->tvPlaylist->setCurrentIndex(playlistItemModel_.index(playlistItemModel_.rowCount(QModelIndex()) - 1, 0));
 	};
 }
 
-void MainWindow_PresentationMode::onAddPresentationBeforeMenuAboutToShow()
-{
+void MainWindow_PresentationMode::onAddPresentationBeforeMenuAboutToShow() {
 	const int insertPos = ui->tvPlaylist->currentIndex().row();
 
-	addPresentationsAction_ = [this, insertPos](const QVector<QSharedPointer<Presentation > > &presentations) {
+	addPresentationsAction_ = [this, insertPos](const QVector<QSharedPointer<Presentation>> &presentations) {
 		playlist_->insertItems(insertPos, presentations);
 	};
 }
 
-void MainWindow_PresentationMode::onAddPresentationAfterMenuAboutToShow()
-{
-	const int insertPos = ui->tvPlaylist->currentIndex().row()+1;
+void MainWindow_PresentationMode::onAddPresentationAfterMenuAboutToShow() {
+	const int insertPos = ui->tvPlaylist->currentIndex().row() + 1;
 
-	addPresentationsAction_ = [this, insertPos](const QVector<QSharedPointer<Presentation > > &presentations) {
+	addPresentationsAction_ = [this, insertPos](const QVector<QSharedPointer<Presentation>> &presentations) {
 		playlist_->insertItems(insertPos, presentations);
 	};
 }
 
-void MainWindow_PresentationMode::onPlaylistManipulatedAnyhow()
-{
+void MainWindow_PresentationMode::onPlaylistManipulatedAnyhow() {
 	ui->twPlaylist->setTabText(0, playlist_->areChangesSaved() ? playlist_->dbName : tr("%1*").arg(playlist_->dbName));
 
 	ui->actionSavePlaylist->setEnabled(!playlist_->areChangesSaved());
 }
 
-void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)
-{
+void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked) {
 	if(!checked) {
 		presentationManager->setActive(false);
 		return;
@@ -414,16 +387,14 @@ void MainWindow_PresentationMode::on_btnEnableProjection_clicked(bool checked)
 	presentationManager->setSlide(playlist_.data(), globalSlideId);
 }
 
-void MainWindow_PresentationMode::on_tvPlaylist_activated(const QModelIndex &index)
-{
+void MainWindow_PresentationMode::on_tvPlaylist_activated(const QModelIndex &index) {
 	if(!index.isValid())
 		return;
 
 	presentationManager->setSlide(playlist_.data(), playlist_->items()[index.row()]->globalSlideIdOffset());
 }
 
-void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
-{
+void MainWindow_PresentationMode::on_actionDeletePresentation_triggered() {
 	QModelIndexList selection = ui->tvPlaylist->selectionModel()->selectedRows();
 	if(selection.isEmpty())
 		return;
@@ -431,20 +402,18 @@ void MainWindow_PresentationMode::on_actionDeletePresentation_triggered()
 	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané prezentace?")))
 		return;
 
-	QVector<QSharedPointer<Presentation> > items;
-	for(const QModelIndex &index : selection)
+	QVector<QSharedPointer<Presentation>> items;
+	for(const QModelIndex &index: selection)
 		items.append(playlist_->items()[index.row()]);
 
 	playlist_->deleteItems(items);
 }
 
-void MainWindow_PresentationMode::on_actionAddBlackScreen_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddBlackScreen_triggered() {
 	addPresentationsAction_({Presentation_BlackScreen::create()});
 }
 
-void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered() {
 	static const QIcon icon(":/icons/16/Microsoft PowerPoint_16px.png");
 
 	QFileDialog dlg(this);
@@ -460,8 +429,8 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 
 	settings->setValue("dialog.addPowerpointPresentation.directory", dlg.directory().absolutePath());
 
-	QVector<QSharedPointer<Presentation> > presentations;
-	for(auto &filename : dlg.selectedFiles()) {
+	QVector<QSharedPointer<Presentation>> presentations;
+	for(auto &filename: dlg.selectedFiles()) {
 		QSharedPointer<Presentation> presentation = Presentation_PowerPoint::createFromFilename(filename);
 		if(!presentation)
 			break;
@@ -473,8 +442,7 @@ void MainWindow_PresentationMode::on_actionAddPowerpointPresentation_triggered()
 
 #include <QGraphicsDropShadowEffect>
 
-void MainWindow_PresentationMode::on_actionAddSong_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddSong_triggered() {
 	//standardInfoDialog(tr("Vyberte píseň v panelu \"Písně\" vlevo dole a přetáhněte ji do panelu \"Program\"."));
 	ui->twLeftBottom->setCurrentWidget(ui->tabSongList);
 
@@ -484,28 +452,24 @@ void MainWindow_PresentationMode::on_actionAddSong_triggered()
 	flashWidget(ui->twLeftBottom);
 }
 
-void MainWindow_PresentationMode::on_actionEditSong_triggered()
-{
+void MainWindow_PresentationMode::on_actionEditSong_triggered() {
 	mainWindow->showSongsMode();
 	mainWindow->songsMode()->editSong(ui->wgtSongList->currentRowId());
 }
 
-void MainWindow_PresentationMode::on_actionDeleteSongs_triggered()
-{
+void MainWindow_PresentationMode::on_actionDeleteSongs_triggered() {
 	mainWindow->songsMode()->requestDeleteSongs(ui->wgtSongList->selectedRowIds());
 }
 
-void MainWindow_PresentationMode::on_actionAddSongsToPlaylist_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddSongsToPlaylist_triggered() {
 	QVector<QSharedPointer<Presentation>> items;
-	for(const qlonglong songId : ui->wgtSongList->selectedRowIds())
+	for(const qlonglong songId: ui->wgtSongList->selectedRowIds())
 		items << Presentation_Song::createFromDb(songId);
 
 	playlist_->addItems(items);
 }
 
-void MainWindow_PresentationMode::on_btnShowHideTwLeftBottom_clicked()
-{
+void MainWindow_PresentationMode::on_btnShowHideTwLeftBottom_clicked() {
 	if(isTwLeftBottomHidden_) {
 		ui->twLeftBottom->currentWidget()->show();
 		ui->twLeftBottom->setMaximumHeight(QWIDGETSIZE_MAX);
@@ -514,8 +478,8 @@ void MainWindow_PresentationMode::on_btnShowHideTwLeftBottom_clicked()
 		ui->btnShowHideTwLeftBottom->setIcon(pixmap);
 		ui->btnShowHideTwLeftBottom->setText(tr("Skrýt"));
 		isTwLeftBottomHidden_ = false;
-
-	} else {
+	}
+	else {
 		ui->twLeftBottom->currentWidget()->hide();
 		ui->twLeftBottom->setMaximumHeight(ui->twLeftBottom->tabBar()->height() + 8);
 
@@ -526,19 +490,16 @@ void MainWindow_PresentationMode::on_btnShowHideTwLeftBottom_clicked()
 	}
 }
 
-void MainWindow_PresentationMode::on_twLeftBottom_currentChanged(int)
-{
+void MainWindow_PresentationMode::on_twLeftBottom_currentChanged(int) {
 	if(isTwLeftBottomHidden_)
 		ui->btnShowHideTwLeftBottom->click();
 }
 
-void MainWindow_PresentationMode::on_actionAddCustomSlidePresentation_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddCustomSlidePresentation_triggered() {
 	addPresentationsAction_({Presentation_CustomSlide::create()});
 }
 
-void MainWindow_PresentationMode::on_actionEditPresentation_triggered()
-{
+void MainWindow_PresentationMode::on_actionEditPresentation_triggered() {
 	if(!ui->tabPresentationProperties->isEnabled())
 		return;
 
@@ -546,8 +507,7 @@ void MainWindow_PresentationMode::on_actionEditPresentation_triggered()
 	flashWidget(ui->twLeftBottom);
 }
 
-void MainWindow_PresentationMode::on_actionClearPlaylist_triggered()
-{
+void MainWindow_PresentationMode::on_actionClearPlaylist_triggered() {
 	if(!askSaveChanges())
 		return;
 
@@ -555,31 +515,26 @@ void MainWindow_PresentationMode::on_actionClearPlaylist_triggered()
 	playlist_->assumeChangesSaved();
 }
 
-void MainWindow_PresentationMode::on_btnPlaylists_pressed()
-{
+void MainWindow_PresentationMode::on_btnPlaylists_pressed() {
 	updatePlaylistsMenu();
 }
 
-void MainWindow_PresentationMode::on_actionSavePlaylist_triggered()
-{
+void MainWindow_PresentationMode::on_actionSavePlaylist_triggered() {
 	if(playlist_->dbId != -1)
 		playlistsDialog()->saveWorkingPlaylist(playlist_->dbId);
 	else
 		playlistsDialog()->show(true);
 }
 
-void MainWindow_PresentationMode::on_actionLoadPlaylist_triggered()
-{
+void MainWindow_PresentationMode::on_actionLoadPlaylist_triggered() {
 	playlistsDialog()->show(false);
 }
 
-void MainWindow_PresentationMode::on_actionSavePlaylistAs_triggered()
-{
+void MainWindow_PresentationMode::on_actionSavePlaylistAs_triggered() {
 	playlistsDialog()->show(true);
 }
 
-void MainWindow_PresentationMode::on_actionAddImagesPresentation_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddImagesPresentation_triggered() {
 	static const QIcon icon(":/icons/16/Add_16px.png");
 
 	QFileDialog dlg(this);
@@ -598,8 +553,7 @@ void MainWindow_PresentationMode::on_actionAddImagesPresentation_triggered()
 	addPresentationsAction_({Presentation_Images::create(dlg.selectedFiles())});
 }
 
-void MainWindow_PresentationMode::on_actionAddVideoPresentation_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddVideoPresentation_triggered() {
 	static const QIcon icon(":/icons/16/Play Button_16px.png");
 
 	QFileDialog dlg(this);
@@ -615,8 +569,8 @@ void MainWindow_PresentationMode::on_actionAddVideoPresentation_triggered()
 
 	settings->setValue("dialog.addVideoPresentation.directory", dlg.directory().absolutePath());
 
-	QVector<QSharedPointer<Presentation> > presentations;
-	for(auto &filename : dlg.selectedFiles()) {
+	QVector<QSharedPointer<Presentation>> presentations;
+	for(auto &filename: dlg.selectedFiles()) {
 		QSharedPointer<Presentation> presentation = Presentation_Video::createFromFilename(filename);
 		if(!presentation)
 			break;
@@ -626,18 +580,14 @@ void MainWindow_PresentationMode::on_actionAddVideoPresentation_triggered()
 	addPresentationsAction_(presentations);
 }
 
-void MainWindow_PresentationMode::on_actionAddBibleVerse_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddBibleVerse_triggered() {
 	addPresentationsAction_({Presentation_BibleVerse::create()});
 }
 
-void MainWindow_PresentationMode::on_actionAddWebPresentation_triggered()
-{
+void MainWindow_PresentationMode::on_actionAddWebPresentation_triggered() {
 	addPresentationsAction_({Presentation_Web::create()});
 }
 
-void MainWindow_PresentationMode::on_btnQuickVerse_clicked()
-{
+void MainWindow_PresentationMode::on_btnQuickVerse_clicked() {
 	QuickBibleVerseWindow::instance()->show();
 }
-

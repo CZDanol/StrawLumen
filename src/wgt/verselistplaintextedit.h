@@ -1,11 +1,10 @@
 #ifndef VERSELISTPLAINTEXTEDIT_H
 #define VERSELISTPLAINTEXTEDIT_H
 
-#include <QPlainTextEdit>
 #include <QCompleter>
+#include <QPlainTextEdit>
 
-class VerseListPlainTextEdit : public QPlainTextEdit
-{
+class VerseListPlainTextEdit : public QPlainTextEdit {
 	Q_OBJECT
 
 public:
@@ -13,7 +12,6 @@ public:
 
 private:
 	QCompleter *completer_;
-
 };
 
-#endif // VERSELISTPLAINTEXTEDIT_H
+#endif// VERSELISTPLAINTEXTEDIT_H

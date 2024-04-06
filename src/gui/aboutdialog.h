@@ -7,8 +7,7 @@ namespace Ui {
 	class AboutDialog;
 }
 
-class AboutDialog : public QDialog
-{
+class AboutDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -24,9 +23,8 @@ private slots:
 
 private:
 	Ui::AboutDialog *ui;
-
 };
 
 AboutDialog *aboutDialog();
 
-#endif // ABOUTDIALOG_H
+#endif// ABOUTDIALOG_H

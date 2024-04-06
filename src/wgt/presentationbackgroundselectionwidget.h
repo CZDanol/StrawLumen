@@ -9,8 +9,7 @@ namespace Ui {
 	class PresentationBackgroundSelectionWidget;
 }
 
-class PresentationBackgroundSelectionWidget : public QWidget
-{
+class PresentationBackgroundSelectionWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -34,7 +33,6 @@ private:
 	Ui::PresentationBackgroundSelectionWidget *ui;
 	PresentationBackground presentationBackground_;
 	bool isReadOnly_ = false;
-
 };
 
-#endif // PRESENTATIONBACKGROUNDSELECTIONWIDGET_H
+#endif// PRESENTATIONBACKGROUNDSELECTIONWIDGET_H

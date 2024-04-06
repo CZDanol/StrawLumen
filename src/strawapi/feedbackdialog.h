@@ -7,8 +7,7 @@ namespace Ui {
 	class FeedbackDialog;
 }
 
-class FeedbackDialog : public QDialog
-{
+class FeedbackDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -26,9 +25,8 @@ private slots:
 
 private:
 	Ui::FeedbackDialog *ui;
-
 };
 
 FeedbackDialog *feedbackDialog();
 
-#endif // FEEDBACKDIALOG_H
+#endif// FEEDBACKDIALOG_H

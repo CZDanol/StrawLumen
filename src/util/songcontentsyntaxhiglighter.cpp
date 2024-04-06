@@ -1,15 +1,14 @@
 #include "songcontentsyntaxhiglighter.h"
 
+#include <QPalette>
 #include <QRegularExpressionMatchIterator>
 #include <QTextDocument>
-#include <QPalette>
 
+#include "job/wordsplit.h"
 #include "rec/chord.h"
 #include "rec/songsection.h"
-#include "job/wordsplit.h"
 
-SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
-{
+SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {
 	{
 		chordFormat_.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
 		// chordFormat_.setForeground(Qt::blue);
@@ -45,8 +44,7 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 	invalidAnnotationFormat_.setForeground(Qt::red);
 }
 
-void SongContentSyntaxHiglighter::setSepSyllables(bool set)
-{
+void SongContentSyntaxHiglighter::setSepSyllables(bool set) {
 	if(sepSyllables_ == set)
 		return;
 
@@ -54,13 +52,11 @@ void SongContentSyntaxHiglighter::setSepSyllables(bool set)
 	rehighlight();
 }
 
-bool SongContentSyntaxHiglighter::sepSyllables() const
-{
+bool SongContentSyntaxHiglighter::sepSyllables() const {
 	return sepSyllables_;
 }
 
-void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
-{
+void SongContentSyntaxHiglighter::highlightBlock(const QString &text) {
 	QPalette p;
 	chordFormat_.setForeground(p.link());
 
@@ -76,7 +72,7 @@ void SongContentSyntaxHiglighter::highlightBlock(const QString &text)
 		ChordsInSong chords;
 		QVector<int> splits = WordSplit::czech(text, chords, WordSplit::IncludeNewlines | WordSplit::IncludeChords);
 
-		for(int split : splits) {
+		for(int split: splits) {
 			setFormat(prev, split, alt ? syllableAltFormat_ : syllableFormat_);
 			alt = !alt;
 			prev = split;

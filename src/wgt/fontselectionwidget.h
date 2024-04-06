@@ -1,15 +1,14 @@
 #ifndef FONTSELECTIONWIDGET_H
 #define FONTSELECTIONWIDGET_H
 
-#include <QWidget>
 #include <QStringListModel>
+#include <QWidget>
 
 namespace Ui {
 	class FontSelectionWidget;
 }
 
-class FontSelectionWidget : public QWidget
-{
+class FontSelectionWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -43,7 +42,6 @@ private:
 	QFont selectedFont_;
 	QStringListModel fontListModel_;
 	QStringListModel fontStyleListModel_;
-
 };
 
-#endif // FONTSELECTIONWIDGET_H
+#endif// FONTSELECTIONWIDGET_H

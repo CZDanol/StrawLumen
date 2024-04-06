@@ -12,8 +12,7 @@ namespace Ui {
 	class StylesDialog;
 }
 
-class StylesDialog : public QDialog
-{
+class StylesDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -65,9 +64,8 @@ private:
 	bool isMgmtMode_, isEditMode_ = false;
 	qlonglong currentStyleId_ = -1;
 	bool currentStyleIsInternal_;
-
 };
 
 extern StylesDialog *stylesDialog;
 
-#endif // STYLESDIALOG_H
+#endif// STYLESDIALOG_H

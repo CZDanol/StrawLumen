@@ -2,8 +2,7 @@
 
 #include "job/db.h"
 
-SongTagsLineEdit::SongTagsLineEdit(QWidget *parent) : WordCompletingLineEdit(parent)
-{
+SongTagsLineEdit::SongTagsLineEdit(QWidget *parent) : WordCompletingLineEdit(parent) {
 	completer_.setModel(&completerModel_);
 	completer_.setCaseSensitivity(Qt::CaseInsensitive);
 
@@ -15,10 +14,9 @@ SongTagsLineEdit::SongTagsLineEdit(QWidget *parent) : WordCompletingLineEdit(par
 	connect(db, &DatabaseManager::sigSongChanged, this, &SongTagsLineEdit::updateTagList);
 }
 
-QSet<QString> SongTagsLineEdit::toTags() const
-{
+QSet<QString> SongTagsLineEdit::toTags() const {
 	QSet<QString> result;
-	for(QString tag : text().split(",")) {
+	for(QString tag: text().split(",")) {
 		tag = tag.trimmed();
 
 		if(tag.isEmpty() || result.contains(tag))
@@ -30,13 +28,11 @@ QSet<QString> SongTagsLineEdit::toTags() const
 	return result;
 }
 
-void SongTagsLineEdit::showEvent(QShowEvent *e)
-{
+void SongTagsLineEdit::showEvent(QShowEvent *e) {
 	updateTagList();
 	WordCompletingLineEdit::showEvent(e);
 }
 
-void SongTagsLineEdit::updateTagList()
-{
+void SongTagsLineEdit::updateTagList() {
 	completerModel_.setQuery(db->selectQuery("SELECT DISTINCT tag FROM song_tags ORDER BY tag ASC"));
 }

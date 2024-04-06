@@ -1,23 +1,22 @@
 #include "db.h"
 
 #include <QCoreApplication>
-#include <QFileInfo>
 #include <QDir>
+#include <QFileInfo>
 #include <QRegularExpression>
 #include <QUuid>
 
-#include "main.h"
-#include "util/standarddialogs.h"
 #include "job/dbmigration.h"
-#include "rec/songsection.h"
+#include "main.h"
 #include "rec/chord.h"
-#include "util/scopeexit.h"
+#include "rec/songsection.h"
 #include "util/regex.h"
+#include "util/scopeexit.h"
+#include "util/standarddialogs.h"
 
 DatabaseManager *db = nullptr;
 
-DatabaseManager::DatabaseManager()
-{
+DatabaseManager::DatabaseManager() {
 	auto db_ = db;
 	db = this;
 	SCOPE_EXIT(db = db_);
@@ -30,15 +29,15 @@ DatabaseManager::DatabaseManager()
 
 	// Open the database
 	{
-		connect(this, &DBManager::sigDatabaseError, [](QString error){
+		connect(this, &DBManager::sigDatabaseError, [](QString error) {
 			criticalBootError(DBManager::tr("Nepodařilo se incializovat databázi: %1").arg(error));
 		});
 
 		openSQLITE(dbFilepath);
-		disconnect(SIGNAL(sigQueryError(QString,QString)));
+		disconnect(SIGNAL(sigQueryError(QString, QString)));
 	}
 
-	connect(this, &DBManager::sigQueryError, [](QString query, QString error){
+	connect(this, &DBManager::sigQueryError, [](QString query, QString error) {
 		criticalBootError(DBManager::tr("Chyba při inicializaci databáze: %1\n\n%2").arg(error, query));
 	});
 
@@ -51,13 +50,13 @@ DatabaseManager::DatabaseManager()
 		QFile(dbFilepath).copy(QString("%1.bkp.v%2").arg(dbFilepath).arg(version));
 	}
 
-#define F(v)\
-	if(version == v) {\
-		beginTransaction();\
-		migrateDbFrom_v ## v();\
-		exec("UPDATE keyValueAssoc SET value = ? WHERE key = 'database.version'", {v+1});\
-		commitTransaction();\
-		version++;\
+#define F(v)                                                                            \
+	if(version == v) {                                                                    \
+		beginTransaction();                                                                 \
+		migrateDbFrom_v##v();                                                               \
+		exec("UPDATE keyValueAssoc SET value = ? WHERE key = 'database.version'", {v + 1}); \
+		commitTransaction();                                                                \
+		version++;                                                                          \
 	}
 	DB_VERSION_HISTORY_FACTORY(F)
 #undef F
@@ -65,16 +64,13 @@ DatabaseManager::DatabaseManager()
 	if(version != CURRENT_DB_VERSION)
 		criticalBootError(DBManager::tr("Nepodporovaná verze databáze"));
 
-	disconnect(SIGNAL(sigQueryError(QString,QString)));
+	disconnect(SIGNAL(sigQueryError(QString, QString)));
 }
 
-DatabaseManager::~DatabaseManager()
-{
-
+DatabaseManager::~DatabaseManager() {
 }
 
-bool DatabaseManager::blockListChangedSignals(bool set)
-{
+bool DatabaseManager::blockListChangedSignals(bool set) {
 	bool result = blockListChangedSignals_;
 	blockListChangedSignals_ = set;
 	return result;
@@ -91,18 +87,16 @@ void DatabaseManager::updateSongFulltextIndex(DBManager *db, qlonglong songId) {
 	content = collate(content);
 
 	db->exec(
-				"INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
-				{songId, collate(r.value("name").toString()), collate(r.value("author").toString()), content});
+	  "INSERT INTO songs_fulltext(docid, name, author, content) VALUES(?, ?, ?, ?)",
+	  {songId, collate(r.value("name").toString()), collate(r.value("author").toString()), content});
 }
 
-void DatabaseManager::onSongChanged()
-{
+void DatabaseManager::onSongChanged() {
 	if(!blockListChangedSignals_)
 		emit sigSongListChanged();
 }
 
-QString collate(const QString &str)
-{
+QString collate(const QString &str) {
 	// \P{M} -- a character intended to be combined with another character (e.g. accents, umlauts, enclosing boxes, etc.)
 	static QRegularExpression removeRegex("\\p{M}+", QRegularExpression::UseUnicodePropertiesOption);
 
@@ -124,8 +118,7 @@ QString collate(const QString &str)
 	return result;
 }
 
-QString collateFulltextQuery(const QString &str)
-{
+QString collateFulltextQuery(const QString &str) {
 	QString result = collate(str);
 
 	if(result.isEmpty())
@@ -139,19 +132,17 @@ QString collateFulltextQuery(const QString &str)
 	return result;
 }
 
-QString denullifyString(const QString &str)
-{
+QString denullifyString(const QString &str) {
 	return str.isNull() ? "" : str;
 }
 
-QString standardizeSongName(const QString &name)
-{
+QString standardizeSongName(const QString &name) {
 	QString r = name;
 
 	// Standardize all numbers
 	{
 		static const QRegularExpression regex("[0-9]+");
-		replaceCallback(r, regex, [] (const QRegularExpressionMatch &m) {
+		replaceCallback(r, regex, [](const QRegularExpressionMatch &m) {
 			return m.captured().rightJustified(8, '0');
 		});
 	}

@@ -1,24 +1,24 @@
 #include "opensongimportdialog.h"
 #include "ui_opensongimportdialog.h"
 
-#include <QFileDialog>
-#include <QStandardPaths>
-#include <QDomDocument>
-#include <QUuid>
-#include <QFile>
-#include <QDateTime>
 #include <QCryptographicHash>
-#include <QListView>
-#include <QTreeView>
+#include <QDateTime>
 #include <QDirIterator>
+#include <QDomDocument>
+#include <QFile>
+#include <QFileDialog>
+#include <QListView>
+#include <QStandardPaths>
+#include <QTreeView>
+#include <QUuid>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
 #include "gui/splashscreen.h"
 #include "job/db.h"
 #include "job/settings.h"
-#include "rec/playlist.h"
 #include "presentation/native/presentation_song.h"
+#include "rec/playlist.h"
 #include "util/scopeexit.h"
 #include "util/standarddialogs.h"
 
@@ -27,8 +27,7 @@ enum ConflictBehavior {
 	cbOverwrite
 };
 
-OpenSongImportDialog *openSongImportDialog()
-{
+OpenSongImportDialog *openSongImportDialog() {
 	static OpenSongImportDialog *dlg = nullptr;
 	if(!dlg)
 		dlg = new OpenSongImportDialog(mainWindow);
@@ -36,21 +35,16 @@ OpenSongImportDialog *openSongImportDialog()
 	return dlg;
 }
 
-
-OpenSongImportDialog::OpenSongImportDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::OpenSongImportDialog)
-{
+OpenSongImportDialog::OpenSongImportDialog(QWidget *parent) : QDialog(parent),
+                                                              ui(new Ui::OpenSongImportDialog) {
 	ui->setupUi(this);
 }
 
-OpenSongImportDialog::~OpenSongImportDialog()
-{
+OpenSongImportDialog::~OpenSongImportDialog() {
 	delete ui;
 }
 
-void OpenSongImportDialog::show()
-{
+void OpenSongImportDialog::show() {
 	importFiles_.clear();
 	importDirectory_.clear();
 	ui->optSingleSongs->click();
@@ -59,26 +53,21 @@ void OpenSongImportDialog::show()
 	QDialog::show();
 }
 
-void OpenSongImportDialog::show(const QStringList &files)
-{
+void OpenSongImportDialog::show(const QStringList &files) {
 	importFiles_ = files;
 	updateUi();
 	QDialog::show();
 }
 
-void OpenSongImportDialog::updateUi()
-{
+void OpenSongImportDialog::updateUi() {
 	ui->btnSelectFiles->setText(importFiles_.isEmpty() ? tr("Vybrat položky...") : tr("%n souborů", nullptr, importFiles_.size()));
 	ui->btnFolderStructure->setText(importDirectory_.isEmpty() ? tr("Vybrat složku...") : QFileInfo(importDirectory_).fileName());
 
 	ui->btnImport->setEnabled(
-				(ui->optSingleSongs->isChecked() && !importFiles_.isEmpty())
-				|| (ui->optDirectoryTree->isChecked() && !importDirectory_.isEmpty())
-				);
+	  (ui->optSingleSongs->isChecked() && !importFiles_.isEmpty()) || (ui->optDirectoryTree->isChecked() && !importDirectory_.isEmpty()));
 }
 
-QString OpenSongImportDialog::openSongToLumenSongFormat(const QString &openSongFormat)
-{
+QString OpenSongImportDialog::openSongToLumenSongFormat(const QString &openSongFormat) {
 	QString result = openSongFormat;
 
 	// Change sections formet
@@ -107,7 +96,7 @@ QString OpenSongImportDialog::openSongToLumenSongFormat(const QString &openSongF
 	while(it.hasNext()) {
 		const QRegularExpressionMatch m = it.next();
 
-		result.remove(m.capturedStart(1)+offsetCorrection, m.capturedLength(1));
+		result.remove(m.capturedStart(1) + offsetCorrection, m.capturedLength(1));
 		offsetCorrection -= m.capturedLength(1);
 
 		static const QRegularExpression chordRegex("\\S+");
@@ -115,7 +104,7 @@ QString OpenSongImportDialog::openSongToLumenSongFormat(const QString &openSongF
 		while(it2.hasNext()) {
 			const QRegularExpressionMatch m2 = it2.next();
 			const QString insertText = QString("[%1]").arg(m2.captured());
-			result.insert(m.capturedStart(2)+qMin(m2.capturedStart(),m.capturedLength(2)-1)+offsetCorrection, insertText);
+			result.insert(m.capturedStart(2) + qMin(m2.capturedStart(), m.capturedLength(2) - 1) + offsetCorrection, insertText);
 			offsetCorrection += insertText.length();
 		}
 	}
@@ -128,8 +117,7 @@ QString OpenSongImportDialog::openSongToLumenSongFormat(const QString &openSongF
 	return result;
 }
 
-QString OpenSongImportDialog::importSong(const QString &filename, const int conflictBehavior, const QSet<QString> &tags, const bool addToPlaylist, QVector<QSharedPointer<Presentation> > &presentations)
-{
+QString OpenSongImportDialog::importSong(const QString &filename, const int conflictBehavior, const QSet<QString> &tags, const bool addToPlaylist, QVector<QSharedPointer<Presentation>> &presentations) {
 	QFile f(filename);
 	if(!f.open(QIODevice::ReadOnly))
 		return tr("Nepodařilo se otevřít soubor \"%1\".").arg(filename);
@@ -163,17 +151,16 @@ QString OpenSongImportDialog::importSong(const QString &filename, const int conf
 
 		// #: SONGS_TABLE_FIELDS
 		// Denullify - the database has NOT NULL columns for error checking
-		QHash<QString,QVariant> fields {
-			{"uid", uid},
-			{"lastEdit", lastEdit},
+		QHash<QString, QVariant> fields{
+		  {"uid", uid},
+		  {"lastEdit", lastEdit},
 
-			{"name", name},
-			{"standardized_name", standardizeSongName(name)},
-			{"author", denullifyString(root.firstChildElement("author").text())},
-			{"copyright", denullifyString(root.firstChildElement("copyright").text())},
-			{"slideOrder", denullifyString(root.firstChildElement("presentation").text())},
-			{"notes", ""}
-		};
+		  {"name", name},
+		  {"standardized_name", standardizeSongName(name)},
+		  {"author", denullifyString(root.firstChildElement("author").text())},
+		  {"copyright", denullifyString(root.firstChildElement("copyright").text())},
+		  {"slideOrder", denullifyString(root.firstChildElement("presentation").text())},
+		  {"notes", ""}};
 
 		fields.insert("content", openSongToLumenSongFormat(root.firstChildElement("lyrics").text().trimmed()));
 
@@ -185,7 +172,7 @@ QString OpenSongImportDialog::importSong(const QString &filename, const int conf
 		DatabaseManager::updateSongFulltextIndex(db, songId);
 	}
 
-	for(const QString &tag : tags)
+	for(const QString &tag: tags)
 		db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
 
 	if(addToPlaylist)
@@ -194,21 +181,19 @@ QString OpenSongImportDialog::importSong(const QString &filename, const int conf
 	return nullptr;
 }
 
-void OpenSongImportDialog::on_btnClose_clicked()
-{
+void OpenSongImportDialog::on_btnClose_clicked() {
 	reject();
 }
 
-void OpenSongImportDialog::on_btnImport_clicked()
-{
+void OpenSongImportDialog::on_btnImport_clicked() {
 	const bool addToPlaylist = ui->cbAddToPlaylist->isChecked();
 	const bool directoryTreeMode = ui->optDirectoryTree->isChecked();
 	const QSet<QString> tags = ui->lnTags->toTags();
 
-	QVector<QSharedPointer<Presentation> > presentations;
+	QVector<QSharedPointer<Presentation>> presentations;
 	const int conflictBehavior = ui->cmbConflictBehavior->currentIndex();
 
-	splashscreen->asyncAction(tr("Import písní"), true, [&]{
+	splashscreen->asyncAction(tr("Import písní"), true, [&] {
 		db->beginTransaction();
 		SCOPE_EXIT(db->commitTransaction());
 
@@ -242,8 +227,8 @@ void OpenSongImportDialog::on_btnImport_clicked()
 					}
 				}
 			}
-
-		} else {
+		}
+		else {
 			for(int i = 0; i < importFiles_.size(); i++) {
 				const QString filename = importFiles_[i];
 
@@ -264,11 +249,8 @@ void OpenSongImportDialog::on_btnImport_clicked()
 
 	emit db->sigSongListChanged();
 
-	if(!presentations.isEmpty() && (
-			 presentations.size() < 20
-			 || standardConfirmDialog(tr("Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?").arg(presentations.size()))
-			 )) {
-			mainWindow->presentationMode()->playlist()->addItems(presentations);
+	if(!presentations.isEmpty() && (presentations.size() < 20 || standardConfirmDialog(tr("Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?").arg(presentations.size())))) {
+		mainWindow->presentationMode()->playlist()->addItems(presentations);
 	}
 
 	if(!splashscreen->isStornoPressed())
@@ -277,8 +259,7 @@ void OpenSongImportDialog::on_btnImport_clicked()
 	close();
 }
 
-void OpenSongImportDialog::on_btnSelectFiles_clicked()
-{
+void OpenSongImportDialog::on_btnSelectFiles_clicked() {
 	static const QIcon icon(":/icons/16/Import_16px.png");
 
 	QFileDialog dlg(this);
@@ -299,8 +280,7 @@ void OpenSongImportDialog::on_btnSelectFiles_clicked()
 	updateUi();
 }
 
-void OpenSongImportDialog::on_btnFolderStructure_clicked()
-{
+void OpenSongImportDialog::on_btnFolderStructure_clicked() {
 	static const QIcon icon(":/icons/16/Import_16px.png");
 
 	QFileDialog dlg(this);
@@ -321,12 +301,10 @@ void OpenSongImportDialog::on_btnFolderStructure_clicked()
 	updateUi();
 }
 
-void OpenSongImportDialog::on_optSingleSongs_clicked()
-{
+void OpenSongImportDialog::on_optSingleSongs_clicked() {
 	updateUi();
 }
 
-void OpenSongImportDialog::on_optDirectoryTree_clicked()
-{
+void OpenSongImportDialog::on_optDirectoryTree_clicked() {
 	updateUi();
 }

@@ -1,43 +1,37 @@
 #include "feedbackdialog.h"
 #include "ui_feedbackdialog.h"
 
-#include <QShortcut>
 #include <QDesktopServices>
+#include <QShortcut>
 #include <QUrl>
 
-#include "strawapi/strawapi.h"
 #include "gui/mainwindow.h"
-#include "util/standarddialogs.h"
 #include "gui/splashscreen.h"
+#include "strawapi/strawapi.h"
+#include "util/standarddialogs.h"
 
-FeedbackDialog::FeedbackDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::FeedbackDialog)
-{
+FeedbackDialog::FeedbackDialog(QWidget *parent) : QDialog(parent),
+                                                  ui(new Ui::FeedbackDialog) {
 	ui->setupUi(this);
 
 	new QShortcut(Qt::CTRL + Qt::Key_Return, ui->btnSend, SLOT(click()));
 }
 
-FeedbackDialog::~FeedbackDialog()
-{
+FeedbackDialog::~FeedbackDialog() {
 	delete ui;
 }
 
-void FeedbackDialog::show()
-{
+void FeedbackDialog::show() {
 	ui->teMessage->clear();
 	ui->lnEmail->setFocus();
 	QDialog::show();
 }
 
-void FeedbackDialog::on_btnCancel_clicked()
-{
+void FeedbackDialog::on_btnCancel_clicked() {
 	reject();
 }
 
-FeedbackDialog *feedbackDialog()
-{
+FeedbackDialog *feedbackDialog() {
 	static FeedbackDialog *dlg = nullptr;
 	if(!dlg)
 		dlg = new FeedbackDialog(mainWindow);
@@ -45,8 +39,7 @@ FeedbackDialog *feedbackDialog()
 	return dlg;
 }
 
-void FeedbackDialog::on_btnSend_clicked()
-{
+void FeedbackDialog::on_btnSend_clicked() {
 	const QString email = ui->lnEmail->text().trimmed();
 	if(email.isEmpty())
 		return standardErrorDialog(tr("Prosím vyplňte kontaktní e-mail"));
@@ -57,17 +50,16 @@ void FeedbackDialog::on_btnSend_clicked()
 
 	const QString subject = ui->lnSubject->text().trimmed();
 
-	const QJsonObject request {
-		{"action", "feedback"},
-		{"product", PRODUCT_IDSTR},
-		{"subject", subject},
-		{"message", QStringLiteral("Kontakt: %1\n\n%2").arg(email, message)}
-	};
+	const QJsonObject request{
+	  {"action", "feedback"},
+	  {"product", PRODUCT_IDSTR},
+	  {"subject", subject},
+	  {"message", QStringLiteral("Kontakt: %1\n\n%2").arg(email, message)}};
 
 	StrawApi::RequestResult result;
 	QJsonObject response;
 
-	splashscreen->asyncAction(tr("Odesílání zprávy"), false, [&]{
+	splashscreen->asyncAction(tr("Odesílání zprávy"), false, [&] {
 		result = StrawApi::requestJson(request, response);
 	});
 
@@ -79,7 +71,6 @@ void FeedbackDialog::on_btnSend_clicked()
 	accept();
 }
 
-void FeedbackDialog::on_btnFacebook_clicked()
-{
+void FeedbackDialog::on_btnFacebook_clicked() {
 	QDesktopServices::openUrl(QUrl("https://www.facebook.com/strawLumen"));
 }

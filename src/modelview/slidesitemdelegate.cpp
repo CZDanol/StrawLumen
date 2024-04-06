@@ -7,13 +7,10 @@
 constexpr int presentationSeparatorSize = 3;
 static const QColor presentationSeparatorColor("#333");
 
-SlidesItemDelegate::SlidesItemDelegate()
-{
-
+SlidesItemDelegate::SlidesItemDelegate() {
 }
 
-void SlidesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
+void SlidesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
 	if(!index.isValid())
 		return;
 
@@ -27,19 +24,17 @@ void SlidesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
 		opt.rect.setHeight(opt.rect.height() - presentationSeparatorSize);
 		_paintImpl(painter, opt, index);
-
-	}	else
+	}
+	else
 		_paintImpl(painter, option, index);
 }
 
-QSize SlidesItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
+QSize SlidesItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
 	bool isLast = index.data(Qt::UserRole).toBool();
 	return QStyledItemDelegate::sizeHint(option, index) + QSize(0, isLast ? presentationSeparatorSize : 0);
 }
 
-void SlidesItemDelegate::_paintImpl(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
+void SlidesItemDelegate::_paintImpl(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
 	QStyledItemDelegate::paint(painter, option, index);
 
 	if(index.column() == static_cast<int>(SlidesItemModel::Column::id)) {

@@ -6,8 +6,7 @@
 
 #include "presentation/presentation.h"
 
-class Presentation_NativePresentation : public Presentation
-{
+class Presentation_NativePresentation : public Presentation {
 	Q_OBJECT
 
 public:
@@ -33,7 +32,6 @@ protected:
 
 private:
 	bool isActive_ = false;
-
 };
 
-#endif // PRESENTATION_NATIVEPRESENTATION_H
+#endif// PRESENTATION_NATIVEPRESENTATION_H

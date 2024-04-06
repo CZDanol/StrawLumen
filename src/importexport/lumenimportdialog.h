@@ -9,8 +9,7 @@ namespace Ui {
 	class LumenImportDialog;
 }
 
-class LumenImportDialog : public QDialog
-{
+class LumenImportDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -34,9 +33,8 @@ private:
 	Ui::LumenImportDialog *ui;
 	QString importFilename_;
 	QScopedPointer<ExportDatabaseManager> db_;
-
 };
 
 LumenImportDialog *lumenImportDialog();
 
-#endif // LUMENIMPORTDIALOG_H
+#endif// LUMENIMPORTDIALOG_H

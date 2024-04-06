@@ -1,9 +1,9 @@
 #ifndef MULTISONGSELECTIONWIDGET_H
 #define MULTISONGSELECTIONWIDGET_H
 
-#include <QWidget>
 #include <QHash>
 #include <QTreeWidgetItem>
+#include <QWidget>
 
 #include "modelview/songrecorditemmodel.h"
 
@@ -11,8 +11,7 @@ namespace Ui {
 	class MultiSongSelectionWidget;
 }
 
-class MultiSongSelectionWidget : public QWidget
-{
+class MultiSongSelectionWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -51,7 +50,6 @@ private slots:
 private:
 	Ui::MultiSongSelectionWidget *ui;
 	SongRecordItemModel selectionModel_;
-
 };
 
-#endif // MULTISONGSELECTIONWIDGET_H
+#endif// MULTISONGSELECTIONWIDGET_H

@@ -1,7 +1,4 @@
 #include "verselistplaintextedit.h"
 
-VerseListPlainTextEdit::VerseListPlainTextEdit(QWidget *parent) :
-	QPlainTextEdit(parent)
-{
-
+VerseListPlainTextEdit::VerseListPlainTextEdit(QWidget *parent) : QPlainTextEdit(parent) {
 }

@@ -1,13 +1,12 @@
 #ifndef SONGCONTENTTEXTEDIT_H
 #define SONGCONTENTTEXTEDIT_H
 
-#include <QTextEdit>
 #include <QKeyEvent>
+#include <QTextEdit>
 
 class SongContentSyntaxHiglighter;
 
-class SongContentTextEdit : public QTextEdit
-{
+class SongContentTextEdit : public QTextEdit {
 	Q_OBJECT
 
 public:
@@ -26,7 +25,6 @@ protected:
 
 private:
 	SongContentSyntaxHiglighter *contentSyntaxHiglighter_;
-
 };
 
-#endif // SONGCONTENTTEXTEDIT_H
+#endif// SONGCONTENTTEXTEDIT_H

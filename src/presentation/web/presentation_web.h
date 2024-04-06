@@ -5,8 +5,7 @@
 
 #include "presentation/presentation.h"
 
-class Presentation_Web : public Presentation
-{
+class Presentation_Web : public Presentation {
 	Q_OBJECT
 
 	friend class PresentationPropertiesWidget_Web;
@@ -48,7 +47,6 @@ private:
 private:
 	QString identification_;
 	QUrl url_;
-
 };
 
-#endif // PRESENTATION_WEB_H
+#endif// PRESENTATION_WEB_H

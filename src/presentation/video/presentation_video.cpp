@@ -3,26 +3,32 @@
 #include <QFileInfo>
 
 #include "presentationengine_video.h"
-#include "videoprojectorwindow.h"
 #include "presentationpropertieswidget_video.h"
+#include "videoprojectorwindow.h"
 
-QStringList Presentation_Video::validExtensions()
-{
+QStringList Presentation_Video::validExtensions() {
 	static const QStringList result{
-		"mp4", "mp3",
-		"wav", "wmv", "wma",
-		"webm",
-		"mov", "mkv", "avi",
-		"mpg", "mpeg",
-		"flv", "flac",
-		"m4v", "m4a",
-		"aac",
+	  "mp4",
+	  "mp3",
+	  "wav",
+	  "wmv",
+	  "wma",
+	  "webm",
+	  "mov",
+	  "mkv",
+	  "avi",
+	  "mpg",
+	  "mpeg",
+	  "flv",
+	  "flac",
+	  "m4v",
+	  "m4a",
+	  "aac",
 	};
 	return result;
 }
 
-QSharedPointer<Presentation_Video> Presentation_Video::createFromFilename(const QString &filename)
-{
+QSharedPointer<Presentation_Video> Presentation_Video::createFromFilename(const QString &filename) {
 	QSharedPointer<Presentation_Video> result(new Presentation_Video);
 	result->weakPtr_ = result;
 	result->filename_ = filename;
@@ -30,8 +36,7 @@ QSharedPointer<Presentation_Video> Presentation_Video::createFromFilename(const 
 	return result;
 }
 
-QSharedPointer<Presentation_Video> Presentation_Video::createFromJSON(const QJsonObject &json)
-{
+QSharedPointer<Presentation_Video> Presentation_Video::createFromJSON(const QJsonObject &json) {
 	const QString filename = json["filename"].toString();
 	if(!QFile(filename).exists())
 		return nullptr;
@@ -45,67 +50,54 @@ QSharedPointer<Presentation_Video> Presentation_Video::createFromJSON(const QJso
 	return result;
 }
 
-QJsonObject Presentation_Video::toJSON() const
-{
-	return QJsonObject {
-		{"filename", filename_},
-		{"autoPlay", autoPlay_},
-		{"repeat", repeat_}
-	};
+QJsonObject Presentation_Video::toJSON() const {
+	return QJsonObject{
+	  {"filename", filename_},
+	  {"autoPlay", autoPlay_},
+	  {"repeat", repeat_}};
 }
 
-Presentation_Video::~Presentation_Video()
-{
-
+Presentation_Video::~Presentation_Video() {
 }
 
-QString Presentation_Video::identification() const
-{
+QString Presentation_Video::identification() const {
 	return identification_;
 }
 
-QPixmap Presentation_Video::icon() const
-{
+QPixmap Presentation_Video::icon() const {
 	static QPixmap icon(":/icons/16/Play Button_16px.png");
 	return icon;
 }
 
-QPixmap Presentation_Video::specialIcon() const
-{
+QPixmap Presentation_Video::specialIcon() const {
 	static QPixmap autoSlidePixmap(":/icons/16/Repeat_16px.png");
 	return repeat_ ? autoSlidePixmap : QPixmap();
 }
 
-QWidget *Presentation_Video::createPropertiesWidget(QWidget *parent)
-{
+QWidget *Presentation_Video::createPropertiesWidget(QWidget *parent) {
 	return new PresentationPropertiesWidget_Video(weakPtr_.toStrongRef(), parent);
 }
 
-int Presentation_Video::slideCount() const
-{
+int Presentation_Video::slideCount() const {
 	return 1;
 }
 
-QPixmap Presentation_Video::slideIdentificationIcon(int i) const
-{
+QPixmap Presentation_Video::slideIdentificationIcon(int i) const {
 	Q_UNUSED(i);
 
 	static QPixmap icon(":/icons/16/Play Button_16px.png");
 	return icon;
 }
 
-PresentationEngine *Presentation_Video::engine() const
-{
+PresentationEngine *Presentation_Video::engine() const {
 	return presentationEngine_video;
 }
 
-QString Presentation_Video::classIdentifier() const
-{
+QString Presentation_Video::classIdentifier() const {
 	return "video.video";
 }
 
-void Presentation_Video::activatePresentation(int startingSlide)
-{
+void Presentation_Video::activatePresentation(int startingSlide) {
 	Q_UNUSED(startingSlide);
 
 	if(autoPlay_)
@@ -116,8 +108,7 @@ void Presentation_Video::activatePresentation(int startingSlide)
 	videoProjectorWindow->setRepeat(repeat_);
 }
 
-void Presentation_Video::setSlide(int localSlideId, bool force)
-{
+void Presentation_Video::setSlide(int localSlideId, bool force) {
 	Q_UNUSED(localSlideId);
 	Q_UNUSED(force);
 
@@ -125,7 +116,5 @@ void Presentation_Video::setSlide(int localSlideId, bool force)
 		activatePresentation(0);
 }
 
-Presentation_Video::Presentation_Video()
-{
-
+Presentation_Video::Presentation_Video() {
 }

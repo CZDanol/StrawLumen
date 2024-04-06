@@ -1,16 +1,15 @@
 #ifndef PRESENTATION_H
 #define PRESENTATION_H
 
-#include <QObject>
-#include <QSharedPointer>
-#include <QPixmap>
 #include <QJsonObject>
+#include <QObject>
+#include <QPixmap>
+#include <QSharedPointer>
 
 class Playlist;
 class PresentationEngine;
 
-class Presentation : public QObject
-{
+class Presentation : public QObject {
 	Q_OBJECT
 
 	friend class Playlist;
@@ -75,9 +74,8 @@ private:
 	Playlist *playlist_ = nullptr;
 	int positionInPlaylist_ = -1;
 	int globalSlideIdOffset_ = -1;
-
 };
 
 Q_DECLARE_METATYPE(QSharedPointer<Presentation>)
 
-#endif // PRESENTATION_H
+#endif// PRESENTATION_H

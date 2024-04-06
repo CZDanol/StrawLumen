@@ -8,8 +8,7 @@ namespace Ui {
 	class OpenSongExportDialog;
 }
 
-class OpenSongExportDialog : public QDialog
-{
+class OpenSongExportDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -32,4 +31,4 @@ private:
 
 OpenSongExportDialog *openSongExportDialog();
 
-#endif // OPENSONGEXPORTDIALOG_H
+#endif// OPENSONGEXPORTDIALOG_H

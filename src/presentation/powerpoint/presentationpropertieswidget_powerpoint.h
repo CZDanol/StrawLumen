@@ -1,8 +1,8 @@
 #ifndef PRESENTATIONPROPERTIESWIDGET_POWERPOINT_H
 #define PRESENTATIONPROPERTIESWIDGET_POWERPOINT_H
 
-#include <QWidget>
 #include <QSharedPointer>
+#include <QWidget>
 
 class Presentation_PowerPoint;
 
@@ -10,8 +10,7 @@ namespace Ui {
 	class PresentationPropertiesWidget_PowerPoint;
 }
 
-class PresentationPropertiesWidget_PowerPoint : public QWidget
-{
+class PresentationPropertiesWidget_PowerPoint : public QWidget {
 	Q_OBJECT
 
 public:
@@ -29,7 +28,6 @@ private slots:
 private:
 	Ui::PresentationPropertiesWidget_PowerPoint *ui;
 	QSharedPointer<Presentation_PowerPoint> presentation_;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_POWERPOINT_H
+#endif// PRESENTATIONPROPERTIESWIDGET_POWERPOINT_H

@@ -2,14 +2,12 @@
 
 #include "rec/bibleref.h"
 
-BibleRefSyntaxHighlighter::BibleRefSyntaxHighlighter(QTextDocument *document) : QSyntaxHighlighter(document)
-{
+BibleRefSyntaxHighlighter::BibleRefSyntaxHighlighter(QTextDocument *document) : QSyntaxHighlighter(document) {
 	{
 		bookFormat_.setFontWeight(QFont::Bold);
 	}
 
 	{
-
 	}
 
 	{
@@ -22,10 +20,9 @@ BibleRefSyntaxHighlighter::BibleRefSyntaxHighlighter(QTextDocument *document) : 
 	}
 }
 
-void BibleRefSyntaxHighlighter::highlightBlock(const QString &text)
-{
+void BibleRefSyntaxHighlighter::highlightBlock(const QString &text) {
 	int pos = 0;
-	for(const QString &line : text.split('\n')) {
+	for(const QString &line: text.split('\n')) {
 		const QRegularExpressionMatch m = BibleRef::regex().match(line);
 		if(m.hasMatch() && BibleRef(line).isValid()) {
 			setFormat(pos + m.capturedStart(1), m.capturedLength(1), bookFormat_);

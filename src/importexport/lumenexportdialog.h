@@ -7,8 +7,7 @@ namespace Ui {
 	class LumenExportDialog;
 }
 
-class LumenExportDialog : public QDialog
-{
+class LumenExportDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -24,9 +23,8 @@ private slots:
 
 private:
 	Ui::LumenExportDialog *ui;
-
 };
 
 LumenExportDialog *lumenExportDialog();
 
-#endif // LUMENEXPORTDIALOG_H
+#endif// LUMENEXPORTDIALOG_H

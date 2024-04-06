@@ -1,14 +1,13 @@
 #ifndef SONGTAGSLINEEDIT_H
 #define SONGTAGSLINEEDIT_H
 
-#include <QSqlQueryModel>
 #include <QCompleter>
 #include <QSet>
+#include <QSqlQueryModel>
 
 #include "wgt/wordcompletinglineedit.h"
 
-class SongTagsLineEdit : public WordCompletingLineEdit
-{
+class SongTagsLineEdit : public WordCompletingLineEdit {
 	Q_OBJECT
 
 public:
@@ -26,7 +25,6 @@ private slots:
 private:
 	QCompleter completer_;
 	QSqlQueryModel completerModel_;
-
 };
 
-#endif // SONGTAGSLINEEDIT_H
+#endif// SONGTAGSLINEEDIT_H

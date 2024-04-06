@@ -1,7 +1,6 @@
 #include "regex.h"
 
-void replaceCallback(QString &str, const QRegularExpression &regex, const std::function<QString (const QRegularExpressionMatch &)> &callback)
-{
+void replaceCallback(QString &str, const QRegularExpression &regex, const std::function<QString(const QRegularExpressionMatch &)> &callback) {
 	int correction = 0;
 	auto it = regex.globalMatch(str);
 	while(it.hasNext()) {

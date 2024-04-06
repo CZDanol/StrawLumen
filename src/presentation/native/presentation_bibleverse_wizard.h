@@ -11,12 +11,11 @@ namespace Ui {
 	class Presentation_BibleVerse_Wizard;
 }
 
-class Presentation_BibleVerse_Wizard : public QDialog
-{
+class Presentation_BibleVerse_Wizard : public QDialog {
 	Q_OBJECT
 
 public:
-	using AddCallback = std::function<void(const BibleRef&)>;
+	using AddCallback = std::function<void(const BibleRef &)>;
 
 public:
 	explicit Presentation_BibleVerse_Wizard(QWidget *parent = nullptr);
@@ -35,9 +34,8 @@ private slots:
 private:
 	Ui::Presentation_BibleVerse_Wizard *ui;
 	AddCallback addCallback_;
-
 };
 
 Presentation_BibleVerse_Wizard *presentation_BibleVerse_wizard();
 
-#endif // PRESENTATION_BIBLEVERSE_WIZARD_H
+#endif// PRESENTATION_BIBLEVERSE_WIZARD_H

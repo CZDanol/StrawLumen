@@ -1,8 +1,8 @@
 #ifndef ACTIVEXJOBTHREAD_H
 #define ACTIVEXJOBTHREAD_H
 
-#include <QObject>
 #include <QAxObject>
+#include <QObject>
 
 #include "util/jobthread.h"
 
@@ -16,12 +16,12 @@ namespace Office {
 	namespace PowerPoint {
 
 		enum class PpSlideShowType : int {
-			ppShowTypeKiosk	= 3,
+			ppShowTypeKiosk = 3,
 			ppShowTypeSpeaker = 1,
 			ppShowTypeWindow = 2
 		};
 
-		enum class PpSlideShowAdvanceMode  : int {
+		enum class PpSlideShowAdvanceMode : int {
 			ppSlideShowManualAdvance = 1,
 			ppSlideShowRehearseNewTimings = 3,
 			ppSlideShowUseSlideTimings = 2
@@ -35,14 +35,14 @@ namespace Office {
 			ppSlideShowWhiteScreen = 4
 		};
 
-		enum class PpSlideShowRangeType  : int {
+		enum class PpSlideShowRangeType : int {
 			ppShowAll = 1,
 			ppShowNamedSlideShow = 3,
 			ppShowSlideRange = 2
 		};
 
-	}
-}
+	}// namespace PowerPoint
+}// namespace Office
 
 class ActiveXJobThread : public JobThread {
 	Q_OBJECT
@@ -53,9 +53,8 @@ public:
 
 public:
 	QAxObject *axPowerPointApplication = nullptr;
-
 };
 
 extern ActiveXJobThread *activeXJobThread;
 
-#endif // ACTIVEXJOBTHREAD_H
+#endif// ACTIVEXJOBTHREAD_H

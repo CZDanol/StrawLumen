@@ -3,27 +3,22 @@
 
 #include "gui/stylesdialog.h"
 
-StyleSelectionWidget::StyleSelectionWidget(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::StyleSelectionWidget)
-{
+StyleSelectionWidget::StyleSelectionWidget(QWidget *parent) : QWidget(parent),
+                                                              ui(new Ui::StyleSelectionWidget) {
 	ui->setupUi(this);
 
 	connect(&presentationStyle_, SIGNAL(sigChanged()), this, SLOT(updateLabel()));
 }
 
-StyleSelectionWidget::~StyleSelectionWidget()
-{
+StyleSelectionWidget::~StyleSelectionWidget() {
 	delete ui;
 }
 
-const PresentationStyle &StyleSelectionWidget::presentationStyle() const
-{
+const PresentationStyle &StyleSelectionWidget::presentationStyle() const {
 	return presentationStyle_;
 }
 
-void StyleSelectionWidget::setPresentationStyle(const PresentationStyle &style)
-{
+void StyleSelectionWidget::setPresentationStyle(const PresentationStyle &style) {
 	if(style == presentationStyle_)
 		return;
 
@@ -31,13 +26,11 @@ void StyleSelectionWidget::setPresentationStyle(const PresentationStyle &style)
 	// No need to call updateLabel, PresentationStyle.sigChanged is emitted
 }
 
-void StyleSelectionWidget::updateLabel()
-{
+void StyleSelectionWidget::updateLabel() {
 	ui->btnSelect->setText(presentationStyle_.name());
 }
 
-void StyleSelectionWidget::on_btnSelect_clicked()
-{
+void StyleSelectionWidget::on_btnSelect_clicked() {
 	if(stylesDialog->showInSelectionMode(presentationStyle_))
 		emit sigPresentationStyleChangedByUser();
 }

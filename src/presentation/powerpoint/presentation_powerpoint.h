@@ -1,16 +1,15 @@
 #ifndef PRESENTATION_POWERPOINT_H
 #define PRESENTATION_POWERPOINT_H
 
-#include <QSharedPointer>
-#include <QPixmap>
-#include <QList>
-#include <QStringList>
 #include <QFileInfo>
+#include <QList>
+#include <QPixmap>
+#include <QSharedPointer>
+#include <QStringList>
 
 #include "presentation/presentation.h"
 
-class Presentation_PowerPoint : public Presentation
-{
+class Presentation_PowerPoint : public Presentation {
 	Q_OBJECT
 
 	friend class PresentationPropertiesWidget_PowerPoint;
@@ -51,6 +50,7 @@ public:
 	inline const auto &getSlides() const {
 		return slides_;
 	}
+
 	int slideCount() const override;
 	QString slideIdentification(int i) const override;
 	QPixmap slideIdentificationIcon(int i) const override;
@@ -84,7 +84,6 @@ private:
 	QString identification_;
 	QList<QSharedPointer<Slide>> slides_;
 	QWeakPointer<Presentation_PowerPoint> weakPtr_;
-
 };
 
-#endif // PRESENTATION_POWERPOINT_H
+#endif// PRESENTATION_POWERPOINT_H

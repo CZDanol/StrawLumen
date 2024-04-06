@@ -2,16 +2,15 @@
 #define PLAYLISTSDIALOG_H
 
 #include <QDialog>
+#include <QJsonObject>
 #include <QListWidgetItem>
 #include <QStringListModel>
-#include <QJsonObject>
 
 namespace Ui {
 	class PlaylistsDialog;
 }
 
-class PlaylistsDialog : public QDialog
-{
+class PlaylistsDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -43,9 +42,8 @@ private slots:
 private:
 	Ui::PlaylistsDialog *ui;
 	QStringListModel itemsModel_;
-
 };
 
 PlaylistsDialog *playlistsDialog();
 
-#endif // PLAYLISTSDIALOG_H
+#endif// PLAYLISTSDIALOG_H

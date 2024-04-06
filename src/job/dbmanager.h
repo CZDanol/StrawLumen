@@ -1,14 +1,13 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-#include <QVector>
 #include <QPair>
-#include <QVariant>
 #include <QSqlDatabase>
 #include <QSqlRecord>
+#include <QVariant>
+#include <QVector>
 
-class DBManager : public QObject
-{
+class DBManager : public QObject {
 	Q_OBJECT
 
 public:
@@ -17,11 +16,11 @@ public:
 	using Arg = QVariant;
 	using Args = QVariantList;
 
-	using AssocArg = QPair<QString,QVariant>;
+	using AssocArg = QPair<QString, QVariant>;
 	using AssocArgs = QList<AssocArg>;
 
-	using ManipFunc = std::function<void(QSqlQuery&)>;
-	using QueryOpFunc = std::function<void(QSqlDatabase&)>;
+	using ManipFunc = std::function<void(QSqlQuery &)>;
+	using QueryOpFunc = std::function<void(QSqlDatabase &)>;
 
 public:
 	DBManager();
@@ -40,9 +39,9 @@ public:
 	/// Blocking query, returns insert id
 	QVariant insertAssoc(const QString &query, const AssocArgs &args = AssocArgs());
 	QVariant insert(const QString &query, const Args &args = Args());
-	QVariant insert(const QString &table, const QHash<QString,QVariant> &fields);
+	QVariant insert(const QString &table, const QHash<QString, QVariant> &fields);
 
-	void update(const QString &table, const QHash<QString,QVariant> &fields, const QString &where, const QVariantList &whereArgs = QVariantList());
+	void update(const QString &table, const QHash<QString, QVariant> &fields, const QString &where, const QVariantList &whereArgs = QVariantList());
 
 	/// Blocking query, returns first row selected (or throws error if no rows)
 	QSqlRecord selectRowAssoc(const QString &query, const AssocArgs &args = AssocArgs());
@@ -57,7 +56,7 @@ public:
 	QVariant selectValue(const QString &query, const Args &args = Args());
 
 	/// Blocking query, returns first value of the first row
-	QVariant selectValueDefAssoc(const QString &query, const AssocArgs &args = AssocArgs(),  const QVariant &def = QVariant());
+	QVariant selectValueDefAssoc(const QString &query, const AssocArgs &args = AssocArgs(), const QVariant &def = QVariant());
 	QVariant selectValueDef(const QString &query, const Args &args = Args(), const QVariant &def = QVariant());
 
 	/// Blocking query, returns the query
@@ -78,7 +77,6 @@ signals:
 
 private:
 	QSqlDatabase db_;
-
 };
 
-#endif // DBMANAGER_H
+#endif// DBMANAGER_H

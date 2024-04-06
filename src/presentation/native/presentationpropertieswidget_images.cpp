@@ -1,22 +1,20 @@
 #include "presentationpropertieswidget_images.h"
-#include "ui_presentationpropertieswidget_images.h"
 #include "presentation_images.h"
+#include "ui_presentationpropertieswidget_images.h"
 
-#include <QStandardPaths>
 #include <QFileDialog>
 #include <QShortcut>
+#include <QStandardPaths>
 
 #include "job/settings.h"
 #include "util/execonmainthread.h"
 
-PresentationPropertiesWidget_Images::PresentationPropertiesWidget_Images(const QSharedPointer<Presentation_Images> &presentation, QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::PresentationPropertiesWidget_Images),
-	presentation_(presentation)
-{
+PresentationPropertiesWidget_Images::PresentationPropertiesWidget_Images(const QSharedPointer<Presentation_Images> &presentation, QWidget *parent) : QWidget(parent),
+                                                                                                                                                     ui(new Ui::PresentationPropertiesWidget_Images),
+                                                                                                                                                     presentation_(presentation) {
 	ui->setupUi(this);
 
-	connect(presentation.data(), SIGNAL(sigItemChanged(Presentation*)), this, SLOT(fillData()));
+	connect(presentation.data(), SIGNAL(sigItemChanged(Presentation *)), this, SLOT(fillData()));
 
 	new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelection()), nullptr, Qt::WidgetWithChildrenShortcut);
 
@@ -24,18 +22,15 @@ PresentationPropertiesWidget_Images::PresentationPropertiesWidget_Images(const Q
 	fillData();
 }
 
-PresentationPropertiesWidget_Images::~PresentationPropertiesWidget_Images()
-{
+PresentationPropertiesWidget_Images::~PresentationPropertiesWidget_Images() {
 	delete ui;
 }
 
-
-bool PresentationPropertiesWidget_Images::eventFilter(QObject *obj, QEvent *ev)
-{
+bool PresentationPropertiesWidget_Images::eventFilter(QObject *obj, QEvent *ev) {
 	Q_UNUSED(obj);
 
 	if(ev->type() == QEvent::Drop) {
-		execOnMainThread([this]{
+		execOnMainThread([this] {
 			emit presentation_->sigSlidesChanged();
 		});
 	}
@@ -43,18 +38,16 @@ bool PresentationPropertiesWidget_Images::eventFilter(QObject *obj, QEvent *ev)
 	return false;
 }
 
-void PresentationPropertiesWidget_Images::fillData()
-{
+void PresentationPropertiesWidget_Images::fillData() {
 	ui->lstImages->setModel(&presentation_->images_);
 	ui->cbAutoPresentation->setChecked(presentation_->isAutoPresentation_);
 	ui->sbAutoInterval->setValue(presentation_->autoInterval_);
 	ui->lnName->setText(presentation_->name_);
 }
 
-void PresentationPropertiesWidget_Images::deleteSelection()
-{
+void PresentationPropertiesWidget_Images::deleteSelection() {
 	QList<QPersistentModelIndex> lst;
-	for(const QModelIndex &mi : ui->lstImages->selectionModel()->selectedRows())
+	for(const QModelIndex &mi: ui->lstImages->selectionModel()->selectedRows())
 		lst += mi;
 
 	for(auto mi: lst)
@@ -63,8 +56,7 @@ void PresentationPropertiesWidget_Images::deleteSelection()
 	emit presentation_->sigSlidesChanged();
 }
 
-void PresentationPropertiesWidget_Images::on_btnAddItems_clicked()
-{
+void PresentationPropertiesWidget_Images::on_btnAddItems_clicked() {
 	static const QIcon icon(":/icons/16/Add_16px.png");
 
 	QFileDialog dlg(this);
@@ -82,8 +74,7 @@ void PresentationPropertiesWidget_Images::on_btnAddItems_clicked()
 	presentation_->addImages(dlg.selectedFiles());
 }
 
-void PresentationPropertiesWidget_Images::on_cbAutoPresentation_clicked(bool checked)
-{
+void PresentationPropertiesWidget_Images::on_cbAutoPresentation_clicked(bool checked) {
 	presentation_->isAutoPresentation_ = checked;
 	presentation_->updateTiming();
 
@@ -91,16 +82,14 @@ void PresentationPropertiesWidget_Images::on_cbAutoPresentation_clicked(bool che
 	emit presentation_->sigItemChanged(presentation_.data());
 }
 
-void PresentationPropertiesWidget_Images::on_sbAutoInterval_valueChanged(int arg1)
-{
+void PresentationPropertiesWidget_Images::on_sbAutoInterval_valueChanged(int arg1) {
 	presentation_->autoInterval_ = arg1;
 	presentation_->updateTiming();
 
 	emit presentation_->sigChanged();
 }
 
-void PresentationPropertiesWidget_Images::on_lnName_editingFinished()
-{
+void PresentationPropertiesWidget_Images::on_lnName_editingFinished() {
 	presentation_->name_ = ui->lnName->text();
 
 	emit presentation_->sigSlidesChanged();

@@ -4,4 +4,4 @@
 #define STRINGIFY_IMPL(arg) #arg
 #define STRINGIFY(arg) STRINGIFY_IMPL(arg)
 
-#endif // MACROUTILS_H
+#endif// MACROUTILS_H

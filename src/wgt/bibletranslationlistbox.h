@@ -2,8 +2,7 @@
 
 #include <QListWidget>
 
-class BibleTranslationListBox : public QListWidget
-{
+class BibleTranslationListBox : public QListWidget {
 	Q_OBJECT
 
 public:
@@ -17,6 +16,4 @@ public:
 
 signals:
 	void sigChanged();
-
 };
-

@@ -9,8 +9,7 @@ namespace Ui {
 	class OpenSongImportDialog;
 }
 
-class OpenSongImportDialog : public QDialog
-{
+class OpenSongImportDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -28,7 +27,7 @@ public:
 	static QString openSongToLumenSongFormat(const QString &openSongFormat);
 
 private:
-	QString importSong(const QString &filename, const int conflictBehavior, const QSet<QString> &tags, const bool addToPlaylist, QVector<QSharedPointer<Presentation> > &presentations);
+	QString importSong(const QString &filename, const int conflictBehavior, const QSet<QString> &tags, const bool addToPlaylist, QVector<QSharedPointer<Presentation>> &presentations);
 
 private slots:
 	void on_btnClose_clicked();
@@ -42,9 +41,8 @@ private:
 	Ui::OpenSongImportDialog *ui;
 	QStringList importFiles_;
 	QString importDirectory_;
-
 };
 
 OpenSongImportDialog *openSongImportDialog();
 
-#endif // OPENSONGIMPORTDIALOG_H
+#endif// OPENSONGIMPORTDIALOG_H

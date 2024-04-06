@@ -1,14 +1,13 @@
 #include "presentation_song.h"
 
-#include "job/db.h"
 #include "job/backgroundmanager.h"
+#include "job/db.h"
 #include "job/settings.h"
-#include "rec/chord.h"
 #include "presentation/native/nativeprojectorwindow.h"
 #include "presentation/native/presentationpropertieswidget_song.h"
+#include "rec/chord.h"
 
-QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong songId)
-{
+QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong songId) {
 	QSharedPointer<Presentation_Song> result(new Presentation_Song());
 	QSignalBlocker sb(result.data());
 
@@ -26,8 +25,8 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromDb(qlonglong song
 }
 
 #include "util/standarddialogs.h"
-QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonObject &json)
-{
+
+QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonObject &json) {
 	QSharedPointer<Presentation_Song> result(new Presentation_Song());
 	QSignalBlocker sb(result.data());
 
@@ -58,22 +57,19 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 	return result;
 }
 
-QJsonObject Presentation_Song::toJSON() const
-{
+QJsonObject Presentation_Song::toJSON() const {
 	return QJsonObject{
-		{"songUid", songUid_},
-		{"customSlideOrder", customSlideOrder_},
-		{"emptySlideBefore", emptySlideBefore_},
-		{"emptySlideAfter", emptySlideAfter_},
-		{"ignoreEmptySlides", ignoreEmptySlides_},
-		{"styleId", style_.styleId()},
-		{"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()},
-			{"wordWrap", wordWrap_}
-	};
+	  {"songUid", songUid_},
+	  {"customSlideOrder", customSlideOrder_},
+	  {"emptySlideBefore", emptySlideBefore_},
+	  {"emptySlideAfter", emptySlideAfter_},
+	  {"ignoreEmptySlides", ignoreEmptySlides_},
+	  {"styleId", style_.styleId()},
+	  {"background", style_.hasCustomBackground() ? QJsonValue(style_.background().toJSON()) : QJsonValue()},
+	  {"wordWrap", wordWrap_}};
 }
 
-void Presentation_Song::drawSlide(QPainter &p, int slideId, const QRect &rect)
-{
+void Presentation_Song::drawSlide(QPainter &p, int slideId, const QRect &rect) {
 	// Empty slide name -> slide is empty, only draw background
 	if(slides_[slideId].name_.isEmpty())
 		style_.background().draw(p, rect);
@@ -87,49 +83,40 @@ void Presentation_Song::drawSlide(QPainter &p, int slideId, const QRect &rect)
 	}
 }
 
-QString Presentation_Song::identification() const
-{
+QString Presentation_Song::identification() const {
 	return name_;
 }
 
-QPixmap Presentation_Song::icon() const
-{
+QPixmap Presentation_Song::icon() const {
 	static QPixmap icon(":/icons/16/Musical Notes_16px.png");
 	return icon;
 }
 
-QWidget *Presentation_Song::createPropertiesWidget(QWidget *parent)
-{
+QWidget *Presentation_Song::createPropertiesWidget(QWidget *parent) {
 	return new PresentationPropertiesWidget_Song(weakPtr_.toStrongRef().staticCast<Presentation_Song>(), parent);
 }
 
-int Presentation_Song::slideCount() const
-{
+int Presentation_Song::slideCount() const {
 	return slides_.count();
 }
 
-QString Presentation_Song::slideIdentification(int i) const
-{
+QString Presentation_Song::slideIdentification(int i) const {
 	return slides_[i].name_;
 }
 
-QString Presentation_Song::slideDescription(int i) const
-{
+QString Presentation_Song::slideDescription(int i) const {
 	return slides_[i].description_;
 }
 
-QPixmap Presentation_Song::slideIdentificationIcon(int i) const
-{
+QPixmap Presentation_Song::slideIdentificationIcon(int i) const {
 	return slides_[i].icon_;
 }
 
-QString Presentation_Song::classIdentifier() const
-{
+QString Presentation_Song::classIdentifier() const {
 	return "native.song";
 }
 
-Presentation_Song::Presentation_Song()
-{
+Presentation_Song::Presentation_Song() {
 	connect(db, SIGNAL(sigSongChanged(qlonglong)), this, SLOT(onDbManagerSongChanged(qlonglong)));
 	connect(&style_, SIGNAL(sigChanged()), this, SLOT(onStyleChanged()));
 	connect(&style_.background(), SIGNAL(sigChanged()), this, SLOT(onStyleBackgroundChanged()));
@@ -137,8 +124,7 @@ Presentation_Song::Presentation_Song()
 	connect(&style_, &PresentationStyle::sigNeedsRepaint, this, &Presentation_Song::onStyleNeedsRepaint);
 }
 
-bool Presentation_Song::loadFromDb(qlonglong songId)
-{
+bool Presentation_Song::loadFromDb(qlonglong songId) {
 	const QSqlRecord rec = db->selectRowDef("SELECT * FROM songs WHERE id = ?", {songId});
 	if(rec.isEmpty())
 		return false;
@@ -147,8 +133,7 @@ bool Presentation_Song::loadFromDb(qlonglong songId)
 	return true;
 }
 
-bool Presentation_Song::loadFromDb_Uid(const QString &uid)
-{
+bool Presentation_Song::loadFromDb_Uid(const QString &uid) {
 	const QSqlRecord rec = db->selectRowDef("SELECT * FROM songs WHERE uid = ?", {uid});
 
 	if(rec.isEmpty())
@@ -158,8 +143,7 @@ bool Presentation_Song::loadFromDb_Uid(const QString &uid)
 	return true;
 }
 
-void Presentation_Song::loadFromDb(const QSqlRecord &rec)
-{
+void Presentation_Song::loadFromDb(const QSqlRecord &rec) {
 	QSignalBlocker sb(this);
 
 	songUid_ = rec.value("uid").toString();
@@ -171,14 +155,14 @@ void Presentation_Song::loadFromDb(const QSqlRecord &rec)
 	const bool defaultSlideOrderEmpty = defaultSlideOrder_.isEmpty();
 
 	QString content = rec.value("content").toString();
-	content.replace(songChordAnnotationRegex(),QString()); // Remove chords
+	content.replace(songChordAnnotationRegex(), QString());// Remove chords
 
 	sections_.clear();
-	for(const SongSectionWithContent &swc : songSectionsWithContent(content)) {
+	for(const SongSectionWithContent &swc: songSectionsWithContent(content)) {
 		SectionRec rec;
 		rec.section = swc.section;
 
-		for(QString content : swc.content.split(songSlideSeparatorRegex())) {
+		for(QString content: swc.content.split(songSlideSeparatorRegex())) {
 			content = content.trimmed();
 
 			/*if(content.isEmpty())
@@ -209,8 +193,7 @@ void Presentation_Song::loadFromDb(const QSqlRecord &rec)
 	emit sigSlidesChanged();
 }
 
-void Presentation_Song::loadSlideOrder()
-{
+void Presentation_Song::loadSlideOrder() {
 	static const QPixmap emptySlideBeforePixmap(":/icons/16/Sign Out_16px.png");
 	static const QPixmap emptySlideAfterPixmap(":/icons/16/Logout Rounded Left_16px.png");
 
@@ -221,7 +204,7 @@ void Presentation_Song::loadSlideOrder()
 	if(emptySlideBefore_)
 		slides_.append(SlideRec{QString(), QString(), QString(), emptySlideBeforePixmap});
 
-	for(const QString &userSectionName : slideOrder) {
+	for(const QString &userSectionName: slideOrder) {
 		const SongSection section(userSectionName, false);
 		if(!section.isValid())
 			continue;
@@ -231,9 +214,9 @@ void Presentation_Song::loadSlideOrder()
 			continue;
 
 		const SectionRec &sr = sections_[sectionName];
-		for(int i = 0; i < sr.slides.size(); i ++) {
+		for(int i = 0; i < sr.slides.size(); i++) {
 			const SlideData &slideData = sr.slides[i];
-			const QString slideName = sr.slides.size() > 1 ? tr("%1-%2", "%1 - section name, %2 - slide in section index (for multiple slides per section)").arg(sr.section.standardName()).arg(i+1) : sr.section.standardName();
+			const QString slideName = sr.slides.size() > 1 ? tr("%1-%2", "%1 - section name, %2 - slide in section index (for multiple slides per section)").arg(sr.section.standardName()).arg(i + 1) : sr.section.standardName();
 
 			if(slideData.content_.isEmpty() && ignoreEmptySlides_)
 				continue;
@@ -248,8 +231,7 @@ void Presentation_Song::loadSlideOrder()
 	emit sigSlidesChanged();
 }
 
-void Presentation_Song::onDbManagerSongChanged(qlonglong songId)
-{
+void Presentation_Song::onDbManagerSongChanged(qlonglong songId) {
 	if(songId != songId_)
 		return;
 
@@ -259,8 +241,7 @@ void Presentation_Song::onDbManagerSongChanged(qlonglong songId)
 		nativeProjectorWindow->update();
 }
 
-void Presentation_Song::onStyleChanged()
-{
+void Presentation_Song::onStyleChanged() {
 	if(signalsBlocked())
 		return;
 
@@ -268,13 +249,11 @@ void Presentation_Song::onStyleChanged()
 		nativeProjectorWindow->update();
 }
 
-void Presentation_Song::onStyleBackgroundChanged()
-{
+void Presentation_Song::onStyleBackgroundChanged() {
 	backgroundManager->preloadBackground(style_.background().filename(), settings->projectionDisplayGeometry().size());
 }
 
-void Presentation_Song::onStyleNeedsRepaint()
-{
+void Presentation_Song::onStyleNeedsRepaint() {
 	if(signalsBlocked())
 		return;
 

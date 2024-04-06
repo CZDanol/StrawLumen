@@ -8,8 +8,7 @@ namespace Ui {
 	class QuickBibleVerseWindow;
 }
 
-class QuickBibleVerseWindow : public QDialog
-{
+class QuickBibleVerseWindow : public QDialog {
 	Q_OBJECT
 
 public:
@@ -35,6 +34,4 @@ private:
 		bool active;
 		int slideId;
 	} originalPresentationState_;
-
 };
-

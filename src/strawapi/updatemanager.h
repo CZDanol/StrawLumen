@@ -4,16 +4,15 @@
 #include <QDialog>
 #include <QJsonObject>
 #include <QNetworkAccessManager>
-#include <QTemporaryFile>
-#include <QSharedPointer>
 #include <QNetworkReply>
+#include <QSharedPointer>
+#include <QTemporaryFile>
 
 namespace Ui {
 	class UpdateManager;
 }
 
-class UpdateManager : public QDialog
-{
+class UpdateManager : public QDialog {
 	Q_OBJECT
 
 public:
@@ -49,9 +48,8 @@ private:
 	QNetworkAccessManager networkAccessManager_;
 	QSharedPointer<QTemporaryFile> downloadFile_;
 	QSharedPointer<QNetworkReply> networkReply_;
-
 };
 
 UpdateManager *updateManager();
 
-#endif // UPDATEMANAGER_H
+#endif// UPDATEMANAGER_H

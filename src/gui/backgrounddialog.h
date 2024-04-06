@@ -3,9 +3,9 @@
 
 #include <QDialog>
 #include <QDir>
-#include <QMenu>
-#include <QListWidgetItem>
 #include <QHash>
+#include <QListWidgetItem>
+#include <QMenu>
 
 #include "rec/presentationbackground.h"
 
@@ -15,8 +15,7 @@ namespace Ui {
 	class BackgroundDialog;
 }
 
-class BackgroundDialog : public QDialog
-{
+class BackgroundDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -65,10 +64,9 @@ private:
 private:
 	bool backgroundsLoaded_ = false;
 	QDir backgroundsDirectory_;
-	QHash<QString,QListWidgetItem*> itemsByFilename_;
-
+	QHash<QString, QListWidgetItem *> itemsByFilename_;
 };
 
 extern BackgroundDialog *backgroundDialog;
 
-#endif // BACKGROUNDDIALOG_H
+#endif// BACKGROUNDDIALOG_H

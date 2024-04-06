@@ -5,8 +5,7 @@
 
 #include "rec/presentationstyle.h"
 
-class Presentation_CustomSlide : public Presentation_NativePresentation
-{
+class Presentation_CustomSlide : public Presentation_NativePresentation {
 	Q_OBJECT
 
 	friend class PresentationPropertiesWidget_CustomSlide;
@@ -52,7 +51,6 @@ private:
 	QString text_;
 	QStringList slides_, titles_, descriptions_;
 	bool wordWrap_ = true;
-
 };
 
-#endif // PRESENTATION_CUSTOMSLIDE_H
+#endif// PRESENTATION_CUSTOMSLIDE_H

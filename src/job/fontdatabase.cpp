@@ -2,13 +2,12 @@
 
 #include <QApplication>
 
-QFontDatabase &fontDatabase()
-{
+QFontDatabase &fontDatabase() {
 	static QFontDatabase *inst = nullptr;
 
 	if(!inst) {
 		inst = new QFontDatabase();
-		QObject::connect(qApp, &QCoreApplication::aboutToQuit, []{
+		QObject::connect(qApp, &QCoreApplication::aboutToQuit, [] {
 			delete inst;
 		});
 	}

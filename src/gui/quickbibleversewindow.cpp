@@ -1,14 +1,12 @@
 #include "quickbibleversewindow.h"
 #include "ui_quickbibleversewindow.h"
 
-#include "presentation/presentationmanager.h"
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
+#include "presentation/presentationmanager.h"
 
-QuickBibleVerseWindow::QuickBibleVerseWindow(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::QuickBibleVerseWindow)
-{
+QuickBibleVerseWindow::QuickBibleVerseWindow(QWidget *parent) : QDialog(parent),
+                                                                ui(new Ui::QuickBibleVerseWindow) {
 	ui->setupUi(this);
 
 	presentation_ = Presentation_BibleVerse::create();
@@ -23,19 +21,16 @@ QuickBibleVerseWindow::QuickBibleVerseWindow(QWidget *parent) :
 	});
 }
 
-QuickBibleVerseWindow::~QuickBibleVerseWindow()
-{
+QuickBibleVerseWindow::~QuickBibleVerseWindow() {
 	delete ui;
 }
 
-QuickBibleVerseWindow *QuickBibleVerseWindow::instance()
-{
+QuickBibleVerseWindow *QuickBibleVerseWindow::instance() {
 	static QuickBibleVerseWindow *i = new QuickBibleVerseWindow(mainWindow);
 	return i;
 }
 
-void QuickBibleVerseWindow::showEvent(QShowEvent *e)
-{
+void QuickBibleVerseWindow::showEvent(QShowEvent *e) {
 	QDialog::showEvent(e);
 
 	originalPresentationState_.active = presentationManager->isActive();
@@ -47,22 +42,19 @@ void QuickBibleVerseWindow::showEvent(QShowEvent *e)
 	presentationManager->setSlide(presentation_, 0, true);
 }
 
-void QuickBibleVerseWindow::closeEvent(QCloseEvent *e)
-{
+void QuickBibleVerseWindow::closeEvent(QCloseEvent *e) {
 	QDialog::closeEvent(e);
 
 	onHideOrClose();
 }
 
-void QuickBibleVerseWindow::hideEvent(QHideEvent *e)
-{
+void QuickBibleVerseWindow::hideEvent(QHideEvent *e) {
 	QDialog::hideEvent(e);
 
 	onHideOrClose();
 }
 
-void QuickBibleVerseWindow::onHideOrClose()
-{
+void QuickBibleVerseWindow::onHideOrClose() {
 	auto playlist = mainWindow->presentationMode()->playlist();
 
 	if(originalPresentationState_.active && playlist)

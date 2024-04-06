@@ -9,8 +9,7 @@ namespace Ui {
 	class StyleSelectionWidget;
 }
 
-class StyleSelectionWidget : public QWidget
-{
+class StyleSelectionWidget : public QWidget {
 	Q_OBJECT
 
 public:
@@ -35,7 +34,6 @@ private slots:
 private:
 	Ui::StyleSelectionWidget *ui;
 	PresentationStyle presentationStyle_;
-
 };
 
-#endif // STYLESELECTIONWIDGET_H
+#endif// STYLESELECTIONWIDGET_H

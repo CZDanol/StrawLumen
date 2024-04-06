@@ -1,16 +1,14 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
-#include <QVector>
-#include <QSharedPointer>
 #include <QMap>
 #include <QObject>
+#include <QSharedPointer>
 #include <QVector>
 
 class Presentation;
 
-class Playlist : public QObject
-{
+class Playlist : public QObject {
 	Q_OBJECT
 
 public:
@@ -18,11 +16,11 @@ public:
 
 public:
 	bool addItem(const QSharedPointer<Presentation> &item);
-	void addItems(const QVector<QSharedPointer<Presentation> > &items);
+	void addItems(const QVector<QSharedPointer<Presentation>> &items);
 	void deleteItem(const QSharedPointer<Presentation> &item);
 
-	void insertItems(int pos, const QVector<QSharedPointer<Presentation> > &items);
-	void deleteItems(const QVector<QSharedPointer<Presentation> > &items);
+	void insertItems(int pos, const QVector<QSharedPointer<Presentation>> &items);
+	void deleteItems(const QVector<QSharedPointer<Presentation>> &items);
 
 	void clear();
 
@@ -30,7 +28,7 @@ public:
 	int moveItems(const QVector<int> &itemIndexes, int targetPosition);
 
 public:
-	const QVector<QSharedPointer<Presentation> > &items() const;
+	const QVector<QSharedPointer<Presentation>> &items() const;
 	int slideCount() const;
 
 	QSharedPointer<Presentation> presentationOfSlide(int globalSlideId) const;
@@ -82,11 +80,10 @@ private slots:
 	void onPresentationMorphedInto(const QSharedPointer<Presentation> &from, const QSharedPointer<Presentation> &to);
 
 private:
-	QVector<QSharedPointer<Presentation> > items_;
+	QVector<QSharedPointer<Presentation>> items_;
 	QVector<int> itemOffsets_;
 	int slideCount_ = 0;
 	bool areChangesSaved_ = true;
-
 };
 
-#endif // PLAYLIST_H
+#endif// PLAYLIST_H

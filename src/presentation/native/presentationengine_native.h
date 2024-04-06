@@ -1,11 +1,10 @@
 #ifndef PRESENTATIONENGINE_NATIVE_H
 #define PRESENTATIONENGINE_NATIVE_H
 
-#include "presentation/presentationengine.h"
 #include "presentation/native/presentation_nativepresentation.h"
+#include "presentation/presentationengine.h"
 
-class PresentationEngine_Native : public PresentationEngine
-{
+class PresentationEngine_Native : public PresentationEngine {
 	Q_OBJECT
 
 public:
@@ -34,9 +33,8 @@ private:
 	bool isBlackScreen_ = false;
 	QSharedPointer<Presentation_NativePresentation> currentPresentation_;
 	int currentSlide_ = -1;
-
 };
 
 extern PresentationEngine_Native *presentationEngine_native;
 
-#endif // PRESENTATIONENGINE_NATIVE_H
+#endif// PRESENTATIONENGINE_NATIVE_H

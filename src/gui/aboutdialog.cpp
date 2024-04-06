@@ -2,34 +2,30 @@
 #include "ui_aboutdialog.h"
 
 #include <QDate>
-#include <QTime>
-#include <QLocale>
 #include <QDesktopServices>
-#include <QUrl>
 #include <QDir>
+#include <QLocale>
+#include <QTime>
+#include <QUrl>
 
 #include "gui/mainwindow.h"
 
-AboutDialog::AboutDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::AboutDialog)
-{
+AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent),
+                                            ui(new Ui::AboutDialog) {
 	ui->setupUi(this);
 	ui->lblVersion->setText(PROGRAM_VERSION);
 
 	setFixedSize(minimumSize());
 
-	QLocale locale( QLocale::English );
+	QLocale locale(QLocale::English);
 	ui->lblBuildDate->setText(QDateTime(locale.toDate(__DATE__, "MMM dd yyyy"), QTime::fromString(__TIME__)).toString("dd.MM.yyyy HH:mm"));
 }
 
-AboutDialog::~AboutDialog()
-{
+AboutDialog::~AboutDialog() {
 	delete ui;
 }
 
-AboutDialog *aboutDialog()
-{
+AboutDialog *aboutDialog() {
 	static AboutDialog *dlg = nullptr;
 	if(!dlg)
 		dlg = new AboutDialog(mainWindow);
@@ -37,17 +33,14 @@ AboutDialog *aboutDialog()
 	return dlg;
 }
 
-void AboutDialog::on_btnFacebookPage_clicked()
-{
+void AboutDialog::on_btnFacebookPage_clicked() {
 	QDesktopServices::openUrl(QUrl("https://www.facebook.com/strawLumen"));
 }
 
-void AboutDialog::on_btnWeb_clicked()
-{
+void AboutDialog::on_btnWeb_clicked() {
 	QDesktopServices::openUrl(QUrl("https://lumen.danol.cz"));
 }
 
-void AboutDialog::on_btnChangelog_clicked()
-{
+void AboutDialog::on_btnChangelog_clicked() {
 	QDesktopServices::openUrl(QUrl::fromLocalFile(QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../changelog.html")));
 }

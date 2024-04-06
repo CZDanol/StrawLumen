@@ -1,29 +1,28 @@
 #include "lumenimportdialog.h"
 #include "ui_lumenimportdialog.h"
 
-#include <QFileDialog>
-#include <QStandardPaths>
-#include <QSqlQuery>
-#include <QFileInfo>
-#include <QDebug>
 #include <QDate>
+#include <QDebug>
+#include <QFileDialog>
+#include <QFileInfo>
 #include <QSet>
+#include <QSqlQuery>
+#include <QStandardPaths>
 
 #include "gui/mainwindow.h"
 #include "gui/mainwindow_presentationmode.h"
 #include "gui/splashscreen.h"
+#include "importexport/exportdb.h"
 #include "job/db.h"
 #include "job/settings.h"
-#include "rec/playlist.h"
 #include "presentation/native/presentation_song.h"
-#include "importexport/exportdb.h"
+#include "rec/playlist.h"
 #include "util/standarddialogs.h"
 
 // settingName, uiControl
-#define LUMENIMPORT_SETTINGS_FACTORY(F)\
+#define LUMENIMPORT_SETTINGS_FACTORY(F) \
 	F(lumenImport_stripTags, cbStripTags) \
-	F(lumenImport_addDateLabel, cbAddDateLabel) \
-
+	F(lumenImport_addDateLabel, cbAddDateLabel)
 
 enum ConflictBehavior {
 	cbSkip,
@@ -31,8 +30,7 @@ enum ConflictBehavior {
 	cbOverwrite
 };
 
-LumenImportDialog *lumenImportDialog()
-{
+LumenImportDialog *lumenImportDialog() {
 	static LumenImportDialog *dlg = nullptr;
 	if(!dlg)
 		dlg = new LumenImportDialog(mainWindow);
@@ -40,10 +38,8 @@ LumenImportDialog *lumenImportDialog()
 	return dlg;
 }
 
-LumenImportDialog::LumenImportDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::LumenImportDialog)
-{
+LumenImportDialog::LumenImportDialog(QWidget *parent) : QDialog(parent),
+                                                        ui(new Ui::LumenImportDialog) {
 	ui->setupUi(this);
 
 	ui->wgtSongSelection->setDb(nullptr, false);
@@ -52,35 +48,30 @@ LumenImportDialog::LumenImportDialog(QWidget *parent) :
 	ui->lblCurrentDateLabel->setText(QDate::currentDate().toString("yyyy_MM_dd"));
 }
 
-LumenImportDialog::~LumenImportDialog()
-{
+LumenImportDialog::~LumenImportDialog() {
 	delete ui;
 }
 
-void LumenImportDialog::show()
-{
+void LumenImportDialog::show() {
 	importFilename_.clear();
 	loadImportFile();
 	updateUi();
 	QDialog::show();
 }
 
-void LumenImportDialog::show(const QString &filename)
-{
+void LumenImportDialog::show(const QString &filename) {
 	importFilename_ = filename;
 	loadImportFile();
 	updateUi();
 	QDialog::show();
 }
 
-void LumenImportDialog::updateUi()
-{
+void LumenImportDialog::updateUi() {
 	ui->btnSelectFile->setText(importFilename_.isEmpty() ? tr("Vybrat soubor...") : QFileInfo(importFilename_).fileName());
 	ui->btnImport->setEnabled(!importFilename_.isEmpty());
 }
 
-void LumenImportDialog::loadImportFile()
-{
+void LumenImportDialog::loadImportFile() {
 	if(importFilename_.isEmpty()) {
 		db_.reset();
 		ui->wgtSongSelection->clearSelection();
@@ -98,13 +89,11 @@ void LumenImportDialog::loadImportFile()
 	}
 }
 
-void LumenImportDialog::on_btnClose_clicked()
-{
+void LumenImportDialog::on_btnClose_clicked() {
 	reject();
 }
 
-void LumenImportDialog::on_btnImport_clicked()
-{
+void LumenImportDialog::on_btnImport_clicked() {
 	if(!ui->wgtSongSelection->isAnySongSelected())
 		return standardErrorDialog(tr("Není vybrána žádná píseň pro import."), this);
 
@@ -113,7 +102,7 @@ void LumenImportDialog::on_btnImport_clicked()
 	const bool stripTags = ui->cbStripTags->isChecked();
 
 	QSet<int> ids;
-	for(const int id : ui->wgtSongSelection->selectedSongs())
+	for(const int id: ui->wgtSongSelection->selectedSongs())
 		ids += id;
 
 	QSet<QString> tags = ui->lnTags->toTags();
@@ -121,14 +110,14 @@ void LumenImportDialog::on_btnImport_clicked()
 		tags += ui->lblCurrentDateLabel->text();
 
 	bool isError = false;
-	QVector<QSharedPointer<Presentation> > presentations;
+	QVector<QSharedPointer<Presentation>> presentations;
 
-	splashscreen->asyncAction(tr("Impportování písní"), true, [&]{
+	splashscreen->asyncAction(tr("Impportování písní"), true, [&] {
 		ExportDatabaseManager importDb(importFilename_, false);
 		if(!importDb.database().isOpen())
 			return;
 
-		connect(&importDb, &ExportDatabaseManager::sigQueryError, [&]{isError = true;});
+		connect(&importDb, &ExportDatabaseManager::sigQueryError, [&] { isError = true; });
 
 		db->beginTransaction();
 
@@ -144,24 +133,24 @@ void LumenImportDialog::on_btnImport_clicked()
 			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE name = ?", {q.value("name")});
 			qlonglong songId;
 
-			static const QStringList dataFields {"name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
+			static const QStringList dataFields{"name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
 			bool updateData = true;
 
-			QHash<QString,QVariant> data;
-			for(const QString &field : dataFields)
+			QHash<QString, QVariant> data;
+			for(const QString &field: dataFields)
 				data.insert(field, q.value(field));
 
 			data["standardized_name"] = standardizeSongName(data["name"].toString());
 
 			if(!existingSong.isEmpty() && conflictBehavior == cbSkip) {
-				 songId = existingSong.value("id").toLongLong();
-				 updateData = false;
-
-			} else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite) {
+				songId = existingSong.value("id").toLongLong();
+				updateData = false;
+			}
+			else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite) {
 				songId = existingSong.value("id").toLongLong();
 				db->update("songs", data, "id = ?", {songId});
-
-			} else {
+			}
+			else {
 				data["uid"] = q.value("uid");
 				songId = db->insert("songs", data).toLongLong();
 			}
@@ -178,7 +167,7 @@ void LumenImportDialog::on_btnImport_clicked()
 						db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, q2.value(0)});
 				}
 
-				for (const QString &tag : qAsConst(tags))
+				for(const QString &tag: qAsConst(tags))
 					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
 			}
 
@@ -191,11 +180,8 @@ void LumenImportDialog::on_btnImport_clicked()
 
 	emit db->sigSongListChanged();
 
-	if(!presentations.isEmpty() && (
-			 presentations.size() < 20
-			 || standardConfirmDialog(tr("Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?").arg(presentations.size()))
-			 )) {
-			mainWindow->presentationMode()->playlist()->addItems(presentations);
+	if(!presentations.isEmpty() && (presentations.size() < 20 || standardConfirmDialog(tr("Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?").arg(presentations.size())))) {
+		mainWindow->presentationMode()->playlist()->addItems(presentations);
 	}
 
 	if(!isError) {
@@ -206,8 +192,7 @@ void LumenImportDialog::on_btnImport_clicked()
 	}
 }
 
-void LumenImportDialog::on_btnSelectFile_clicked()
-{
+void LumenImportDialog::on_btnSelectFile_clicked() {
 	static const QIcon icon(":/icons/16/Import_16px.png");
 
 	QFileDialog dlg(this);

@@ -7,8 +7,7 @@ namespace Ui {
 	class ColorSelectionWidget;
 }
 
-class ColorSelectionWidget : public QWidget
-{
+class ColorSelectionWidget : public QWidget {
 	Q_OBJECT
 	Q_PROPERTY(bool alphaChannelEnabled READ isAlphaChannelEnabled() WRITE setAlphaChannelEnabled())
 
@@ -38,7 +37,6 @@ private:
 	QColor currentColor_;
 	bool isReadOnly_ = false;
 	bool isAlphaChannelEnabled_ = true;
-
 };
 
-#endif // COLORSELECTWIDGET_H
+#endif// COLORSELECTWIDGET_H

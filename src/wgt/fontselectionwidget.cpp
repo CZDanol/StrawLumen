@@ -3,10 +3,8 @@
 
 #include "job/fontdatabase.h"
 
-FontSelectionWidget::FontSelectionWidget(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::FontSelectionWidget)
-{
+FontSelectionWidget::FontSelectionWidget(QWidget *parent) : QWidget(parent),
+                                                            ui(new Ui::FontSelectionWidget) {
 	ui->setupUi(this);
 	ui->cmbFont->setModel(&fontListModel_);
 	ui->cmbFontStyle->setModel(&fontStyleListModel_);
@@ -14,23 +12,19 @@ FontSelectionWidget::FontSelectionWidget(QWidget *parent) :
 	updateFontList();
 }
 
-FontSelectionWidget::~FontSelectionWidget()
-{
+FontSelectionWidget::~FontSelectionWidget() {
 	delete ui;
 }
 
-const QFont &FontSelectionWidget::selectedFont() const
-{
+const QFont &FontSelectionWidget::selectedFont() const {
 	return selectedFont_;
 }
 
-void FontSelectionWidget::updateFontList()
-{
+void FontSelectionWidget::updateFontList() {
 	fontListModel_.setStringList(fontDatabase().families());
 }
 
-void FontSelectionWidget::setSelectedFont(const QFont &font)
-{
+void FontSelectionWidget::setSelectedFont(const QFont &font) {
 	if(font == selectedFont_)
 		return;
 
@@ -44,8 +38,7 @@ void FontSelectionWidget::setSelectedFont(const QFont &font)
 	ui->btnItalic->setChecked(font.italic());
 }
 
-void FontSelectionWidget::setReadOnly(bool set)
-{
+void FontSelectionWidget::setReadOnly(bool set) {
 	if(isReadOnly_ == set)
 		return;
 
@@ -57,8 +50,7 @@ void FontSelectionWidget::setReadOnly(bool set)
 	ui->btnItalic->setEnabled(!set);
 }
 
-void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
-{
+void FontSelectionWidget::updateFontStyleList(const QString &setStyle) {
 	fontStyleListModel_.setStringList(fontDatabase().styles(selectedFont_.family()));
 
 	const QStringList stringList = fontStyleListModel_.stringList();
@@ -75,7 +67,7 @@ void FontSelectionWidget::updateFontStyleList(const QString &setStyle)
 void FontSelectionWidget::on_cmbFont_activated(int) {
 	const QString arg1 = ui->cmbFont->currentText();
 
-	if (selectedFont_.family() == arg1)
+	if(selectedFont_.family() == arg1)
 		return;
 
 	const QString fontStyleName = selectedFont_.styleName();
@@ -88,7 +80,7 @@ void FontSelectionWidget::on_cmbFont_activated(int) {
 void FontSelectionWidget::on_cmbFontStyle_activated(int) {
 	const QString arg1 = ui->cmbFontStyle->currentText();
 
-	if (selectedFont_.styleName() == arg1)
+	if(selectedFont_.styleName() == arg1)
 		return;
 
 	selectedFont_ = fontDatabase().font(ui->cmbFont->currentText(), ui->cmbFontStyle->currentText(), ui->sbSize->value());
@@ -98,8 +90,7 @@ void FontSelectionWidget::on_cmbFontStyle_activated(int) {
 	emit sigFontChangedByUser(selectedFont_);
 }
 
-void FontSelectionWidget::on_sbSize_valueChanged(int arg1)
-{
+void FontSelectionWidget::on_sbSize_valueChanged(int arg1) {
 	if(selectedFont_.pointSize() == arg1)
 		return;
 
@@ -108,8 +99,7 @@ void FontSelectionWidget::on_sbSize_valueChanged(int arg1)
 	emit sigFontChangedByUser(selectedFont_);
 }
 
-void FontSelectionWidget::on_btnBold_toggled(bool checked)
-{
+void FontSelectionWidget::on_btnBold_toggled(bool checked) {
 	if(selectedFont_.bold() == checked)
 		return;
 
@@ -117,8 +107,7 @@ void FontSelectionWidget::on_btnBold_toggled(bool checked)
 	emit sigFontChangedByUser(selectedFont_);
 }
 
-void FontSelectionWidget::on_btnItalic_toggled(bool checked)
-{
+void FontSelectionWidget::on_btnItalic_toggled(bool checked) {
 	if(selectedFont_.italic() == checked)
 		return;
 

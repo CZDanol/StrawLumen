@@ -6,4 +6,4 @@
 void flashButton(QPushButton *btn);
 void flashWidget(QWidget *wgt);
 
-#endif // GUIANIMATIONS_H
+#endif// GUIANIMATIONS_H

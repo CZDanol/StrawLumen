@@ -2,19 +2,15 @@
 
 #include <QKeyEvent>
 
-ExtendedLineEdit::ExtendedLineEdit(QWidget *parent) : QLineEdit(parent)
-{
-
+ExtendedLineEdit::ExtendedLineEdit(QWidget *parent) : QLineEdit(parent) {
 }
 
-void ExtendedLineEdit::focusInEvent(QFocusEvent *e)
-{
+void ExtendedLineEdit::focusInEvent(QFocusEvent *e) {
 	QLineEdit::focusInEvent(e);
 	emit sigFocused();
 }
 
-void ExtendedLineEdit::keyPressEvent(QKeyEvent *e)
-{
+void ExtendedLineEdit::keyPressEvent(QKeyEvent *e) {
 	if(e->key() == Qt::Key_Up)
 		emit sigUpPressed();
 

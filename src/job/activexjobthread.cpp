@@ -6,11 +6,10 @@
 
 ActiveXJobThread *activeXJobThread = nullptr;
 
-ActiveXJobThread::ActiveXJobThread(QObject *parent) : JobThread(parent)
-{
+ActiveXJobThread::ActiveXJobThread(QObject *parent) : JobThread(parent) {
 	qRegisterMetaType<int>("Office::MsoTriState");
 
-	executeNonblocking([this]{
+	executeNonblocking([this] {
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
 
 		axPowerPointApplication = new QAxObject();
@@ -22,9 +21,8 @@ ActiveXJobThread::ActiveXJobThread(QObject *parent) : JobThread(parent)
 	});
 }
 
-ActiveXJobThread::~ActiveXJobThread()
-{
-	executeBlocking([this]{
+ActiveXJobThread::~ActiveXJobThread() {
+	executeBlocking([this] {
 		if(axPowerPointApplication) {
 			axPowerPointApplication->dynamicCall("Quit()");
 			delete axPowerPointApplication;

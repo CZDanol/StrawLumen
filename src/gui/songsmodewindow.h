@@ -7,8 +7,7 @@ namespace Ui {
 	class SongsModeWindow;
 }
 
-class SongsModeWindow : public QMainWindow
-{
+class SongsModeWindow : public QMainWindow {
 	Q_OBJECT
 
 public:
@@ -19,4 +18,4 @@ private:
 	Ui::SongsModeWindow *ui;
 };
 
-#endif // SONGSMODEWINDOW_H
+#endif// SONGSMODEWINDOW_H

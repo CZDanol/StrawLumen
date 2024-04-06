@@ -3,8 +3,7 @@
 
 #include "presentation/presentation.h"
 
-class Presentation_Video : public Presentation
-{
+class Presentation_Video : public Presentation {
 	Q_OBJECT
 
 	friend class PresentationPropertiesWidget_Video;
@@ -44,7 +43,6 @@ protected:
 private:
 	QString filename_, identification_;
 	bool autoPlay_ = true, repeat_ = false;
-
 };
 
-#endif // PRESENTATION_VIDEO_H
+#endif// PRESENTATION_VIDEO_H

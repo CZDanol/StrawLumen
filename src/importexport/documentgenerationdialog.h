@@ -9,8 +9,7 @@ namespace Ui {
 	class DocumentGenerationDialog;
 }
 
-class DocumentGenerationDialog : public QDialog
-{
+class DocumentGenerationDialog : public QDialog {
 	Q_OBJECT
 
 public:
@@ -44,9 +43,8 @@ private:
 private:
 	QString jsCode_;
 	QString outputFilePath_;
-
 };
 
 DocumentGenerationDialog *documentGenerationDialog();
 
-#endif // DOCUMENTGENERATIONDIALOG_H
+#endif// DOCUMENTGENERATIONDIALOG_H

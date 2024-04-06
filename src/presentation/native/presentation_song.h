@@ -1,17 +1,16 @@
 #ifndef PRESENTATION_SONG_H
 #define PRESENTATION_SONG_H
 
-#include <QVector>
 #include <QMap>
 #include <QSharedPointer>
 #include <QSqlRecord>
+#include <QVector>
 
 #include "presentation/native/presentation_nativepresentation.h"
-#include "rec/songsection.h"
 #include "rec/presentationstyle.h"
+#include "rec/songsection.h"
 
-class Presentation_Song : public Presentation_NativePresentation
-{
+class Presentation_Song : public Presentation_NativePresentation {
 	Q_OBJECT
 
 	friend class PresentationPropertiesWidget_Song;
@@ -20,10 +19,12 @@ class Presentation_Song : public Presentation_NativePresentation
 		QString content_;
 		QString description_;
 	};
+
 	struct SectionRec {
 		SongSection section;
 		QVector<SlideData> slides;
 	};
+
 	struct SlideRec {
 		QString name_;
 		QString content_;
@@ -83,7 +84,6 @@ private:
 private:
 	QMap<QString, SectionRec> sections_;
 	QVector<SlideRec> slides_;
-
 };
 
-#endif // PRESENTATION_SONG_H
+#endif// PRESENTATION_SONG_H

@@ -1,13 +1,13 @@
 #ifndef MAINWINDOW_PRESENTATIONMODE_H
 #define MAINWINDOW_PRESENTATIONMODE_H
 
-#include <QWidget>
-#include <QTimer>
 #include <QMenu>
+#include <QTimer>
+#include <QWidget>
 
 #include "modelview/playlistitemmodel.h"
-#include "modelview/slidesitemmodel.h"
 #include "modelview/slidesitemdelegate.h"
+#include "modelview/slidesitemmodel.h"
 #include "wgt/videocontroltabwidget.h"
 
 namespace Ui {
@@ -16,8 +16,7 @@ namespace Ui {
 
 class PresentationPropertiesWidget;
 
-class MainWindow_PresentationMode : public QWidget
-{
+class MainWindow_PresentationMode : public QWidget {
 	Q_OBJECT
 
 public:
@@ -99,14 +98,13 @@ private:
 
 private:
 	QMenu addPresentationMenu_, insertPresentationBeforeMenu_, insertPresentationAfterMenu_;
-	std::function<void(const QVector<QSharedPointer<Presentation> >&)> addPresentationsAction_;
+	std::function<void(const QVector<QSharedPointer<Presentation>> &)> addPresentationsAction_;
 
 private:
 	QSharedPointer<Playlist> playlist_;
 	PlaylistItemModel playlistItemModel_;
 	SlidesItemModel slidesItemModel_;
 	SlidesItemDelegate slidesItemDelegate_;
-
 };
 
-#endif // MAINWINDOW_PRESENTATIONMODE_H
+#endif// MAINWINDOW_PRESENTATIONMODE_H

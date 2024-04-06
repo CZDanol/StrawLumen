@@ -5,4 +5,4 @@
 
 QFontDatabase &fontDatabase();
 
-#endif // FONTDATABASE_H
+#endif// FONTDATABASE_H

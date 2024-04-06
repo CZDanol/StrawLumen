@@ -7,8 +7,7 @@
 
 class Presentation_CustomSlide;
 
-class Presentation_BibleVerse : public Presentation_NativePresentation
-{
+class Presentation_BibleVerse : public Presentation_NativePresentation {
 	Q_OBJECT
 
 	friend class PresentationPropertiesWidget_BibleVerse;
@@ -23,6 +22,7 @@ public:
 	inline const QString &versesStr() const {
 		return versesStr_;
 	}
+
 	void setVersesStr(const QString &set, bool defaultEmptySlide = false);
 
 public:
@@ -60,7 +60,6 @@ private:
 	QString versesStr_;
 	bool defaultEmptySlide_ = false;
 	QStringList slides_, slideDescriptions_, slideNames_;
-
 };
 
-#endif // PRESENTATION_BIBLEVERSE_H
+#endif// PRESENTATION_BIBLEVERSE_H

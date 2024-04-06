@@ -9,8 +9,7 @@ namespace Ui {
 
 class Presentation_Web;
 
-class PresentationPropertiesWidget_Web : public QWidget
-{
+class PresentationPropertiesWidget_Web : public QWidget {
 	Q_OBJECT
 
 public:
@@ -25,7 +24,6 @@ private slots:
 private:
 	Ui::PresentationPropertiesWidget_Web *ui;
 	QSharedPointer<Presentation_Web> presentation_;
-
 };
 
-#endif // PRESENTATIONPROPERTIESWIDGET_WEB_H
+#endif// PRESENTATIONPROPERTIESWIDGET_WEB_H

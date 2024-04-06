@@ -6,10 +6,8 @@
 #include "gui/mainwindow.h"
 #include "gui/splashscreen.h"
 
-DisplaySelectionWidget::DisplaySelectionWidget(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::DisplaySelectionWidget)
-{
+DisplaySelectionWidget::DisplaySelectionWidget(QWidget *parent) : QWidget(parent),
+                                                                  ui(new Ui::DisplaySelectionWidget) {
 	ui->setupUi(this);
 
 	connect(ui->cmb, SIGNAL(activated(int)), this, SLOT(onItemActivated(int)));
@@ -19,24 +17,20 @@ DisplaySelectionWidget::DisplaySelectionWidget(QWidget *parent) :
 	updateScreenList();
 }
 
-DisplaySelectionWidget::~DisplaySelectionWidget()
-{
+DisplaySelectionWidget::~DisplaySelectionWidget() {
 	delete ui;
 }
 
-QScreen *DisplaySelectionWidget::selectedScreen() const
-{
+QScreen *DisplaySelectionWidget::selectedScreen() const {
 	return ui->cmb->currentIndex() == -1 ? primaryScreen_ : screenList_[ui->cmb->currentIndex()];
 }
 
-QPair<QRect, QString> DisplaySelectionWidget::selectedScreenId() const
-{
+QPair<QRect, QString> DisplaySelectionWidget::selectedScreenId() const {
 	auto screen = selectedScreen();
 	return QPair<QRect, QString>(screen->geometry(), screen->name());
 }
 
-void DisplaySelectionWidget::setSelectedScreen(const QPair<QRect, QString> &id)
-{
+void DisplaySelectionWidget::setSelectedScreen(const QPair<QRect, QString> &id) {
 	int bestCoverage = 0;
 	int bestIndex = -1;
 
@@ -67,8 +61,7 @@ void DisplaySelectionWidget::setSelectedScreen(const QPair<QRect, QString> &id)
 	ui->cmb->setCurrentIndex(isPreferNonprimaryScreens_ ? anyNonprimaryScreenIndex_ : primaryScreenIndex_);
 }
 
-void DisplaySelectionWidget::updateScreenList()
-{
+void DisplaySelectionWidget::updateScreenList() {
 	ui->cmb->clear();
 
 	screenList_ = QGuiApplication::screens();
@@ -77,7 +70,7 @@ void DisplaySelectionWidget::updateScreenList()
 
 	anyNonprimaryScreenIndex_ = 0;
 
-	for(int i = 0; i < screenList_.size(); i ++) {
+	for(int i = 0; i < screenList_.size(); i++) {
 		QScreen *screen = screenList_[i];
 		QString positionStr;
 
@@ -94,7 +87,8 @@ void DisplaySelectionWidget::updateScreenList()
 					positionStr = tr("vpravo");
 				else
 					positionStr = tr("vlevo");
-			} else {
+			}
+			else {
 				if(center.y() > primaryScreenCenter.y())
 					positionStr = tr("dole");
 				else
@@ -102,12 +96,11 @@ void DisplaySelectionWidget::updateScreenList()
 			}
 		}
 
-		ui->cmb->addItem(tr("Obrazovka %1 (%2)").arg(i+1).arg(positionStr));
+		ui->cmb->addItem(tr("Obrazovka %1 (%2)").arg(i + 1).arg(positionStr));
 	}
 }
 
-void DisplaySelectionWidget::onItemActivated(int current)
-{
+void DisplaySelectionWidget::onItemActivated(int current) {
 	if(current == -1)
 		return;
 

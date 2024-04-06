@@ -4,12 +4,15 @@
 
 #include "job/fontdatabase.h"
 
-#define JSON_FROM(T) template<> void loadFromJSON<T>(T& subj, const QJsonValue &json)
-#define JSON_TO(T) template<> QJsonValue toJSON<T>(const T& subj)
+#define JSON_FROM(T) template<> \
+void loadFromJSON<T>(T & subj, const QJsonValue &json)
+#define JSON_TO(T) template<> \
+QJsonValue toJSON<T>(const T &subj)
 
 JSON_FROM(bool) {
 	subj = json.toBool();
 }
+
 JSON_TO(bool) {
 	return subj;
 }
@@ -17,6 +20,7 @@ JSON_TO(bool) {
 JSON_FROM(int) {
 	subj = json.toInt();
 }
+
 JSON_TO(int) {
 	return subj;
 }
@@ -24,6 +28,7 @@ JSON_TO(int) {
 JSON_FROM(QString) {
 	subj = json.toString();
 }
+
 JSON_TO(QString) {
 	return subj;
 }
@@ -31,6 +36,7 @@ JSON_TO(QString) {
 JSON_FROM(QColor) {
 	subj = QColor(json.toString());
 }
+
 JSON_TO(QColor) {
 	return subj.name(QColor::HexArgb);
 }
@@ -40,6 +46,7 @@ JSON_FROM(QFont) {
 	subj.setBold(json["bold"].toBool());
 	subj.setItalic(json["italic"].toBool());
 }
+
 JSON_TO(QFont) {
 	QJsonObject json;
 
@@ -52,10 +59,10 @@ JSON_TO(QFont) {
 	return json;
 }
 
-
 JSON_FROM(TextStyle) {
 	subj.loadFromJSON(json);
 }
+
 JSON_TO(TextStyle) {
 	return subj.toJSON();
 }
@@ -63,6 +70,7 @@ JSON_TO(TextStyle) {
 JSON_FROM(PresentationBackground) {
 	subj.loadFromJSON(json);
 }
+
 JSON_TO(PresentationBackground) {
 	return subj.toJSON();
 }

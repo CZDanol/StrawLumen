@@ -1,12 +1,11 @@
 #ifndef BIBLEREF_H
 #define BIBLEREF_H
 
+#include <QRegularExpression>
 #include <QString>
 #include <QVector>
-#include <QRegularExpression>
 
-class BibleRef
-{
+class BibleRef {
 
 public:
 	static const QRegularExpression &regex();
@@ -35,7 +34,6 @@ public:
 private:
 	QVector<int> verses_;
 	bool isValid_;
-
 };
 
-#endif // BIBLEREF_H
+#endif// BIBLEREF_H
