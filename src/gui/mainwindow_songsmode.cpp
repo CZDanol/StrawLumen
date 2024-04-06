@@ -30,6 +30,9 @@
 #include "util/songcontentsyntaxhighlighter.h"
 #include "util/standarddialogs.h"
 
+constexpr qreal minFontSize = 8;
+constexpr qreal maxFontSize = 24;
+
 // F(uiControl)
 #define SONG_FIELDS_FACTORY(F) \
 	F(lnName)                    \
@@ -266,6 +269,10 @@ void MainWindow_SongsMode::updateSongManipulationButtonsEnabled() {
 	ui->btnEdit->setEnabled(!isSongEditMode_ && currentSongId_ != -1);
 	ui->actionDeleteSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 	ui->actionPresentSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
+
+	const auto fontSize = ui->teContent->document()->defaultFont().pointSizeF();
+	ui->btnZoomOut->setEnabled(fontSize > minFontSize);
+	ui->btnZoomIn->setEnabled(fontSize < maxFontSize);
 }
 
 void MainWindow_SongsMode::updateCopyChordsMenu() {
@@ -452,6 +459,15 @@ void MainWindow_SongsMode::moveChords(bool right) {
 	cursor.setPosition(start);
 	cursor.setPosition(end, QTextCursor::KeepAnchor);
 	ui->teContent->setTextCursor(cursor);
+}
+
+void MainWindow_SongsMode::adjustFontSize(qreal step) {
+	QFont fnt = ui->teContent->document()->defaultFont();
+	fnt.setPointSizeF(qBound(minFontSize, fnt.pointSizeF() + step, maxFontSize));
+	ui->teContent->document()->setDefaultFont(fnt);
+	ui->teContent->syntaxHiglighter()->rehighlight();
+
+	updateSongManipulationButtonsEnabled();
 }
 
 QPair<int, QString> MainWindow_SongsMode::songSectionAroundPos(int pos) {
@@ -861,4 +877,12 @@ void MainWindow_SongsMode::on_btnTransposeFlat_clicked() {
 
 void MainWindow_SongsMode::on_actionImportFromPowerPoint_triggered() {
 	PowerPointImportDialog::instance()->show();
+}
+
+void MainWindow_SongsMode::on_btnZoomIn_clicked() {
+	adjustFontSize(2);
+}
+
+void MainWindow_SongsMode::on_btnZoomOut_clicked() {
+	adjustFontSize(-2);
 }

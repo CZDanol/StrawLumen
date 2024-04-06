@@ -562,6 +562,40 @@ Zkratka: Alt+Shift+F</string>
            <number>0</number>
           </property>
           <item>
+           <widget class="QPushButton" name="btnZoomOut">
+            <property name="toolTip">
+             <string>Zmenšit písmo</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Zoom Out.png</normaloff>:/icons/16/Zoom Out.png</iconset>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+-</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnZoomIn">
+            <property name="toolTip">
+             <string>Zvětšit písmo</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Zoom In.png</normaloff>:/icons/16/Zoom In.png</iconset>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl++</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btnDiscardChanges">
             <property name="text">
              <string>Zahodit změny</string>

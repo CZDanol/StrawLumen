@@ -263,5 +263,7 @@
         <file>icons/16/language_16px.png</file>
         <file>icons/16/word_wrap_16px.png</file>
         <file>logos/avatar_64w.png</file>
+        <file>icons/16/Zoom In.png</file>
+        <file>icons/16/Zoom Out.png</file>
     </qresource>
 </RCC>

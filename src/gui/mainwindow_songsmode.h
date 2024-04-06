@@ -48,6 +48,8 @@ private:
 	void contentSelectionMorph(const std::function<QString(QString)> &callback, bool onlySection);
 	void moveChords(bool right);
 
+	void adjustFontSize(qreal step);
+
 	/// Returns position and content of a song section around position pos
 	QPair<int, QString> songSectionAroundPos(int pos);
 
@@ -91,6 +93,8 @@ private slots:
 	void on_btnConvertChords_clicked();
 	void on_btnTransposeFlat_clicked();
 	void on_actionImportFromPowerPoint_triggered();
+	void on_btnZoomIn_clicked();
+	void on_btnZoomOut_clicked();
 
 private:
 	Ui::MainWindow_SongsMode *ui;

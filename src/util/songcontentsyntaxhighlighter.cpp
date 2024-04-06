@@ -64,13 +64,12 @@ void SongContentSyntaxHighlighter::highlightBlock(const QString &text) {
 		const QColor errColor = isDarkMode ? QColor("#f55") : Qt::red;
 		invalidWhitespaceFormat_.setBackground(errColor);
 		invalidAnnotationFormat_.setForeground(errColor);
+
+		// Default font changes, we must update
+		auto size = document()->defaultFont().pointSize() * 1.3;
+		chordFormat_.setFontPointSize(size);
+		chordAnnotationSymbolFormat_.setFontPointSize(size);
 	}
-
-
-	// Default font changes, we must update
-	auto size = document()->defaultFont().pointSize() * 1.3;
-	chordFormat_.setFontPointSize(size);
-	chordAnnotationSymbolFormat_.setFontPointSize(size);
 
 	// Sep syllables
 	if(sepSyllables_) {
