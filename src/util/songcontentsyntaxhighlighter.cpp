@@ -5,6 +5,7 @@
 #include <QTextDocument>
 
 #include "job/wordsplit.h"
+#include "main.h"
 #include "rec/chord.h"
 #include "rec/songsection.h"
 
@@ -21,10 +22,8 @@ SongContentSyntaxHighlighter::SongContentSyntaxHighlighter(QTextDocument *parent
 	{
 		sectionFormat_.setFontWeight(QFont::Bold);
 		sectionFormat_.setForeground(Qt::white);
-		sectionFormat_.setBackground(Qt::black);
 
 		sectionAnnotationSymbolFormat_.setForeground(Qt::transparent);
-		sectionAnnotationSymbolFormat_.setBackground(Qt::black);
 		//sectionAnnotationSymbolFormat_.setFontStretch(400);
 	}
 
@@ -38,10 +37,6 @@ SongContentSyntaxHighlighter::SongContentSyntaxHighlighter(QTextDocument *parent
 		syllableFormat_.setBackground(QColor(0, 255, 0, 64));
 		syllableAltFormat_.setBackground(QColor(0, 0, 255, 64));
 	}
-
-	invalidWhitespaceFormat_.setBackground(QColor("red"));
-
-	invalidAnnotationFormat_.setForeground(Qt::red);
 }
 
 void SongContentSyntaxHighlighter::setSepSyllables(bool set) {
@@ -57,8 +52,20 @@ bool SongContentSyntaxHighlighter::sepSyllables() const {
 }
 
 void SongContentSyntaxHighlighter::highlightBlock(const QString &text) {
-	QPalette p;
-	chordFormat_.setForeground(p.link());
+	// Update palette based on dark/light mode
+	{
+		QPalette p;
+		chordFormat_.setForeground(p.link());
+
+		const QColor bgColor = isDarkMode ? QColor("#333") : Qt::black;
+		sectionFormat_.setBackground(bgColor);
+		sectionAnnotationSymbolFormat_.setBackground(bgColor);
+
+		const QColor errColor = isDarkMode ? QColor("#f55") : Qt::red;
+		invalidWhitespaceFormat_.setBackground(errColor);
+		invalidAnnotationFormat_.setForeground(errColor);
+	}
+
 
 	// Default font changes, we must update
 	auto size = document()->defaultFont().pointSize() * 1.3;

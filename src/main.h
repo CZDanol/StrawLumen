@@ -6,6 +6,7 @@
 
 extern QDir appDataDirectory;
 extern bool isPortableMode;
+extern bool isDarkMode;
 
 void initApplication();
 void uninitApplication();

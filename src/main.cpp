@@ -36,6 +36,7 @@
 
 QDir appDataDirectory;
 bool isPortableMode;
+bool isDarkMode = true;
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
@@ -138,11 +139,12 @@ void uninitApplication() {
 }
 
 void setupStylesheet(bool darkMode) {
+	isDarkMode = darkMode;
+
 	static auto style = new FusionProxyStyle();
 	qApp->setStyle(style);
 
-	static auto defaultPalette = qApp->palette();
-	QPalette p = defaultPalette;
+	QPalette p = style->standardPalette();
 	if(darkMode) {
 		const QColor themeCl("#CA3406");
 		const QColor midCl("#333333");
@@ -159,7 +161,7 @@ void setupStylesheet(bool darkMode) {
 		p.setColor(QPalette::Button, darkCl);
 		p.setColor(QPalette::ButtonText, Qt::white);
 		p.setColor(QPalette::BrightText, Qt::red);
-		p.setColor(QPalette::Link, QColor("#0a80ff"));
+		p.setColor(QPalette::Link, QColor("#1987fc"));
 		p.setColor(QPalette::LinkVisited, themeCl);
 
 		p.setColor(QPalette::Highlight, QColor("#f5734c"));
