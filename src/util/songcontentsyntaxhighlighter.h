@@ -4,11 +4,11 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-class SongContentSyntaxHiglighter : public QSyntaxHighlighter {
+class SongContentSyntaxHighlighter : public QSyntaxHighlighter {
 	Q_OBJECT
 
 public:
-	SongContentSyntaxHiglighter(QTextDocument *parent = nullptr);
+	SongContentSyntaxHighlighter(QTextDocument *parent = nullptr);
 
 public:
 	void setSepSyllables(bool set);

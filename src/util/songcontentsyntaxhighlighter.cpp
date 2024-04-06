@@ -1,4 +1,4 @@
-#include "songcontentsyntaxhiglighter.h"
+#include "songcontentsyntaxhighlighter.h"
 
 #include <QPalette>
 #include <QRegularExpressionMatchIterator>
@@ -8,7 +8,7 @@
 #include "rec/chord.h"
 #include "rec/songsection.h"
 
-SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {
+SongContentSyntaxHighlighter::SongContentSyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {
 	{
 		chordFormat_.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
 		// chordFormat_.setForeground(Qt::blue);
@@ -44,7 +44,7 @@ SongContentSyntaxHiglighter::SongContentSyntaxHiglighter(QTextDocument *parent) 
 	invalidAnnotationFormat_.setForeground(Qt::red);
 }
 
-void SongContentSyntaxHiglighter::setSepSyllables(bool set) {
+void SongContentSyntaxHighlighter::setSepSyllables(bool set) {
 	if(sepSyllables_ == set)
 		return;
 
@@ -52,11 +52,11 @@ void SongContentSyntaxHiglighter::setSepSyllables(bool set) {
 	rehighlight();
 }
 
-bool SongContentSyntaxHiglighter::sepSyllables() const {
+bool SongContentSyntaxHighlighter::sepSyllables() const {
 	return sepSyllables_;
 }
 
-void SongContentSyntaxHiglighter::highlightBlock(const QString &text) {
+void SongContentSyntaxHighlighter::highlightBlock(const QString &text) {
 	QPalette p;
 	chordFormat_.setForeground(p.link());
 

@@ -4,7 +4,7 @@
 #include <QKeyEvent>
 #include <QTextEdit>
 
-class SongContentSyntaxHiglighter;
+class SongContentSyntaxHighlighter;
 
 class SongContentTextEdit : public QTextEdit {
 	Q_OBJECT
@@ -13,7 +13,7 @@ public:
 	explicit SongContentTextEdit(QWidget *parent = nullptr);
 
 public:
-	SongContentSyntaxHiglighter *syntaxHiglighter();
+	SongContentSyntaxHighlighter *syntaxHiglighter();
 
 signals:
 	void sigAltlLeftPressed();
@@ -24,7 +24,7 @@ protected:
 	bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
-	SongContentSyntaxHiglighter *contentSyntaxHiglighter_;
+	SongContentSyntaxHighlighter *contentSyntaxHiglighter_;
 };
 
 #endif// SONGCONTENTTEXTEDIT_H

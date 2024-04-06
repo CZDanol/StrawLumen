@@ -27,7 +27,7 @@
 #include "presentation/presentationmanager.h"
 #include "rec/chord.h"
 #include "rec/playlist.h"
-#include "util/songcontentsyntaxhiglighter.h"
+#include "util/songcontentsyntaxhighlighter.h"
 #include "util/standarddialogs.h"
 
 // F(uiControl)

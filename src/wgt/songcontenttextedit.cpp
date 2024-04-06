@@ -1,14 +1,14 @@
 #include "songcontenttextedit.h"
 
 #include "rec/chord.h"
-#include "util/songcontentsyntaxhiglighter.h"
+#include "util/songcontentsyntaxhighlighter.h"
 
 SongContentTextEdit::SongContentTextEdit(QWidget *parent) : QTextEdit(parent) {
-	contentSyntaxHiglighter_ = new SongContentSyntaxHiglighter(document());
+	contentSyntaxHiglighter_ = new SongContentSyntaxHighlighter(document());
 	viewport()->installEventFilter(this);
 }
 
-SongContentSyntaxHiglighter *SongContentTextEdit::syntaxHiglighter() {
+SongContentSyntaxHighlighter *SongContentTextEdit::syntaxHiglighter() {
 	return contentSyntaxHiglighter_;
 }
 

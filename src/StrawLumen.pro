@@ -72,6 +72,7 @@ SOURCES += main.cpp \
 		rec/playlist.cpp \
 		modelview/playlistitemmodel.cpp \
 		gui/mainwindow_presentationmode.cpp \
+		util/songcontentsyntaxhighlighter.cpp \
 		util/standarddialogs.cpp \
 		util/execonmainthread.cpp \
 		util/scopeexit.cpp \
@@ -97,7 +98,6 @@ SOURCES += main.cpp \
 		wgt/songlistwidget.cpp \
 		job/settings.cpp \
 		rec/chord.cpp \
-		util/songcontentsyntaxhiglighter.cpp \
 		wgt/songcontenttextedit.cpp \
 		rec/songsection.cpp \
 		wgt/extendedlineedit.cpp \
@@ -231,6 +231,7 @@ HEADERS += \
 		rec/playlist.h \
 		modelview/playlistitemmodel.h \
 		gui/mainwindow_presentationmode.h \
+		util/songcontentsyntaxhighlighter.h \
 		util/standarddialogs.h \
 		util/execonmainthread.h \
 		util/scopeexit.h \
@@ -257,7 +258,6 @@ HEADERS += \
 		wgt/songlistwidget.h \
 		job/settings.h \
 		rec/chord.h \
-		util/songcontentsyntaxhiglighter.h \
 		wgt/songcontenttextedit.h \
 		rec/songsection.h \
 		wgt/extendedlineedit.h \
