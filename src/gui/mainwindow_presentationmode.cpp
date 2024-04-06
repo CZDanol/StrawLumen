@@ -28,8 +28,7 @@
 #include "util/guianimations.h"
 #include "util/standarddialogs.h"
 
-MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) : QWidget(parent),
-                                                                            ui(new Ui::MainWindow_PresentationMode) {
+MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) : QWidget(parent), ui(new Ui::MainWindow_PresentationMode) {
 	ui->setupUi(this);
 	setAcceptDrops(true);
 

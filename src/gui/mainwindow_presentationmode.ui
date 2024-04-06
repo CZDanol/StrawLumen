@@ -6,26 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
-    <height>597</height>
+    <width>1628</width>
+    <height>918</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
    <item>
     <widget class="QWidget" name="wgtMenu" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -301,9 +289,39 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QWidget" name="twControlsCorner" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -554,7 +572,7 @@ PresentationPropertiesWidget
                 <x>0</x>
                 <y>0</y>
                 <width>274</width>
-                <height>173</height>
+                <height>346</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9"/>
@@ -566,52 +584,49 @@ PresentationPropertiesWidget
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QTabWidget" name="tabWidget_2">
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <widget class="QWidget" name="tab_5">
-          <attribute name="icon">
-           <iconset resource="../../res/resources.qrc">
-            <normaloff>:/icons/16/Mockup_16px.png</normaloff>:/icons/16/Mockup_16px.png</iconset>
-          </attribute>
-          <attribute name="title">
-           <string>Snímky</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QTreeView" name="tvSlides">
-             <property name="frameShadow">
-              <enum>QFrame::Plain</enum>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="rootIsDecorated">
-              <bool>false</bool>
-             </property>
-             <property name="itemsExpandable">
-              <bool>false</bool>
-             </property>
-             <property name="allColumnsShowFocus">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
+     </widget>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <widget class="QWidget" name="tab_5">
+       <attribute name="icon">
+        <iconset resource="../../res/resources.qrc">
+         <normaloff>:/icons/16/Mockup_16px.png</normaloff>:/icons/16/Mockup_16px.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Snímky</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QTreeView" name="tvSlides">
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="rootIsDecorated">
+           <bool>false</bool>
+          </property>
+          <property name="itemsExpandable">
+           <bool>false</bool>
+          </property>
+          <property name="allColumnsShowFocus">
+           <bool>true</bool>
+          </property>
          </widget>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
    </item>
   </layout>
   <action name="actionAddPowerpointPresentation">
@@ -809,7 +824,6 @@ PresentationPropertiesWidget
   <tabstop>twLeftBottom</tabstop>
   <tabstop>wgtSongList</tabstop>
   <tabstop>saPresentationProperties</tabstop>
-  <tabstop>tabWidget_2</tabstop>
   <tabstop>tvSlides</tabstop>
  </tabstops>
  <resources>

@@ -14,18 +14,6 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
    <item>
     <widget class="QWidget" name="wgtMenu" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
@@ -426,9 +414,33 @@ Zkratka: Alt+Shift+F</string>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="" native="true">
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QWidget" name="twSongsCorner" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -513,9 +525,27 @@ Zkratka: Alt+Shift+F</string>
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
+     </widget>
+     <widget class="QWidget" name="" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QWidget" name="twSongCorner" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -796,8 +826,8 @@ Zkratka: Alt+Shift+F</string>
         </widget>
        </item>
       </layout>
-     </item>
-    </layout>
+     </widget>
+    </widget>
    </item>
   </layout>
   <action name="actionDeleteSongs">
@@ -938,6 +968,15 @@ Zkratka: Alt+Shift+F</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>SongListWidget</class>
+   <extends>QWidget</extends>
+   <header>wgt/songlistwidget.h</header>
+   <container>1</container>
+   <slots>
+    <signal>sigItemActivated(qlonglong)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
    <class>WordCompletingLineEdit</class>
    <extends>QLineEdit</extends>
    <header>wgt/wordcompletinglineedit.h</header>
@@ -949,15 +988,6 @@ Zkratka: Alt+Shift+F</string>
    <class>SongTagsLineEdit</class>
    <extends>QLineEdit</extends>
    <header>wgt/songtagslineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>SongListWidget</class>
-   <extends>QWidget</extends>
-   <header>wgt/songlistwidget.h</header>
-   <container>1</container>
-   <slots>
-    <signal>sigItemActivated(qlonglong)</signal>
-   </slots>
   </customwidget>
   <customwidget>
    <class>SongContentTextEdit</class>
