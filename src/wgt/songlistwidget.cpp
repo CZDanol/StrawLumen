@@ -172,10 +172,10 @@ void SongListWidget::requery() {
 		auto header = ui->tvSongs->header();
 		header->hideSection(0);
 		header->setSectionResizeMode(1, QHeaderView::Interactive);
-		header->resizeSection(1, 150);
+		header->resizeSection(1, 100);
 		header->setSectionResizeMode(2, QHeaderView::Interactive);
-		header->resizeSection(1, 150);
-		header->setSectionResizeMode(3, QHeaderView::Stretch);
+		header->resizeSection(2, 100);
+		header->setSectionResizeMode(3, QHeaderView::Interactive);
 	}
 
 	// Try reselecting previously selected song
@@ -209,7 +209,7 @@ void SongListWidget::requeryTags() {
 	                      "ORDER BY tag ASC")
 	                .arg(tr("-- vše --"));
 	QSqlQuery q = db_->selectQuery(sql);
-	tagsModel_.setQuery(q);
+	tagsModel_.setQuery(std::move(q));
 
 	if(tagsModel_.record(prevIndex).value("tag") == prevTag)
 		ui->lvTags->setCurrentIndex(tagsModel_.index(prevIndex, 0));
