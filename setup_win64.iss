@@ -3,7 +3,7 @@
 
 #define MyAppName "Straw Lumen (x64)"
 #define PlatformId "win_x86_64"
-#define MyAppVersion "1.3.7.3"
+#define MyAppVersion "1.3.8.0"
 
 #include "setup_base.iss"
 
