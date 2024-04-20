@@ -265,5 +265,6 @@
         <file>logos/avatar_64w.png</file>
         <file>icons/16/Zoom In.png</file>
         <file>icons/16/Zoom Out.png</file>
+        <file>icons/16/Lock.png</file>
     </qresource>
 </RCC>

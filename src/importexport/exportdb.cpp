@@ -58,7 +58,8 @@ void ExportDatabaseManager::createDb() {
 		     "content TEXT NOT NULL,"
 		     "notes TEXT NOT NULL,"
 		     "slideOrder TEXT NOT NULL,"
-		     "lastEdit INTEGER NOT NULL"
+		     "lastEdit INTEGER NOT NULL,"
+		     "locked INTEGER"
 		     ")");
 	}
 
@@ -144,4 +145,8 @@ EXPORT_DB_MIGRATION_PROCEDURE(4, 5) {
 	QSqlQuery q = db->selectQuery("SELECT id FROM songs");
 	while(q.next())
 		DatabaseManager::updateSongFulltextIndex(db, q.value(0).toInt());
+}
+
+EXPORT_DB_MIGRATION_PROCEDURE(5, 6) {
+	db->exec("ALTER TABLE songs ADD locked INTEGER");
 }

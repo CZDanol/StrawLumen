@@ -241,18 +241,17 @@ void MainWindow_SongsMode::setSongEditMode(bool set) {
 
 	isSongEditMode_ = set;
 
-	ui->btnEdit->setVisible(!set);
-	ui->btnNew->setEnabled(!set);
-	ui->btnImport->setEnabled(!set);
-	ui->btnSaveChanges->setVisible(set);
-	ui->btnDiscardChanges->setVisible(set);
+	ui->btnNew->setEnabled(!isSongEditMode_);
+	ui->btnImport->setEnabled(!isSongEditMode_);
+	ui->btnSaveChanges->setVisible(isSongEditMode_);
+	ui->btnDiscardChanges->setVisible(isSongEditMode_);
 
-	ui->twInsert->setVisible(set);
-	ui->twEdit->setVisible(set);
-	ui->twTranspose->setVisible(set);
-	ui->twImportExport->setVisible(!set);
+	ui->twInsert->setVisible(isSongEditMode_);
+	ui->twEdit->setVisible(isSongEditMode_);
+	ui->twTranspose->setVisible(isSongEditMode_);
+	ui->twImportExport->setVisible(!isSongEditMode_);
 
-	ui->btnAddCustomSlideOrderItem->setEnabled(set);
+	ui->btnAddCustomSlideOrderItem->setEnabled(isSongEditMode_);
 
 #define F(uiControl)                               \
 	ui->uiControl->setReadOnly(!set);                \
@@ -266,7 +265,11 @@ void MainWindow_SongsMode::setSongEditMode(bool set) {
 }
 
 void MainWindow_SongsMode::updateSongManipulationButtonsEnabled() {
+	ui->btnEdit->setVisible(!isSongEditMode_ && !isCurrentSongLocked_);
 	ui->btnEdit->setEnabled(!isSongEditMode_ && currentSongId_ != -1);
+	ui->btnLock->setVisible(!isSongEditMode_ && !isCurrentSongLocked_ && currentSongId_ != -1);
+	ui->wgtLockedNotify->setVisible(isCurrentSongLocked_);
+
 	ui->actionDeleteSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 	ui->actionPresentSongs->setEnabled(ui->wgtSongList->selectedRowCount() > 0);
 
@@ -483,13 +486,17 @@ void MainWindow_SongsMode::fillSongData() {
 	if(currentSongId_ == -1)
 		return;
 
+
 	QSqlRecord r = db->selectRow("SELECT * FROM songs WHERE id = ?", {currentSongId_});
+	isCurrentSongLocked_ = r.value("locked").toBool();
+
 	ui->lnName->setText(r.value("name").toString());
 	ui->lnAuthor->setText(r.value("author").toString());
 	ui->lnSlideOrder->setText(r.value("slideOrder").toString());
 	ui->teContent->setText(r.value("content").toString());
 	ui->lnCopyright->setText(r.value("copyright").toString());
 	ui->teNotes->setPlainText(r.value("notes").toString());
+
 
 	QString tags;
 	QSqlQuery q = db->selectQuery("SELECT tag FROM song_tags WHERE song = ? ORDER BY tag ASC", {currentSongId_});
@@ -500,6 +507,8 @@ void MainWindow_SongsMode::fillSongData() {
 		tags.append(q.value("tag").toString());
 	}
 	ui->lnTags->setText(tags);
+
+	updateSongManipulationButtonsEnabled();
 }
 
 void MainWindow_SongsMode::onCurrentSongChanged(qlonglong songId, int prevRowId) {
@@ -592,7 +601,7 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked() {
 
 	// Tags
 	db->exec("DELETE FROM song_tags WHERE song = ?", {currentSongId_});
-	for(QString tag: ui->lnTags->toTags())
+	for(const QString &tag: ui->lnTags->toTags())
 		db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {currentSongId_, tag});
 
 	db->commitTransaction();
@@ -885,4 +894,12 @@ void MainWindow_SongsMode::on_btnZoomIn_clicked() {
 
 void MainWindow_SongsMode::on_btnZoomOut_clicked() {
 	adjustFontSize(-2);
+}
+
+void MainWindow_SongsMode::on_btnLock_clicked() {
+	if(!standardDeleteConfirmDialog(tr("Tato akce zamkne písničku proti úpravám. Tuto akci nelze vzít zpět - píseň pak lze pouze smazat nebo zkopírovat.\nOpravdu chcete pokračovat?")))
+		return;
+
+	db->exec("UPDATE songs SET locked = 1 WHERE id = ?", {currentSongId_});
+	updateSongManipulationButtonsEnabled();
 }

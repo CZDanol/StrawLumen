@@ -29,7 +29,8 @@ void createDb() {
 		         "content TEXT NOT NULL,"
 		         "notes TEXT NOT NULL,"
 		         "slideOrder TEXT NOT NULL,"
-		         "lastEdit INTEGER NOT NULL"
+		         "lastEdit INTEGER NOT NULL,"
+		         "locked INTEGER"
 		         ")");
 
 		db->exec("CREATE INDEX i_songs_uid ON songs (uid)");
@@ -227,4 +228,8 @@ DB_MIGRATION_PROCEDURE(6, 7) {
 		db->exec("UPDATE songs SET standardized_name = ? WHERE id = ?", {standardizeSongName(q.value(1).toString()), q.value(0)});
 
 	db->commitTransaction();
+}
+
+DB_MIGRATION_PROCEDURE(7, 8) {
+	db->exec("ALTER TABLE songs ADD locked INTEGER");
 }

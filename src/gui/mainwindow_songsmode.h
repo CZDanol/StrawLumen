@@ -96,6 +96,8 @@ private slots:
 	void on_btnZoomIn_clicked();
 	void on_btnZoomOut_clicked();
 
+	void on_btnLock_clicked();
+
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_, teContentMenu_;
@@ -109,6 +111,7 @@ private:
 private:
 	qlonglong currentSongId_ = -1;
 	bool isSongEditMode_ = false;
+	bool isCurrentSongLocked_ = false;
 };
 
 #endif// MAINWINDOW_SONGSMODE_H

@@ -130,10 +130,19 @@ void LumenImportDialog::on_btnImport_clicked() {
 			if(!ids.contains(q.value("id").toInt()))
 				continue;
 
-			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit FROM songs WHERE name = ?", {q.value("name")});
+			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit, locked FROM songs WHERE name = ?", {q.value("name")});
 			qlonglong songId;
 
-			static const QStringList dataFields{"name", "author", "copyright", "content", "slideOrder", "notes", "lastEdit"};
+			static const QStringList dataFields{
+			  "name",
+			  "author",
+			  "copyright",
+			  "content",
+			  "slideOrder",
+			  "notes",
+			  "lastEdit",
+			  "locked",
+			};
 			bool updateData = true;
 
 			QHash<QString, QVariant> data;
