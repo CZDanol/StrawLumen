@@ -140,42 +140,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="155"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="144"/>
         <source>Načítání pozadí</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="193"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="181"/>
         <source>Načítání &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="199"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="187"/>
         <source>Pozadí &quot;%1&quot; se nepodařilo načíst.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="231"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="219"/>
         <source>Pozadí se nepodařilo vložit (kopírování selhalo)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="241"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="229"/>
         <source>Pozadí se nepodařilo vložit (ukládání náhledu selhalo)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="302"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="286"/>
         <source>Soubory obrázků (*.jpg *.jpeg *.png *.bmp *.gif)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="304"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="288"/>
         <source>Import pozadí</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/backgrounddialog.cpp" line="339"/>
+        <location filename="../../src/gui/backgrounddialog.cpp" line="321"/>
         <source>Opravdu smazat vybrané pozadí?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -183,7 +183,7 @@
 <context>
     <name>BackgroundManager</name>
     <message>
-        <location filename="../../src/job/backgroundmanager.cpp" line="17"/>
+        <location filename="../../src/job/backgroundmanager.cpp" line="16"/>
         <source>Nepodařilo se vytvořit složku pro pozadí</source>
         <translation type="unfinished"></translation>
     </message>
@@ -236,27 +236,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="62"/>
+        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="55"/>
         <source>Opravdu smazat vybrané překlady?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="69"/>
+        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="62"/>
         <source>Mazání překladů</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="84"/>
+        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="76"/>
         <source>Zefania XML Bible (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="86"/>
+        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="78"/>
         <source>Import překladu Bible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="97"/>
+        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="89"/>
         <source>Překlady úspěšně importovány.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -315,13 +315,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="111"/>
-        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="175"/>
+        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="104"/>
+        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="167"/>
         <source>(vše)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="283"/>
+        <location filename="../../src/wgt/bibleverseselectionwidget.cpp" line="273"/>
         <source>(a další; výsledky omezeny na 200 veršů)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -359,12 +359,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/bulkeditsongsdialog.cpp" line="39"/>
+        <location filename="../../src/gui/bulkeditsongsdialog.cpp" line="35"/>
         <source>Provádění úprav</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/bulkeditsongsdialog.cpp" line="82"/>
+        <location filename="../../src/gui/bulkeditsongsdialog.cpp" line="98"/>
+        <source>Některé vybrané písně byly zamčené: úpravy byly provedeny pouze pro nezamčené písně.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/bulkeditsongsdialog.cpp" line="101"/>
         <source>Úpravy byly provedeny.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -415,30 +420,30 @@
 <context>
     <name>DBManager</name>
     <message>
-        <location filename="../../src/importexport/exportdb.cpp" line="43"/>
-        <location filename="../../src/job/db.cpp" line="66"/>
+        <location filename="../../src/importexport/exportdb.cpp" line="42"/>
+        <location filename="../../src/job/db.cpp" line="65"/>
         <source>Nepodporovaná verze databáze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/db.cpp" line="34"/>
+        <location filename="../../src/job/db.cpp" line="33"/>
         <source>Nepodařilo se incializovat databázi: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/db.cpp" line="42"/>
+        <location filename="../../src/job/db.cpp" line="41"/>
         <source>Chyba při inicializaci databáze: %1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="82"/>
+        <location filename="../../src/main.cpp" line="83"/>
         <source>Nepodařilo se vytvořit složku pro data aplikace: &quot;%1&quot;. To je pravděpodobně tím, že máte nainstalovanou přenosnou verzi aplikace ve složce &apos;Program Files&apos;. Přenosná verze aplikace musí být nainstalována do umístění, kam uživatel může zapisovat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="84"/>
+        <location filename="../../src/main.cpp" line="85"/>
         <source>Nepodařilo se vytvořit složku pro data aplikace: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -451,32 +456,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/displayselectionwidget.cpp" line="85"/>
+        <location filename="../../src/wgt/displayselectionwidget.cpp" line="78"/>
         <source>hlavní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/displayselectionwidget.cpp" line="94"/>
+        <location filename="../../src/wgt/displayselectionwidget.cpp" line="87"/>
         <source>vpravo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/displayselectionwidget.cpp" line="96"/>
+        <location filename="../../src/wgt/displayselectionwidget.cpp" line="89"/>
         <source>vlevo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/displayselectionwidget.cpp" line="99"/>
+        <location filename="../../src/wgt/displayselectionwidget.cpp" line="93"/>
         <source>dole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/displayselectionwidget.cpp" line="101"/>
+        <location filename="../../src/wgt/displayselectionwidget.cpp" line="95"/>
         <source>nahoře</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/displayselectionwidget.cpp" line="105"/>
+        <location filename="../../src/wgt/displayselectionwidget.cpp" line="99"/>
         <source>Obrazovka %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -485,7 +490,7 @@
     <name>DocumentGenerationDialog</name>
     <message>
         <location filename="../../src/importexport/documentgenerationdialog.ui" line="17"/>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="334"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="325"/>
         <source>Vytvoření zpěvníku</source>
         <translation type="unfinished"></translation>
     </message>
@@ -496,7 +501,7 @@
     </message>
     <message>
         <location filename="../../src/importexport/documentgenerationdialog.ui" line="71"/>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="127"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="122"/>
         <source>Obsah</source>
         <translation type="unfinished"></translation>
     </message>
@@ -627,69 +632,69 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="58"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="57"/>
         <source>A4</source>
         <comment>Default page size</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="93"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="88"/>
         <source>Generování zpěvníku</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="245"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="239"/>
         <source>Neznámá chyba při vytváření zpěvníku (nepodařilo se načíst šablonu).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="269"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="263"/>
         <source>Nepodařilo se otevřít soubor &apos;%1&apos; pro zápis.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="276"/>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="307"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="270"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="301"/>
         <source>Zpěvník byl uložen do &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="293"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="287"/>
         <source>Vytváření PDF souboru</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="295"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="289"/>
         <source>Neznámá chyba při vytváření zpěvníku (nepodařilo se připravit PDF data).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="299"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="293"/>
         <source>Nepodařilo se otevřít soubor &quot;%1&quot; pro zápis.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="302"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="296"/>
         <source>Neznámá chyba při vytváření zpěvníku (nebyla zapsána všechna data).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="320"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="311"/>
         <source>Aktuální konfigurace by vytvořila prázdný dokument, protože není zvoleno ani generování obsahu, ani generování slov písní.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="324"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="315"/>
         <source>Není zvolena ani jedna píseň.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="332"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="323"/>
         <source>Soubory PDF (*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="332"/>
+        <location filename="../../src/importexport/documentgenerationdialog.cpp" line="323"/>
         <source>Soubory HTML (*.html)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -738,27 +743,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/feedbackdialog.cpp" line="52"/>
+        <location filename="../../src/strawapi/feedbackdialog.cpp" line="45"/>
         <source>Prosím vyplňte kontaktní e-mail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/feedbackdialog.cpp" line="56"/>
+        <location filename="../../src/strawapi/feedbackdialog.cpp" line="49"/>
         <source>Prosím vyplňte tělo zprávy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/feedbackdialog.cpp" line="70"/>
+        <location filename="../../src/strawapi/feedbackdialog.cpp" line="62"/>
         <source>Odesílání zprávy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/feedbackdialog.cpp" line="75"/>
+        <location filename="../../src/strawapi/feedbackdialog.cpp" line="67"/>
         <source>Je nám líto, ale zprávu se nepodařilo odeslat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/feedbackdialog.cpp" line="77"/>
+        <location filename="../../src/strawapi/feedbackdialog.cpp" line="69"/>
         <source>Zpětná vazba byla odeslána. Děkujeme!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -794,27 +799,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenexportdialog.cpp" line="49"/>
+        <location filename="../../src/importexport/lumenexportdialog.cpp" line="42"/>
         <source>Není vybrána žádná píseň k exportu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenexportdialog.cpp" line="58"/>
+        <location filename="../../src/importexport/lumenexportdialog.cpp" line="51"/>
         <source>Soubory Straw Lumen (*.strawLumen)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenexportdialog.cpp" line="60"/>
+        <location filename="../../src/importexport/lumenexportdialog.cpp" line="53"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenexportdialog.cpp" line="72"/>
+        <location filename="../../src/importexport/lumenexportdialog.cpp" line="65"/>
         <source>Exportování písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenexportdialog.cpp" line="111"/>
+        <location filename="../../src/importexport/lumenexportdialog.cpp" line="114"/>
         <source>Vybrané písně byly exportovány do &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -887,37 +892,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="78"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="70"/>
         <source>Vybrat soubor...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="109"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="98"/>
         <source>Není vybrána žádná píseň pro import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="126"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="115"/>
         <source>Impportování písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="196"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="192"/>
         <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="203"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="198"/>
         <source>Písně byly importovány.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="216"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="210"/>
         <source>Soubory Straw Lumen (*.strawLumen)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="218"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="212"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1008,19 +1013,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow.cpp" line="126"/>
+        <location filename="../../src/gui/mainwindow.cpp" line="115"/>
         <source>Chyba databáze: %1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow.cpp" line="131"/>
+        <location filename="../../src/gui/mainwindow.cpp" line="119"/>
         <source>Chyba databáze: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow.cpp" line="214"/>
+        <location filename="../../src/gui/mainwindow.cpp" line="198"/>
         <source>Soubor &quot;%1&quot; není podporován.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1033,246 +1038,246 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="67"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="55"/>
         <source>Ovládání</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="79"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="67"/>
         <source>Promítat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="102"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="90"/>
         <source>Předchozí prezentace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="122"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Předchozí snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Down&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="142"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="130"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Další snímek&lt;/p&gt;&lt;p&gt;Zkratka: Page Up&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="162"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="150"/>
         <source>Další prezentace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="182"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="170"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Černá obrazovka&lt;/p&gt;&lt;p&gt;Zkratka: B&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="205"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="193"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rychlé promátní verše&lt;br/&gt;&lt;br/&gt;Zkratka: Ctrl+Shift+V&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="218"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="206"/>
         <source>Ctrl+Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="255"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="243"/>
         <source>Aktuální čas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="343"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="680"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="361"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="695"/>
         <source>Přidat do programu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="357"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="397"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="101"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="375"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="415"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="98"/>
         <source>Program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="502"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="520"/>
         <source>Písně</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="520"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="538"/>
         <source>Položka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="586"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="604"/>
         <source>Snímky</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="623"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="638"/>
         <source>PowerPoint prezentace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="632"/>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="671"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="647"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="686"/>
         <source>Smazat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="644"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="659"/>
         <source>Černá obrazovka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="653"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="668"/>
         <source>Píseň</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="662"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="677"/>
         <source>Upravit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="689"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="704"/>
         <source>Vlastní snímek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="692"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="707"/>
         <source>Vlastní text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="701"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="716"/>
         <source>Upravit položku</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="710"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="725"/>
         <source>Nový</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="719"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="734"/>
         <source>Uložit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="722"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="737"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="731"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="746"/>
         <source>Načíst</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="740"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="755"/>
         <source>Uložit jako</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="743"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="758"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="752"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="767"/>
         <source>Obrázky</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="761"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="776"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="770"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="785"/>
         <source>Biblický verš</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="779"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.ui" line="794"/>
         <source>Webová stránka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="83"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="80"/>
         <source>Přidat před:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="88"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="85"/>
         <source>Přidat za:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="110"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="107"/>
         <source>Načíst nedávné</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="214"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="207"/>
         <source>Program promítání obsahuje neuložené změny. Opravdu chcete pokračovat?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="274"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="260"/>
         <source>HH:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="398"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="371"/>
         <source>%1*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="431"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="401"/>
         <source>Opravdu smazat vybrané prezentace?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="453"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="421"/>
         <source>PowerPoint prezentace (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="455"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="423"/>
         <source>Import prezentace PowerPoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="515"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="478"/>
         <source>Skrýt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="524"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="487"/>
         <source>Zobrazit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="588"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="542"/>
         <source>Soubory obrázků (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="590"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="544"/>
         <source>Přidání obrázků</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="608"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="561"/>
         <source>Soubory videa (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="610"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="563"/>
         <source>Import videa</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1285,76 +1290,76 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="95"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="83"/>
         <source>Transpozice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="113"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="101"/>
         <source>Transponovat píseň o půltón nahoru</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="127"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="115"/>
         <source>Transponovat píseň o půltón dolů</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="141"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="129"/>
         <source>Používat béčkové akordy místo křížkových (např. Gb místo F#)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="179"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="167"/>
         <source>Import/export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="197"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="105"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="185"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="106"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="211"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="111"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="199"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="112"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="225"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="213"/>
         <source>Zkratka: Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="228"/>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="827"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="216"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="966"/>
         <source>Vytvořit zpěvník</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="263"/>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="720"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="251"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="859"/>
         <source>Vložit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="281"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="269"/>
         <source>Sekce</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="295"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="283"/>
         <source>Jedna sekce může být v prezentaci rozdělena do více snímků. Toto se řídí právě oddělovači.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="298"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="286"/>
         <source>Oddělovač</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="312"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="300"/>
         <source>Vložit akord do textu.
 V Lumenu se akordy vkládají přímo do řádku textu, nikoli nad něj.
 
@@ -1362,263 +1367,309 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="318"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="306"/>
         <source>Akord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="332"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="320"/>
         <source>Zkopíruje akordy z uvedené sekce a vloží je do aktuální sekce. Pozice akordů je určena podle slabik.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="335"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="323"/>
         <source>Akordy z...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="370"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="358"/>
         <source>Úpravy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="388"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="376"/>
         <source>Převede akordy do jednotného formátu, odstraní zbytečné mezery, apod.
 
 Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="393"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="381"/>
         <source>Formátovat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="407"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="395"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Převede akordy z formátu, kdy jsou akordy umístěny na vlastním řádku a odsazeny mezerami, do formátu Lumenu (chordpro).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="410"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="398"/>
         <source>Převést akordy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="450"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="462"/>
         <source>Hromadná úprava</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="464"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="476"/>
         <source>Nová píseň</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="495"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="507"/>
         <source>Písně</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="537"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="567"/>
+        <source>Zmenšit písmo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="574"/>
+        <source>Ctrl+-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="584"/>
+        <source>Zvětšit písmo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="591"/>
+        <source>Ctrl++</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="638"/>
+        <source>Zamknuto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="648"/>
+        <source>Zamknout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="662"/>
         <source>Zahodit změny</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="551"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="676"/>
         <source>Uložit změny</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="565"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="690"/>
+        <source>Duplikovat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="704"/>
         <source>Upravit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="596"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="735"/>
         <source>Píseň</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="635"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="774"/>
         <source>Název:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="642"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="781"/>
         <source>Text:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="664"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="803"/>
         <source>např. Jan Novák</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="690"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="829"/>
         <source>Autor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="697"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="836"/>
         <source>Pořadí snímků:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="713"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="852"/>
         <source>nevyplněno = jako v textu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="740"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="879"/>
         <source>Copyright:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="773"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="912"/>
         <source>Štítky:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="788"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="927"/>
         <source>Poznámky</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="809"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="948"/>
         <source>Smazat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="818"/>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="872"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="957"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1011"/>
         <source>OpenSong</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="836"/>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="845"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="975"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="984"/>
         <source>Straw Lumen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="854"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="993"/>
         <source>Promítat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="863"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1002"/>
         <source>Přidat do programu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="881"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1020"/>
         <source>Vymazat akordy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="884"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1023"/>
         <source>Vymaže akordy v sekci nebo ve výběru</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="893"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1032"/>
         <source>Posunout akord vpravo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="896"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1035"/>
         <source>Alt+Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="908"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1047"/>
         <source>Posunout akord vlevo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="911"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1050"/>
         <source>Alt+Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="923"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1062"/>
         <source>Pouze akordy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="926"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1065"/>
         <source>Vymaže ve výběru/v sekci všechny slova a nechá pouze akordy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.ui" line="935"/>
+        <location filename="../../src/gui/mainwindow_songsmode.ui" line="1074"/>
         <source>PowerPoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="96"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="97"/>
         <source>Vlastní název</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="122"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="123"/>
         <source>Kopírovat akordy z...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="197"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="192"/>
         <source>V režimu úprav nelze mazat písně. Ukončete úpravy a zkuste to znovu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="199"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="194"/>
         <source>Opravdu smazat vybrané písně?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="227"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="221"/>
         <source>Píseň je otevřena pro editaci. Chcete uložit provedené úpravy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="301"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="299"/>
         <source>Schránka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="306"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="321"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="304"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="320"/>
         <source>Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="377"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="373"/>
         <source>Vybraná pozice neobsahuje žádnou sekci</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="551"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="555"/>
         <source>Nová písnička</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="567"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="570"/>
         <source>Opravdu zahodit provedené úpravy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="672"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="667"/>
         <source>Píseň aktuálně neobsahuje žádné sekce.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="721"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="709"/>
         <source>Tuto akci nelze provést během úprav písně. Ukončete úpravy a zkuste to znovu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="766"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="751"/>
         <source>Píseň neobsahuje žádné sekce s textem i akordy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="901"/>
+        <source>Tato akce zamkne písničku proti úpravám. Tuto akci nelze vzít zpět - píseň pak lze pouze smazat nebo zkopírovat.
+Opravdu chcete pokračovat?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="911"/>
+        <source>%1 (kopie)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1670,7 +1721,7 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/multisongselectionwidget.cpp" line="137"/>
+        <location filename="../../src/wgt/multisongselectionwidget.cpp" line="123"/>
         <source>Opravdu odebrat všechny položky z výběru?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1706,37 +1757,37 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongexportdialog.cpp" line="122"/>
+        <location filename="../../src/importexport/opensongexportdialog.cpp" line="116"/>
         <source>Nepodařilo se otevřít soubor &quot;%1&quot; pro zápis.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongexportdialog.cpp" line="140"/>
+        <location filename="../../src/importexport/opensongexportdialog.cpp" line="132"/>
         <source>Není vybrána žádná píseň k exportu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongexportdialog.cpp" line="151"/>
+        <location filename="../../src/importexport/opensongexportdialog.cpp" line="143"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongexportdialog.cpp" line="163"/>
+        <location filename="../../src/importexport/opensongexportdialog.cpp" line="155"/>
         <source>Exportování písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongexportdialog.cpp" line="185"/>
+        <location filename="../../src/importexport/opensongexportdialog.cpp" line="177"/>
         <source>Nepodařilo se vytvořit složku &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongexportdialog.cpp" line="206"/>
+        <location filename="../../src/importexport/opensongexportdialog.cpp" line="198"/>
         <source>Bez štítků</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongexportdialog.cpp" line="213"/>
+        <location filename="../../src/importexport/opensongexportdialog.cpp" line="205"/>
         <source>Vybrané písně byly exportovány do &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1809,60 +1860,60 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="71"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="63"/>
         <source>Vybrat položky...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="71"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="63"/>
         <source>%n souborů</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="72"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="64"/>
         <source>Vybrat složku...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="135"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="123"/>
         <source>Nepodařilo se otevřít soubor &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="154"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="142"/>
         <source>Nepodařilo se načíst soubor &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="160"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="148"/>
         <source>Soubor &quot;%1&quot; není formátu OpenSong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="211"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="196"/>
         <source>Import písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="269"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="252"/>
         <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="275"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="257"/>
         <source>Písně byly importovány.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="287"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="268"/>
         <source>Soubory OpenSong (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="289"/>
-        <location filename="../../src/importexport/opensongimportdialog.cpp" line="311"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="270"/>
+        <location filename="../../src/importexport/opensongimportdialog.cpp" line="291"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1870,17 +1921,17 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>Playlist</name>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="152"/>
+        <location filename="../../src/rec/playlist.cpp" line="144"/>
         <source>Nový program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="235"/>
+        <location filename="../../src/rec/playlist.cpp" line="222"/>
         <source>Neznámý typ prezentace: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/playlist.cpp" line="254"/>
+        <location filename="../../src/rec/playlist.cpp" line="241"/>
         <source>Níže vyčtené položky se nepodařilo načíst:
 
 %1</source>
@@ -1936,28 +1987,28 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/playlistsdialog.cpp" line="46"/>
+        <location filename="../../src/gui/playlistsdialog.cpp" line="41"/>
         <source>Program se nepodařilo uložit, protože byl v databázi smazán.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/playlistsdialog.cpp" line="112"/>
+        <location filename="../../src/gui/playlistsdialog.cpp" line="102"/>
         <source>-- aktuální program --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/playlistsdialog.cpp" line="148"/>
+        <location filename="../../src/gui/playlistsdialog.cpp" line="136"/>
         <source>Nový program</source>
         <comment>Newly created playlist name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/playlistsdialog.cpp" line="214"/>
+        <location filename="../../src/gui/playlistsdialog.cpp" line="197"/>
         <source>Opravdu chcete pokračovat a přepsat vybraný program?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/playlistsdialog.cpp" line="238"/>
+        <location filename="../../src/gui/playlistsdialog.cpp" line="219"/>
         <source>Opravdu smazat vybraný program?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2020,37 +2071,37 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="51"/>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="45"/>
         <source>Vybrat soubory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="51"/>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="45"/>
         <source>%1 souborů</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="64"/>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="57"/>
         <source>Impportování písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="130"/>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="121"/>
         <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="137"/>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="127"/>
         <source>Písně byly importovány.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="155"/>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="143"/>
         <source>Soubory PowerPoint (*.ppt *.pptx)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="157"/>
+        <location filename="../../src/importexport/powerpoint/powerpointimportdialog.cpp" line="145"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2058,17 +2109,17 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>PresentationBackground</name>
     <message>
-        <location filename="../../src/rec/presentationbackground.cpp" line="22"/>
+        <location filename="../../src/rec/presentationbackground.cpp" line="19"/>
         <source>Barva</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/presentationbackground.cpp" line="25"/>
+        <location filename="../../src/rec/presentationbackground.cpp" line="22"/>
         <source>Obrázek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/presentationbackground.cpp" line="27"/>
+        <location filename="../../src/rec/presentationbackground.cpp" line="24"/>
         <source>Obrázek s %1% barvou</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2193,12 +2244,12 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_images.cpp" line="73"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_images.cpp" line="65"/>
         <source>Soubory obrázků (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentationpropertieswidget_images.cpp" line="75"/>
+        <location filename="../../src/presentation/native/presentationpropertieswidget_images.cpp" line="67"/>
         <source>Přidání obrázků</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2320,12 +2371,12 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/web/presentationpropertieswidget_web.cpp" line="55"/>
+        <location filename="../../src/presentation/web/presentationpropertieswidget_web.cpp" line="49"/>
         <source>Webová stránka (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/web/presentationpropertieswidget_web.cpp" line="57"/>
+        <location filename="../../src/presentation/web/presentationpropertieswidget_web.cpp" line="51"/>
         <source>Lokální webová stránka</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2333,14 +2384,14 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>PresentationStylePreviewWidget</name>
     <message>
-        <location filename="../../src/wgt/presentationstylepreviewwidget.cpp" line="39"/>
+        <location filename="../../src/wgt/presentationstylepreviewwidget.cpp" line="36"/>
         <source>Příliš žluťoučký kůň
 úpěl dábělské ódy.</source>
         <comment>Slide preview main text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/presentationstylepreviewwidget.cpp" line="39"/>
+        <location filename="../../src/wgt/presentationstylepreviewwidget.cpp" line="36"/>
         <source>Název písně</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2348,7 +2399,7 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>Presentation_BibleVerse</name>
     <message>
-        <location filename="../../src/presentation/native/presentation_bibleverse.cpp" line="70"/>
+        <location filename="../../src/presentation/native/presentation_bibleverse.cpp" line="64"/>
         <source>Verš</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2384,7 +2435,7 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>Presentation_BlackScreen</name>
     <message>
-        <location filename="../../src/presentation/native/presentation_blackscreen.cpp" line="29"/>
+        <location filename="../../src/presentation/native/presentation_blackscreen.cpp" line="23"/>
         <source>Černá obrazovka</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2392,7 +2443,7 @@ Zkratka: Alt+Shift+F</source>
 <context>
     <name>Presentation_CustomSlide</name>
     <message>
-        <location filename="../../src/presentation/native/presentation_customslide.cpp" line="13"/>
+        <location filename="../../src/presentation/native/presentation_customslide.cpp" line="12"/>
         <source>{Snímek 1}
 Text
 
@@ -2401,7 +2452,7 @@ Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/native/presentation_customslide.cpp" line="64"/>
+        <location filename="../../src/presentation/native/presentation_customslide.cpp" line="58"/>
         <source>Vlastní text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2409,7 +2460,7 @@ Text</source>
 <context>
     <name>Presentation_Images</name>
     <message>
-        <location filename="../../src/presentation/native/presentation_images.cpp" line="160"/>
+        <location filename="../../src/presentation/native/presentation_images.cpp" line="143"/>
         <source>Obrázky</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2417,27 +2468,27 @@ Text</source>
 <context>
     <name>Presentation_PowerPoint</name>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="40"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="38"/>
         <source>Program nedetekoval instalaci PowerPointu. Bez nainstalového PowerPointu nelze pracovat s powerpointovými prezentacemi.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="52"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="49"/>
         <source>Nepodařilo se načíst prezentaci &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="137"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="134"/>
         <source>Načítání &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="225"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="212"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="289"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="273"/>
         <source>Nepodařilo se spustit prezentaci &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2445,7 +2496,7 @@ Text</source>
 <context>
     <name>Presentation_Song</name>
     <message>
-        <location filename="../../src/presentation/native/presentation_song.cpp" line="236"/>
+        <location filename="../../src/presentation/native/presentation_song.cpp" line="219"/>
         <source>%1-%2</source>
         <comment>%1 - section name, %2 - slide in section index (for multiple slides per section)</comment>
         <translation type="unfinished"></translation>
@@ -2454,81 +2505,81 @@ Text</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="91"/>
+        <location filename="../../src/gui/bibletranslationmgmtdialog.cpp" line="83"/>
         <source>Import překladu Bible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="20"/>
+        <location filename="../../src/job/parsebible.cpp" line="19"/>
         <source>Nepodařilo se otevřít soubor překladu Bible &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="27"/>
+        <location filename="../../src/job/parsebible.cpp" line="26"/>
         <source>Soubor &apos;%1&apos; není validní soubor překladu Bible (E00)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="46"/>
+        <location filename="../../src/job/parsebible.cpp" line="45"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TRNEM)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="57"/>
+        <location filename="../../src/job/parsebible.cpp" line="56"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TREM)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="79"/>
+        <location filename="../../src/job/parsebible.cpp" line="78"/>
         <source>Neplatný formát souboru Bible &apos;%1&apos; (TREMND)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/job/parsebible.cpp" line="140"/>
+        <location filename="../../src/job/parsebible.cpp" line="138"/>
         <source>Import překladů Bible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="10"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="9"/>
         <source>Potvrdit smazání</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="14"/>
-        <location filename="../../src/util/standarddialogs.cpp" line="36"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="13"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="34"/>
         <source>Ano</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="15"/>
-        <location filename="../../src/util/standarddialogs.cpp" line="37"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="14"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="35"/>
         <source>Ne</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="32"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="30"/>
         <source>Potvrzení</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="55"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="52"/>
         <source>Chyba</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="58"/>
-        <location filename="../../src/util/standarddialogs.cpp" line="81"/>
-        <location filename="../../src/util/standarddialogs.cpp" line="100"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="55"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="77"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="95"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="78"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="74"/>
         <source>Informace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/util/standarddialogs.cpp" line="97"/>
+        <location filename="../../src/util/standarddialogs.cpp" line="92"/>
         <source>Úspěch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2632,17 +2683,17 @@ Text</source>
 <context>
     <name>SlidesItemModel</name>
     <message>
-        <location filename="../../src/modelview/slidesitemmodel.cpp" line="52"/>
+        <location filename="../../src/modelview/slidesitemmodel.cpp" line="46"/>
         <source>Prezentace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/modelview/slidesitemmodel.cpp" line="55"/>
+        <location filename="../../src/modelview/slidesitemmodel.cpp" line="49"/>
         <source>Snímek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/modelview/slidesitemmodel.cpp" line="58"/>
+        <location filename="../../src/modelview/slidesitemmodel.cpp" line="52"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2685,32 +2736,32 @@ Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="174"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="160"/>
         <source>Štítky</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="176"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="162"/>
         <source>Název</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="176"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="162"/>
         <source>Autor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="202"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="190"/>
         <source>Zobrazeny pouze písně se štítkem &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="222"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="210"/>
         <source>-- vše --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/wgt/songlistwidget.cpp" line="364"/>
+        <location filename="../../src/wgt/songlistwidget.cpp" line="334"/>
         <source>Opravdu smazat štítek &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2718,17 +2769,17 @@ Text</source>
 <context>
     <name>SongRecordItemModel</name>
     <message>
-        <location filename="../../src/modelview/songrecorditemmodel.cpp" line="207"/>
+        <location filename="../../src/modelview/songrecorditemmodel.cpp" line="191"/>
         <source>Název</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/modelview/songrecorditemmodel.cpp" line="210"/>
+        <location filename="../../src/modelview/songrecorditemmodel.cpp" line="194"/>
         <source>Autor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/modelview/songrecorditemmodel.cpp" line="213"/>
+        <location filename="../../src/modelview/songrecorditemmodel.cpp" line="197"/>
         <source>Štítky</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2736,83 +2787,83 @@ Text</source>
 <context>
     <name>SongSection</name>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="65"/>
+        <location filename="../../src/rec/songsection.cpp" line="59"/>
         <source>Refrén</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="66"/>
+        <location filename="../../src/rec/songsection.cpp" line="60"/>
         <source>Sloka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="67"/>
+        <location filename="../../src/rec/songsection.cpp" line="61"/>
         <source>Intro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="68"/>
+        <location filename="../../src/rec/songsection.cpp" line="62"/>
         <source>Outro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="69"/>
+        <location filename="../../src/rec/songsection.cpp" line="63"/>
         <source>Bridge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="70"/>
+        <location filename="../../src/rec/songsection.cpp" line="64"/>
         <source>Mezihra</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="71"/>
+        <location filename="../../src/rec/songsection.cpp" line="65"/>
         <source>Předrefrén</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="75"/>
-        <location filename="../../src/rec/songsection.cpp" line="96"/>
+        <location filename="../../src/rec/songsection.cpp" line="68"/>
+        <location filename="../../src/rec/songsection.cpp" line="88"/>
         <source>## NEVALIDNÍ ##</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="80"/>
+        <location filename="../../src/rec/songsection.cpp" line="73"/>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="86"/>
+        <location filename="../../src/rec/songsection.cpp" line="78"/>
         <source>Ref. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="87"/>
+        <location filename="../../src/rec/songsection.cpp" line="79"/>
         <source>%1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="88"/>
+        <location filename="../../src/rec/songsection.cpp" line="80"/>
         <source>Intro %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="89"/>
+        <location filename="../../src/rec/songsection.cpp" line="81"/>
         <source>Outro %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="90"/>
+        <location filename="../../src/rec/songsection.cpp" line="82"/>
         <source>Bridge %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="91"/>
+        <location filename="../../src/rec/songsection.cpp" line="83"/>
         <source>Mezihra %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/rec/songsection.cpp" line="92"/>
+        <location filename="../../src/rec/songsection.cpp" line="84"/>
         <source>Předrefrén %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2820,7 +2871,7 @@ Text</source>
 <context>
     <name>SongTagsLineEdit</name>
     <message>
-        <location filename="../../src/wgt/songtagslineedit.cpp" line="13"/>
+        <location filename="../../src/wgt/songtagslineedit.cpp" line="12"/>
         <source>Oddělené čárkou</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2836,7 +2887,7 @@ Text</source>
 <context>
     <name>Splashscreen</name>
     <message>
-        <location filename="../../src/gui/splashscreen.cpp" line="37"/>
+        <location filename="../../src/gui/splashscreen.cpp" line="33"/>
         <source>%1...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2978,32 +3029,32 @@ Pro možnost úprav si vytvořte vlastní styl.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/stylesdialog.cpp" line="162"/>
+        <location filename="../../src/gui/stylesdialog.cpp" line="152"/>
         <source>Aktuální styl je otevřený pro editaci. Chcete uložit provedené úpravy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/stylesdialog.cpp" line="200"/>
+        <location filename="../../src/gui/stylesdialog.cpp" line="188"/>
         <source> (interní)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/stylesdialog.cpp" line="245"/>
+        <location filename="../../src/gui/stylesdialog.cpp" line="228"/>
         <source>Nový styl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/stylesdialog.cpp" line="255"/>
+        <location filename="../../src/gui/stylesdialog.cpp" line="237"/>
         <source>Opravdu zahodit provedené úpravy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/stylesdialog.cpp" line="304"/>
+        <location filename="../../src/gui/stylesdialog.cpp" line="281"/>
         <source>V režimu úprav nelze mazat styly. Ukončete úpravy a zkuste to znovu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/stylesdialog.cpp" line="306"/>
+        <location filename="../../src/gui/stylesdialog.cpp" line="283"/>
         <source>Opravdu smazat styl &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3011,7 +3062,7 @@ Pro možnost úprav si vytvořte vlastní styl.</source>
 <context>
     <name>TextStylePreviewWidget</name>
     <message>
-        <location filename="../../src/wgt/textstylepreviewwidget.cpp" line="9"/>
+        <location filename="../../src/wgt/textstylepreviewwidget.cpp" line="8"/>
         <source>Příliš žluťoučký kůň úpěl ďábelské ódy</source>
         <comment>Preview sample text</comment>
         <translation type="unfinished"></translation>
@@ -3085,22 +3136,22 @@ Pro možnost úprav si vytvořte vlastní styl.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/updatemanager.cpp" line="99"/>
+        <location filename="../../src/strawapi/updatemanager.cpp" line="91"/>
         <source>Při stahování aktualizace nastala chyba: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/updatemanager.cpp" line="103"/>
+        <location filename="../../src/strawapi/updatemanager.cpp" line="95"/>
         <source>Nepodařilo se připravit soubor aktualizace.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/updatemanager.cpp" line="110"/>
+        <location filename="../../src/strawapi/updatemanager.cpp" line="102"/>
         <source>Nepodařilo se spustit aktualizaci.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/strawapi/updatemanager.cpp" line="139"/>
+        <location filename="../../src/strawapi/updatemanager.cpp" line="127"/>
         <source>Nepodařilo se připravit místo pro stahování.</source>
         <translation type="unfinished"></translation>
     </message>
