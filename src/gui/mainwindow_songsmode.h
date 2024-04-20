@@ -98,6 +98,8 @@ private slots:
 
 	void on_btnLock_clicked();
 
+	void on_btnCopy_clicked();
+
 private:
 	Ui::MainWindow_SongsMode *ui;
 	QMenu insertSectionMenu_, importMenu_, exportMenu_, songListContextMenu_, copyChordsMenu_, teContentMenu_;

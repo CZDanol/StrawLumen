@@ -685,6 +685,20 @@ Zkratka: Alt+Shift+F</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btnCopy">
+            <property name="text">
+             <string>Duplikovat</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../res/resources.qrc">
+              <normaloff>:/icons/16/Copy.png</normaloff>:/icons/16/Copy.png</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btnEdit">
             <property name="text">
              <string>Upravit</string>

@@ -267,6 +267,7 @@ void MainWindow_SongsMode::setSongEditMode(bool set) {
 void MainWindow_SongsMode::updateSongManipulationButtonsEnabled() {
 	ui->btnEdit->setVisible(!isSongEditMode_ && !isCurrentSongLocked_);
 	ui->btnEdit->setEnabled(!isSongEditMode_ && currentSongId_ != -1);
+	ui->btnCopy->setVisible(!isSongEditMode_ && currentSongId_ != -1);
 	ui->btnLock->setVisible(!isSongEditMode_ && !isCurrentSongLocked_ && currentSongId_ != -1);
 	ui->wgtLockedNotify->setVisible(isCurrentSongLocked_);
 
@@ -902,4 +903,11 @@ void MainWindow_SongsMode::on_btnLock_clicked() {
 
 	db->exec("UPDATE songs SET locked = 1 WHERE id = ?", {currentSongId_});
 	updateSongManipulationButtonsEnabled();
+}
+
+void MainWindow_SongsMode::on_btnCopy_clicked() {
+	currentSongId_ = -1;
+	isCurrentSongLocked_ = false;
+	ui->lnName->setText(tr("%1 (kopie)").arg(ui->lnName->text()));
+	setSongEditMode(true);
 }
