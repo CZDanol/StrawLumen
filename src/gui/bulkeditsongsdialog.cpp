@@ -29,17 +29,39 @@ void BulkEditSongsDialog::on_btnStorno_clicked() {
 }
 
 void BulkEditSongsDialog::on_btnGenerate_clicked() {
-	splashscreen->asyncAction(tr("Provádění úprav"), false, [=]() {
+	const auto sourceSongIDs = ui->wgtSongSelection->selectedSongs();
+	bool anySongLocked = false;
+
+	splashscreen->asyncAction(tr("Provádění úprav"), false, [&]() {
 		db->beginTransaction();
 
 		QSqlQuery q(db->database());
+
+		QVector<qlonglong> songIDs;
+		songIDs.reserve(sourceSongIDs.size());
+
+		// Filter out locked songs
+		{
+			q.prepare("SELECT locked FROM songs WHERE id = ?");
+			for(const auto songID: sourceSongIDs) {
+				q.bindValue(0, songID);
+				q.exec();
+
+				if(!q.value(0).toBool()) {
+					songIDs += songID;
+				}
+				else {
+					anySongLocked = true;
+				}
+			}
+		}
 
 		// Remove tags
 		{
 			const auto tags = ui->lnRemoveTags->toTags();
 			q.prepare("DELETE FROM song_tags WHERE song = ? AND tag = ?");
 
-			for(const qlonglong song: ui->wgtSongSelection->selectedSongs()) {
+			for(const qlonglong song: songIDs) {
 				q.bindValue(0, song);
 
 				for(const QString &tag: tags) {
@@ -54,7 +76,7 @@ void BulkEditSongsDialog::on_btnGenerate_clicked() {
 			const auto tags = ui->lnAddTags->toTags();
 			q.prepare("INSERT INTO song_tags(song, tag) VALUES(?, ?)");
 
-			for(const qlonglong song: ui->wgtSongSelection->selectedSongs()) {
+			for(const qlonglong song: songIDs) {
 				q.bindValue(0, song);
 
 				for(const QString &tag: tags) {
@@ -72,5 +94,10 @@ void BulkEditSongsDialog::on_btnGenerate_clicked() {
 
 	emit db->sigSongListChanged();
 
-	standardSuccessDialog(tr("Úpravy byly provedeny."), this);
+	if(anySongLocked) {
+		standardSuccessDialog(tr("Některé vybrané písně byly zamčené: úpravy byly provedeny pouze pro nezamčené písně."), this);
+	}
+	else {
+		standardSuccessDialog(tr("Úpravy byly provedeny."), this);
+	}
 }
