@@ -155,7 +155,7 @@ void LumenImportDialog::on_btnImport_clicked() {
 				songId = existingSong.value("id").toLongLong();
 				updateData = false;
 			}
-			else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite) {
+			else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite && !existingSong.value("locked").toBool()) {
 				songId = existingSong.value("id").toLongLong();
 				db->update("songs", data, "id = ?", {songId});
 			}
