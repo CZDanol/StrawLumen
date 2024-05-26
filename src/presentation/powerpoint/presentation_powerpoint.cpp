@@ -14,7 +14,6 @@
 #include "presentation/powerpoint/presentationpropertieswidget_powerpoint.h"
 #include "util/scopeexit.h"
 #include "util/standarddialogs.h"
-
 #include "gui/activexdebugdialog.h"
 
 const QStringList Presentation_PowerPoint::validExtensions{"ppt", "pptx"};
@@ -42,8 +41,8 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 
 		auto axPresentations = axApplication->querySubObject("Presentations");
 		auto axPresentation = axPresentations->querySubObject(
-		  "Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)",
-		  QDir::toNativeSeparators(filename), true, false, false);
+			"Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)",
+			QDir::toNativeSeparators(filename), true, false, false);
 
 		if(!axPresentation)
 			return standardErrorDialog(tr("Nepodařilo se načíst prezentaci \"%1\".").arg(filename));
@@ -109,7 +108,7 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 
 			// Obtain slide image
 			/*do {
-                const QString filename = QDir::toNativeSeparators(tmpDir.absoluteFilePath("strawLumenThumbTmp.png"));
+								const QString filename = QDir::toNativeSeparators(tmpDir.absoluteFilePath("strawLumenThumbTmp.png"));
 
                 axSlide->dynamicCall("Export(QString,QString,Long,Long)", filename, "PNG", 512, 512).toBool();
                 slide->thumbnail = QPixmap(filename);
@@ -152,10 +151,10 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromJSON(
 
 QJsonObject Presentation_PowerPoint::toJSON() const {
 	return QJsonObject{
-	  {"filePath", filePath_},
-	  {"isAutoPresentation", isAutoPresentation_},
-	  {"blackSlideBefore", blackSlideBefore_},
-	  {"blackSlideAfter", blackSlideAfter_}};
+		{"filePath", filePath_},
+		{"isAutoPresentation", isAutoPresentation_},
+		{"blackSlideBefore", blackSlideBefore_},
+		{"blackSlideAfter", blackSlideAfter_}};
 }
 
 Presentation_PowerPoint::~Presentation_PowerPoint() {
@@ -261,11 +260,10 @@ QString Presentation_PowerPoint::classIdentifier() const {
 void Presentation_PowerPoint::activatePresentation(int startingSlide) {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 
-	const QRect rect = settings->projectionDisplayGeometry();
 	const int pptSlideI = getPptSlideI(startingSlide);
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
-	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide, rect, pptSlideI] {
+	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide, pptSlideI] {
 		auto &pe = *presentationEngine_powerPoint;
 
 		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
@@ -277,27 +275,33 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide) {
 		pe.axSSSettings_ = pe.axPresentation_->querySubObject("SlideShowSettings");
 		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", static_cast<int>(Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk));
 
-		/*pe.axSSSettings_->dynamicCall("SetRangeType(int)", (int) Office::PowerPoint::PpSlideShowRangeType::ppShowSlideRange);
+    /*pe.axSSSettings_->dynamicCall("SetRangeType(int)", (int) Office::PowerPoint::PpSlideShowRangeType::ppShowSlideRange);
         pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
         pe.axSSSettings_->dynamicCall("SetEndingSlide(int)", startingSlide_+1); Does not work like expected*/
 
 		pe.axSSSettings_->dynamicCall(
-		  "SetAdvanceMode(Office::PpSlideShowAdvanceMode)",
-		  static_cast<int>(isAutoPresentation_ ? Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowUseSlideTimings : Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance));
+			"SetAdvanceMode(Office::PpSlideShowAdvanceMode)",
+			static_cast<int>(isAutoPresentation_ ? Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowUseSlideTimings : Office::PowerPoint::PpSlideShowAdvanceMode::ppSlideShowManualAdvance));
 
 		pe.axSSSettings_->dynamicCall("Run()");
 
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
 
+		/*const auto doc = pe.axPresentationWindow_->generateDocumentation();
+		QTimer::singleShot(0, qApp, [doc] {
+			activeXDebugDialog()->show(doc);
+		});*/
+
 		setSlide_axThread(pptSlideI);
-		presentationEngine_powerPoint->setDisplay_axThread(rect);
 	});
+
+	presentationEngine_powerPoint->setDisplay(settings->projectionDisplay());
 }
 
 void Presentation_PowerPoint::deactivatePresentation() {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
-	activeXJobThread->executeNonblocking([this, selfPtr] {
+	activeXJobThread->executeNonblocking([selfPtr] {
 		auto &pe = *presentationEngine_powerPoint;
 
 		if(!pe.axPresentation_) {

@@ -23,11 +23,11 @@ public:
 	virtual void deactivateEngine() override;
 
 	virtual void setBlackScreen(bool set) override;
-	virtual void setDisplay(const QRect &rect) override;
+	virtual void setDisplay(QScreen *screen) override;
 	virtual void raiseWindow() override;
 
 private:
-	void setDisplay_axThread(const QRect &rect);
+	void setDisplay_axThread(const QRectF &rect);
 
 private slots:
 	void onActivateTimer();
@@ -36,7 +36,6 @@ private:
 	QAxObject *axPresentations_, *axPresentation_ = nullptr, *axPresentationWindow_, *axSlides_, *axSSSettings_, *axSSView_;
 	bool isInitialized_ = false;
 	QTimer activateTimer_;
-	QPointF dotsPerPoint_;
 };
 
 extern PresentationEngine_PowerPoint *presentationEngine_powerPoint;

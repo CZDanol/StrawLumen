@@ -56,8 +56,8 @@ void PresentationEngine_Native::setBlackScreen(bool set) {
 	nativeProjectorWindow->update();
 }
 
-void PresentationEngine_Native::setDisplay(const QRect &rect) {
-	nativeProjectorWindow->setGeometry(rect);
+void PresentationEngine_Native::setDisplay(QScreen *screen) {
+	nativeProjectorWindow->setGeometry(screen->geometry());
 }
 
 void PresentationEngine_Native::raiseWindow() {

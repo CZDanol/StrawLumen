@@ -26,7 +26,7 @@ public:
 	void deactivateEngine() override;
 
 	void setBlackScreen(bool set) override;
-	void setDisplay(const QRect &rect) override;
+	void setDisplay(QScreen *screen) override;
 	void raiseWindow() override;
 
 private:

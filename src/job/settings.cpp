@@ -31,8 +31,13 @@ QVariant SettingsManager::value(const QString &key, const QVariant &def) const {
 	return settings_.value(key, def);
 }
 
+QScreen *SettingsManager::projectionDisplay() const
+{
+	return settingsDialog->ui->dsDisplay->selectedScreen();
+}
+
 QRect SettingsManager::projectionDisplayGeometry() const {
-	return settingsDialog->ui->dsDisplay->selectedScreen()->geometry();
+	return projectionDisplay()->geometry();
 }
 
 SETTING_SAVE(QComboBox) {
@@ -93,8 +98,8 @@ SETTING_SAVE(DisplaySelectionWidget) {
 
 SETTING_LOAD(DisplaySelectionWidget) {
 	QPair<QRect, QString> id(
-	  settings->value(name + ".geometry").toRect(),
-	  settings->value(name + ".name").toString());
+		settings->value(name + ".geometry").toRect(),
+		settings->value(name + ".name").toString());
 	widget->setSelectedScreen(id);
 }
 

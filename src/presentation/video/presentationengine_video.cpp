@@ -29,8 +29,8 @@ void PresentationEngine_Video::setBlackScreen(bool set) {
 	videoProjectorWindow->setBlackScreen(set);
 }
 
-void PresentationEngine_Video::setDisplay(const QRect &rect) {
-	videoProjectorWindow->setGeometry(rect);
+void PresentationEngine_Video::setDisplay(QScreen *screen) {
+	videoProjectorWindow->setGeometry(screen->geometry());
 }
 
 void PresentationEngine_Video::raiseWindow() {

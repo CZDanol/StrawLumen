@@ -3,7 +3,6 @@
 #include <QApplication>
 #include <QDebug>
 
-#include "gui/mainwindow.h"
 #include "job/activexjobthread.h"
 #include "presentation/powerpoint/presentation_powerpoint.h"
 #include "presentation/presentationmanager.h"
@@ -30,7 +29,6 @@ void PresentationEngine_PowerPoint::activateEngine() {
 		return;
 
 	isInitialized_ = true;
-	dotsPerPoint_ = QPointF(mainWindow->logicalDpiX(), mainWindow->logicalDpiY()) / 72;
 
 	activeXJobThread->executeNonblocking([&] {
 		auto axApplication = activeXJobThread->axPowerPointApplication;
@@ -56,7 +54,12 @@ void PresentationEngine_PowerPoint::setBlackScreen(bool set) {
 	});
 }
 
-void PresentationEngine_PowerPoint::setDisplay(const QRect &rect) {
+void PresentationEngine_PowerPoint::setDisplay(QScreen *screen) {
+	const auto posCoef = 72.0 / 96.0;
+	const float sizeCoef = posCoef * screen->devicePixelRatio();
+	const auto geom = screen->geometry().toRectF();
+	const QRectF rect(geom.left() * posCoef, geom.top() * posCoef, geom.width() * sizeCoef, geom.height() * sizeCoef);
+
 	activeXJobThread->executeNonblocking([this, rect] {
 		setDisplay_axThread(rect);
 	});
@@ -66,14 +69,14 @@ void PresentationEngine_PowerPoint::raiseWindow() {
 	// TODO
 }
 
-void PresentationEngine_PowerPoint::setDisplay_axThread(const QRect &rect) {
+void PresentationEngine_PowerPoint::setDisplay_axThread(const QRectF &rect) {
 	if(!axPresentation_)
 		return;
 
-	axPresentationWindow_->dynamicCall("SetLeft(double)", double(rect.left() / dotsPerPoint_.x()));
-	axPresentationWindow_->dynamicCall("SetTop(double)", double(rect.top() / dotsPerPoint_.y()));
-	axPresentationWindow_->dynamicCall("SetWidth(double)", double(rect.width() / dotsPerPoint_.x()));
-	axPresentationWindow_->dynamicCall("SetHeight(double)", double(rect.height() / dotsPerPoint_.y()));
+	axPresentationWindow_->dynamicCall("SetLeft(double)", rect.left());
+	axPresentationWindow_->dynamicCall("SetTop(double)", rect.top());
+	axPresentationWindow_->dynamicCall("SetWidth(double)", rect.width());
+	axPresentationWindow_->dynamicCall("SetHeight(double)", rect.height());
 }
 
 void PresentationEngine_PowerPoint::onActivateTimer() {

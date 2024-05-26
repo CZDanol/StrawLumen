@@ -37,6 +37,7 @@ public:
 	QVariant value(const QString &key, const QVariant &def = QVariant()) const;
 
 public:
+	QScreen *projectionDisplay() const;
 	QRect projectionDisplayGeometry() const;
 
 private:

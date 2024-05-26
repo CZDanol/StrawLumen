@@ -24,8 +24,8 @@ void PresentationEngine_Web::setBlackScreen(bool set) {
 	webProjectorWindow->setBlackScreen(set);
 }
 
-void PresentationEngine_Web::setDisplay(const QRect &rect) {
-	webProjectorWindow->setGeometry(rect);
+void PresentationEngine_Web::setDisplay(QScreen *screen) {
+	webProjectorWindow->setGeometry(screen->geometry());
 }
 
 void PresentationEngine_Web::raiseWindow() {

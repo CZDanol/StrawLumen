@@ -14,7 +14,7 @@
 SettingsDialog *settingsDialog = nullptr;
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
-                                                  ui(new Ui::SettingsDialog) {
+																									ui(new Ui::SettingsDialog) {
 	ui->setupUi(this);
 
 	connect(ui->dsDisplay, SIGNAL(sigCurrentChangedByUser(QScreen *)), this, SLOT(onDisplayChanged(QScreen *)));
@@ -45,7 +45,7 @@ void SettingsDialog::updateLanguageList() {
 
 void SettingsDialog::onDisplayChanged(QScreen *current) {
 	if(presentationManager->isActive())
-		presentationManager->currentEngine()->setDisplay(current->geometry());
+		presentationManager->currentEngine()->setDisplay(current);
 }
 
 void SettingsDialog::on_btnClose_clicked() {

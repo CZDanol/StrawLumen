@@ -2,6 +2,7 @@
 #define PRESENTATIONENGINE_H
 
 #include <QObject>
+#include <QScreen>
 
 class PresentationEngine : public QObject {
 	Q_OBJECT
@@ -16,7 +17,7 @@ public:
 	virtual void deactivateEngine() = 0;
 
 	virtual void setBlackScreen(bool set) = 0;
-	virtual void setDisplay(const QRect &rect) = 0;
+	virtual void setDisplay(QScreen *screen) = 0;
 	virtual void raiseWindow() = 0;
 };
 
