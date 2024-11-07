@@ -6,6 +6,9 @@ Aktuálně
    - možnost skrytí akordů
    - linky z obsahu na jednotlivé písně
 
+- když zamknutá písnička projde exportem + importem, odemkne se
+- dvojklikem na zamknutou písničku lze stále editovat
+
 - update english
 
 - možnost kopírovat písničku
