@@ -211,6 +211,7 @@ void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds)
 	emit db->sigSongListChanged();
 
 	currentSongId_ = -1;
+	isCurrentSongLocked_ = false;
 	updateSongManipulationButtonsEnabled();
 }
 
@@ -234,6 +235,10 @@ QVector<qlonglong> MainWindow_SongsMode::selectedSongIds() {
 }
 
 void MainWindow_SongsMode::setSongEditMode(bool set) {
+	if(isCurrentSongLocked_) {
+		set = false;
+	}
+
 	if(isSongEditMode_ == set) {
 		updateSongManipulationButtonsEnabled();
 		return;
@@ -560,6 +565,7 @@ void MainWindow_SongsMode::on_btnNew_clicked() {
 	ui->lnTags->setText(ui->wgtSongList->currentTagFilterName());
 
 	currentSongId_ = -1;
+	isCurrentSongLocked_ = false;
 
 	setSongEditMode(true);
 	ui->lnName->setFocus();
@@ -902,6 +908,7 @@ void MainWindow_SongsMode::on_btnLock_clicked() {
 		return;
 
 	db->exec("UPDATE songs SET locked = 1 WHERE id = ?", {currentSongId_});
+	isCurrentSongLocked_ = true;
 	updateSongManipulationButtonsEnabled();
 }
 
