@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppPublisher "Danol"
-#define MyAppCopyright "(c) 2023 Danol"
+#define MyAppCopyright "2025 Danol"
 #define MyAppURL "https://danol.cz"
 #define MyAppExeName "strawLumen.exe"
 
@@ -26,8 +26,8 @@ Compression=lzma
 SolidCompression=yes
 UninstallDisplayIcon="{app}\bin_{#PlatformId}\{#MyAppExeName}"
 ; Sign tools configured in inno setup ide
-SignTool=ComodoSign
-SignedUninstaller=yes
+; SignTool=ComodoSign
+; SignedUninstaller=yes
 DisableDirPage=no
 Uninstallable=not IsPortableMode
 DirExistsWarning=no
