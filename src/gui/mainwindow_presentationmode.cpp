@@ -171,7 +171,11 @@ MainWindow_PresentationMode::MainWindow_PresentationMode(QWidget *parent) : QWid
 		// Pageup/down cannot be connected directly using qshortcut native thingies because when the buttons are not enabled, the shortcuts don't prop
 		// So for example in slide list, pageUp/down then have their default behavior, which is bad
 		connect(new QShortcut(Qt::Key_PageDown, this), SIGNAL(activated()), ui->btnNextSlide, SLOT(click()));
+		connect(new QShortcut(Qt::Key_Right, this), SIGNAL(activated()), ui->btnNextSlide, SLOT(click()));
+
 		connect(new QShortcut(Qt::Key_PageUp, this), SIGNAL(activated()), ui->btnPreviousSlide, SLOT(click()));
+		connect(new QShortcut(Qt::Key_Left, this), SIGNAL(activated()), ui->btnPreviousSlide, SLOT(click()));
+
 		new QShortcut(Qt::Key_F5, ui->btnEnableProjection, SLOT(click()));
 		new QShortcut(Qt::Key_B, ui->btnBlackScreen, SLOT(click()));
 		new QShortcut(Qt::Key_Escape, this, SLOT(disablePresentation()));
