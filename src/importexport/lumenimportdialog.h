@@ -20,9 +20,13 @@ public:
 	void show();
 	void show(const QString &filename);
 
+protected:
+	void closeEvent(QCloseEvent *) override;
+
 private:
 	void updateUi();
 	void loadImportFile();
+	void setupDefaultUi();
 
 private slots:
 	void on_btnClose_clicked();

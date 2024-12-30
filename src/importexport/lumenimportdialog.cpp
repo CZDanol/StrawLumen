@@ -55,15 +55,22 @@ LumenImportDialog::~LumenImportDialog() {
 void LumenImportDialog::show() {
 	importFilename_.clear();
 	loadImportFile();
-	updateUi();
+	setupDefaultUi();
 	QDialog::show();
 }
 
 void LumenImportDialog::show(const QString &filename) {
 	importFilename_ = filename;
 	loadImportFile();
-	updateUi();
+	setupDefaultUi();
 	QDialog::show();
+}
+
+void LumenImportDialog::closeEvent(QCloseEvent *)
+{
+	saveSetting("lumenImport.conflictBehavior", ui->cmbConflictBehavior);
+	saveSetting("lumenImport.stripTags", ui->cbStripTags);
+	saveSetting("lumenImport.cbAddDateLabel", ui->cbAddDateLabel);
 }
 
 void LumenImportDialog::updateUi() {
@@ -89,6 +96,15 @@ void LumenImportDialog::loadImportFile() {
 	}
 }
 
+void LumenImportDialog::setupDefaultUi()
+{
+	loadSetting("lumenImport.conflictBehavior", ui->cmbConflictBehavior);
+	loadSetting("lumenImport.stripTags", ui->cbStripTags);
+	loadSetting("lumenImport.cbAddDateLabel", ui->cbAddDateLabel);
+
+	updateUi();
+}
+
 void LumenImportDialog::on_btnClose_clicked() {
 	reject();
 }
@@ -112,7 +128,7 @@ void LumenImportDialog::on_btnImport_clicked() {
 	bool isError = false;
 	QVector<QSharedPointer<Presentation>> presentations;
 
-	splashscreen->asyncAction(tr("Impportování písní"), true, [&] {
+	splashscreen->asyncAction(tr("Importování písní"), true, [&] {
 		ExportDatabaseManager importDb(importFilename_, false);
 		if(!importDb.database().isOpen())
 			return;
