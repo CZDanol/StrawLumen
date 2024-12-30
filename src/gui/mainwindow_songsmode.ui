@@ -50,7 +50,7 @@
       <item row="1" column="4">
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -69,7 +69,7 @@
          </sizepolicy>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::FocusPolicy::NoFocus</enum>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -153,7 +153,7 @@
          </sizepolicy>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::FocusPolicy::NoFocus</enum>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -237,7 +237,7 @@
          </sizepolicy>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::FocusPolicy::NoFocus</enum>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -344,7 +344,7 @@ Zkratka: Ctrl+Alt+F nebo AltGr+F</string>
          </sizepolicy>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::FocusPolicy::NoFocus</enum>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -422,12 +422,12 @@ Zkratka: Alt+Shift+F</string>
       </sizepolicy>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="QWidget" name="wgtLeftTab" native="true">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="leftMargin">
         <number>0</number>
@@ -496,7 +496,7 @@ Zkratka: Alt+Shift+F</string>
           </sizepolicy>
          </property>
          <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
+          <enum>Qt::FocusPolicy::NoFocus</enum>
          </property>
          <widget class="QWidget" name="tabSongList">
           <attribute name="icon">
@@ -516,7 +516,7 @@ Zkratka: Alt+Shift+F</string>
               </sizepolicy>
              </property>
              <property name="focusPolicy">
-              <enum>Qt::StrongFocus</enum>
+              <enum>Qt::FocusPolicy::StrongFocus</enum>
              </property>
             </widget>
            </item>
@@ -526,7 +526,7 @@ Zkratka: Alt+Shift+F</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="QWidget" name="widget_2" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>1</horstretch>
@@ -718,7 +718,7 @@ Zkratka: Alt+Shift+F</string>
        <item>
         <widget class="QTabWidget" name="twSong">
          <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
+          <enum>Qt::FocusPolicy::NoFocus</enum>
          </property>
          <property name="currentIndex">
           <number>0</number>
@@ -790,7 +790,7 @@ Zkratka: Alt+Shift+F</string>
               </font>
              </property>
              <property name="contextMenuPolicy">
-              <enum>Qt::CustomContextMenu</enum>
+              <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
              </property>
              <property name="acceptRichText">
               <bool>false</bool>
@@ -807,10 +807,10 @@ Zkratka: Alt+Shift+F</string>
            <item row="1" column="2">
             <spacer name="horizontalSpacer_2">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
+              <enum>QSizePolicy::Policy::Fixed</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -883,10 +883,10 @@ Zkratka: Alt+Shift+F</string>
            <item row="2" column="6">
             <spacer name="horizontalSpacer_4">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
+              <enum>QSizePolicy::Policy::Fixed</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
