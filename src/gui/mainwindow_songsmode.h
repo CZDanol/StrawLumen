@@ -95,9 +95,7 @@ private slots:
 	void on_actionImportFromPowerPoint_triggered();
 	void on_btnZoomIn_clicked();
 	void on_btnZoomOut_clicked();
-
 	void on_btnLock_clicked();
-
 	void on_btnCopy_clicked();
 
 private:

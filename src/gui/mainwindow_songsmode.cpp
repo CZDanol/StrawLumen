@@ -39,7 +39,7 @@ constexpr qreal maxFontSize = 24;
 	F(lnAuthor) F(lnSlideOrder) F(teContent) F(lnCopyright) F(lnTags) F(teNotes)
 
 MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) : QWidget(parent),
-                                                              ui(new Ui::MainWindow_SongsMode) {
+																															ui(new Ui::MainWindow_SongsMode) {
 	ui->setupUi(this);
 	ui->twSong->setCornerWidget(ui->twSongCorner);
 	ui->twSongs->setCornerWidget(ui->twSongsCorner);
@@ -84,7 +84,7 @@ MainWindow_SongsMode::MainWindow_SongsMode(QWidget *parent) : QWidget(parent),
 	// Insert song section menu
 	{
 		const QStringList sectionNames{
-		  "C", "V1", "V2", "V3", "B", "I", "O", "M", "P"};
+			"C", "V1", "V2", "V3", "B", "I", "O", "M", "P"};
 
 		for(auto &sectionName: sectionNames) {
 			SongSection section(sectionName);
@@ -306,7 +306,7 @@ void MainWindow_SongsMode::updateCopyChordsMenu() {
 
 				return copySongChords(QApplication::clipboard()->text(), newStr);
 			},
-			                      true);
+														true);
 		});
 	}
 
@@ -322,7 +322,7 @@ void MainWindow_SongsMode::updateCopyChordsMenu() {
 
 				return copySongChords(sourceContent, newStr);
 			},
-			                      true);
+														true);
 		});
 	}
 
@@ -582,14 +582,14 @@ void MainWindow_SongsMode::on_btnSaveChanges_clicked() {
 	db->beginTransaction();
 
 	QHash<QString, QVariant> data{
-	  {"name", ui->lnName->text()},
-	  {"standardized_name", standardizeSongName(ui->lnName->text())},
-	  {"author", ui->lnAuthor->text()},
-	  {"copyright", ui->lnCopyright->text()},
-	  {"content", ui->teContent->toPlainText()},
-	  {"slideOrder", ui->lnSlideOrder->text().simplified()},
-	  {"notes", ui->teNotes->toPlainText()},
-	  {"lastEdit", QDateTime::currentSecsSinceEpoch()}};
+		{"name", ui->lnName->text()},
+		{"standardized_name", standardizeSongName(ui->lnName->text())},
+		{"author", ui->lnAuthor->text()},
+		{"copyright", ui->lnCopyright->text()},
+		{"content", ui->teContent->toPlainText()},
+		{"slideOrder", ui->lnSlideOrder->text().simplified()},
+		{"notes", ui->teNotes->toPlainText()},
+		{"lastEdit", QDateTime::currentSecsSinceEpoch()}};
 
 	if(currentSongId_ == -1) {
 		data.insert("uid", QUuid::createUuid().toString());
@@ -648,7 +648,7 @@ void MainWindow_SongsMode::on_btnTransposeUp_clicked() {
 		transposeSong(content, 1, ui->btnTransposeFlat->isChecked());
 		return content;
 	},
-	                      false);
+												false);
 }
 
 void MainWindow_SongsMode::on_btnTransposeDown_clicked() {
@@ -656,7 +656,7 @@ void MainWindow_SongsMode::on_btnTransposeDown_clicked() {
 		transposeSong(content, -1, ui->btnTransposeFlat->isChecked());
 		return content;
 	},
-	                      false);
+												false);
 }
 
 void MainWindow_SongsMode::on_btnAddCustomSlideOrderItem_pressed() {
@@ -760,7 +760,7 @@ void MainWindow_SongsMode::on_actionDeleteChords_triggered() {
 		str.remove(rxTrim);
 		return str;
 	},
-	                      true);
+												true);
 }
 
 void MainWindow_SongsMode::on_btnAutoFormat_clicked() {
@@ -794,7 +794,7 @@ void MainWindow_SongsMode::on_btnAutoFormat_clicked() {
 
 		return content;
 	},
-	                      false);
+												false);
 }
 
 void MainWindow_SongsMode::on_actionMoveChordsRight_triggered() {
@@ -823,7 +823,7 @@ void MainWindow_SongsMode::on_actionOnlyChords_triggered() {
 
 		return newContent;
 	},
-	                      true);
+												true);
 }
 
 void MainWindow_SongsMode::on_btnBulkEdit_clicked() {
@@ -834,19 +834,19 @@ void MainWindow_SongsMode::on_btnBulkEdit_clicked() {
 void MainWindow_SongsMode::on_btnConvertChords_clicked() {
 	contentSelectionMorph([=](QString content) {
 		static const QString chordRegexPattern =
-		  Chord::chordRegex().pattern().replace(QRegularExpression("\\((?!\\?\\:)"), "(?:")// Replace capturing groups with non-capturing
-		    .remove('^')
-		    .remove('$')// Make it a global match
-		  ;
+			Chord::chordRegex().pattern().replace(QRegularExpression("\\((?!\\?\\:)"), "(?:")// Replace capturing groups with non-capturing
+				.remove('^')
+				.remove('$')// Make it a global match
+			;
 
 		static QRegularExpression globalChordRegex(chordRegexPattern);
 
 		static const QRegularExpression regex(
-		  // First - chords - line
-		  "^(\\.?(?:(?!\\n)\\s)*(?:" + chordRegexPattern + "(?:(?!\\n)\\s)*)+)" + "\n"
-		    // Second - text - line
-		    + "(.*?)$",
-		  QRegularExpression::MultilineOption);
+			// First - chords - line
+			"^(\\.?(?:(?!\\n)\\s)*(?:" + chordRegexPattern + "(?:(?!\\n)\\s)*)+)" + "\n"
+				// Second - text - line
+				+ "(.*?)$",
+			QRegularExpression::MultilineOption);
 
 		QString result = content;
 		int resultPosCorrection = 0;
@@ -874,7 +874,7 @@ void MainWindow_SongsMode::on_btnConvertChords_clicked() {
 
 		return result;
 	},
-	                      false);
+												false);
 }
 
 void MainWindow_SongsMode::on_btnTransposeFlat_clicked() {
@@ -882,7 +882,7 @@ void MainWindow_SongsMode::on_btnTransposeFlat_clicked() {
 		transposeSong(content, 0, ui->btnTransposeFlat->isChecked());
 		return content;
 	},
-	                      false);
+												false);
 }
 
 void MainWindow_SongsMode::on_actionImportFromPowerPoint_triggered() {
