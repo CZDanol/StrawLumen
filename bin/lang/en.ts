@@ -841,7 +841,7 @@
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="131"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="238"/>
         <source>Soubor:</source>
         <translation>File:</translation>
     </message>
@@ -862,87 +862,111 @@
         <translation type="vanished">Always overwrite</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="161"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="281"/>
         <source>Existující písně se stejným názvem:</source>
         <translation>Existing songs with the same name:</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="188"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="189"/>
         <source>Přeskočit</source>
         <translation>Skip</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="193"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="194"/>
         <source>Přidat a nechat původní</source>
         <translation>Add and keep original</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="198"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="199"/>
         <source>Přepsat</source>
         <translation>Overwrite</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="76"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="264"/>
         <source>Přidat importované písně do programu promítání</source>
         <translation>Add imported songs to the playlist</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="56"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="251"/>
         <source>Zahodit štítky importovaných písní</source>
         <translation>Remove imported songs tags</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="117"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="50"/>
         <source>Přidat štítky:</source>
         <translation>Add tags:</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="224"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="150"/>
+        <source>Při vyplnění kategorie se pro kontrolu existujících písní uvažují pouze písně s alespoň jedním ze zadaných štítků. Ve všem ostatním fungují kategoie stejně jako &quot;přidat štítky&quot;.</source>
+        <translation>When category is filled, only songs with at least one of the specified tags are considered for checking existing songs. In all other respects, the categories function the same as &apos;add tags&apos;.</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="226"/>
         <source>Přidat štítek s aktuálním datem:</source>
         <translation>Add tag with the current date:</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="281"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="274"/>
+        <source>Štítky kategorie:</source>
+        <translation>Category tags:</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="308"/>
+        <source>Vynutit používání kategorií</source>
+        <translation>Enforce using categories</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="360"/>
         <source>Storno</source>
         <translation>Storno</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="295"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="374"/>
         <source>Importovat</source>
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="70"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="87"/>
         <source>Vybrat soubor...</source>
         <translation>Select file...</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="98"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="117"/>
+        <source>Je třeba zvolit kategorii pro import nebo vypnout vyžadování kategorií.</source>
+        <translation>It is necessary to choose a category for import or turn off category enforcement.</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="120"/>
         <source>Není vybrána žádná píseň pro import.</source>
         <translation>No songs selected for import.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="115"/>
         <source>Impportování písní</source>
+        <translation type="vanished">Importing songs</translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="138"/>
+        <source>Importování písní</source>
         <translation>Importing songs</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="192"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="227"/>
         <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
         <translation>There is a lot of songs to import (%1). Do you areally want to add them all to the playlist?</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="198"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="233"/>
         <source>Písně byly importovány.</source>
         <translation>Songs were imported.</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="210"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="245"/>
         <source>Soubory Straw Lumen (*.strawLumen)</source>
         <translation>Straw Lumen files (*.strawLumen)</translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="212"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="247"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
@@ -1250,62 +1274,62 @@
         <translation>Load recent</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="207"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="211"/>
         <source>Program promítání obsahuje neuložené změny. Opravdu chcete pokračovat?</source>
         <translation>Playlist contains unsaved changes. Do you really want to continue?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="260"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="264"/>
         <source>HH:mm:ss</source>
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="371"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="375"/>
         <source>%1*</source>
         <translation>%1*</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="401"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="405"/>
         <source>Opravdu smazat vybrané prezentace?</source>
         <translation>Do you really want to delete selected presentations?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="421"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="425"/>
         <source>PowerPoint prezentace (%1)</source>
         <translation>PowerPoint presentation (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="423"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="427"/>
         <source>Import prezentace PowerPoint</source>
         <translation>Import PowerPoint presentation</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="478"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="482"/>
         <source>Skrýt</source>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="487"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="491"/>
         <source>Zobrazit</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="542"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="546"/>
         <source>Soubory obrázků (%1)</source>
         <translation>Image files (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="544"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="548"/>
         <source>Přidání obrázků</source>
         <translation>Adding images</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="561"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="565"/>
         <source>Soubory videa (%1)</source>
         <translation>Video files (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="563"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="567"/>
         <source>Import videa</source>
         <translation>Importing videos</translation>
     </message>
@@ -1644,60 +1668,60 @@ Zkratka: Alt+Shift+F</source>
         <translation>Do you really want to delete selected songs?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="221"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="222"/>
         <source>Píseň je otevřena pro editaci. Chcete uložit provedené úpravy?</source>
         <translation>A song is open in edit mode. Save changes?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="299"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="304"/>
         <source>Schránka</source>
         <translation>Clipboard</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="304"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="320"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="309"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="325"/>
         <source>Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?</source>
         <translation>Section already contains chords. Continue?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="373"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="378"/>
         <source>Vybraná pozice neobsahuje žádnou sekci</source>
         <translation>Selection does not contain any sections</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="555"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="560"/>
         <source>Nová písnička</source>
         <translation>New song</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="570"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="576"/>
         <source>Opravdu zahodit provedené úpravy?</source>
         <translation>Really discard changes?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="667"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="673"/>
         <source>Píseň aktuálně neobsahuje žádné sekce.</source>
         <translation>Song does not contain any sections.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="709"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="715"/>
         <source>Tuto akci nelze provést během úprav písně. Ukončete úpravy a zkuste to znovu.</source>
         <translation>Cannot perform this action during song editing. Finish editing and try again.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="751"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="757"/>
         <source>Píseň neobsahuje žádné sekce s textem i akordy.</source>
         <translation>Song does not contain any sections with both chords and lyrics.</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="901"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="907"/>
         <source>Tato akce zamkne písničku proti úpravám. Tuto akci nelze vzít zpět - píseň pak lze pouze smazat nebo zkopírovat.
 Opravdu chcete pokračovat?</source>
         <translation>This action will lock the song for edits. Songs can not be unlocked - you will have to copy or delete them afterwards.
 Do you want to continue?</translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="911"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="918"/>
         <source>%1 (kopie)</source>
         <translation>%1 (copy)</translation>
     </message>
@@ -2511,27 +2535,27 @@ Text</translation>
 <context>
     <name>Presentation_PowerPoint</name>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="134"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="133"/>
         <source>Načítání &quot;%1&quot;</source>
         <translation>Loading &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="38"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="37"/>
         <source>Program nedetekoval instalaci PowerPointu. Bez nainstalového PowerPointu nelze pracovat s powerpointovými prezentacemi.</source>
         <translation>PowerPoint installation not detected. Straw Lumen will not be able to work with PowerPoint presentations.</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="49"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="48"/>
         <source>Nepodařilo se načíst prezentaci &quot;%1&quot;.</source>
         <translation>Failed to load presentation &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="212"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="211"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="273"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="271"/>
         <source>Nepodařilo se spustit prezentaci &quot;%1&quot;.</source>
         <translation>Failed to run presentation &quot;%1&quot;.</translation>
     </message>

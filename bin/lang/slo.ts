@@ -837,92 +837,112 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="56"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="251"/>
         <source>Zahodit štítky importovaných písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="76"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="264"/>
         <source>Přidat importované písně do programu promítání</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="117"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="50"/>
         <source>Přidat štítky:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="131"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="238"/>
         <source>Soubor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="161"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="281"/>
         <source>Existující písně se stejným názvem:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="188"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="189"/>
         <source>Přeskočit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="193"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="150"/>
+        <source>Při vyplnění kategorie se pro kontrolu existujících písní uvažují pouze písně s alespoň jedním ze zadaných štítků. Ve všem ostatním fungují kategoie stejně jako &quot;přidat štítky&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="194"/>
         <source>Přidat a nechat původní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="198"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="199"/>
         <source>Přepsat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="224"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="226"/>
         <source>Přidat štítek s aktuálním datem:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="281"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="274"/>
+        <source>Štítky kategorie:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="308"/>
+        <source>Vynutit používání kategorií</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="360"/>
         <source>Storno</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.ui" line="295"/>
+        <location filename="../../src/importexport/lumenimportdialog.ui" line="374"/>
         <source>Importovat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="70"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="87"/>
         <source>Vybrat soubor...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="98"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="117"/>
+        <source>Je třeba zvolit kategorii pro import nebo vypnout vyžadování kategorií.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="120"/>
         <source>Není vybrána žádná píseň pro import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="115"/>
-        <source>Impportování písní</source>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="138"/>
+        <source>Importování písní</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="192"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="227"/>
         <source>Importovaných písní je mnoho (%1). Opravdu je chcete všechny přidat do programu promítání?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="198"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="233"/>
         <source>Písně byly importovány.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="210"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="245"/>
         <source>Soubory Straw Lumen (*.strawLumen)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/importexport/lumenimportdialog.cpp" line="212"/>
+        <location filename="../../src/importexport/lumenimportdialog.cpp" line="247"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1222,62 +1242,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="207"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="211"/>
         <source>Program promítání obsahuje neuložené změny. Opravdu chcete pokračovat?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="260"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="264"/>
         <source>HH:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="371"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="375"/>
         <source>%1*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="401"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="405"/>
         <source>Opravdu smazat vybrané prezentace?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="421"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="425"/>
         <source>PowerPoint prezentace (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="423"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="427"/>
         <source>Import prezentace PowerPoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="478"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="482"/>
         <source>Skrýt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="487"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="491"/>
         <source>Zobrazit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="542"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="546"/>
         <source>Soubory obrázků (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="544"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="548"/>
         <source>Přidání obrázků</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="561"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="565"/>
         <source>Soubory videa (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="563"/>
+        <location filename="../../src/gui/mainwindow_presentationmode.cpp" line="567"/>
         <source>Import videa</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1616,59 +1636,59 @@ Zkratka: Alt+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="221"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="222"/>
         <source>Píseň je otevřena pro editaci. Chcete uložit provedené úpravy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="299"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="304"/>
         <source>Schránka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="304"/>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="320"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="309"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="325"/>
         <source>Sekce, do které by se měly akordy kopírovat, již akordy obsahuje. Chcete pokračovat a přepsat tyto akordy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="373"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="378"/>
         <source>Vybraná pozice neobsahuje žádnou sekci</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="555"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="560"/>
         <source>Nová písnička</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="570"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="576"/>
         <source>Opravdu zahodit provedené úpravy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="667"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="673"/>
         <source>Píseň aktuálně neobsahuje žádné sekce.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="709"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="715"/>
         <source>Tuto akci nelze provést během úprav písně. Ukončete úpravy a zkuste to znovu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="751"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="757"/>
         <source>Píseň neobsahuje žádné sekce s textem i akordy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="901"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="907"/>
         <source>Tato akce zamkne písničku proti úpravám. Tuto akci nelze vzít zpět - píseň pak lze pouze smazat nebo zkopírovat.
 Opravdu chcete pokračovat?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="911"/>
+        <location filename="../../src/gui/mainwindow_songsmode.cpp" line="918"/>
         <source>%1 (kopie)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2468,27 +2488,27 @@ Text</source>
 <context>
     <name>Presentation_PowerPoint</name>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="38"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="37"/>
         <source>Program nedetekoval instalaci PowerPointu. Bez nainstalového PowerPointu nelze pracovat s powerpointovými prezentacemi.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="49"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="48"/>
         <source>Nepodařilo se načíst prezentaci &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="134"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="133"/>
         <source>Načítání &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="212"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="211"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="273"/>
+        <location filename="../../src/presentation/powerpoint/presentation_powerpoint.cpp" line="271"/>
         <source>Nepodařilo se spustit prezentaci &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
