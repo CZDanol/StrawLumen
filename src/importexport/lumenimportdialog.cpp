@@ -39,7 +39,7 @@ LumenImportDialog *lumenImportDialog() {
 }
 
 LumenImportDialog::LumenImportDialog(QWidget *parent) : QDialog(parent),
-                                                        ui(new Ui::LumenImportDialog) {
+																												ui(new Ui::LumenImportDialog) {
 	ui->setupUi(this);
 
 	ui->wgtSongSelection->setDb(nullptr, false);
@@ -134,14 +134,14 @@ void LumenImportDialog::on_btnImport_clicked() {
 			qlonglong songId;
 
 			static const QStringList dataFields{
-			  "name",
-			  "author",
-			  "copyright",
-			  "content",
-			  "slideOrder",
-			  "notes",
-			  "lastEdit",
-			  "locked",
+				"name",
+				"author",
+				"copyright",
+				"content",
+				"slideOrder",
+				"notes",
+				"lastEdit",
+				"locked",
 			};
 			bool updateData = true;
 
@@ -176,7 +176,7 @@ void LumenImportDialog::on_btnImport_clicked() {
 						db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, q2.value(0)});
 				}
 
-				for(const QString &tag: qAsConst(tags))
+				for(const QString &tag: std::as_const(tags))
 					db->exec("INSERT OR IGNORE INTO song_tags(song, tag) VALUES(?, ?)", {songId, tag});
 			}
 

@@ -42,7 +42,7 @@ void BibleTranslationListBox::updateList(const QStringList &selection) {
 	}
 
 	// Add selected translations first, in the order they were selected
-	for(const QString &tr: qAsConst(selection)) {
+	for(const QString &tr: std::as_const(selection)) {
 		QListWidgetItem *wi = items.take(tr);
 		if(!wi)
 			continue;
@@ -52,7 +52,7 @@ void BibleTranslationListBox::updateList(const QStringList &selection) {
 	}
 
 	// The add the unselected items in alphabetical order
-	for(QListWidgetItem *wi: qAsConst(items))
+	for(QListWidgetItem *wi: std::as_const(items))
 		addItem(wi);
 }
 

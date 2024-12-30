@@ -11,10 +11,10 @@
 #include "util/standarddialogs.h"
 
 FeedbackDialog::FeedbackDialog(QWidget *parent) : QDialog(parent),
-                                                  ui(new Ui::FeedbackDialog) {
+																									ui(new Ui::FeedbackDialog) {
 	ui->setupUi(this);
 
-	new QShortcut(Qt::CTRL + Qt::Key_Return, ui->btnSend, SLOT(click()));
+	new QShortcut(Qt::CTRL | Qt::Key_Return, ui->btnSend, SLOT(click()));
 }
 
 FeedbackDialog::~FeedbackDialog() {
@@ -51,10 +51,10 @@ void FeedbackDialog::on_btnSend_clicked() {
 	const QString subject = ui->lnSubject->text().trimmed();
 
 	const QJsonObject request{
-	  {"action", "feedback"},
-	  {"product", PRODUCT_IDSTR},
-	  {"subject", subject},
-	  {"message", QStringLiteral("Kontakt: %1\n\n%2").arg(email, message)}};
+		{"action", "feedback"},
+		{"product", PRODUCT_IDSTR},
+		{"subject", subject},
+		{"message", QStringLiteral("Kontakt: %1\n\n%2").arg(email, message)}};
 
 	StrawApi::RequestResult result;
 	QJsonObject response;
