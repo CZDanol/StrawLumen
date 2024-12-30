@@ -14,7 +14,7 @@ TEMPLATE = app
 VERSION = 1.3.8.0
 QMAKE_TARGET_COMPANY = "Danol"
 QMAKE_TARGET_PRODUCT = "Straw Lumen"
-QMAKE_TARGET_COPYRIGHT = "(c) 2023 Danol"
+QMAKE_TARGET_COPYRIGHT = "2025 Danol"
 QMAKE_TARGET_DESCRIPTION = "Straw Lumen"
 
 win32|win64 {
@@ -39,9 +39,6 @@ CONFIG += c++17
 
 # Statically link MSVC distributables
 # Release:CONFIG += static_runtime TODO
-
-# Without this, the program can use max 2GB ram
-QMAKE_LFLAGS = /LARGEADDRESSAWARE
 
 Debug:RELEASE_STR = _dbg
 Release:RELEASE_STR =

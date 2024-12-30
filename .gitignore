@@ -11,4 +11,5 @@ bin/**/*.qm
 bin/**/*.pak
 bin/**/*.dat
 bin/**/*.log
+bin/**/*.bin
 src/StrawLumen.pro.user
