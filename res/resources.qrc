@@ -267,5 +267,7 @@
         <file>icons/16/Zoom Out.png</file>
         <file>icons/16/Lock.png</file>
         <file>icons/16/Copy.png</file>
+        <file>icons/16/Product.png</file>
+        <file>icons/16/Security Lock.png</file>
     </qresource>
 </RCC>

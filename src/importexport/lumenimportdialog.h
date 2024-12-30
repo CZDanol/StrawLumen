@@ -24,9 +24,9 @@ protected:
 	void closeEvent(QCloseEvent *) override;
 
 private:
+	void showImpl();
 	void updateUi();
 	void loadImportFile();
-	void setupDefaultUi();
 
 private slots:
 	void on_btnClose_clicked();

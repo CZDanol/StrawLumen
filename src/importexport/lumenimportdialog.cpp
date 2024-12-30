@@ -54,16 +54,12 @@ LumenImportDialog::~LumenImportDialog() {
 
 void LumenImportDialog::show() {
 	importFilename_.clear();
-	loadImportFile();
-	setupDefaultUi();
-	QDialog::show();
+	showImpl();
 }
 
 void LumenImportDialog::show(const QString &filename) {
 	importFilename_ = filename;
-	loadImportFile();
-	setupDefaultUi();
-	QDialog::show();
+	showImpl();
 }
 
 void LumenImportDialog::closeEvent(QCloseEvent *)
@@ -71,6 +67,20 @@ void LumenImportDialog::closeEvent(QCloseEvent *)
 	saveSetting("lumenImport.conflictBehavior", ui->cmbConflictBehavior);
 	saveSetting("lumenImport.stripTags", ui->cbStripTags);
 	saveSetting("lumenImport.cbAddDateLabel", ui->cbAddDateLabel);
+	saveSetting("lumenImport.requireCategory", ui->cbRequireCategory);
+}
+
+void LumenImportDialog::showImpl()
+{
+	loadSetting("lumenImport.conflictBehavior", ui->cmbConflictBehavior);
+	loadSetting("lumenImport.stripTags", ui->cbStripTags);
+	loadSetting("lumenImport.cbAddDateLabel", ui->cbAddDateLabel);
+	loadSetting("lumenImport.requireCategory", ui->cbRequireCategory);
+	ui->lnCategories->clear();
+
+	loadImportFile();
+	updateUi();
+	QDialog::show();
 }
 
 void LumenImportDialog::updateUi() {
@@ -96,20 +106,16 @@ void LumenImportDialog::loadImportFile() {
 	}
 }
 
-void LumenImportDialog::setupDefaultUi()
-{
-	loadSetting("lumenImport.conflictBehavior", ui->cmbConflictBehavior);
-	loadSetting("lumenImport.stripTags", ui->cbStripTags);
-	loadSetting("lumenImport.cbAddDateLabel", ui->cbAddDateLabel);
-
-	updateUi();
-}
-
 void LumenImportDialog::on_btnClose_clicked() {
 	reject();
 }
 
 void LumenImportDialog::on_btnImport_clicked() {
+	QSet<QString> categories = ui->lnCategories->toTags();
+	const bool useCategories = !categories.isEmpty();
+	if(!useCategories && ui->cbRequireCategory->isChecked())
+		return standardErrorDialog(tr("Je třeba zvolit kategorii pro import nebo vypnout vyžadování kategorií."), this);
+
 	if(!ui->wgtSongSelection->isAnySongSelected())
 		return standardErrorDialog(tr("Není vybrána žádná píseň pro import."), this);
 
@@ -124,6 +130,7 @@ void LumenImportDialog::on_btnImport_clicked() {
 	QSet<QString> tags = ui->lnTags->toTags();
 	if(ui->cbAddDateLabel->isChecked())
 		tags += ui->lblCurrentDateLabel->text();
+	tags += categories;
 
 	bool isError = false;
 	QVector<QSharedPointer<Presentation>> presentations;
@@ -146,8 +153,20 @@ void LumenImportDialog::on_btnImport_clicked() {
 			if(!ids.contains(q.value("id").toInt()))
 				continue;
 
-			const QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit, locked FROM songs WHERE name = ?", {q.value("name")});
+			QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit, locked FROM songs WHERE name = ?", {q.value("name")});
+			const auto existingSongId = existingSong.value("id").toLongLong();
 			qlonglong songId;
+
+			if(useCategories && !existingSong.isEmpty()) {
+				bool categoriesIntersect = false;
+				QSqlQuery q2 = importDb.selectQuery("SELECT tag FROM song_tags WHERE song = ?", {existingSongId});
+				while(q2.next()) {
+					categoriesIntersect |= categories.contains(q2.value("tag").toString());
+				}
+				if(!categoriesIntersect) {
+					existingSong = {};
+				}
+			}
 
 			static const QStringList dataFields{
 				"name",
@@ -168,11 +187,11 @@ void LumenImportDialog::on_btnImport_clicked() {
 			data["standardized_name"] = standardizeSongName(data["name"].toString());
 
 			if(!existingSong.isEmpty() && conflictBehavior == cbSkip) {
-				songId = existingSong.value("id").toLongLong();
+				songId = existingSongId;
 				updateData = false;
 			}
 			else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite && !existingSong.value("locked").toBool()) {
-				songId = existingSong.value("id").toLongLong();
+				songId = existingSongId;
 				db->update("songs", data, "id = ?", {songId});
 			}
 			else {

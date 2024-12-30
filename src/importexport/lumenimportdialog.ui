@@ -44,16 +44,17 @@
        <string>Nastavení</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="1" colspan="3">
-        <widget class="QCheckBox" name="cbStripTags">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+       <item row="11" column="1">
+        <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Zahodit štítky importovaných písní</string>
+          <string>Přidat štítky:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Sort By Modified Date_16px.png</pixmap>
          </property>
         </widget>
        </item>
@@ -64,28 +65,22 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1" colspan="3">
-        <widget class="QCheckBox" name="cbAddToPlaylist">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Přidat importované písně do programu promítání</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="label_4">
          <property name="pixmap">
           <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
          </property>
         </widget>
+       </item>
+       <item row="11" column="3">
+        <widget class="SongTagsLineEdit" name="lnTags"/>
        </item>
        <item row="1" column="1">
         <spacer name="verticalSpacer_2">
@@ -103,42 +98,20 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="btnSelectFile">
-         <property name="icon">
-          <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/16/Open_16px.png</normaloff>:/icons/16/Open_16px.png</iconset>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Přidat štítky:</string>
-         </property>
-        </widget>
+       <item row="4" column="3">
+        <widget class="SongTagsLineEdit" name="lnCategories"/>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_8">
+        <widget class="QLabel" name="label_10">
          <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Product.png</pixmap>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Soubor:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_13">
          <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Sort By Modified Date_16px.png</pixmap>
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Info_16px.png</pixmap>
          </property>
         </widget>
        </item>
@@ -158,19 +131,44 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Existující písně se stejným názvem:</string>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Folder_16px.png</pixmap>
+       <item row="6" column="1" colspan="3">
+        <widget class="QLabel" name="label_14">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Při vyplnění kategorie se pro kontrolu existujících písní uvažují pouze písně s alespoň jedním ze zadaných štítků. Ve všem ostatním fungují kategoie stejně jako &quot;přidat štítky&quot;.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item row="8" column="1">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Policy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>16</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="3" column="3">
         <widget class="QComboBox" name="cmbConflictBehavior">
@@ -203,17 +201,18 @@
          </item>
         </widget>
        </item>
-       <item row="6" column="3">
-        <widget class="SongTagsLineEdit" name="lnTags"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="pixmap">
-          <pixmap resource="../../res/resources.qrc">:/icons/16/Tags_16px.png</pixmap>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="btnSelectFile">
+         <property name="icon">
+          <iconset resource="../../res/resources.qrc">
+           <normaloff>:/icons/16/Open_16px.png</normaloff>:/icons/16/Open_16px.png</iconset>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="5" column="1" colspan="3">
+       <item row="10" column="1" colspan="3">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QCheckBox" name="cbAddDateLabel">
@@ -232,6 +231,83 @@
           <widget class="QLabel" name="lblCurrentDateLabel"/>
          </item>
         </layout>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Soubor:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbStripTags">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Zahodit štítky importovaných písní</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbAddToPlaylist">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Přidat importované písně do programu promítání</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Štítky kategorie:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Existující písně se stejným názvem:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Folder_16px.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="pixmap">
+          <pixmap resource="../../res/resources.qrc">:/icons/16/Security Lock.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1" colspan="3">
+        <widget class="QCheckBox" name="cbRequireCategory">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Vynutit používání kategorií</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
