@@ -50,6 +50,7 @@ Source: "bin\bin_{#PlatformId}\QtWebEngineProcess.exe"; DestDir: "{app}\bin_{#Pl
 Source: "bin\bin_{#PlatformId}\*.dll"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\bin_{#PlatformId}\*.pak"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 Source: "bin\bin_{#PlatformId}\*.dat"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
+Source: "bin\bin_{#PlatformId}\*.bin"; DestDir: "{app}\bin_{#PlatformId}"; Flags: ignoreversion recursesubdirs
 
 Source: "bin\lang\*.qm"; DestDir: "{app}\lang"; Flags: ignoreversion
 Source: "bin\backgrounds\*"; DestDir: "{app}\backgrounds"; Flags: ignoreversion
