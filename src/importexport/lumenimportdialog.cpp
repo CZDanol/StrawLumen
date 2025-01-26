@@ -159,7 +159,7 @@ void LumenImportDialog::on_btnImport_clicked() {
 
 			if(useCategories && !existingSong.isEmpty()) {
 				bool categoriesIntersect = false;
-				QSqlQuery q2 = importDb.selectQuery("SELECT tag FROM song_tags WHERE song = ?", {existingSongId});
+				QSqlQuery q2 = db->selectQuery("SELECT tag FROM song_tags WHERE song = ?", {existingSongId});
 				while(q2.next()) {
 					categoriesIntersect |= categories.contains(q2.value("tag").toString());
 				}
