@@ -194,6 +194,18 @@ void MainWindow_SongsMode::requestDeleteSongs(const QVector<qlonglong> &songIds)
 	if(!standardDeleteConfirmDialog(tr("Opravdu smazat vybrané písně?")))
 		return;
 
+
+	bool anySongLocked = false;
+	for(qlonglong id: songIds) {
+		if(db->selectValue("SELECT locked FROM songs WHERE id = ?", {id}).toBool()) {
+			anySongLocked = true;
+			break;
+		}
+	}
+	if(anySongLocked && !standardDeleteConfirmDialog(tr("Některé z vybraných písní jsou zamčené. Opravdu chcete pokračovat?"))) {
+		return;
+	}
+
 	db->beginTransaction();
 	for(qlonglong id: songIds) {
 		db->exec("DELETE FROM songs_fulltext WHERE docid = ?", {id});
