@@ -153,19 +153,34 @@ void LumenImportDialog::on_btnImport_clicked() {
 			if(!ids.contains(q.value("id").toInt()))
 				continue;
 
-			QSqlRecord existingSong = db->selectRowDef("SELECT id, lastEdit, locked FROM songs WHERE name = ?", {q.value("name")});
-			const auto existingSongId = existingSong.value("id").toLongLong();
-			qlonglong songId;
+			QSqlRecord existingSong;
+			qlonglong existingSongId = 0;
 
-			if(useCategories && !existingSong.isEmpty()) {
-				bool categoriesIntersect = false;
-				QSqlQuery q2 = db->selectQuery("SELECT tag FROM song_tags WHERE song = ?", {existingSongId});
-				while(q2.next()) {
-					categoriesIntersect |= categories.contains(q2.value("tag").toString());
+			auto existingSongCandidate = db->selectQuery("SELECT id, lastEdit, locked FROM songs WHERE name = ?", {q.value("name")});
+			while(existingSongCandidate.next()) {
+				const qlonglong candidateId = existingSongCandidate.value("id").toLongLong();
+
+				// The candidate must match the categories
+				if(useCategories) {
+					bool categoriesIntersect = false;
+					QSqlQuery q2 = db->selectQuery("SELECT tag FROM song_tags WHERE song = ?", {candidateId});
+					while(q2.next()) {
+						const auto tag = q2.value(0).toString();
+						categoriesIntersect |= categories.contains(tag);
+					}
+					if(!categoriesIntersect) {
+						continue;
+					}
 				}
-				if(!categoriesIntersect) {
-					existingSong = {};
+
+				// Do not consider locked candidates for overriding
+				if(conflictBehavior == cbOverwrite && existingSongCandidate.value("locked").toBool()) {
+					continue;
 				}
+
+				existingSong = existingSongCandidate.record();
+				existingSongId = candidateId;
+				break;
 			}
 
 			static const QStringList dataFields{
@@ -179,6 +194,7 @@ void LumenImportDialog::on_btnImport_clicked() {
 				"locked",
 			};
 			bool updateData = true;
+			qlonglong songId = -1;
 
 			QHash<QString, QVariant> data;
 			for(const QString &field: dataFields)
@@ -190,7 +206,7 @@ void LumenImportDialog::on_btnImport_clicked() {
 				songId = existingSongId;
 				updateData = false;
 			}
-			else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite && !existingSong.value("locked").toBool()) {
+			else if(!existingSong.isEmpty() && conflictBehavior == cbOverwrite) {
 				songId = existingSongId;
 				db->update("songs", data, "id = ?", {songId});
 			}
