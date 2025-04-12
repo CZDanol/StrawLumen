@@ -34,6 +34,9 @@ void PresentationEngine_PowerPoint::activateEngine() {
 		auto axApplication = activeXJobThread->axPowerPointApplication;
 
 		axPresentations_ = axApplication->querySubObject("Presentations");
+		if(!axPresentations_) {
+			qWarning() << "Presentations null";
+		}
 	});
 }
 
@@ -47,10 +50,12 @@ void PresentationEngine_PowerPoint::setBlackScreen(bool set) {
 		set = true;
 
 	activeXJobThread->executeNonblocking([=] {
-		if(!axPresentation_)
+		auto view = presentation_.axSSView_;
+		if(!view)
 			return;
 
-		axSSView_->dynamicCall("SetState(int)", int(set ? Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen : Office::PowerPoint::PpSlideShowState::ppSlideShowRunning));
+		qDebug() << "SetState";
+		view->dynamicCall("SetState(int)", int(set ? Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen : Office::PowerPoint::PpSlideShowState::ppSlideShowRunning));
 	});
 }
 
@@ -70,20 +75,37 @@ void PresentationEngine_PowerPoint::raiseWindow() {
 }
 
 void PresentationEngine_PowerPoint::setDisplay_axThread(const QRectF &rect) {
-	if(!axPresentation_)
+	qDebug() << "SetDisplay";
+
+	auto wnd = presentation_.axPresentationWindow_;
+	if(!wnd)
 		return;
 
-	axPresentationWindow_->dynamicCall("SetLeft(double)", rect.left());
-	axPresentationWindow_->dynamicCall("SetTop(double)", rect.top());
-	axPresentationWindow_->dynamicCall("SetWidth(double)", rect.width());
-	axPresentationWindow_->dynamicCall("SetHeight(double)", rect.height());
+	wnd->dynamicCall("SetLeft(double)", rect.left());
+	wnd->dynamicCall("SetTop(double)", rect.top());
+	wnd->dynamicCall("SetWidth(double)", rect.width());
+	wnd->dynamicCall("SetHeight(double)", rect.height());
 }
 
 void PresentationEngine_PowerPoint::onActivateTimer() {
 	activeXJobThread->executeNonblocking([=] {
-		if(!axPresentation_)
+		auto wnd = presentation_.axPresentationWindow_;
+		if(!wnd)
 			return;
 
-		axPresentationWindow_->dynamicCall("Activate()");
+		qDebug() << "Activate";
+		wnd->dynamicCall("Activate()");
 	});
+}
+
+void PresentationEngine_PowerPoint::PresentationData::reset()
+{
+	qDebug() << "Reset";
+
+	if(axPresentation_) {
+		axPresentation_->dynamicCall("Close()");
+		delete axPresentation_;
+	}
+
+	*this = {};
 }

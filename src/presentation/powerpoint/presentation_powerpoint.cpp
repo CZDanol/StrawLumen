@@ -110,11 +110,11 @@ QSharedPointer<Presentation_PowerPoint> Presentation_PowerPoint::createFromFilen
 			/*do {
 								const QString filename = QDir::toNativeSeparators(tmpDir.absoluteFilePath("strawLumenThumbTmp.png"));
 
-                axSlide->dynamicCall("Export(QString,QString,Long,Long)", filename, "PNG", 512, 512).toBool();
-                slide->thumbnail = QPixmap(filename);
-                QFile(filename).remove();
+								axSlide->dynamicCall("Export(QString,QString,Long,Long)", filename, "PNG", 512, 512).toBool();
+								slide->thumbnail = QPixmap(filename);
+								QFile(filename).remove();
 
-            } while(false);*/
+						} while(false);*/
 
 			result->slideCount_++;
 		}
@@ -264,20 +264,42 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide) {
 
 	//splashscreen->asyncAction(tr("Spouštění prezentace"), false, *activeXJobThread, [this, selfPtr, &result]{
 	activeXJobThread->executeNonblocking([this, selfPtr, startingSlide, pptSlideI] {
-		auto &pe = *presentationEngine_powerPoint;
+		qDebug() << "Activate";
 
-		pe.axPresentation_ = pe.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
+		auto &pp = *presentationEngine_powerPoint;
+		if(!pp.axPresentations_) {
+			return;
+		}
+
+		auto &pe = pp.presentation_;
+		pe.reset();
+
+		// Reset presentations if anything fails
+		QScopeGuard resetPresentationGuard([&] {
+			pe.reset();
+		});
+
+		pe.axPresentation_ = pp.axPresentations_->querySubObject("Open(QString,Office::MsoTriState,Office::MsoTriState,Office::MsoTriState)", QDir::toNativeSeparators(filePath_), true, false, false);
 		if(!pe.axPresentation_)
 			return standardErrorDialog(tr("Nepodařilo se spustit prezentaci \"%1\".").arg(filePath_));
 
 		pe.axSlides_ = pe.axPresentation_->querySubObject("Slides");
+		if(!pe.axSlides_) {
+			qDebug() << "Slides null";
+			return;
+		}
 
 		pe.axSSSettings_ = pe.axPresentation_->querySubObject("SlideShowSettings");
+		if(!pe.axSSSettings_) {
+			qDebug() << "SlideShowSettings null";
+			return;
+		}
+
 		pe.axSSSettings_->dynamicCall("SetShowType(Office::PpSlideShowType)", static_cast<int>(Office::PowerPoint::PpSlideShowType::ppShowTypeKiosk));
 
-    /*pe.axSSSettings_->dynamicCall("SetRangeType(int)", (int) Office::PowerPoint::PpSlideShowRangeType::ppShowSlideRange);
-        pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
-        pe.axSSSettings_->dynamicCall("SetEndingSlide(int)", startingSlide_+1); Does not work like expected*/
+		/*pe.axSSSettings_->dynamicCall("SetRangeType(int)", (int) Office::PowerPoint::PpSlideShowRangeType::ppShowSlideRange);
+				pe.axSSSettings_->dynamicCall("SetStartingSlide(int)", startingSlide_);
+				pe.axSSSettings_->dynamicCall("SetEndingSlide(int)", startingSlide_+1); Does not work like expected*/
 
 		pe.axSSSettings_->dynamicCall(
 			"SetAdvanceMode(Office::PpSlideShowAdvanceMode)",
@@ -286,13 +308,23 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide) {
 		pe.axSSSettings_->dynamicCall("Run()");
 
 		pe.axPresentationWindow_ = pe.axPresentation_->querySubObject("SlideShowWindow");
+		if(!pe.axPresentationWindow_) {
+			qDebug() << "SlideShowWindow null";
+			return;
+		}
+
 		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
+		if(!pe.axSSView_) {
+			qDebug() << "View null";
+			return;
+		}
 
 		/*const auto doc = pe.axPresentationWindow_->generateDocumentation();
 		QTimer::singleShot(0, qApp, [doc] {
 			activeXDebugDialog()->show(doc);
 		});*/
 
+		resetPresentationGuard.dismiss();
 		setSlide_axThread(pptSlideI);
 	});
 
@@ -303,16 +335,7 @@ void Presentation_PowerPoint::deactivatePresentation() {
 	QSharedPointer<Presentation_PowerPoint> selfPtr(weakPtr_);
 	activeXJobThread->executeNonblocking([selfPtr] {
 		auto &pe = *presentationEngine_powerPoint;
-
-		if(!pe.axPresentation_) {
-			pe.axPresentation_ = nullptr;
-			return;
-		}
-
-		pe.axPresentation_->dynamicCall("Close()");
-		delete pe.axPresentation_;
-
-		pe.axPresentation_ = nullptr;
+		pe.presentation_.reset();
 	});
 }
 
@@ -324,11 +347,6 @@ void Presentation_PowerPoint::setSlide(int localSlideId, bool force) {
 	const int pptSlideI = getPptSlideI(localSlideId);
 
 	activeXJobThread->executeNonblocking([this, selfPtr, pptSlideI] {
-		auto &pe = *presentationEngine_powerPoint;
-
-		if(!pe.axPresentation_)
-			return;
-
 		setSlide_axThread(pptSlideI);
 	});
 }
@@ -341,18 +359,22 @@ Presentation_PowerPoint::Presentation_PowerPoint() {
 }
 
 void Presentation_PowerPoint::setSlide_axThread(int pptSlideI) {
-	auto &pe = *presentationEngine_powerPoint;
+	qDebug() << "SetSlide";
+
+	auto view = presentationEngine_powerPoint->presentation_.axSSView_;
+	if(!view)
+		return;
 
 	if(pptSlideI == -2)
 		return;
 
 	if(pptSlideI == -1) {
-		pe.axSSView_->dynamicCall("SetState(int)", (int) Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen);
+		view->dynamicCall("SetState(int)", (int) Office::PowerPoint::PpSlideShowState::ppSlideShowBlackScreen);
 		return;
 	}
 
-	pe.axSSView_->dynamicCall("SetState(int)", (int) Office::PowerPoint::PpSlideShowState::ppSlideShowRunning);
-	pe.axSSView_->dynamicCall("GotoSlide(int)", pptSlideI);
+	view->dynamicCall("SetState(int)", (int) Office::PowerPoint::PpSlideShowState::ppSlideShowRunning);
+	view->dynamicCall("GotoSlide(int)", pptSlideI);
 }
 
 int Presentation_PowerPoint::getPptSlideI(int localSlideId) const {

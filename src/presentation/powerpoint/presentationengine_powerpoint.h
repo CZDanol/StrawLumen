@@ -33,9 +33,20 @@ private slots:
 	void onActivateTimer();
 
 private:
-	QAxObject *axPresentations_, *axPresentation_ = nullptr, *axPresentationWindow_, *axSlides_, *axSSSettings_, *axSSView_;
+	QAxObject *axPresentations_;
 	bool isInitialized_ = false;
 	QTimer activateTimer_;
+
+	struct PresentationData {
+		QAxObject *axPresentation_ = nullptr;
+		QAxObject *axPresentationWindow_ = nullptr;
+		QAxObject *axSlides_ = nullptr;
+		QAxObject *axSSSettings_ = nullptr;
+		QAxObject *axSSView_ = nullptr;
+
+		void reset();
+	};
+	PresentationData presentation_;
 };
 
 extern PresentationEngine_PowerPoint *presentationEngine_powerPoint;
