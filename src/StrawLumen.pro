@@ -31,7 +31,7 @@ TRANSLATIONS = ../bin/lang/en.ts ../bin/lang/slo.ts
 
 TARGET = strawLumen
 
-CONFIG += c++17
+CONFIG += c++17 force_debug_info
 
 *msvc* {
 	QMAKE_CXXFLAGS += -MP # Parallel build
@@ -46,6 +46,7 @@ Release:RELEASE_STR =
 INCLUDEPATH += $$PWD/../include
 DEPENDPATH += $$PWD/../include
 
+LIBS += -lole32
 LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}/
 LIBS += -L$$PWD/../lib/$${OS_STR}_$${QMAKE_TARGET.arch}_common/
 DESTDIR = $$PWD/../bin/bin_$${OS_STR}_$${QMAKE_TARGET.arch}$${RELEASE_STR}

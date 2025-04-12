@@ -2,6 +2,7 @@ setup/
 build/
 local_etc/
 lib/
+etc/build-ax/
 installDeps/*.exe
 bin/**/*.ilk
 bin/**/*.pdb
