@@ -313,10 +313,20 @@ void Presentation_PowerPoint::activatePresentation(int startingSlide) {
 			return;
 		}
 
-		pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
-		if(!pe.axSSView_) {
+		// Sometimes on cold start the View returns null, but will eventually get toghether if we wait a bit
+		// This also requires a fix inside QtActiveQt: https://codereview.qt-project.org/c/qt/qtactiveqt/+/639203
+		for(int retries = 0;; retries++) {
+			pe.axSSView_ = pe.axPresentationWindow_->querySubObject("View");
+			if(pe.axSSView_) {
+				break;
+			}
+
 			qDebug() << "View null";
-			return;
+
+			if(retries > 5) {
+				return;
+			}
+			QThread::sleep(1);
 		}
 
 		/*const auto doc = pe.axPresentationWindow_->generateDocumentation();
