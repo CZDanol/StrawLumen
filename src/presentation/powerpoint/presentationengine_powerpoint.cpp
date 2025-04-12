@@ -60,8 +60,10 @@ void PresentationEngine_PowerPoint::setBlackScreen(bool set) {
 }
 
 void PresentationEngine_PowerPoint::setDisplay(QScreen *screen) {
-	const auto posCoef = 72.0 / 96.0;
-	const float sizeCoef = posCoef * screen->devicePixelRatio();
+	// PowerPoint is using some really weird coordinate mechanics... :/
+	const float commonCoef = 1.0f / qApp->primaryScreen()->devicePixelRatio();
+	const float posCoef = 72.0f / 96.0f * commonCoef;
+	const float sizeCoef = screen->devicePixelRatio() * posCoef;
 	const auto geom = screen->geometry().toRectF();
 	const QRectF rect(geom.left() * posCoef, geom.top() * posCoef, geom.width() * sizeCoef, geom.height() * sizeCoef);
 
