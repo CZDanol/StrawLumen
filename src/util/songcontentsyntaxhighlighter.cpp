@@ -65,6 +65,8 @@ void SongContentSyntaxHighlighter::highlightBlock(const QString &text) {
 		invalidWhitespaceFormat_.setBackground(errColor);
 		invalidAnnotationFormat_.setForeground(errColor);
 
+		anyWhitespaceFormat_.setBackground(isDarkMode ? QColor("#22ffffff") : QColor("#22000000"));
+
 		// Default font changes, we must update
 		auto size = document()->defaultFont().pointSize() * 1.3;
 		chordFormat_.setFontPointSize(size);
@@ -128,6 +130,15 @@ void SongContentSyntaxHighlighter::highlightBlock(const QString &text) {
 		setFormat(m.capturedStart(), m.capturedLength(), slideSeparatorFormat_);
 	}
 
+	// Visualise all spaces
+	static const QRegularExpression spacesRegex("\\s+");
+	it = spacesRegex.globalMatch(text);
+	while(it.hasNext()) {
+		const QRegularExpressionMatch m = it.next();
+		setFormat(m.capturedStart(), m.capturedLength(), anyWhitespaceFormat_);
+	}
+
+	// Warn about double spaces
 	static const QRegularExpression doubleSpaceRegex("\t+|  +|^\\s+|\\s+$");
 	it = doubleSpaceRegex.globalMatch(text);
 	while(it.hasNext()) {

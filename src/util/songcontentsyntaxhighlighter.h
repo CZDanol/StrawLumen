@@ -28,6 +28,7 @@ private:
 private:
 	QTextCharFormat invalidAnnotationFormat_;
 	QTextCharFormat invalidWhitespaceFormat_;
+	QTextCharFormat anyWhitespaceFormat_;
 
 private:
 	bool sepSyllables_ = false;
