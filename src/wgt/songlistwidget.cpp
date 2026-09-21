@@ -1,11 +1,26 @@
 #include "songlistwidget.h"
 #include "ui_songlistwidget.h"
 
+#include <QHeaderView>
 #include <QMenu>
 #include <QShortcut>
 #include <QShowEvent>
 
+#include "job/settings.h"
 #include "util/standarddialogs.h"
+
+/// All song lists store their column widths together - they show the same columns of the same
+/// songs, so a width set in one of them is the width expected in the next one opened
+static const QString nameColumnWidthSettingsKey = "songList.nameColumnWidth";
+static const QString authorColumnWidthSettingsKey = "songList.authorColumnWidth";
+
+static const int defaultNameColumnWidth = 150;
+static const int defaultAuthorColumnWidth = 100;
+
+static int storedColumnWidth(const QString &key, int defaultWidth) {
+	const int result = settings->value(key, defaultWidth).toInt();
+	return result > 0 ? result : defaultWidth;
+}
 
 SongListWidget::SongListWidget(QWidget *parent) : QWidget(parent),
                                                   ui(new Ui::SongListWidget) {
@@ -48,6 +63,10 @@ SongListWidget::SongListWidget(QWidget *parent) : QWidget(parent),
 		auto sc = new QShortcut(Qt::Key_Delete, ui->lvTags, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
 		connect(sc, SIGNAL(activated()), ui->actionDeleteTag, SLOT(trigger()));
 	}
+
+	// Store the widths as soon as the user changes them - a list that flushed later would
+	// otherwise be able to put its own, older layout back
+	connect(ui->tvSongs->header(), &QHeaderView::sectionResized, this, [this] { saveColumnWidths(); });
 }
 
 SongListWidget::~SongListWidget() {
@@ -167,16 +186,9 @@ void SongListWidget::requery() {
 	else
 		songsModel_.setQuery({});
 
-	// Setup headers
-	if(db_) {
-		auto header = ui->tvSongs->header();
-		header->hideSection(0);
-		header->setSectionResizeMode(1, QHeaderView::Interactive);
-		header->resizeSection(1, 100);
-		header->setSectionResizeMode(2, QHeaderView::Interactive);
-		header->resizeSection(2, 100);
-		header->setSectionResizeMode(3, QHeaderView::Interactive);
-	}
+	// Setup headers. Not conditioned on db_ - querying without one empties the model just like a
+	// failed query does, and the header has to be laid out again once there is something to show.
+	updateHeaderLayout();
 
 	// Try reselecting previously selected song
 	{
@@ -213,6 +225,63 @@ void SongListWidget::requeryTags() {
 
 	if(tagsModel_.record(prevIndex).value("tag") == prevTag)
 		ui->lvTags->setCurrentIndex(tagsModel_.index(prevIndex, 0));
+}
+
+void SongListWidget::updateHeaderLayout() {
+	auto header = ui->tvSongs->header();
+
+	// The query emptied the model, taking the header sections with it - the layout has to be
+	// applied again once there are columns to apply it to
+	if(header->count() < 3) {
+		headerLaidOut_ = false;
+		return;
+	}
+
+	// A successful query leaves the header alone, so re-applying the layout here would only throw
+	// away the column widths the user has dragged
+	if(headerLaidOut_)
+		return;
+
+	header->setSectionResizeMode(1, QHeaderView::Interactive);
+	header->setSectionResizeMode(2, QHeaderView::Interactive);
+
+	header->resizeSection(1, storedColumnWidth(nameColumnWidthSettingsKey, defaultNameColumnWidth));
+	header->resizeSection(2, storedColumnWidth(authorColumnWidthSettingsKey, defaultAuthorColumnWidth));
+
+	// The id column is never shown
+	header->hideSection(0);
+
+	// Whatever the header ended up with is what to compare against later - resizeSection() clamps
+	// the width it is given to the minimum section size
+	loadedNameColumnWidth_ = header->sectionSize(1);
+	loadedAuthorColumnWidth_ = header->sectionSize(2);
+
+	// Set last, so that the resizing above is not mistaken for the user changing something
+	headerLaidOut_ = true;
+}
+
+void SongListWidget::saveColumnWidths() {
+	auto header = ui->tvSongs->header();
+
+	if(!headerLaidOut_ || header->count() < 3)
+		return;
+
+	// The view stretches whichever column ends up last, so that one's width follows the space
+	// available rather than anything the user set. Columns can be reordered, and once a stored
+	// column has been moved there, there is nothing worth storing.
+	if(header->logicalIndex(header->count() - 1) != 3)
+		return;
+
+	// Only widths this list actually changed are worth storing - writing unconditionally would let
+	// a list nobody touched overwrite what was set in another one
+	if(header->sectionSize(1) == loadedNameColumnWidth_ && header->sectionSize(2) == loadedAuthorColumnWidth_)
+		return;
+
+	loadedNameColumnWidth_ = header->sectionSize(1);
+	loadedAuthorColumnWidth_ = header->sectionSize(2);
+
+	settings->setValue(nameColumnWidthSettingsKey, loadedNameColumnWidth_);
+	settings->setValue(authorColumnWidthSettingsKey, loadedAuthorColumnWidth_);
 }
 
 void SongListWidget::requeryIfFilterChanged() {

@@ -14,3 +14,6 @@ bin/**/*.dat
 bin/**/*.log
 bin/**/*.bin
 src/StrawLumen.pro.user
+
+# Claude Code worktrees
+.claude/worktrees/

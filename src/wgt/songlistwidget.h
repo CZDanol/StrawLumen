@@ -79,6 +79,15 @@ private slots:
 	void on_actionDeleteTag_triggered();
 
 private:
+	/// Lays the song list columns out, unless they already are. Called after every requery - a
+	/// requery leaves the header alone as long as the query succeeds, but one that empties the
+	/// model takes the header sections down with it.
+	void updateHeaderLayout();
+
+	/// Stores the column widths, so that they are there on the next start as well.
+	void saveColumnWidths();
+
+private:
 	bool showTags_ = true;
 	Ui::SongListWidget *ui;
 	SongsItemModel songsModel_;
@@ -86,6 +95,10 @@ private:
 	QString currentFilterText_;
 	QString currentTagFitler();
 	QTimer typingTimer_;
+
+	bool headerLaidOut_ = false;
+	int loadedNameColumnWidth_ = 0;
+	int loadedAuthorColumnWidth_ = 0;
 
 private:
 	DBManager *db_ = nullptr;
