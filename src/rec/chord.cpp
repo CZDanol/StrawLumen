@@ -40,6 +40,7 @@ Chord::Chord(const QString &str) {
 	  {"a", 9},
 	  {"b", 10},
 	  {"b♭", 10},
+	  {"bb", 10},
 	  {"h", 11}};
 
 	static const QHash<QString, int> noteModifierEffects{
