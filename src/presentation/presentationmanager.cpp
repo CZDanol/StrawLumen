@@ -69,7 +69,8 @@ void PresentationManager::previousPresentation() {
 
 	if(currentLocalSlideId_ == 0) {
 		int i = currentPresentation_->positionInPlaylist() - 1;
-		while(currentPresentation_->playlist()->items()[i]->slideCount() == 0)
+
+		while(i >= 0 && currentPresentation_->playlist()->items()[i]->slideCount() == 0)
 			i--;
 
 		if(i < 0)

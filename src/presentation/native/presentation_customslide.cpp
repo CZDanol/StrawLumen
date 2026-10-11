@@ -49,7 +49,8 @@ QJsonObject Presentation_CustomSlide::toJSON() const {
 }
 
 void Presentation_CustomSlide::drawSlide(QPainter &p, int slideId, const QRect &rect) {
-	Q_UNUSED(slideId);
+	if(slideId < 0 || slideId >= slides_.size())
+		return;
 
 	style_.drawSlide(p, rect, slides_[slideId], titles_[slideId], wordWrap_ ? PresentationStyle::fWordWrapContent : 0);
 }

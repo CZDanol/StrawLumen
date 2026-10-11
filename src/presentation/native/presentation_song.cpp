@@ -71,6 +71,9 @@ QJsonObject Presentation_Song::toJSON() const {
 }
 
 void Presentation_Song::drawSlide(QPainter &p, int slideId, const QRect &rect) {
+	if(slideId < 0 || slideId >= slides_.size())
+		return;
+
 	// Empty slide name -> slide is empty, only draw background
 	if(slides_[slideId].name_.isEmpty())
 		style_.background().draw(p, rect);

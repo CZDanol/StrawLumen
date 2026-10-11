@@ -11,7 +11,7 @@
 
 QStringList Presentation_Images::validExtensions() {
 	static const QStringList result{
-	  "jpg", "jpeg", "png", "gif", "bmp"};
+		"jpg", "jpeg", "png", "gif", "bmp"};
 	return result;
 }
 
@@ -129,6 +129,9 @@ QPixmap Presentation_Images::slideIdentificationIcon(int i) const {
 }
 
 QString Presentation_Images::slideDescription(int i) const {
+	if(i < 0 || i >= images_.rowCount())
+		return {};
+
 	if(isAutoPresentation_)
 		return nullptr;
 
@@ -156,6 +159,9 @@ void Presentation_Images::deactivatePresentation() {
 }
 
 QImage Presentation_Images::getImage(int slideId, const QSize size) {
+	if(slideId < 0 || slideId >= images_.rowCount())
+		return {};
+
 	const QString fileName = images_.item(slideId)->data().toString();
 
 	QString cacheKey = QString("image:%1#res:%2x%3").arg(fileName).arg(size.width()).arg(size.height());

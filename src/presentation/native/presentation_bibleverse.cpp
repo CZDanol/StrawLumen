@@ -57,6 +57,9 @@ void Presentation_BibleVerse::setVersesStr(const QString &set, bool defaultEmpty
 }
 
 void Presentation_BibleVerse::drawSlide(QPainter &p, int slideId, const QRect &rect) {
+	if(slideId < 0 || slideId >= slides_.size())
+		return;
+
 	style_.drawSlide(p, rect, slides_[slideId], slideNames_[slideId], PresentationStyle::fWordWrapContent);
 }
 
