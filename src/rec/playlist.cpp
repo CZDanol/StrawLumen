@@ -112,8 +112,7 @@ void Playlist::insertItems(int pos, const QVector<QSharedPointer<Presentation>> 
 		item->playlist_ = this;
 
 		items_[pos++] = item;
-		connect(item.data(), SIGNAL(sigSlidesChanged()), this, SLOT(emitSlidesChanged()));
-		connect(item.data(), SIGNAL(sigItemChanged(Presentation *)), this, SIGNAL(sigItemChanged(Presentation *)));
+		connectSignals(item);
 	}
 
 	emitItemsChanged();
