@@ -36,9 +36,9 @@ void JobThread::executeBlocking(JobThread::Job job) {
 	QMutexLocker ml(&m);
 	executeNonblocking([&] {
 		job();
-		done = true;
-
+		
 		QMutexLocker ml(&m);
+		done = true;
 		c.wakeOne();
 	});
 

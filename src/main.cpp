@@ -193,10 +193,10 @@ void criticalBootError(const QString &message) {
 void setupLanguage() {
 	QDir langDir(QDir(QApplication::applicationDirPath()).absoluteFilePath("../lang"));
 
-	QString language = settings->value("language", QLocale::languageToString(QLocale::system().language())).toString();
+	QString language = settings->value("language", QLocale::languageToCode(QLocale::system().language(), QLocale::ISO639Part1)).toString();
 
 	// For backwards compatibility
-	const QHash languageLegacyMapping {
+	const QHash<QString, QString> languageLegacyMapping {
 		{"cz", "cs"},
 		{"slo", "sk"},
 	};

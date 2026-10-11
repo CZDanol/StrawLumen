@@ -17,7 +17,7 @@ const QRegularExpression &BibleRef::regex() {
 	  "([0-9]+)"     // chapter
 	  "\\s*[:;,]\\s*"//separator
 	  "("
-	  "(?:[0-9]+(?:\\s**[-–]\\s*[0-9]+)?)"             // verse/verse range
+	  "(?:[0-9]+(?:\\s*[-–]\\s*[0-9]+)?)"             // verse/verse range
 	  "(?:\\s*,\\s*[0-9]+(?:\\s*[-–]\\s*[0-9]+)?)*"// more verse ranges
 	  ")"
 	  ",?"

@@ -36,7 +36,7 @@ void SettingsDialog::updateBibleTranslationList() {
 
 void SettingsDialog::updateLanguageList() {
 	ui->cmbLanguage->clear();
-	ui->cmbLanguage->addItem("Čeština", "cz");
+	ui->cmbLanguage->addItem("Čeština", "cs");
 
 	QDir dir(QDir(qApp->applicationDirPath()).absoluteFilePath("../lang"));
 	for(const QFileInfo &f: dir.entryInfoList({"*.qm"}))
