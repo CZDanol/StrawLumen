@@ -1,11 +1,16 @@
 #include "songlistwidget.h"
 #include "ui_songlistwidget.h"
 
+#include <QHeaderView>
 #include <QMenu>
 #include <QShortcut>
 #include <QShowEvent>
 
+#include "job/settings.h"
 #include "util/standarddialogs.h"
+
+static const QString nameColumnWidthSettingsKey = "songList.nameColumnWidth";
+static const QString authorColumnWidthSettingsKey = "songList.authorColumnWidth";
 
 SongListWidget::SongListWidget(QWidget *parent) : QWidget(parent),
                                                   ui(new Ui::SongListWidget) {
@@ -48,6 +53,16 @@ SongListWidget::SongListWidget(QWidget *parent) : QWidget(parent),
 		auto sc = new QShortcut(Qt::Key_Delete, ui->lvTags, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
 		connect(sc, SIGNAL(activated()), ui->actionDeleteTag, SLOT(trigger()));
 	}
+
+	connect(ui->tvSongs->header(), &QHeaderView::sectionResized, this, [this](int logical, int, int newSize) {
+		if(!headerLaidOut_ || newSize <= 0)
+			return;
+
+		if(logical == 1)
+			settings->setValue(nameColumnWidthSettingsKey, newSize);
+		else if(logical == 2)
+			settings->setValue(authorColumnWidthSettingsKey, newSize);
+	});
 }
 
 SongListWidget::~SongListWidget() {
@@ -168,14 +183,21 @@ void SongListWidget::requery() {
 		songsModel_.setQuery({});
 
 	// Setup headers
-	if(db_) {
+	{
 		auto header = ui->tvSongs->header();
+		headerLaidOut_ = false;
+
+		// Hide the ID column
 		header->hideSection(0);
+
 		header->setSectionResizeMode(1, QHeaderView::Interactive);
-		header->resizeSection(1, 100);
 		header->setSectionResizeMode(2, QHeaderView::Interactive);
-		header->resizeSection(2, 100);
-		header->setSectionResizeMode(3, QHeaderView::Interactive);
+
+		header->resizeSection(1, settings->value(nameColumnWidthSettingsKey, 150).toInt());
+		header->resizeSection(2, settings->value(authorColumnWidthSettingsKey, 100).toInt());
+
+		// Set last, so that the resizing above is not mistaken for the user changing something
+		headerLaidOut_ = true;
 	}
 
 	// Try reselecting previously selected song

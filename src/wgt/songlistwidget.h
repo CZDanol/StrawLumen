@@ -80,6 +80,7 @@ private slots:
 
 private:
 	bool showTags_ = true;
+	bool headerLaidOut_ = false;
 	Ui::SongListWidget *ui;
 	SongsItemModel songsModel_;
 	QSqlQueryModel tagsModel_;
