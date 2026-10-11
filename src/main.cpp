@@ -194,11 +194,21 @@ void setupLanguage() {
 	QDir langDir(QDir(QApplication::applicationDirPath()).absoluteFilePath("../lang"));
 
 	QString language = settings->value("language", QLocale::languageToString(QLocale::system().language())).toString();
-	if(language != "cz" && !langDir.exists(QString("%1.qm").arg(language)))
-		language = "en";
 
-	if(language == "cz")
+	// For backwards compatibility
+	const QHash languageLegacyMapping {
+		{"cz", "cs"},
+		{"slo", "sk"},
+	};
+
+	language = languageLegacyMapping.value(language, language);
+
+	// CS = default/no translation
+	if(language == "cs")
 		return;
+
+	if(!langDir.exists(QString("%1.qm").arg(language)))
+		language = "en";
 
 	QTranslator *translator = new QTranslator(qApp);
 	(void) translator->load(langDir.absoluteFilePath(QString("%1.qm").arg(language)));
