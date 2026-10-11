@@ -113,7 +113,7 @@ Chord::Chord(const QString &str) {
 		inversionNote_ = -1;
 
 	if(m.capturedLength(mpInversionNoteModifier))
-		inversionNote_ += noteModifierEffects[m.captured(mpInversionNoteModifier)];
+		inversionNote_ += (noteModifierEffects[m.captured(mpInversionNoteModifier)] + 12) % 12;
 }
 
 bool Chord::isValid() const {
