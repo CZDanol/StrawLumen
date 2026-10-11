@@ -20,7 +20,7 @@ void createDb() {
 		 * lumenimportdialog
 		 * */
 		db->exec("CREATE TABLE songs ("
-		         "id INTEGER PRIMARY KEY,"
+		         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 		         "uid TEXT NOT NULL,"
 		         "name TEXT NOT NULL,"
 		         "standardized_name TEXT NOT NULL,"
@@ -232,4 +232,29 @@ DB_MIGRATION_PROCEDURE(6, 7) {
 
 DB_MIGRATION_PROCEDURE(7, 8) {
 	db->exec("ALTER TABLE songs ADD locked INTEGER");
+}
+
+DB_MIGRATION_PROCEDURE(8, 9) {
+	db->exec("CREATE TABLE songs_tmp ("
+			"id INTEGER PRIMARY KEY AUTOINCREMENT,"
+			"uid TEXT NOT NULL,"
+			"name TEXT NOT NULL,"
+			"standardized_name TEXT NOT NULL,"
+			"author TEXT NOT NULL,"
+			"copyright TEXT NOT NULL,"
+			"content TEXT NOT NULL,"
+			"notes TEXT NOT NULL,"
+			"slideOrder TEXT NOT NULL,"
+			"lastEdit INTEGER NOT NULL,"
+			"locked INTEGER"
+			")");
+
+	db->exec("INSERT INTO songs_tmp SELECT id, uid, name, standardized_name, author, copyright, content, notes, slideOrder, lastEdit, locked FROM songs");
+	db->exec("DROP TABLE songs");
+
+	db->exec("ALTER TABLE songs_tmp RENAME TO songs");
+
+	db->exec("CREATE INDEX i_songs_uid ON songs (uid)");
+	db->exec("CREATE INDEX i_songs_name ON songs (name)");
+	db->exec("CREATE INDEX i_songs_author_name ON songs (author, name)");
 }

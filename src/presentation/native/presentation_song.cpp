@@ -39,7 +39,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 
 	result->wordWrap_ = json["wordWrap"].toBool();
 
-	if(!result->loadFromDb(json["songId"].toString()) && !result->loadFromDb_Uid(json["songUid"].toString()))
+	if(!result->loadFromDb(json["songId"].toInteger()) && !result->loadFromDb_Uid(json["songUid"].toString()))
 		return nullptr;
 
 	{
@@ -135,7 +135,7 @@ bool Presentation_Song::loadFromDb(qlonglong songId) {
 }
 
 bool Presentation_Song::loadFromDb_Uid(const QString &uid) {
-	const QSqlRecord rec = db->selectRowDef("SELECT * FROM songs WHERE uid = ?", {uid});
+	const QSqlRecord rec = db->selectRowDef("SELECT * FROM songs WHERE uid = ? ORDER BY lastEdit DESC limit 1", {uid});
 
 	if(rec.isEmpty())
 		return false;
