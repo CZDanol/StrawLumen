@@ -34,7 +34,7 @@ DatabaseManager::DatabaseManager() {
 		});
 
 		openSQLITE(dbFilepath);
-		disconnect(SIGNAL(sigQueryError(QString, QString)));
+		disconnect(SIGNAL(sigDatabaseError(QString, QString)));
 	}
 
 	connect(this, &DBManager::sigQueryError, [](QString query, QString error) {
