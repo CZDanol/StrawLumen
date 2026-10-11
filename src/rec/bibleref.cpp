@@ -17,7 +17,7 @@ const QRegularExpression &BibleRef::regex() {
 	  "([0-9]+)"     // chapter
 	  "\\s*[:;,]\\s*"//separator
 	  "("
-	  "(?:[0-9]+(?:\\s*-\\s*[0-9]+)?)"             // verse/verse range
+	  "(?:[0-9]+(?:\\s**[-–]\\s*[0-9]+)?)"             // verse/verse range
 	  "(?:\\s*,\\s*[0-9]+(?:\\s*[-–]\\s*[0-9]+)?)*"// more verse ranges
 	  ")"
 	  ",?"
@@ -28,6 +28,8 @@ const QRegularExpression &BibleRef::regex() {
 
 	return r;
 }
+
+const QRegularExpression verse_range_regex ("[-–]");
 
 BibleRef::BibleRef() {
 	isValid_ = false;
@@ -87,7 +89,7 @@ BibleRef::BibleRef(const QString &str) {
 	chapter = m.captured(2).toInt();
 
 	for(QString verse: m.captured(3).split(',')) {
-		int delimiterPos = verse.indexOf('-');
+		int delimiterPos = verse.indexOf(verse_range_regex);
 
 		if(delimiterPos == -1)
 			verses_ += verse.trimmed().toInt();
