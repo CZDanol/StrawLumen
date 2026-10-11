@@ -31,16 +31,19 @@ void JobThread::executeBlocking(JobThread::Job job) {
 
 	QMutex m;
 	QWaitCondition c;
+	bool done = false;
 
 	QMutexLocker ml(&m);
 	executeNonblocking([&] {
 		job();
+		done = true;
 
 		QMutexLocker ml(&m);
 		c.wakeOne();
 	});
 
-	c.wait(&m);
+	while(!done)
+		c.wait(&m);
 }
 
 void JobThread::waitJobsDone() {
