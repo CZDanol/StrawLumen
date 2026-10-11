@@ -39,7 +39,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 
 	result->wordWrap_ = json["wordWrap"].toBool();
 
-	if(!result->loadFromDb_Uid(json["songUid"].toString()))
+	if(!result->loadFromDb(json["songId"].toString()) && !result->loadFromDb_Uid(json["songUid"].toString()))
 		return nullptr;
 
 	{
@@ -60,6 +60,7 @@ QSharedPointer<Presentation_Song> Presentation_Song::createFromJSON(const QJsonO
 QJsonObject Presentation_Song::toJSON() const {
 	return QJsonObject{
 	  {"songUid", songUid_},
+	  {"songId", songId_},
 	  {"customSlideOrder", customSlideOrder_},
 	  {"emptySlideBefore", emptySlideBefore_},
 	  {"emptySlideAfter", emptySlideAfter_},
